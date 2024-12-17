@@ -1,8 +1,12 @@
+import {OrganizationCardComponent} from "@/components/event/OrganizationCardComponent";
 
 export default function Events() {
     return (
-      <section className="flex flex-col">
-        <p>This is Events Page</p>
-      </section>
+        <>
+            {/*Start Hero Section */}
+            <section className="flex flex-col">
+                <p>Welcome to Events Page</p>
+            </section>
+        </>
     );
-  }
+}

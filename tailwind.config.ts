@@ -27,8 +27,8 @@ const config: Config = {
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {
-  				DEFAULT: 'hsl(var(--card))',
-  				foreground: 'hsl(var(--card-foreground))'
+  				DEFAULT: 'hsl(var(--event))',
+  				foreground: 'hsl(var(--event-foreground))'
   			},
   			popover: {
   				DEFAULT: 'hsl(var(--popover))',
@@ -104,6 +104,12 @@ const config: Config = {
 		boxShadow: {
 			"custom": "1px 1px 8px 2px rgba(0, 0, 0, 0.1)",
 			"light": "0 2px 4px rgba(0, 0, 0, 0.1)"
+		},
+		lineHeight: {
+			relaxed: "1.75",
+			loose: "4",
+			tighter: "1.1",
+			extra: "2.5",
 		},
   	}
   },
