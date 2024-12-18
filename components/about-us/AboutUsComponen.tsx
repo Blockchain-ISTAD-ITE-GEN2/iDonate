@@ -124,7 +124,7 @@ export default function AboutUsComponent() {
                 animate="visible"
                 custom={index}
                 whileHover={{ scale: 1.05 }}
-                className=" rounded-xl shadow-sm p-8 text-center transform transition-all duration-200 hover:shadow-xl"
+                className=" rounded-xl shadow-sm p-8 text-center transform transition-all duration-200 hover:shadow-lg"
               >
                 <motion.div
                   whileHover={{ scale: 1.1 }}

@@ -1,4 +1,5 @@
 import { clsx, type ClassValue } from "clsx"
+import { format } from "date-fns"
 import { twMerge } from "tailwind-merge"
 
 export function cn(...inputs: ClassValue[]) {
@@ -25,3 +26,8 @@ export function formatBytes(
       : (sizes[i] ?? "Bytes")
   }`
 }
+
+export const formatDate = (date: Date, dateFormat: string = 'yyyy-MM-dd'): string => {
+    return format(date, dateFormat);
+};
+
