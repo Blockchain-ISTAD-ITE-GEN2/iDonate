@@ -1,7 +1,7 @@
-import { CalendarDateRangePicker } from "@/components/dashboard/date-range-picker";
+import { CalendarDateRangePicker } from "@/components/organization/dashboard/date-range-picker";
 import { Button } from "@/components/ui/button";
-import { BannerComponent } from "@/components/dashboard/banner";
-import { BarAndLineChart } from "@/components/dashboard/bar-and-line-chart";
+import { BannerComponent } from "@/components/organization/card/banner";
+import { BarAndLineChart } from "@/components/organization/dashboard/bar-and-line-chart";
 
 export default function Contributor() {
 

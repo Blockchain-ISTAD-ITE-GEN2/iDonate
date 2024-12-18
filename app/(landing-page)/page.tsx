@@ -1,10 +1,14 @@
 import categories  from "@/data/category.json";
 import CategoryCardComponent from "@/components/category/CategoryCardComponent";
 import { CategoryType } from "@/difinitions/types/components-type/CategoryType";
+import TestimonialCardComponent from "@/components/testimonials/TestimonailCardComponent";
+import { TestimonialType } from "@/difinitions/types/components-type/testimonial";
+import  testimonials from "@/data/testimonials.json"
 
 export default function Homepage() {
 
   const typedCategory: CategoryType[] = categories
+  const typedTestimonial: TestimonialType[] = testimonials
   
 
   return (
@@ -15,6 +19,8 @@ export default function Homepage() {
         <CategoryCardComponent categories={typedCategory} />
         
       </section>
+
+      {/* <TestimonialCardComponent testimonials={typedTestimonial}/> */}
 
     
     </section>

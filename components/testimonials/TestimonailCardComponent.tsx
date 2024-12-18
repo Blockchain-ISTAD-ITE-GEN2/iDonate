@@ -7,12 +7,14 @@ export default function TestimonialCardComponent({ testimonials }: { testimonial
     return (
         <div>
             <Carousel >
-            <CarouselContent className="-ml-2 md:-ml-4" >
+            <CarouselContent className="basis-2/4" >
                 {testimonials.map((testimonial, index) => (
-                    <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
+                    <CarouselItem key={index} className="basis-2/4">
                             <Card className="w-[366px] ">
                                 <CardContent className=" flex flex-col items-center p-6">
-                                    <Image 
+                                    <Image
+                                        width={80}
+                                        height={80} 
                                         src={testimonial.media} 
                                         alt={testimonial.name} 
                                         className="w-20 h-20 rounded-full mb-4" 

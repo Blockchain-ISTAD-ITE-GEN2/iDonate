@@ -1,8 +1,9 @@
 'use client';
 
 import { signIn, useSession } from "next-auth/react";
-import { Formik, Form } from "formik";
-import * as Yup from "yup";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";  
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
@@ -17,23 +18,47 @@ import GoogleIcon from "@/public/images/google.png";
 import FacebookIcon from "@/public/images/facebook.png";
 import SampleLogo from "@/public/images/iDonateLogoSample.png";
 
-const validationSchema = Yup.object().shape({
-  email: Yup.string().email("Invalid email address").required("Email is required"),
-  password: Yup.string()
+const loginSchema = z.object({
+  email: z
+    .string()
+    .email("Invalid email address")
+    .nonempty("Email is required")
+    .trim()
+    .toLowerCase()
+    .regex(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, "Invalid email format"),
+  
+  password: z
+    .string()
     .min(6, "Password must be at least 6 characters")
-    .required("Password is required"),
-  rememberMe: Yup.boolean(),
+    .max(50, "Password cannot exceed 50 characters")
+    .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/, 
+      "Password must include at least one uppercase letter, one lowercase letter, one number, and one special character")
+    .nonempty("Password is required"),
+  
+  rememberMe: z.boolean().default(false),
 });
+
+type LoginFormValues = z.infer<typeof loginSchema>;
 
 export default function LoginForm() {
   const { data: session, status } = useSession();
-  const [isHovering, setIsHovering] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleSubmit = async (
-    values: { email: string; password: string; rememberMe: boolean },
-    { setSubmitting, setFieldError }: { setSubmitting: (isSubmitting: boolean) => void, setFieldError: (field: string, message: string) => void }
-  ) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    setError,
+  } = useForm<LoginFormValues>({
+    resolver: zodResolver(loginSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+      rememberMe: false,
+    },
+  });
+
+  const onSubmit = async (values: LoginFormValues) => {
     try {
       const result = await signIn("credentials", {
         email: values.email,
@@ -41,10 +66,10 @@ export default function LoginForm() {
         redirect: false,
         rememberMe: values.rememberMe,
       });
-      
+
       if (result?.error) {
-        setFieldError("email", "Invalid email or password");
-        setFieldError("password", "Invalid email or password");
+        setError("email", { type: "manual", message: "Invalid email or password" });
+        setError("password", { type: "manual", message: "Invalid email or password" });
         toast.error("Invalid email or password");
       } else {
         toast.success("Login successful!");
@@ -52,8 +77,6 @@ export default function LoginForm() {
     } catch (error) {
       console.error("Login error:", error);
       toast.error("An unexpected error occurred. Please try again later.");
-    } finally {
-      setSubmitting(false);
     }
   };
 
@@ -106,111 +129,95 @@ export default function LoginForm() {
             </span>
           </h1>
 
-          <Formik
-            initialValues={{ email: "", password: "", rememberMe: false }}
-            validationSchema={validationSchema}
-            onSubmit={handleSubmit}
-          >
-            {({ errors, touched, isSubmitting, getFieldProps }) => (
-              <Form className="space-y-4 sm:space-y-6">
-                <div>
-                  <label htmlFor="email" className="flex items-center space-x-2 text-sm font-medium text-gray-700 mb-1">
-                    <Mail className="w-4 h-4 text-iDonate-navy-primary" />
-                    <span>Email <span className="text-red-500">*</span></span>
-                  </label>
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder="idonate.istad.co@gmail.com"
-                    {...getFieldProps("email")}
-                    className={`w-full h-10 sm:h-11 rounded-md ${
-                      errors.email && touched.email
-                        ? "border-red-500 focus:ring-red-500"
-                        : "focus:ring-iDonate-navy-primary"
-                    }`}
-                  />
-                  {errors.email && touched.email && (
-                    <motion.p
-                      initial={{ opacity: 0, y: -10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      className="text-red-500 text-xs mt-1"
-                    >
-                      {errors.email}
-                    </motion.p>
-                  )}
-                </div>
-
-                <div className="relative">
-                  <label htmlFor="password" className="flex items-center space-x-2 text-sm font-medium text-gray-700 mb-1">
-                    <Lock className="w-4 h-4 text-iDonate-navy-primary" />
-                    <span>Password <span className="text-red-500">*</span></span>
-                  </label>
-                  <Input
-                    id="password"
-                    type={showPassword ? "text" : "password"}
-                    placeholder="Idonate123@#$!"
-                    {...getFieldProps("password")}
-                    className={`w-full h-10 sm:h-11 pr-10 rounded-md ${
-                      errors.password && touched.password
-                        ? "border-red-500 focus:ring-red-500"
-                        : "focus:ring-iDonate-navy-primary"
-                    }`}
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-8 text-gray-400 hover:text-gray-600 focus:outline-none"
-                  >
-                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-                  </button>
-                  {errors.password && touched.password && (
-                    <motion.p
-                      initial={{ opacity: 0, y: -10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      className="text-red-500 text-xs mt-1"
-                    >
-                      {errors.password}
-                    </motion.p>
-                  )}
-                </div>
-
-                <div className="grid grid-cols-2 gap-16 md:gap-36 sm:items-center sm:justify-between text-sm mt-4">
-                  <label className="flex items-center space-x-2 cursor-pointer mb-2 sm:mb-0">
-                    <input
-                      type="checkbox"
-                      {...getFieldProps("rememberMe")}
-                      className="rounded border-gray-300 text-iDonate-navy-primary focus:ring-iDonate-navy-primary"
-                    />
-                    <span className="text-gray-600">Remember me</span>
-                  </label>
-                  <Link
-                    href="/auth/forgot-password"
-                    className="text-iDonate-navy-primary hover:text-iDonate-navy-primary/80 font-medium transition-colors duration-200"
-                  >
-                    Forgot Password?
-                  </Link>
-                </div>
-
-                <motion.div
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="mt-6 sm:mt-8"
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 sm:space-y-6">
+            <div>
+              <label htmlFor="email" className="flex items-center space-x-2 text-sm font-medium text-gray-700 mb-1">
+                <Mail className="w-4 h-4 text-iDonate-navy-primary" />
+                <span>Email <span className="text-red-500">*</span></span>
+              </label>
+              <Input
+                id="email"
+                type="email"
+                placeholder="idonate.istad.co@gmail.com"
+                {...register("email")}
+                className={`w-full h-10 sm:h-11 rounded-md ${errors.email ? "border-red-500 focus:ring-red-500" : "focus:ring-iDonate-navy-primary"}`}
+              />
+              {errors.email && (
+                <motion.p
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="text-red-500 text-xs mt-1"
                 >
-                  <Button
-                    type="submit"
-                    className="w-full h-10 sm:h-11 bg-iDonate-navy-primary hover:bg-iDonate-navy-primary/90 text-white font-medium text-lg rounded-md transition-all duration-200 shadow-md hover:shadow-lg"
-                    disabled={isSubmitting}
-                  >
-                    {isSubmitting ? (
-                      <Loader2 className="h-5 w-5 animate-spin" />
-                    ) : (
-                      "Sign In"
-                    )}
-                  </Button>
-                </motion.div>
-              </Form>
-            )}
-          </Formik>
+                  {errors.email.message}
+                </motion.p>
+              )}
+            </div>
+
+            <div className="relative">
+              <label htmlFor="password" className="flex items-center space-x-2 text-sm font-medium text-gray-700 mb-1">
+                <Lock className="w-4 h-4 text-iDonate-navy-primary" />
+                <span>Password <span className="text-red-500">*</span></span>
+              </label>
+              <Input
+                id="password"
+                type={showPassword ? "text" : "password"}
+                placeholder="Idonate123@#$!"
+                {...register("password")}
+                className={`w-full h-10 sm:h-11 pr-10 rounded-md ${errors.password ? "border-red-500 focus:ring-red-500" : "focus:ring-iDonate-navy-primary"}`}
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-8 text-gray-400 hover:text-gray-600 focus:outline-none"
+              >
+                {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+              </button>
+              {errors.password && (
+                <motion.p
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="text-red-500 text-xs mt-1"
+                >
+                  {errors.password.message}
+                </motion.p>
+              )}
+            </div>
+
+            <div className="grid grid-cols-2 gap-16 md:gap-36 sm:items-center sm:justify-between text-sm mt-4">
+              <label className="flex items-center space-x-2 cursor-pointer mb-2 sm:mb-0">
+                <input
+                  type="checkbox"
+                  {...register("rememberMe")}
+                  className="rounded border-gray-300 text-iDonate-navy-primary focus:ring-iDonate-navy-primary"
+                />
+                <span className="text-gray-600">Remember me</span>
+              </label>
+              <Link
+                href="/auth/forgot-password"
+                className="text-iDonate-navy-primary hover:text-iDonate-navy-primary/80 font-medium transition-colors duration-200"
+              >
+                Forgot Password?
+              </Link>
+            </div>
+
+            <motion.div
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              className="mt-6 sm:mt-8"
+            >
+              <Button
+                type="submit"
+                className="w-full h-10 sm:h-11 bg-iDonate-navy-primary hover:bg-iDonate-navy-primary/90 text-white font-medium text-lg rounded-md transition-all duration-200 shadow-md hover:shadow-lg"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? (
+                  <Loader2 className="h-5 w-5 animate-spin" />
+                ) : (
+                  "Sign In"
+                )}
+              </Button>
+            </motion.div>
+          </form>
 
           <div className="flex items-center my-4 mb-0">
             <span className="flex-grow border-t border-gray-400"></span>

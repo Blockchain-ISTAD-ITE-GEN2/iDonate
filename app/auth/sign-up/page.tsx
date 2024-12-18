@@ -1,21 +1,13 @@
 
-// import React from 'react'
-// import { RegisterForm } from '@/components/auth/SignUpForm' 
+import SignUpForm from '@/components/auth/SignUpForm'
+import React from 'react'
 
-// export default function page() {
-//   return (
-//   // <SessionWrapper>
-//   //     <RegisterForm/>
-//   //  </SessionWrapper>
+
+export default function page() {
+  return (
+    <>
+      <SignUpForm/> 
+    </>
   
-//   <RegisterForm/>
-//   )
-// }
-
-export default function About() {
-    return (
-      <section className="flex flex-col">
-        <p>This is about Page</p>
-      </section>
-    );
-  }
+  )
+}

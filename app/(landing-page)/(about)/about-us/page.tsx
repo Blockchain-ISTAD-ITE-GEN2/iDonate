@@ -1,8 +1,9 @@
+import AboutUsComponent from "@/components/about-us/AboutUsComponen";
 
-export default function About() {
+export default function page() {
     return (
       <section className="flex flex-col">
-        <p>This is about Page</p>
+        <AboutUsComponent/>
       </section>
     );
   }

@@ -22,6 +22,7 @@ import { AboutMenulist } from "./sub-navbar/AboutMenu";
 import { ContributorMenulist } from "./sub-navbar/ContributorMenu";
 import { NavMenuType } from "@/difinitions/types/components-type/NavMenuType";
 import {signOut, useSession} from "next-auth/react";
+import { PathnameContext } from "next/dist/shared/lib/hooks-client-context.shared-runtime";
 
 export default function NavbarComponent() {
     const [menuList] = useState<NavMenuType[]>(NavMenulist);
@@ -40,8 +41,12 @@ export default function NavbarComponent() {
       console.log("Status:", status);
     }, [session, status]);
 
-  if (pathname === "/auth/login" && "/auth/sign-up" && "/auth/verification")
-    return null;
+  if (pathname === "/auth/login" ||
+    pathname === "/auth/sign-up" ||
+    pathname === "/auth/verification"){
+      return null;
+    }
+   
   else
 
 
@@ -57,7 +62,7 @@ export default function NavbarComponent() {
             </section>
 
         {/* Navigation Menu */}
-        <Menubar className="border-0 flex space-x-4">
+        <Menubar className="border-0 flex space-x-4 bg-transparent">
           {menuList.map((item, index) => {
             const isActive = pathname === item.path;
             const specialPaths = ["/how-it-works", "/search"];
@@ -79,13 +84,13 @@ export default function NavbarComponent() {
                   </Link>
                 ) : (
                   <section>
-                    <MenubarTrigger className="flex items-center px-3 py-1 rounded-lg hover:bg-iDonate-light-gray">
+                    <MenubarTrigger className="flex items-center px-3 py-1 rounded-lg hover:bg-iDonate-light-gray bg-transparent">
                       <span className={navActiveClass(isActive)}>
                         {item.title}
                       </span>
                     </MenubarTrigger>
 
-                                <MenubarContent className="p-4 bg-iDonate-white-space rounded-lg shadow-lg">
+                                <MenubarContent className="p-4 bg-iDonate-white-space rounded-lg shadow-lg ">
                                     {item.title === "Events" && (
                                             <SubNavbarComponent menuList={EventMenulist} />
                                     )}

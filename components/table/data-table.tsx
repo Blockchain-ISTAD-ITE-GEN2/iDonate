@@ -27,12 +27,22 @@ import { DataTablePagination } from "./data-table-pagination"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
+  searchColumns: string
   data: TData[]
+    dateField:string
+    filters?: {
+        columnKey: string // The column key for the table
+        title: string // The display title for the filter
+        options: { label: string; value: string }[] // Filter options
+    }[]
 }
 
 export function DataTable<TData, TValue>({
   columns,
+  searchColumns,
   data,
+  dateField,
+  filters =[]
 }: DataTableProps<TData, TValue>) {
 
     const [sorting, setSorting] = useState<SortingState>([])
@@ -62,7 +72,7 @@ export function DataTable<TData, TValue>({
   return (
     <div className="space-y-4">
 
-        <DataTableToolbar table={table} />
+        <DataTableToolbar table={table} searchColumns={searchColumns} dateField={dateField} filters={filters}/>
 
         <div className="rounded-md border border-iDonate-navy-accent">
             <Table className="bg-iDonate-light-gray rounded-md">

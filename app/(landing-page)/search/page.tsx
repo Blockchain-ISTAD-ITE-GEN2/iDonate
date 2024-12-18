@@ -1,5 +1,5 @@
 import { CommonEventCard } from "@/components/events/CommonEventCad";
-import { EventType } from "@/difinitions/types/events/EventType";
+import { EventType } from "@/difinitions/dto/EventType";
 import events from "@/data/events-data.json";
 
 export default function Events() {

@@ -2,8 +2,8 @@ import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import FacebookProvider from "next-auth/providers/facebook";
-import { authService } from "@/services/auth-service";
-import { UserRole } from "@/types/user";
+import { authService } from "@/redux/services/auth-service";
+import { UserRole } from "@/difinitions/types/media/user";
 export const authConfig: NextAuthOptions = {
   providers: [
     // Google Provider

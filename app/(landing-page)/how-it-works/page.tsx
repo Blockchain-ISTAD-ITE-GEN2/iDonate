@@ -1,7 +1,8 @@
-export default function events() {
-    return (
-      <section className="flex flex-col">
-        <p>This is about Page</p>
-      </section>
-    );
-  }
+import Howitwork from '@/components/howitwork/HowItWorkComponent'
+import React from 'react'
+
+export default function page() {
+  return (
+    <Howitwork/>
+  )
+}

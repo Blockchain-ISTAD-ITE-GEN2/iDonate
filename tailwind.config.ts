@@ -20,15 +20,15 @@ const config: Config = {
   				'navy-accent': '#DCE3F0',
   				'white-space': '#FFFFFF',
   				'white-space-hovering': '#F5F5F5',
-  				'gray': '#808080',
+  				gray: '#808080',
   				'light-gray': '#F6F6F6',
-  				'error': '#FF0000'
+  				error: '#FF0000'
   			},
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {
-  				DEFAULT: 'hsl(var(--event))',
-  				foreground: 'hsl(var(--event-foreground))'
+  				DEFAULT: 'hsl(var(--card))',
+  				foreground: 'hsl(var(--card-foreground))'
   			},
   			popover: {
   				DEFAULT: 'hsl(var(--popover))',
@@ -76,54 +76,108 @@ const config: Config = {
   			}
   		},
   		fontFamily: {
-  			siemreap: ["var(--font-siemreap)", ...fontFamily.sans],
-  			inter: ["var(--font-inter)", ...fontFamily.sans]
+  			siemreap: [
+  				'var(--font-siemreap)',
+                    ...fontFamily.sans
+                ],
+  			inter: [
+  				'var(--font-inter)',
+                    ...fontFamily.sans
+                ]
   		},
   		fontSize: {
-  			'wide-khmer': ['60px', '110px'],
-  			'heading-one-khmer': ['36px', '66px'],
-  			'heading-two-khmer': ['30px', '55px'],
-  			'title-khmer': ['26px', '48px'],
-  			'medium-khmer': ['20px', '37px'],
-  			'description-khmer': ['18px', '33px'],
-  			'title-card': ['19px', '33px'],
-  			'sub-description-khmer': ['14px', '26px'],
-  			'wide-eng': ['60px', '90px'],
-  			'heading-one-eng': ['36px', '54px'],
-  			'heading-two-eng': ['30px', '45px'],
-  			'title-eng': ['26px', '39px'],
-  			'medium-eng': ['20px', '30px'],
-  			'description-eng': ['18px', '28px'],
-  			'sub-description-eng': ['14px', '21px']
+  			'wide-khmer': [
+  				'60px',
+  				'110px'
+  			],
+  			'heading-one-khmer': [
+  				'36px',
+  				'66px'
+  			],
+  			'heading-two-khmer': [
+  				'30px',
+  				'55px'
+  			],
+  			'title-khmer': [
+  				'26px',
+  				'48px'
+  			],
+  			'medium-khmer': [
+  				'20px',
+  				'37px'
+  			],
+  			'description-khmer': [
+  				'18px',
+  				'33px'
+  			],
+  			'title-card': [
+  				'19px',
+  				'33px'
+  			],
+  			'sub-description-khmer': [
+  				'14px',
+  				'26px'
+  			],
+  			'wide-eng': [
+  				'60px',
+  				'90px'
+  			],
+  			'heading-one-eng': [
+  				'36px',
+  				'54px'
+  			],
+  			'heading-two-eng': [
+  				'30px',
+  				'45px'
+  			],
+  			'title-eng': [
+  				'26px',
+  				'39px'
+  			],
+  			'medium-eng': [
+  				'20px',
+  				'30px'
+  			],
+  			'description-eng': [
+  				'18px',
+  				'28px'
+  			],
+  			'sub-description-eng': [
+  				'14px',
+  				'21px'
+  			]
   		},
   		borderRadius: {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
   			sm: 'calc(var(--radius) - 4px)'
   		},
-		boxShadow: {
-			"custom": "1px 1px 8px 2px rgba(0, 0, 0, 0.1)",
-			"light": "0 2px 4px rgba(0, 0, 0, 0.1)"
-		},
-		lineHeight: {
-			relaxed: "1.75",
-			loose: "4",
-			tighter: "1.1",
-			extra: "2.5",
-		},
-		fontWeight: {
-			thin: '100',
-			hairline: '100',
-			extralight: '200',
-			light: '300',
-			normal: '400',
-			medium: '500',
-			semibold: '600',
-			bold: '700',
-			extrabold: '800',
-			'extra-bold': '800',
-			black: '900',
-		},
+  		boxShadow: {
+  			'custom': '1px 1px 8px 2px rgba(0, 0, 0, 0.1)',
+  			'light': '0 2px 4px rgba(0, 0, 0, 0.1)'
+  		},
+  		keyframes: {
+  			'accordion-down': {
+  				from: {
+  					height: '0'
+  				},
+  				to: {
+  					height: 'var(--radix-accordion-content-height)'
+  				}
+  			},
+  			'accordion-up': {
+  				from: {
+  					height: 'var(--radix-accordion-content-height)'
+  				},
+  				to: {
+  					height: '0'
+  				}
+  			}
+  		},
+  		animation: {
+  			'accordion-down': 'accordion-down 0.2s ease-out',
+  			'accordion-up': 'accordion-up 0.2s ease-out'
+  		}
   	}
   },
   plugins: [require("tailwindcss-animate"), require("tailwind-scrollbar-hide")],

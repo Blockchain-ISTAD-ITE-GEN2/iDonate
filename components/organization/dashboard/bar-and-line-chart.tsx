@@ -1,12 +1,12 @@
 import { AverageType, BarchartType } from "@/difinitions/types/chart/barchart";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../ui/card";
+import { CardsMetric } from "./metric";
+import { Overview } from "./overview";
 import { TransactionType } from "@/difinitions/types/table-type/transaction";
 import barchart from "@/data/barchart.json";
 import averages from "@/data/average-data.json"
 import transactions from "@/data/transactions.json"
-import { CardsMetric } from "@/components/dashboard/metric";
-import { Overview } from "@/components/dashboard/overview";
-import { ReacentTransacctions } from "@/components/dashboard/ReacentTransacctions";
+import { ReacentTransacctions } from "./ReacentTransacctions";
 
 export function  BarAndLineChart (){
 

@@ -1,8 +1,8 @@
+import MissionVisionComponent from "@/components/mission-vision/MissionVisionComponent";
 
-export default function About() {
+
+export default function page() {
     return (
-      <section className="flex flex-col">
-        <p>This is about Page</p>
-      </section>
+     <MissionVisionComponent/>
     );
   }

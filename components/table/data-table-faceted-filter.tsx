@@ -37,7 +37,7 @@ export function DataTableFacetedFilter<TData, TValue>({
 }: DataTableFacetedFilterProps<TData, TValue>) {
   const facets = column?.getFacetedUniqueValues()
   // const selectedValues = new Set(column?.getFilterValue() as string[])
-  const selectedValues = new Set<string | number>(column?.getFilterValue() as (string | number)[]); 
+  const selectedValues = new Set<string | number | boolean>(column?.getFilterValue() as (string | number | boolean)[]); 
 
 
   return (
@@ -82,52 +82,68 @@ export function DataTableFacetedFilter<TData, TValue>({
         </Button>
       </PopoverTrigger>
       
-      <PopoverContent className="w-[200px] p-0" align="start">
+      <PopoverContent className="w-auto p-0" align="start">
         <Command>
           <CommandInput placeholder={title} />
           <CommandList>
             <CommandEmpty>No results found.</CommandEmpty>
             <CommandGroup>
-            {options.map((option: { label: number | string; value: number | string; icon?: ComponentType<{ className?: string }> }) => {
-                const isSelected = selectedValues.has(option.value)
-                return (
-                  <CommandItem
-                    key={option.value}
-                    onSelect={() => {
-                      if (isSelected) {
-                        selectedValues.delete(option.value)
-                      } else {
-                        selectedValues.add(option.value)
-                      }
-                      const filterValues = Array.from(selectedValues)
-                      column?.setFilterValue(
-                        filterValues.length ? filterValues : undefined
-                      )
-                    }}
+          {options
+            .sort((a, b) => {
+              const aValue = typeof a.value === "number" ? a.value : Number(a.value);
+              const bValue = typeof b.value === "number" ? b.value : Number(b.value);
+
+              if (!isNaN(aValue) && !isNaN(bValue)) {
+                // Both values are valid numbers, sort numerically
+                return aValue - bValue;
+              }
+
+              // Fallback: handle as strings if values can't be converted to numbers
+              return String(a.value).localeCompare(String(b.value));
+            })
+            .map((option: { label: number | string; value: number | string; icon?: ComponentType<{ className?: string }> }) => {
+              const isSelected = selectedValues.has(option.value);
+              return (
+                <CommandItem
+                  key={option.value}
+                  onSelect={() => {
+                    if (isSelected) {
+                      selectedValues.delete(option.value);
+                    } else {
+                      selectedValues.add(option.value);
+                    }
+                    const filterValues = Array.from(selectedValues);
+                    column?.setFilterValue(
+                      filterValues.length ? filterValues : undefined
+                    );
+                  }}
+                >
+                  <div
+                    className={cn(
+                      "mr-2 flex h-4 w-4 items-center justify-center rounded-sm border border-primary",
+                      isSelected
+                        ? "bg-primary text-primary-foreground"
+                        : "opacity-50 [&_svg]:invisible"
+                    )}
                   >
-                    <div
-                      className={cn(
-                        "mr-2 flex h-4 w-4 items-center justify-center rounded-sm border border-primary",
-                        isSelected
-                          ? "bg-primary text-primary-foreground"
-                          : "opacity-50 [&_svg]:invisible"
-                      )}
-                    >
-                      <Check />
-                    </div>
-                    {option.icon && (
-                      <option.icon className="mr-2 h-4 w-4 text-muted-foreground" />
-                    )}
-                    <span>{option.label}</span>
-                    {facets?.get(option.value) && (
-                      <span className="ml-auto flex h-4 w-4 items-center justify-center font-mono text-xs">
-                        {facets.get(option.value)}
-                      </span>
-                    )}
-                  </CommandItem>
-                )
-              })}
-            </CommandGroup>
+                    <Check />
+                  </div>
+                  {option.icon && (
+                    <option.icon className="mr-2 h-4 w-4 text-muted-foreground" />
+                  )}
+                  <span>{option.label}</span>
+                  {facets?.get(option.value) && (
+                    <span className="ml-auto flex h-4 w-4 items-center justify-center font-mono text-xs">
+                      {facets.get(option.value)}
+                    </span>
+                  )}
+                </CommandItem>
+              );
+            })}
+        </CommandGroup>
+
+
+
             {selectedValues.size > 0 && (
               <>
                 <CommandSeparator />

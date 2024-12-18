@@ -31,6 +31,7 @@ export const transactionColumns: ColumnDef<TransactionType>[] = [
     enableSorting: false,
     enableHiding: false,
   },
+  
   {
     accessorKey: "date",
     header: ({ column }) => (
