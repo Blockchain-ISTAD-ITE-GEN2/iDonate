@@ -31,7 +31,7 @@ export default function Page() {
             total_amount: 10000,
         },
         {
-            image: "https://c8.alamy.com/comp/ADB76P/children-learning-english-at-a-school-in-kampot-cambodia-ADB76P.jpg",
+            image: "https://media.istockphoto.com/id/547404780/photo/local-students-in-cambodia.jpg?s=612x612&w=0&k=20&c=e5bAh7pAa87T2eKj1XJ9PgaMztkImfSVS4UAwb8zF-o=",
             title: "ការជួបប្រជុំសំខាន់ជាមួយអង្គការសប្បុរសធម៌",
             description: "អង្គការសប្បុរសធម៌ជួបប្រជុំដើម្បីបង្កើតការផ្លាស់ប្តូរជាពិសេស",
             total_donor: 200,
@@ -93,8 +93,6 @@ export default function Page() {
             total_donor: 200,
             total_amount: 10000,
         },
-
-
     ];
 
     return (
