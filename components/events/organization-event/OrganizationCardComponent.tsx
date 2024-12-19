@@ -4,7 +4,7 @@ import {
     CardContent,
 } from "@/components/ui/card"
 import Image from "next/image";
-import {OrganizationParam} from "@/types/organization";
+import {OrganizationParam} from "@/difinitions/types/media/organization";
 
 export function OrganizationCardComponent({image, title, description}:OrganizationParam) {
     return (

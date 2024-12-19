@@ -10,7 +10,7 @@ import Image from "next/image";
 
 export default function OrganizationCarouseHerosection() {
     return (
-        <section className="mx-[106px] h-[600px]">
+        <section className="mx-[106px] h-[500px]">
             <Carousel>
                 <CarouselContent>
                     {/* Slide 1 */}

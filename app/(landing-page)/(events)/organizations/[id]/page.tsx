@@ -1,10 +1,11 @@
+'use client'
 import OrganizationDetailHeroSection from "@/components/herosection/OrganizationDetailHeroSection";
 import { SearchInput } from "@/components/ui/SearchInput";
-import { DropDownButtonComponent } from "@/components/butttonComponent/DropDownButtonComponent";
-import { DatePickerDemo } from "@/components/event/detail-event/DatePickerDemo";
-import { CardEvent } from "@/components/event/CardEvent";
-import { EventTypeParam } from "@/types/organization";
-import {CommonEventCard} from "@/components/events/CommonEventCad"; // Ensure this imports the correct type
+import { DropDownButtonComponent } from "@/components/dropdown-button/DropDownButtonComponent";
+import { DatePickerDemo } from "@/components/events/organization-event/detail-event/DatePickerDemo";
+import {CommonEventCard} from "@/components/events/organization-event/CommonEventCad";
+import {EventTypeParam} from "@/difinitions/types/media/organization";
+import {Button} from "@/components/ui/button"; // Ensure this imports the correct type
 
 export default function Page() {
     // Correct the type to EventTypeParam[]
@@ -99,26 +100,34 @@ export default function Page() {
         <>
             {/* Hero Section Start */}
             <section className="flex flex-col">
-                <OrganizationDetailHeroSection />
+                <OrganizationDetailHeroSection/>
             </section>
             {/* Hero Section End */}
 
             <section>
                 <div className="mb-[24px] flex">
-                    <SearchInput />
-                    <DropDownButtonComponent />
-                    <DatePickerDemo />
+                    <SearchInput/>
+                    <DropDownButtonComponent/>
+                    <DatePickerDemo/>
                 </div>
             </section>
 
             {/* List Organization Cards Start */}
-            <section className="mx-[106px]">
+            <section className="mx-[100px] mb-[24px]">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-[44px]">
-                    <CommonEventCard events={eventData} />
+                    <CommonEventCard events={eventData}/>
                 </div>
-
             </section>
             {/* List Organization Cards End */}
+
+            <div lang={"eng"} className="flex flex-wrap justify-end my-[24px] mr-[100px]">
+                <Button
+                    className="w-[147px] h-[50px] rounded-[15px] text-medium-eng text-iDonate-navy-primary bg-iDonate-white-space border-2 border-iDonate-navy-primary hover:text-iDonate-green-secondary hover:bg-iDonate-navy-primary">
+                    Show More
+                </Button>
+            </div>
+
+
         </>
     );
 }

@@ -1,9 +1,9 @@
 import Image from "next/image";
-import { Card, CardContent, CardHeader } from "../ui/card";
-import { EventType } from "@/difinitions/types/events/EventType";
+import { Card, CardContent, CardHeader } from "../../ui/card";
 import { Users, CircleDollarSign } from "lucide-react";
+import {EventType} from "@/difinitions/dto/EventType";
 
-export function CardEvent({ events }: { events: EventType[] }) {
+export function CardEvent({ events }: { events:EventType[]}) {
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {events.map((item, index) => (
