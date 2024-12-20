@@ -1,4 +1,4 @@
-import { CommonEventCard } from "@/components/events/CommonEventCad";
+import { CommonEventCard } from "@/components/events/organization-event/CommonEventCad";
 import { EventType } from "@/difinitions/dto/EventType";
 import events from "@/data/events-data.json";
 
