@@ -5,7 +5,7 @@ export default function CategoryCardComponent({categories}: {categories: Categor
   return (
     <>
     {categories.map((item, index) => (
-        <div key={index} className="w-[310px] h-[370px] flex flex-col items-center gap-6 px-7 py-12 rounded-[15px] shadow-custom">
+        <div key={index} className="w-[300px] h-[370px] flex flex-col items-center gap-6 px-10 py-12 rounded-[15px] shadow-custom ">
             <div className="w-[100px] h-[100px] bg-iDonate-navy-accent rounded-full border border-iDonate-navy-primary flex items-center justify-center">
                 {item.media && <Image width={60} height={60} src={item.media} alt={item.title || "Media"} />}
             </div>

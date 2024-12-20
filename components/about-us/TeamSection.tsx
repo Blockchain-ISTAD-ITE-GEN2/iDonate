@@ -1,5 +1,7 @@
+"use client"
+
 import Image from "next/image"
-import { Facebook, Mail, Github} from 'lucide-react'
+import { Facebook, Mail, Github } from 'lucide-react'
 import { StaticImageData } from "next/image"
 import {motion} from "framer-motion"
 
@@ -16,15 +18,15 @@ interface TeamSectionProps {
 
 function MemberCard({ member }: { member: TeamMember }) {
   return (
-        <motion.div
-      className="flex flex-col items-center mb-8 "
+    <motion.div
+      className="flex flex-col items-center mb-8 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 px-4"
       initial={{ opacity: 0, y: 50 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
       whileHover={{ scale: 1.05 }}
     >
-        <motion.div
-        className="overflow-hidden rounded-full w-40 h-40 mb-4 border-4 border-iDonate-green-accent"
+      <motion.div
+        className="overflow-hidden rounded-full w-32 h-32 sm:w-40 sm:h-40 mb-4 border-4 border-iDonate-green-accent"
         whileHover={{ scale: 1.1 }}
         transition={{ duration: 0.3 }}
       >
@@ -35,13 +37,13 @@ function MemberCard({ member }: { member: TeamMember }) {
           height={160}
           className="w-full h-full object-cover"
         />
-       </motion.div>
-      <h3 className="font-bold text-xl text-center mb-2">{member.name}</h3>
-      <p className="ext-sm text-iDonate-green-primary bg-green-100 px-4 py-2 rounded-full mb-4 font-semibold uppercase">
+      </motion.div>
+      <h3 className="font-bold text-lg sm:text-xl text-center mb-2 text-iDonate-navy-secondary">{member.name}</h3>
+      <p className="text-xs sm:text-sm text-iDonate-green-primary bg-green-100 px-3 py-1 sm:px-4 sm:py-2 rounded-full mb-4 font-semibold uppercase">
         {member.role}
       </p>
       <motion.div
-        className="flex space-x-4"
+        className="flex space-x-2 sm:space-x-4"
         initial="hidden"
         animate="visible"
         variants={{
@@ -54,31 +56,31 @@ function MemberCard({ member }: { member: TeamMember }) {
           }
         }}
       >
-    {[Facebook, Mail, Github].map((Icon, index) => (
+        {[Facebook, Mail, Github].map((Icon, index) => (
           <motion.a
             key={index}
             href="#"
-            className="text-iDonate-navy-primary hover:text-green-600 transition-colors duration-300 border border-iDonate-green-primary rounded-full p-2"
+            className="text-iDonate-navy-primary hover:text-green-600 transition-colors duration-300 border border-iDonate-green-primary rounded-full p-1 sm:p-2"
             variants={{
               hidden: { scale: 0 },
               visible: { scale: 1 }
             }}
             whileHover={{ y: -5 }}
           >
-            <Icon size={24} />
+            <Icon size={20} className="sm:w-6 sm:h-6" />
           </motion.a>
         ))}
       </motion.div>
-      </motion.div>
+    </motion.div>
   )
 }
 
 export default function TeamSection({ mentors, members }: TeamSectionProps) {
   return (
-    <section className="py-16 bg-gray-50">
+    <section className="py-12 sm:py-16 bg-white">
       <div className="container mx-auto px-4">
-      <motion.h2
-          className="text-4xl font-bold text-center mb-12 text-gray-800"
+        <motion.h2
+          className="text-3xl sm:text-4xl font-bold text-center mb-8 sm:mb-12 text-gray-800"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
@@ -86,7 +88,7 @@ export default function TeamSection({ mentors, members }: TeamSectionProps) {
           Mentors
         </motion.h2>
         <motion.div
-          className="flex flex-wrap justify-center gap-52 mb-16"
+          className="flex flex-wrap justify-center -mx-4 mb-12 sm:mb-16"
           initial="hidden"
           animate="visible"
           variants={{
@@ -99,23 +101,22 @@ export default function TeamSection({ mentors, members }: TeamSectionProps) {
             }
           }}
         >
-                {mentors.map((mentor, index) => (
+          {mentors.map((mentor, index) => (
             <MemberCard key={index} member={mentor} />
           ))}
-
         </motion.div>
        
         <motion.h2
-          className="text-4xl font-bold text-center mt-24 mb-16 text-gray-800"
+          className="text-2xl sm:text-3xl font-bold text-center mt-16 sm:mt-24 mb-8 sm:mb-16 text-gray-800"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.5 }}
         >
-          សមាជិកក្រុម
+          Team Members
         </motion.h2>
 
         <motion.div
-          className="flex flex-wrap justify-center gap-52 mb-16"
+          className="flex flex-wrap justify-center -mx-4 mb-12 sm:mb-16"
           initial="hidden"
           animate="visible"
           variants={{
@@ -129,32 +130,10 @@ export default function TeamSection({ mentors, members }: TeamSectionProps) {
             }
           }}
         >
-          {members.slice(0, 2).map((member, index) => (
+          {members.map((member, index) => (
             <MemberCard key={index} member={member} />
           ))}
         </motion.div>
-
-        <motion.div
-          className="flex flex-wrap justify-center gap-52 mb-16"
-          initial="hidden"
-          animate="visible"
-          variants={{
-            hidden: { opacity: 0 },
-            visible: {
-              opacity: 1,
-              transition: {
-                staggerChildren: 0.2,
-                delayChildren: 0.5
-              }
-            }
-          }}
-        >
-          {members.slice(2).map((member, index) => (
-            <MemberCard key={index} member={member} />
-          ))}
-        </motion.div>
-
-        
       </div>
     </section>
   )
