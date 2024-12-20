@@ -1,8 +1,9 @@
+import { DonorProfileComponent } from "@/components/form-donor/donor-profile";
 
-export default function Contributor() {
+export default function ContributorDonor() {
     return (
-      <section className="flex flex-col">
-        <p>This is contributors Page</p>
+      <section className="flex flex-col p-9">
+        <DonorProfileComponent />
       </section>
     );
-  }
+}
