@@ -18,7 +18,7 @@ export default function OrganizationSidebarComponent() {
     }`;
 
   return (
-    <section className="flex flex-col h-full min-h-screen border-r-2 border-iDonate-navy-accent px-6 py-4 gap-y-3">
+    <section className="flex flex-col h-full border-r-2 border-iDonate-navy-accent px-6 py-4 gap-y-3">
       <SidebarGroupLabel className="text-sm text-iDonate-gray">
         Organization
       </SidebarGroupLabel>

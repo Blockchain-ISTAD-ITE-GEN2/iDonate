@@ -50,14 +50,14 @@ export default function RootLayout({ children }: RootLayoutProps) {
               </header>
 
               {showSidebar ? (
-                <div className="w-full h-full flex flex-grow overflow-y-auto">
+                <div className="w-full flex flex-grow">
                   {/* Sidebar */}
-                  <aside className="flex-shrink-0 hidden md:block h-auto flex-grow">
+                  <aside className="flex-shrink-0 hidden md:block flex-grow">
                     <OrganizationSidebarComponent />
                   </aside>
 
                   {/* Main Content */}
-                  <main className="w-full flex-grow">
+                  <main className="w-full flex-grow overflow-auto scrollbar-hide">
                     {children}
                   </main>
                 </div>

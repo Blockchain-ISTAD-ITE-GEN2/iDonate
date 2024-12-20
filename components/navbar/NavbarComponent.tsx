@@ -22,7 +22,6 @@ import { AboutMenulist } from "./sub-navbar/AboutMenu";
 import { ContributorMenulist } from "./sub-navbar/ContributorMenu";
 import { NavMenuType } from "@/difinitions/types/components-type/NavMenuType";
 import {signOut, useSession} from "next-auth/react";
-import { PathnameContext } from "next/dist/shared/lib/hooks-client-context.shared-runtime";
 
 export default function NavbarComponent() {
     const [menuList] = useState<NavMenuType[]>(NavMenulist);

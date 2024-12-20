@@ -64,14 +64,14 @@ export function DataTableToolbar<TData>({
         )}
 
         {isFiltered && (
-      <Button
-        variant="ghost"
-        onClick={() => {
-          table.resetColumnFilters();
-          setResetSignal((prev) => prev + 1); // Increment reset signal
-        }}
-        className="h-8 px-2 lg:px-3"
-      >
+          <Button
+            variant="ghost"
+            onClick={() => {
+              table.resetColumnFilters();
+              setResetSignal((prev) => prev + 1); // Increment reset signal
+            }}
+            className="h-8 px-2 lg:px-3"
+          >
         Reset
         <X />
       </Button>

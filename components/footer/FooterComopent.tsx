@@ -11,9 +11,19 @@ import MPTCLogo from '@/public/sponser/MPTC-Logo.png'
 import ISTADLogo from '@/public/sponser/ISTAD-Logo.png'
 import { Phone, Mail } from 'lucide-react';
 import { motion } from "framer-motion"
+import { usePathname } from "next/navigation"
 
 
 export default function FooterComopent() {
+
+  const pathname = usePathname();
+  if (pathname === "/auth/login" ||
+    pathname === "/auth/sign-up" ||
+    pathname === "/auth/verification"){
+      return null;
+    }
+    else
+
   return (
     <footer className="bg-iDonate-navy-secondary text-white">
       {/* Social Media Section */}
