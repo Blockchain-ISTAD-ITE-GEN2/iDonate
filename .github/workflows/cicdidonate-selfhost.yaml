@@ -47,7 +47,7 @@ jobs:
           docker compose down
       - name: Using yq in order to edit the docker compose part
         run: |
-          yq eval '.services.reactjs-srv.image="69966/${{env.IMAGE_NAME }}:${{ env.TAG }}"' -i docker-compose.yaml
+          yq eval '.services.reactjs-srv.image="kevintido/${{env.IMAGE_NAME }}:${{ env.TAG }}"' -i docker-compose.yaml
       - name: Run the container
         run: |
           docker compose up -d
