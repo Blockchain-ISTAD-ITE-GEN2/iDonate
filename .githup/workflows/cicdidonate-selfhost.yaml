@@ -1,6 +1,6 @@
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "kang" ]
 
 env:
   # NEXUS_REGISTRY: registry-new.devnerd.store # nexus repo for storing docker image
