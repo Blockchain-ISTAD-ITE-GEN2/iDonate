@@ -4,7 +4,6 @@ import { CategoryType } from "@/difinitions/types/components-type/CategoryType";
 import HeroSectionComponent from "@/components/herosection/HeroSectionComponent";
 import TotalOrganizationComponent from "@/components/landing/TotalOrganizationComponent";
 import { BarAndLineChart } from "@/components/organization/dashboard/bar-and-line-chart";
-import LatestDonation from "@/components/landing/latest-donation-event/LatestDonation";
 import LatestDonationCard from "@/components/landing/latest-donation-event/LatestDonationCard";
 import TestimonialCarousel from "@/components/testimonials/TestimonailCardComponent";
 import BannerLandingCard from "@/components/landing/banner/BannerLandingCard";
@@ -13,7 +12,6 @@ import UpcomingEvents from "@/components/landing/upcoming-event/UpComingEventCom
 export default function Homepage() {
 
   const typedCategory: CategoryType[] = categories
-  const typedTestimonial: TestimonialType[] = testimonials
 
 
   return (
