@@ -50,7 +50,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
               </header>
 
               {showSidebar ? (
-                <div className="w-full flex flex-grow">
+                <div className="w-full h-full flex flex-grow">
                   {/* Sidebar */}
                   <aside className="flex-shrink-0 hidden md:block flex-grow">
                     <OrganizationSidebarComponent />

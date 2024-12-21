@@ -19,7 +19,7 @@ export function DonorProfileComponent (){
             <div className="w-full flex flex-col gap-6 rounded-lg border-2 border-iDonate-navy-accent shadow-light">
 
                 <div className="w-full flex flex-col gap-6  border-b-2 border-iDonate-navy-accent">
-                    <DonorMediaForm />
+                    <DonorMediaForm onPercentageUpdate={setImagePercentage}/>
                 </div>
                 
 
@@ -32,7 +32,7 @@ export function DonorProfileComponent (){
 
                     <DonorAddressForm onPercentageUpdate={setAddressPercentage} />
 
-                    <DonorBioForm />
+                    <DonorBioForm onPercentageUpdate={setBioPercentage}/>
 
                 </div>
             </div>

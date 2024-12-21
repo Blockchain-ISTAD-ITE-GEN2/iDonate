@@ -13,13 +13,13 @@ import {
 } from "@/components/ui/form"
 import { useForm } from "react-hook-form"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { SquarePen } from "lucide-react"
 import { organizationBioSchema } from "../schema/schema"
 import { Textarea } from "../ui/textarea"
 import { AlertComfirmDialog } from "../Alert/Alert-Dialog"
 
-export function DonorBioForm() {
+export function DonorBioForm({ onPercentageUpdate }: { onPercentageUpdate: (percentage: number) => void }) {
   // 1. State to toggle between view and edit mode
   const [isEditing, setIsEditing] = useState(false)
 
@@ -31,6 +31,18 @@ export function DonorBioForm() {
     },
   })
 
+  const { watch, handleSubmit, reset, control, formState } = form;
+  const bioValue = watch("bio");
+
+   // Update percentage based on input
+   useEffect(() => {
+    if (bioValue.trim()) {
+      onPercentageUpdate(10); // Address field filled, update percentage
+    } else {
+      onPercentageUpdate(0); // Address field empty, reset percentage
+    }
+  }, [bioValue, onPercentageUpdate]);
+
   // 3. Define a submit handler.
   function onSubmit(values: z.infer<typeof organizationBioSchema>) {
     console.log(values)
@@ -39,13 +51,13 @@ export function DonorBioForm() {
   }
 
   function handleCancel() {
-    form.reset() // Reset the form
+    reset() // Reset the form
     setIsEditing(false) // Switch back to view mode
   }
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         {/* View Mode */}
         {!isEditing && (
           <Card className="flex flex-col rounded-lg border-2 border-iDonate-navy-accent gap-6 p-9">
@@ -83,7 +95,7 @@ export function DonorBioForm() {
 
               <div className="flex gap-3">
                 {/* Cancel Button */}
-                {form.formState.isDirty ? (
+                {formState.isDirty ? (
                   <AlertComfirmDialog
                     trigger={
                       <Button
@@ -121,7 +133,7 @@ export function DonorBioForm() {
 
             <CardContent className="flex gap-9 p-0 m-0">
               <FormField
-                control={form.control}
+                control={control}
                 name="bio"
                 render={({ field }) => (
                   <FormItem className="w-full h-full">

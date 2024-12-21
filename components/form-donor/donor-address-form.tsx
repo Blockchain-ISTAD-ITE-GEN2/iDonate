@@ -31,14 +31,33 @@ export function DonorAddressForm({ onPercentageUpdate }: { onPercentageUpdate: (
   const { watch, handleSubmit, reset, control, formState } = form;
   const addressValue = watch("address");
 
+  // Track if the form is filled
+  const isFormFilled = !!addressValue.trim();
+
   // Update percentage based on input
   useEffect(() => {
-    if (addressValue.trim()) {
+    if (isFormFilled) {
       onPercentageUpdate(10); // Address field filled, update percentage
     } else {
       onPercentageUpdate(0); // Address field empty, reset percentage
     }
-  }, [addressValue, onPercentageUpdate]);
+  }, [isFormFilled, onPercentageUpdate]);
+
+  // Add beforeunload event listener
+  useEffect(() => {
+    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+      if (isFormFilled) {
+        event.preventDefault();
+        event.returnValue = "You have unsaved changes. Are you sure you want to leave?";
+      }
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, [isFormFilled]);
 
   function onSubmit(values: z.infer<typeof organizationAddressSchema>) {
     console.log(values);

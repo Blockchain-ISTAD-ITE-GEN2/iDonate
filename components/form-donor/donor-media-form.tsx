@@ -13,14 +13,14 @@ import {
 } from "@/components/ui/form"
 import { useForm } from "react-hook-form"
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Upload } from "lucide-react"
 import { organizationMediaSchema } from "../schema/schema"
 import Image from "next/image"
 import organization from "@/public/images/Cambodia-Kantha-Bopha-Foundation.jpeg"
 import { AlertComfirmDialog } from "../Alert/Alert-Dialog"
 
-export function DonorMediaForm() {
+export function DonorMediaForm({ onPercentageUpdate }: { onPercentageUpdate: (percentage: number) => void }) {
   const [previewImage, setPreviewImage] = useState<string | null>(null)
 
   const form = useForm<z.infer<typeof organizationMediaSchema>>({
@@ -29,6 +29,19 @@ export function DonorMediaForm() {
       image: "",
     },
   })    
+
+  
+
+  const { watch, handleSubmit, reset, control, formState } = form;
+  const mediaValue = watch("image");
+
+  useEffect(() => {
+    if (mediaValue) {
+      onPercentageUpdate(20); // Address field filled, update percentage
+    } else {
+      onPercentageUpdate(0); // Address field empty, reset percentage
+    }
+  }, [mediaValue, onPercentageUpdate]);
 
   function onSubmit(values: z.infer<typeof organizationMediaSchema>) {
     console.log("Preview URL:", previewImage)
@@ -56,7 +69,7 @@ export function DonorMediaForm() {
   
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)}>
       <Card
     className={`flex flex-col border-0 shadow-none px-20 py-12 rounded-t-lg rounded-b-none items-start gap-6 ${
         previewImage ? "bg-iDonate-light-gray" : ""
@@ -70,7 +83,7 @@ export function DonorMediaForm() {
 
                 <div className="flex gap-3">
                     {/* Cancel Button */}
-                    {form.formState.isDirty ? (
+                    {formState.isDirty ? (
                     <AlertComfirmDialog
                         trigger={
                         <Button
@@ -126,7 +139,7 @@ export function DonorMediaForm() {
             {/* Card Content for Upload Button */}
             <CardContent className="flex flex-col p-0 m-0 gap-4">
                 <FormField
-                    control={form.control}
+                    control={control}
                     name="image"
                     render={({ field }) => (
                         <FormItem>

@@ -72,34 +72,37 @@ export function DonorProfilePercentage({ percentages }: DonorProfilePercentagePr
   // Merge static categories with dynamic percentages
   
   const chartData = useMemo(() => {
+    // Normalize percentages to ensure they don't exceed 100
+    const totalInput = percentages.reduce((acc, curr) => acc + curr, 0);
+    
+    const normalizedPercentages =
+      totalInput > 100
+        ? percentages.map((p) => (p / totalInput) * 100) // Scale down to 100%
+        : percentages;
+  
+    // Create base data with normalized values
     const baseData = staticCategories.map((category, index) => ({
       ...category,
-      completion: percentages[index] || 0, // Use provided percentage or default to 0
-      fill: percentages[index] > 0 ? category.fill : "#FF0000", // Red color for empty percentages
+      completion: normalizedPercentages[index] || 0,
+      fill: normalizedPercentages[index] > 0 ? category.fill : "#FF0000", // Red for 0%
     }));
-
+  
     // Calculate remaining percentage
     const totalCompletion = baseData.reduce((acc, curr) => acc + curr.completion, 0);
-    const remainingPercentage = 100 - totalCompletion;
-
+    const remainingPercentage = Math.max(100 - totalCompletion, 0);
+  
+    // Add "Remaining" category only if needed
     if (remainingPercentage > 0) {
       baseData.push({
         category: "Remaining",
         completion: remainingPercentage,
-        fill: "#DCE3F0", 
+        fill: "#DCE3F0",
       });
     }
-
+  
     return baseData;
   }, [percentages]);
-
-  const totalCompletion = useMemo(() => {
-    const sum = chartData.reduce((acc, curr) => acc + curr.completion, 0);
-    console.log('Total Completion:', sum); // Debugging the total completion
-    return sum;
-  }, [chartData]);
   
-
   return (
     <Card className="h-[580px] flex flex-col rounded-lg border-2 border-iDonate-navy-accent shadow-light">
       <CardHeader className="items-center pb-0">
@@ -125,37 +128,37 @@ export function DonorProfilePercentage({ percentages }: DonorProfilePercentagePr
               innerRadius={60}
               strokeWidth={5}
             >
-              <Label
-                content={({ viewBox }) => {
-                    console.log(viewBox); // Debugging the viewBox
-                    if (viewBox && "cx" in viewBox && "cy" in viewBox) {
-                    return (
-                        <text
-                        x={viewBox.cx}
-                        y={viewBox.cy}
-                        textAnchor="middle"
-                        dominantBaseline="middle"
-                        >
-                        <tspan
-                            x={viewBox.cx}
-                            y={viewBox.cy}
-                            className="fill-foreground text-3xl font-bold"
-                        >
-                            {totalCompletion}%
-                        </tspan>
-                        <tspan
-                            x={viewBox.cx}
-                            y={(viewBox.cy || 0) + 24}
-                            className="fill-muted-foreground"
-                        >
-                            Completed
-                        </tspan>
-                        </text>
-                    );
-                    }
-                }}
-                />
-
+            <Label
+              content={({ viewBox }) => {
+                if (viewBox && "cx" in viewBox && "cy" in viewBox) {
+                  const { cx, cy } = viewBox;
+                  return (
+                    <text
+                      x={cx}
+                      y={cy}
+                      textAnchor="middle"
+                      dominantBaseline="middle"
+                    >
+                      <tspan
+                        x={cx}
+                        y={cy}
+                        className="fill-iDonate-green-primary text-3xl font-bold"
+                      >
+                        {Math.min(percentages.reduce((acc, curr) => acc + curr, 0), 100)}%
+                      </tspan>
+                      <tspan
+                        x={cx}
+                        y={(cy || 0) + 24}
+                        className="fill-muted-foreground"
+                      >
+                        Completed
+                      </tspan>
+                    </text>
+                  );
+                }
+                return null;
+              }}
+            />
             </Pie>
           </PieChart>
         </ChartContainer>
@@ -171,9 +174,9 @@ export function DonorProfilePercentage({ percentages }: DonorProfilePercentagePr
             >
               <div className="flex items-center gap-6">
                 {data.completion > 0 ? (
-                  <Check className="text-medium-eng text-iDonate-navy-primary" />
+                  <Check className="text-medium-eng text-iDonate-green-primary" />
                 ) : (
-                  <X className="text-medium-eng text-red-500" />
+                  <X className="text-medium-eng text-iDonate-error" />
                 )}
                 <span className="text-medium-eng text-iDonate-navy-primary text-left whitespace-nowrap">
                   {data.category}

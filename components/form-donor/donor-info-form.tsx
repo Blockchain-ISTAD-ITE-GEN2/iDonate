@@ -74,14 +74,14 @@ export function DonorInfoForm({
   }, [fullName, email, contact, onFullnamePercentageUpdate, onEmailPercentageUpdate, onContactPercentageUpdate]);
 
   function handleCancel() {
-    form.reset() // Reset the form
+    reset() // Reset the form
     setIsEditing(false) // Switch back to view mode
   }
 
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         {/* View Mode */}
         {!isEditing && (
           <Card className="flex flex-col rounded-lg border-2 border-iDonate-navy-accent gap-6 p-9">
@@ -130,7 +130,7 @@ export function DonorInfoForm({
         
             <div className="flex gap-3">
                 {/* Cancel Button */}
-                {form.formState.isDirty ? (
+                {formState.isDirty ? (
                   <AlertComfirmDialog
                     trigger={
                       <Button
@@ -168,7 +168,7 @@ export function DonorInfoForm({
         
           <CardContent className="flex gap-9 p-0 m-0">
             <FormField
-              control={form.control}
+              control={control}
               name="fullName"
               render={({ field }) => (
                 <FormItem className="flex-1">
