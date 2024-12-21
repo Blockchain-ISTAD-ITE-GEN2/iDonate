@@ -1,8 +1,7 @@
 import Image from "next/image";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
-import { EventType } from "@/difinitions/dto/EventType";
-import { Button } from "../ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../ui/card";
 import { CircleDollarSign, Users } from "lucide-react";
+import {EventType} from "@/difinitions/dto/EventType";
 
 export function CommonEventCard ({events}: {events:EventType[]}) {
     return (
@@ -15,9 +14,9 @@ export function CommonEventCard ({events}: {events:EventType[]}) {
                     </CardHeader>
 
                     <CardContent className="px-4 flex flex-col justify-between h-[220px] gap-6" >
-                        <div>
-                            {item.title && <h3 className="text-title-khmer line-clamp-1 text-center text-iDonate-navy-primary">{item.title}</h3>}
-                            {item.description && <p className=" text-medium-khmer line-clamp-2 text-start text-iDonate-navy-primary">{item.description}</p>}
+                        <div className="mt-[18px]">
+                            {item.title && <h3 lang={"km"} className="font-extrabold text-medium-khmer line-clamp-1 text-left  text-iDonate-navy-primary">{item.title}</h3>}
+                            {item.description && <p lang={"km"}  className="font-thin text-iDonate-navy-secondary text-title-card line-clamp-2 text-start ">{item.description}</p>}
                         </div>
 
                         <div className="flex flex-col gap-1">

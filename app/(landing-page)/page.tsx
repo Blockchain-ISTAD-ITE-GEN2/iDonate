@@ -1,5 +1,5 @@
 import categories  from "@/data/category.json";
-import CategoryCardComponent from "@/components/category/CategoryCardComponent";
+import CategoryCardComponent from "@/components/events/categories/CategoryCardComponent";
 import { CategoryType } from "@/difinitions/types/components-type/CategoryType";
 import TestimonialCardComponent from "@/components/testimonials/TestimonailCardComponent";
 import { TestimonialType } from "@/difinitions/types/components-type/testimonial";
