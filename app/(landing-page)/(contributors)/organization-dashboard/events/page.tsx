@@ -11,7 +11,7 @@ export default function Contributor() {
       key: "title",
       title: "Events",
       options: Array.from(
-        new Set(typedEvents.map((event) => event.title)) // Extract unique organization-event titles
+          new Set(typedEvents.map((event) => event.title))
       ).map((event) => ({
         label: event,
         value: event,

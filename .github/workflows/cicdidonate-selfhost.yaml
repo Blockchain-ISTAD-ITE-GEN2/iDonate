@@ -1,6 +1,6 @@
 on:
   push:
-    branches: [ "kang" ]
+    branches: [ "development" ]
 
 env:
   # NEXUS_REGISTRY: registry-new.devnerd.store # nexus repo for storing docker image
@@ -11,7 +11,7 @@ env:
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
-    environment: DOCKER_REPOSITORY
+#    environment: DOCKER_REPOSITORY
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
@@ -44,10 +44,10 @@ jobs:
           echo "TAG=${GITHUB_SHA::8}" >> $GITHUB_ENV
       - name: Stop the container
         run: |
-          docker compose down
+          sudo docker compose down
       - name: Using yq in order to edit the docker compose part
         run: |
-          yq eval '.services.reactjs-srv.image="69966/${{env.IMAGE_NAME }}:${{ env.TAG }}"' -i docker-compose.yaml
+          yq eval '.services.reactjs-srv.image="kevintido/${{env.IMAGE_NAME }}:${{ env.TAG }}"' -i docker-compose.yaml
       - name: Run the container
         run: |
-          docker compose up -d
+          sudo docker compose up -d
