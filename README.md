@@ -9,9 +9,9 @@ iDonate is a modern, responsive web application designed to facilitate and strea
 
 ## iDonate Page Preview Home Page  
 <div style="display: flex; justify-content: center; gap: 10px; padding: 10px;">
-   <img src="./Laptop-iDonate.png" alt="Laptop iDonate Responsive" width="500"/>
-   <img src="./Tablet-iDonate.png" alt="Tablet iDonate Responsive" width="300" />
-   <img src="./Mobile-iDonate.png" alt="Mobile iDonate Responsive" width="200" />
+   <img src="./Laptop-iDonate.png" alt="Laptop iDonate Responsive" width="300"/>
+   <img src="./Tablet-iDonate.png" alt="Tablet iDonate Responsive" width="200" />
+   <img src="./Mobile-iDonate.png" alt="Mobile iDonate Responsive" width="150" />
 </div>
 
 
