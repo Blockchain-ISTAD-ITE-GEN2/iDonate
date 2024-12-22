@@ -140,9 +140,9 @@ export default function CategoryOnPageComponent() {
                         <CommonEventCard events={eventData}/>
                     </div>
                     {/* List Organization Cards End */}
-                    <div lang={"eng"} className="flex justify-end my-[24px]">
+                    <div lang={"eng"} className="flex flex-wrap justify-end my-[24px] mr-[100px]">
                         <Button
-                            className="w-[147px] h-[50px] rounded-[15px] text-medium-eng text-iDonate-navy-primary bg-iDonate-white-space border-2 border-iDonate-navy-primary hover:text-iDonate-green-secondary hover:bg-iDonate-navy-primary ">
+                            className="w-[147px] h-[50px] rounded-[15px] text-medium-eng text-iDonate-navy-primary bg-iDonate-white-space border-2 border-iDonate-navy-primary hover:text-iDonate-green-secondary hover:bg-iDonate-navy-primary">
                             Show More
                         </Button>
                     </div>
@@ -164,6 +164,7 @@ export default function CategoryOnPageComponent() {
                         <CommonEventCard events={eventData}/>
                     </div>
                 </section>
+                {/* List Organization Cards End */}
                 {/* List Organization Cards End */}
                 <div lang={"eng"} className="flex flex-wrap justify-end my-[24px] mr-[100px]">
                     <Button
