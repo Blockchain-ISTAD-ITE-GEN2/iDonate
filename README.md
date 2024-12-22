@@ -1,4 +1,3 @@
-To enhance your documentation, you can incorporate icons to make the features and sections more visually appealing. Below is your improved content with added icons:
 
 ---
 
@@ -9,7 +8,12 @@ iDonate is a modern, responsive web application designed to facilitate and strea
 ---
 
 ## iDonate Page Preview Home Page  
-<div className="flex justify-center gap-4 p-4"> <img src="./Laptop-iDonate.png" alt="Laptop-iDonate-Responsive" className="rounded-lg shadow-md" /> <img src="./Tablet-iDonate.png" alt="Tablet-iDonate-Responsive" className="rounded-lg shadow-md" /> <img src="./Mobile-iDonate.png" alt="Mobile-iDonate-Responsive" className="rounded-lg shadow-md" /> </div>
+<div style="display: flex; justify-content: center; gap: 10px; padding: 10px;">
+   <img src="./Laptop-iDonate.png" alt="Laptop iDonate Responsive" width="500"/>
+   <img src="./Tablet-iDonate.png" alt="Tablet iDonate Responsive" width="300" />
+   <img src="./Mobile-iDonate.png" alt="Mobile iDonate Responsive" width="200" />
+</div>
+
 
 ---
 
@@ -29,9 +33,6 @@ iDonate is a modern, responsive web application designed to facilitate and strea
 
 The project is currently deployed on Vercel and can be accessed at:  
 [🚀 Live Demo: https://idonate-eight.vercel.app/](https://idonate-eight.vercel.app/)  
-
-## Embedded Live View
-<iframe src="https://idonate-eight.vercel.app/" width="100%" height="500px"></iframe>
 
 ---
 
@@ -98,25 +99,17 @@ The project is currently deployed on Vercel and can be accessed at:
 
 ### Installation  
 
-1. **Clone the Repository**:  
-   ```bash  
-   git clone https://github.com/your-repo/idonate.git  
-   cd idonate  
-   ```  
-
-2. **Install Dependencies**:  
+1. **Install Dependencies**:  
    ```bash  
    npm install  
    ```  
 
-3. **Start the Development Server**:  
+2. **Start the Development Server**:  
    ```bash  
    npm run dev  
    ```  
 
-4. **Access Locally**:  
+3. **Access Locally**:  
    Open [http://localhost:3000](http://localhost:3000) in your browser.  
 
 ---
-
-This updated version adds visual appeal with icons while maintaining clarity and professionalism. Let me know if there’s anything else you'd like to refine!
