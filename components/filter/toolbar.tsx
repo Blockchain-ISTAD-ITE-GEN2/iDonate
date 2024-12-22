@@ -29,20 +29,24 @@ export function Toolbar({
   const [searchValue, setSearchValue] = useState("");
   const [selectedFilters, setSelectedFilters] = useState<Record<string, any>>({});
   const [dateRange, setDateRange] = useState<Record<string, DateRange | undefined>>({});
+  const [filters, setFilters] = useState<Record<string, any>>({});
 
   const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchValue(event.target.value);
   };
 
   const handleFilterChange = (key: string, selected: any) => {
-    setSelectedFilters((prev) => {
+    setFilters((prev) => {
       const updatedFilters = { ...prev, [key]: selected };
       return updatedFilters;
     });
   };
 
   const handleDateRangeChange = (selectedRanges: Record<string, DateRange | undefined>) => {
-    setDateRange(selectedRanges); // Update the date range state with selected range
+    setFilters((prev) => {
+      const updatedFilters = { ...prev, ...selectedRanges };
+      return updatedFilters;
+    });
   };
 
   const filteredEvents = useMemo(() => {
@@ -52,26 +56,23 @@ export function Toolbar({
         .toLowerCase()
         .includes(searchValue.toLowerCase());
 
-      const matchesFilters = Object.entries(selectedFilters).every(([key, value]) => {
+      const matchesFilters = Object.entries(filters).every(([key, value]) => {
         if (Array.isArray(value)) {
           return value.length === 0 || value.includes(event[key]?.toString());
+        }
+        if (value?.from && value?.to) {
+          const eventDate = new Date(event[key]);
+          return (
+            (!value?.from || eventDate >= value.from) &&
+            (!value?.to || eventDate <= value.to)
+          );
         }
         return !value || event[key]?.toString() === value;
       });
 
-      // Date range filtering logic
-      const matchesDateRange = Object.entries(dateRange).every(([key, range]) => {
-        if (!range?.from && !range?.to) return true;
-        const eventDate = new Date(event[key]);
-        return (
-          (!range?.from || eventDate >= range.from) &&
-          (!range?.to || eventDate <= range.to)
-        );
-      });
-
-      return matchesSearch && matchesFilters && matchesDateRange;
+      return matchesSearch && matchesFilters;
     });
-  }, [events, searchKey, selectedFilters, searchValue, dateRange]);
+  }, [events, searchKey, filters, searchValue]);
 
   useEffect(() => {
     onFilterChange(filteredEvents);
@@ -97,7 +98,7 @@ export function Toolbar({
           />
         ))}
 
-        {filtersDateRange && (
+        {filtersDateRange.length > 0 && (
           <DateRangePicker
             filters={filtersDateRange}
             onChange={handleDateRangeChange} // Pass the selected ranges to handleDateRangeChange

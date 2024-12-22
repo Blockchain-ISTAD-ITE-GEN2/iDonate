@@ -24,31 +24,35 @@ import { NavMenuType } from "@/difinitions/types/components-type/NavMenuType";
 import {signOut, useSession} from "next-auth/react";
 
 export default function NavbarComponent() {
-    const [menuList] = useState<NavMenuType[]>(NavMenulist);
-    const pathname = usePathname();
-    const router = useRouter();
-    const { setTheme } = useTheme()
+  const [menuList] = useState<NavMenuType[]>(NavMenulist);
+  const pathname = usePathname();
+  const router = useRouter();
+  const {theme, setTheme } = useTheme()
+
+
+  // Ensure theme is light by default
+  useEffect(() => {
+    if (!theme) setTheme("light");
+  }, [theme, setTheme]);
 
   const navActiveClass = (isActive: boolean) =>
     `text-description-eng font-normal ${
       isActive ? "text-iDonate-green-primary" : "text-iDonate-navy-primary"
-    }`;
-    const { data: session,status } = useSession();
+  }`;
+  const { data: session,status } = useSession();
 
-    useEffect(() => {
-      console.log("Session:", session);
-      console.log("Status:", status);
-    }, [session, status]);
+  useEffect(() => {
+    console.log("Session:", session);
+    console.log("Status:", status);
+  }, [session, status]);
 
   if (pathname === "/auth/login" ||
     pathname === "/auth/sign-up" ||
     pathname === "/auth/verification"){
       return null;
-    }
+  }
    
   else
-
-
     return (
         <nav className="w-full h-[72px] flex items-center justify-between shadow-sm z-10  top-0 px-[100px]">
             {/* Logo and Name */}
@@ -60,8 +64,8 @@ export default function NavbarComponent() {
                 <span className="text-title-eng">iDonate</span>
             </section>
 
-        {/* Navigation Menu */}
-        <Menubar className="border-0 flex space-x-4 bg-transparent">
+            {/* Navigation Menu */}
+            <Menubar className="border-0 flex space-x-4 bg-transparent">
           {menuList.map((item, index) => {
             const isActive = pathname === item.path;
             const specialPaths = ["/how-it-works", "/search"];
@@ -110,29 +114,16 @@ export default function NavbarComponent() {
 
             {/* Sign In & Donate */}
             <section className="flex items-center space-x-4">
-                <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <Button
-                            variant="outline"
-                            size="icon"
-                            className="bg-iDonate-green-accent hover:bg-iDonate-green-secondary rounded-full border-0 p-2"
-                        >
-                            <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0 " />
-                            <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-                        </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                        <DropdownMenuItem onClick={() => setTheme("light")}>
-                        Light
-                        </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => setTheme("dark")}>
-                        Dark
-                        </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => setTheme("system")}>
-                        System
-                        </DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
+
+            <Button
+                    variant="outline"
+                    size="icon"
+                    className="bg-iDonate-green-accent hover:bg-iDonate-green-secondary rounded-full border-0 p-2"
+                    onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+                >
+                    <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0 " />
+                    <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+              </Button>
 
                 {status === "authenticated" ? (
                     <div className="flex items-center space-x-4 text-iDonate-navy-secondary">

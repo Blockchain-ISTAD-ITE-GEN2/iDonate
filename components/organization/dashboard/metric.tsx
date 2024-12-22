@@ -1,7 +1,6 @@
 "use client"
 
-import { Line, LineChart} from "recharts"
-
+import { Area, AreaChart, CartesianGrid, XAxis } from "recharts"
 import {
   Card,
   CardContent,
@@ -17,10 +16,10 @@ import {
 } from "@/components/ui/chart"
 import { AverageType } from "@/difinitions/types/chart/barchart"
 
+
 type AverageProps = {
   data: AverageType[];
 }
-
 
 const chartConfig = {
   today: {
@@ -37,20 +36,17 @@ export function CardsMetric({ data }: AverageProps) {
   return (
     <Card className="w-full bg-iDonate-light-gray rounded-lg border border-iDonate-navy-accent">
       <CardHeader>
-
-        <CardTitle className="text-medium-eng font-normal text-iDonate-navy-secondary">Overall Transaction</CardTitle>
-
+        <CardTitle className="text-medium-eng font-normal text-iDonate-navy-secondary">
+          Overall Transaction
+        </CardTitle>
         <CardDescription className="text-sub-description-eng text-iDonate-navy-secondary">
           Your exercise minutes are ahead of where you normally are.
         </CardDescription>
-
       </CardHeader>
-
       <CardContent className="pb-4">
-
         <ChartContainer config={chartConfig} className="h-[200px] w-full">
-
-          <LineChart
+          <AreaChart
+            accessibilityLayer
             data={data}
             margin={{
               top: 5,
@@ -59,33 +55,35 @@ export function CardsMetric({ data }: AverageProps) {
               bottom: 0,
             }}
           >
-            
-            <Line
+            <CartesianGrid vertical={false} />
+            <XAxis
+              dataKey="average"
+              tickLine={false}
+              axisLine={false}
+              tickMargin={8}
+              tickFormatter={(value) => value}
+            />
+            <Area
               type="monotone"
               strokeWidth={2}
               dataKey="average"
-              activeDot={{
-                r: 10
-              }}
-              className="stroke-iDonate-green-primary"
+              fill="fill-iDonate-green-primary"
+              className="fill-iDonate-green-primary"
             />
-
-            <Line
+            <Area
               type="monotone"
               dataKey="today"
               strokeWidth={2}
-              activeDot={{
-                r: 10
-              }}
-              className="stroke-iDonate-navy-primary"
+              fill="fill-iDonate-navy-primary"
+              className="fill-iDonate-navy-primary"
             />
-            <ChartTooltip content={<ChartTooltipContent />} />
-          </LineChart>
-
+            <ChartTooltip
+              cursor={false}
+              content={<ChartTooltipContent indicator="dot" />}
+            />
+          </AreaChart>
         </ChartContainer>
-
       </CardContent>
-
     </Card>
   )
 }

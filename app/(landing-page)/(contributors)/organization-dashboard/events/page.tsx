@@ -21,7 +21,7 @@ export default function Contributor() {
       key: "total_raised",
       title: "Amount Range",
       options: Array.from(
-          new Set(typedEvents.map((event) => event.total_raised))
+        new Set(typedEvents.map((event) => event.total_raised))
       ).map((amount) => ({
         label: amount.toString(),
         value: amount.toString(),
@@ -37,13 +37,13 @@ export default function Contributor() {
   ];
 
   return (
-      <section lang="km" className="flex flex-col p-9 gap-6">
-        <OrganizationEventCard
-            events={typedEvents}
-            searchKey="title"
-            filtersFace={filtersFace}
-            filtersDateRange={filtersDateRange}
-        />
-      </section>
+    <section lang="km" className="flex flex-col p-9 gap-6">
+      <OrganizationEventCard
+        events={typedEvents}
+        searchKey="title"
+        filtersFace={filtersFace}
+        filtersDateRange={filtersDateRange}
+      />
+    </section>
   );
 }
