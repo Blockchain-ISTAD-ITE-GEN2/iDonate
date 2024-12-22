@@ -1,9 +1,9 @@
-import { OrganizationInfoForm } from "@/components/form-organization/organization-info-form";
-import { OrganizationAddressForm } from "./organization-address-form";
-import { OrganizationBioForm } from "./organization-bio-form";
-import { OrganizationPaymentForm } from "./organization-payment-form";
-import { OrganizationMediaForm } from "./organization-media-form";
-import { OrganizationReferenceForm } from "./organization-reference-form";
+import {OrganizationMediaForm} from "@/components/organization/form-organization/organization-media-form";
+import {OrganizationInfoForm} from "@/components/organization/form-organization/organization-info-form";
+import {OrganizationAddressForm} from "@/components/organization/form-organization/organization-address-form";
+import {OrganizationReferenceForm} from "@/components/organization/form-organization/organization-reference-form";
+import {OrganizationBioForm} from "@/components/organization/form-organization/organization-bio-form";
+import {OrganizationPaymentForm} from "@/components/organization/form-organization/organization-payment-form";
 
 export function OrganizationProfileComponent (){
     return (

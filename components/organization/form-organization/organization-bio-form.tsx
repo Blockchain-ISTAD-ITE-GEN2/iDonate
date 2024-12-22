@@ -12,14 +12,15 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { useForm } from "react-hook-form"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { SquarePen } from "lucide-react"
-import { organizationBioSchema } from "../schema/schema"
-import { Textarea } from "../ui/textarea"
-import { AlertComfirmDialog } from "../Alert/Alert-Dialog"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Textarea } from "@/components/ui/textarea"
+import {organizationBioSchema} from "@/components/schema/schema";
+import { AlertComfirmDialog } from "@/components/Alert/Alert-Dialog"
 
-export function DonorBioForm({ onPercentageUpdate }: { onPercentageUpdate: (percentage: number) => void }) {
+
+export function OrganizationBioForm() {
   // 1. State to toggle between view and edit mode
   const [isEditing, setIsEditing] = useState(false)
 
@@ -31,18 +32,6 @@ export function DonorBioForm({ onPercentageUpdate }: { onPercentageUpdate: (perc
     },
   })
 
-  const { watch, handleSubmit, reset, control, formState } = form;
-  const bioValue = watch("bio");
-
-   // Update percentage based on input
-   useEffect(() => {
-    if (bioValue.trim()) {
-      onPercentageUpdate(10); // Address field filled, update percentage
-    } else {
-      onPercentageUpdate(0); // Address field empty, reset percentage
-    }
-  }, [bioValue, onPercentageUpdate]);
-
   // 3. Define a submit handler.
   function onSubmit(values: z.infer<typeof organizationBioSchema>) {
     console.log(values)
@@ -51,17 +40,16 @@ export function DonorBioForm({ onPercentageUpdate }: { onPercentageUpdate: (perc
   }
 
   function handleCancel() {
-    reset() // Reset the form
+    form.reset() // Reset the form
     setIsEditing(false) // Switch back to view mode
   }
 
   return (
     <Form {...form}>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={form.handleSubmit(onSubmit)}>
         {/* View Mode */}
         {!isEditing && (
           <Card className="flex flex-col rounded-lg border-2 border-iDonate-navy-accent gap-6 p-9">
-            
             <CardHeader className="flex flex-row items-center justify-between p-0 m-0">
               <CardTitle className="text-2xl font-medium text-iDonate-navy-secondary">
               Bio
@@ -74,7 +62,6 @@ export function DonorBioForm({ onPercentageUpdate }: { onPercentageUpdate: (perc
                 <SquarePen />
                 Edit
               </Button>
-
             </CardHeader>
 
             <CardContent className="flex w-fle gap-9 p-0 m-0">
@@ -95,7 +82,7 @@ export function DonorBioForm({ onPercentageUpdate }: { onPercentageUpdate: (perc
 
               <div className="flex gap-3">
                 {/* Cancel Button */}
-                {formState.isDirty ? (
+                {form.formState.isDirty ? (
                   <AlertComfirmDialog
                     trigger={
                       <Button
@@ -133,7 +120,7 @@ export function DonorBioForm({ onPercentageUpdate }: { onPercentageUpdate: (perc
 
             <CardContent className="flex gap-9 p-0 m-0">
               <FormField
-                control={control}
+                control={form.control}
                 name="bio"
                 render={({ field }) => (
                   <FormItem className="w-full h-full">

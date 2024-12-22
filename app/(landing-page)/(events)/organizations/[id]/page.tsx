@@ -6,10 +6,11 @@ import { DatePickerDemo } from "@/components/events/organization-event/detail-ev
 import {CommonEventCard} from "@/components/events/organization-event/CommonEventCad";
 import {EventTypeParam} from "@/difinitions/types/media/organization";
 import {Button} from "@/components/ui/button"; // Ensure this imports the correct type
+import { EventType } from "@/difinitions/dto/EventType";
 
 export default function Page() {
     // Correct the type to EventTypeParam[]
-    const eventData: EventTypeParam[] = [
+    const eventData: EventType[] = [
         {
             image: "https://media.istockphoto.com/id/547404780/photo/local-students-in-cambodia.jpg?s=612x612&w=0&k=20&c=e5bAh7pAa87T2eKj1XJ9PgaMztkImfSVS4UAwb8zF-o=",
             title: "កម្មវិធីជំនួយសិស្សនៅខេត្តកំពង់ធំ",

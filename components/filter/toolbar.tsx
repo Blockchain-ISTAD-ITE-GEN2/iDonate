@@ -4,7 +4,7 @@ import { ChangeEvent, useState, useMemo, useEffect } from "react";
 import { DateRangePicker } from "./date-range-picker";
 import { DateRange } from "react-day-picker";
 
-interface ToolbarProps {
+type ToolbarProps = {
   events: { [key: string]: string | number | Date }[];
   searchKey: string;
   filtersFace: {
@@ -12,7 +12,7 @@ interface ToolbarProps {
     title: string;
     options: { label: string; value: string }[];
   }[];
-  filtersDateRange: {
+  filtersDateRange?: {
     key: string;
     title: string;
   }[];
@@ -88,7 +88,7 @@ export function Toolbar({
           className="h-8 w-[150px] lg:w-[250px]"
         />
 
-        {filtersFace.map(({ key, title, options }) => (
+        {filtersFace?.map(({ key, title, options }) => (
           <FacetedFilter
             key={key}
             filters={[{ key, title, options }]}
@@ -98,7 +98,7 @@ export function Toolbar({
           />
         ))}
 
-        {filtersDateRange.length > 0 && (
+        {filtersDateRange && filtersDateRange.length > 0 && (
           <DateRangePicker
             filters={filtersDateRange}
             onChange={handleDateRangeChange} // Pass the selected ranges to handleDateRangeChange

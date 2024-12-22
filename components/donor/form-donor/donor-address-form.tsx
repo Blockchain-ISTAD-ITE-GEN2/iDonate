@@ -12,11 +12,11 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
 import { useState, useEffect } from "react";
 import { SquarePen } from "lucide-react";
-import { organizationAddressSchema } from "../schema/schema";
-import { AlertComfirmDialog } from "../Alert/Alert-Dialog";
+import {organizationAddressSchema} from "@/components/schema/schema";
+import {AlertComfirmDialog} from "@/components/Alert/Alert-Dialog";
+import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
 
 export function DonorAddressForm({ onPercentageUpdate }: { onPercentageUpdate: (percentage: number) => void }) {
   const [isEditing, setIsEditing] = useState(false);

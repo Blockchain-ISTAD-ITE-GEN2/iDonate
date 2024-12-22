@@ -12,13 +12,13 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { useForm } from "react-hook-form"
-import { Card, CardContent, CardHeader, CardTitle } from "../ui/card"
 import { useState } from "react"
 import { Upload } from "lucide-react"
-import { organizationMediaSchema } from "../schema/schema"
 import Image from "next/image"
 import organization from "@/public/images/Cambodia-Kantha-Bopha-Foundation.jpeg"
-import { AlertComfirmDialog } from "../Alert/Alert-Dialog"
+import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card"
+import { organizationMediaSchema } from "@/components/schema/schema"
+import { AlertComfirmDialog } from "@/components/Alert/Alert-Dialog"
 
 export function OrganizationMediaForm() {
   const [previewImage, setPreviewImage] = useState<string | null>(null)

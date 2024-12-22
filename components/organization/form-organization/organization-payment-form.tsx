@@ -12,18 +12,13 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "../ui/card";
 import { useState } from "react";
 import { SquarePen, Upload } from "lucide-react";
-import { organizationPaymentSchema } from "../schema/schema";
-import { AlertComfirmDialog } from "../Alert/Alert-Dialog";
 import Image from "next/image";
 import payment from "@/public/images/payment.jpg";
+import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
+import {organizationPaymentSchema} from "@/components/schema/schema";
+import {AlertComfirmDialog} from "@/components/Alert/Alert-Dialog";
 
 
 export function OrganizationPaymentForm() {

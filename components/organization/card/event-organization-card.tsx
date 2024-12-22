@@ -6,7 +6,7 @@ import { Share2, Trash2 } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-interface OrganizationEventCardProps {
+type OrganizationEventCardProps = {
   events: OrganizationEventType[];
   searchKey: string;
   filtersFace: {

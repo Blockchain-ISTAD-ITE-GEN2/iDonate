@@ -11,15 +11,14 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { useForm } from "react-hook-form"
-import { Card, CardContent, CardHeader, CardTitle } from "../ui/card"
 import { useState } from "react"
 import { SquarePen } from "lucide-react"
-import { AlertComfirmDialog } from "../Alert/Alert-Dialog"
-import { FileUploader } from "../fileupload/file-uploader"
-import { UploadedFilesCard } from "../fileupload/uploaded-files-card"
 import { UploadedFile } from "@/difinitions/types/fileupload"
 import toast from "react-hot-toast"
-
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { UploadedFilesCard } from "@/components/fileupload/uploaded-files-card"
+import { AlertComfirmDialog } from "@/components/Alert/Alert-Dialog"
+import { FileUploader } from "@/components/fileupload/file-uploader"
 const organizationReferenceSchema = z.object({
   images: z.array(z.instanceof(File)),
 })

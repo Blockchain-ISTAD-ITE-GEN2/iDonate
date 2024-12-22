@@ -1,4 +1,4 @@
-import { DonorProfileComponent } from "@/components/form-donor/donor-profile";
+import {DonorProfileComponent} from "@/components/donor/form-donor/donor-profile";
 
 export default function ContributorDonor() {
     return (

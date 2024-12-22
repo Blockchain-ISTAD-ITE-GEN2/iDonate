@@ -14,23 +14,14 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { useForm } from "react-hook-form"
-import { organizationInfomationSchema } from "../schema/schema"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { SquarePen } from "lucide-react"
-import { AlertComfirmDialog } from "../Alert/Alert-Dialog"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import {organizationInfomationSchema} from "@/components/schema/schema";
+import {AlertComfirmDialog} from "@/components/Alert/Alert-Dialog";
 
-type DonorInfoFormProps = {
-  onFullnamePercentageUpdate: (fullnamePercentage: number) => void ,
-  onEmailPercentageUpdate: (emailPercentage: number) => void,
-  onContactPercentageUpdate: (contactPercentage: number) => void,
-}
 
-export function DonorInfoForm({
-  onFullnamePercentageUpdate,
-  onEmailPercentageUpdate,
-  onContactPercentageUpdate,
-}: DonorInfoFormProps) {
+export function OrganizationInfoForm() {
   // 1. State to toggle between view and edit mode
   const [isEditing, setIsEditing] = useState(false)
 
@@ -44,44 +35,22 @@ export function DonorInfoForm({
     },
   })
 
-  const { watch, handleSubmit, reset, control, formState } = form;
-
-  const fullName = watch("fullName");
-  const email = watch("email");
-  const contact = watch("contact");
-
-
   // 3. Define a submit handler.
   function onSubmit(values: z.infer<typeof organizationInfomationSchema>) {
-    console.log(values);
-    setIsEditing(false);
+    console.log(values)
+    // Switch back to view mode after submitting
+    setIsEditing(false)
   }
 
-  useEffect(() => {
-    // Calculate percentage for each field
-    const calculateCompletionPercentage = () => {
-      const fullNamePercentage = fullName.trim() ? 20 : 0;
-      const emailPercentage = email.trim() ? 20 : 0;
-      const contactPercentage = contact.trim() ? 20 : 0;
-
-      // Call individual percentage update functions for each field
-      onFullnamePercentageUpdate(fullNamePercentage);
-      onEmailPercentageUpdate(emailPercentage);
-      onContactPercentageUpdate(contactPercentage);
-    };
-
-    calculateCompletionPercentage();
-  }, [fullName, email, contact, onFullnamePercentageUpdate, onEmailPercentageUpdate, onContactPercentageUpdate]);
-
   function handleCancel() {
-    reset() // Reset the form
+    form.reset() // Reset the form
     setIsEditing(false) // Switch back to view mode
   }
 
 
   return (
     <Form {...form}>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={form.handleSubmit(onSubmit)}>
         {/* View Mode */}
         {!isEditing && (
           <Card className="flex flex-col rounded-lg border-2 border-iDonate-navy-accent gap-6 p-9">
@@ -130,7 +99,7 @@ export function DonorInfoForm({
         
             <div className="flex gap-3">
                 {/* Cancel Button */}
-                {formState.isDirty ? (
+                {form.formState.isDirty ? (
                   <AlertComfirmDialog
                     trigger={
                       <Button
@@ -168,7 +137,7 @@ export function DonorInfoForm({
         
           <CardContent className="flex gap-9 p-0 m-0">
             <FormField
-              control={control}
+              control={form.control}
               name="fullName"
               render={({ field }) => (
                 <FormItem className="flex-1">
