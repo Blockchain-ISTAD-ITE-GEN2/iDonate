@@ -87,7 +87,7 @@ export function DonorInfoForm({
           <Card className="flex flex-col rounded-lg border-2 border-iDonate-navy-accent gap-6 p-9">
             <CardHeader className="flex flex-row items-center justify-between p-0 m-0">
               <CardTitle className="text-2xl font-medium text-iDonate-navy-secondary">
-                Organization Information
+                Basic Information
               </CardTitle>
 
               <Button

@@ -15,7 +15,7 @@ import { useForm } from "react-hook-form"
 import { useEffect, useState } from "react"
 import { Upload } from "lucide-react"
 import Image from "next/image"
-import organization from "@/public/images/Cambodia-Kantha-Bopha-Foundation.jpeg"
+import donor from "@/public/images/dornor.jpeg"
 import {organizationMediaSchema} from "@/components/schema/schema";
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
 import { AlertComfirmDialog } from "@/components/Alert/Alert-Dialog"
@@ -132,7 +132,7 @@ export function DonorMediaForm({ onPercentageUpdate }: { onPercentageUpdate: (pe
                     className="rounded-md"
                 />
                 ) : (
-                <Image src={organization} alt="Organization" width={150} height={150} />
+                <Image src={donor} alt="Organization" width={150} height={150} />
                 )}
             </CardContent>
 

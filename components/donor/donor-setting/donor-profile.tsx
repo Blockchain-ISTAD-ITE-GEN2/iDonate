@@ -1,11 +1,11 @@
 'use client';
 
 import { useState } from "react";
-import { DonorProfilePercentage } from "@/components/donor/form-donor/doner-profile-percentage";
-import { DonorMediaForm } from "@/components/donor/form-donor/donor-media-form";
-import { DonorInfoForm } from "@/components/donor/form-donor/donor-info-form";
-import { DonorAddressForm } from "@/components/donor/form-donor/donor-address-form";
-import { DonorBioForm } from "@/components/donor/form-donor/donor-bio-form";
+import { DonorProfilePercentage } from "@/components/donor/donor-setting/doner-profile-percentage";
+import { DonorMediaForm } from "@/components/donor/donor-setting/donor-media-form";
+import { DonorInfoForm } from "@/components/donor/donor-setting/donor-info-form";
+import { DonorAddressForm } from "@/components/donor/donor-setting/donor-address-form";
+import { DonorBioForm } from "@/components/donor/donor-setting/donor-bio-form";
 
 export function DonorProfileComponent (){
     const [imagePercentage, setImagePercentage] = useState(0);

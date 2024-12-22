@@ -4,4 +4,8 @@ export type TransactionType = {
     email: string;
     event: string;
     amount: number;
+    image?: string;
+    description?: string;
+    order_date?: string;
+    end_date?: string;
 };
