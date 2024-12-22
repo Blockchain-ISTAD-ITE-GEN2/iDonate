@@ -7,6 +7,7 @@ import { SubNavbarMenuType } from "@/difinitions/types/components-type/SubNavbar
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { SidebarGroupLabel } from "@/components/ui/sidebar";
+import path from "path";
 
 export default function OrganizationSidebarComponent() {
   const [menuList] = useState<SubNavbarMenuType[]>(OrganizationSidebarMenuList);
@@ -16,6 +17,24 @@ export default function OrganizationSidebarComponent() {
     `w-[210px] h-[62px] font-normal bg-transparent flex hover:bg-iDonate-light-gray justify-start px-6 py-4 ${
       isActive ? "text-iDonate-green-primary" : "text-iDonate-navy-primary"
     }`;
+
+    if(pathname === "/" || 
+    pathname === "/auth/login" ||
+    pathname === "/auth/sign-up" ||
+    pathname === "/auth/verification" ||
+    pathname === "/auth/forgot-password" ||
+    pathname === "/auth/reset-password" ||
+    pathname === "/search" ||
+    pathname === "/about-us" ||
+    pathname === "/categories" ||
+    pathname === "/events" ||
+    pathname === "/contributors" ||
+    pathname === "/mission-vision" ||
+    pathname === "/organizations" ||
+    pathname === "/how-it-works"
+
+     ) return null;
+    else
 
   return (
     <section className="flex flex-col h-full border-r-2 border-iDonate-navy-accent px-6 py-4 gap-y-3">
