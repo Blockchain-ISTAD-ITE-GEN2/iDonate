@@ -42,11 +42,7 @@ The project is currently deployed on Vercel and can be accessed at:
 - ⚛️ React.js  
 - 📦 Next.js (App Router)  
 - 🎨 Tailwind CSS  
-- 🧩 shadcn/ui components  
-
-### Backend  
-- 🌐 Node.js  
-- 📂 Next.js API Routes  
+- 🧩 shadcn/ui components   
 
 ### Authentication  
 - 🔑 NextAuth.js  
