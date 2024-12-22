@@ -85,22 +85,25 @@ export default function FooterComponent() {
               />
               <span className="text-xl md:text-2xl font-bold text-iDonate-navy-primary">iDONATE</span>
             </Link>
-            <p className="text-iDonate-navy-primary text-sm text-center md:text-left">
-              Donation is the act of giving resources, such as money, goods, or
-              time, to help others or support a cause without expecting anything in
-              return
+            <p className="text-iDonate-navy-primary text-center md:text-left" lang="km">
+            ការបរិច្ចាគគឺជាសកម្មភាពនៃការផ្តល់ធនធាន ដូចជាប្រាក់ ទំនិញ ឬពេលវេលា ដើម្បីជួយអ្នកដ៏ទៃ ឬជួយដល់បុព្វហេតុមួយ ដោយមិនរំពឹងអ្វីមកវិញឡើយ
             </p>
             <div className="space-y-2 text-iDonate-navy-primary">
               <h3 className="font-semibold text-lg text-center md:text-left">Contact Information</h3>
               <div className="flex flex-col items-center md:items-start gap-2">
-                <p className="flex items-center gap-2">
-                  <Phone className="w-4 h-4" />
-                  <span className="text-sm">+855 95 990 910</span>
-                </p>
-                <p className="flex items-center gap-2">
-                  <Mail className="w-4 h-4"/>
-                  <span className="text-sm">info.istad@gmail.com</span>
-                </p>
+              <p className="flex items-center gap-2">
+                <Phone className="w-4 h-4" />
+                <a href="tel:+85595990910" className="text-sm">
+                  +855 95 990 910
+                </a>
+              </p>
+              <p className="flex items-center gap-2">
+                <Mail className="w-4 h-4"/>
+                <a href="mailto:info.istad@gmail.com" className="text-sm">
+                  info.istad@gmail.com
+                </a>
+              </p>
+
               </div>
             </div>
           </div>
@@ -170,23 +173,26 @@ export default function FooterComponent() {
                 <Image
                   src={MPTCLogo}
                   alt="MPTC Logo"
-                  width={700}
-                  height={700}
+                  width={1000}
+                  height={1000}
                   className="p-2 w-full h-full object-cover"
+                  onClick={() => window.open("https://www.mptc.gov.kh/")}
                 />
                 <Image
                   src={CBRDLogo}
                   alt="CBRD Logo"
-                  width={700}
-                  height={700}
+                  width={1000}
+                  height={1000}
                   className="p-2 w-full h-full object-cover"
+                  onClick={() => window.open("https://cbrd.gov.kh/")}
                 />
                 <Image
                   src={ISTADLogo}
                   alt="ISTAD Logo"
-                  width={700}
-                  height={700}
+                  width={1000}
+                  height={1000}
                   className="p-2 w-full h-full object-cover"
+                  onClick={() => window.open("https://www.cstad.edu.kh/")}
                 />
               </div>
             </div>

@@ -4,7 +4,7 @@
 
 /* Define default fonts using font variables */
 html {
-  --font-siemreap: 'Siemreap', serif;
+  --font-suwannaphum: 'Suwannaphum', serif;
   --font-inter: 'Inter', serif; 
 }
 
@@ -13,9 +13,9 @@ body {
   font-family: var(--font-inter); /* Default to Inter for English text */
 }
 
-/* Apply Siemreap font for Khmer text */
+/* Apply suwannphum font for Khmer text */
 :lang(km) {
-  font-family: var(--font-siemreap); /* Automatically applies to Khmer content */
+  font-family: var(--font-suwannaphum); /* Automatically applies to Khmer content */
 }
 
 @layer utilities {
