@@ -1,4 +1,4 @@
-
+"use client";
 import localFont from "next/font/local";
 import "./globals.css";
 import { ReactNode } from "react";
@@ -8,6 +8,7 @@ import OrganizationSidebarComponent from "@/components/organization/sidebar/Orga
 import SessionWrapper from "@/components/SessionWrapper";
 import FooterComponent from "@/components/footer/FooterComopent"
 import { ThemeProviders } from "./providers";
+import { usePathname } from "next/navigation";
 
 const suwannaphum = localFont({
   src: "/fonts/Suwannaphum-Regular.ttf",
@@ -30,6 +31,8 @@ type RootLayoutProps = {
 };
 
 export default function RootLayout({ children }: RootLayoutProps) {
+  const pathname = usePathname();
+  const showSidebar = pathname.startsWith("/organization-dashboard/");
 
 
   return (
@@ -43,11 +46,12 @@ export default function RootLayout({ children }: RootLayoutProps) {
                 <NavbarComponent />
               </header>
 
-              {/* {showSidebar ? ( */}
+              {showSidebar ? (
                 <div className="w-full h-full flex flex-grow">
                   {/* Sidebar */}
                   <aside className="flex-shrink-0 hidden md:block flex-grow">
                     <OrganizationSidebarComponent />
+                    {/* {children} */}
                   </aside>
 
                   {/* Main Content */}
@@ -55,20 +59,20 @@ export default function RootLayout({ children }: RootLayoutProps) {
                     {children}
                   </main>
                 </div>
-              {/* ) : (
+              ) : (
                 <div className="flex-grow overflow-y-auto">
                   <main>
                     {children}
                   </main>
                 </div>
-              )} */}
+              )}
 
 
-             {/* {!showSidebar && ( */}
+             {!showSidebar && (
               <footer className="bg-iDonate-white-space">
                 <FooterComponent />
               </footer>
-              {/* )} */}
+              )}
             </div>
 
           </ThemeProviders>

@@ -79,7 +79,7 @@ export default function CategoryOnPageComponent() {
             {/* Hero Section End */}
 
             {/*Start Card Categories */}
-            <section lang={"km"} className="flex items-center justify-center gap-[100px] mb-[24px]">
+            <section lang={"km"} className=" flex items-center justify-center gap-[100px] mb-[24px]">
                 {categories.map((category:CategoryIcon, index:number) => (
                     <div
                         key={index}
