@@ -1,17 +1,22 @@
 "use client";
-import React, { use, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NavMenulist } from "@/components/navbar/NavbarMenu";
-import { Menu } from "lucide-react";
-import { usePathname, useRouter } from "next/navigation";
-import { Heart, LogOut, Search, User } from "lucide-react";
 import Link from "next/link";
+import {  Heart, Search } from "lucide-react";
+import { Moon, Sun } from "lucide-react";
+import { Button } from "../ui/button";
+import Image from "next/image";
+import { usePathname, useRouter } from "next/navigation";
+import { Menubar, MenubarContent, MenubarMenu, MenubarTrigger } from "../ui/menubar";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel, DropdownMenuSeparator,
+    DropdownMenuTrigger
+} from "../ui/dropdown-menu";
+import { useTheme } from "next-themes";
+import SubNavbarComponent from "./sub-navbar/SubNavbartComponent";
 import { EventMenulist } from "./sub-navbar/EventMenu";
 import { AboutMenulist } from "./sub-navbar/AboutMenu";
 import { ContributorMenulist } from "./sub-navbar/ContributorMenu";
@@ -117,61 +122,25 @@ export default function NavbarComponent() {
   useEffect(() => {}, [accessTokenValue, session]);
   // console.log("User Profile: ",userProfile);
 
-  if (
-    pathname === "/login" ||
-    pathname === "/sign-up" ||
-    pathname === "/verification" ||
-    pathname === "/forgot-password" ||
-    pathname === "/reset-password"
-  ) {
-    return null;
-  }
+  if (pathname === "/auth/login" ||
+    pathname === "/auth/sign-up" ||
+    pathname === "/auth/verification"){
+      return null;
+    }
+   
+  else
 
-  if (isMobileMenuOpen) {
-    return activeSubmenu ? (
-      <MobileSubmenu
-        activeSubmenu={activeSubmenu}
-        submenuItems={submenuItems}
-        isMobileMenuOpen={isMobileMenuOpen}
-        onClose={() => {
-          setActiveSubmenu(null);
-          setIsMobileMenuOpen(false);
-        }}
-        onBack={() => setActiveSubmenu(null)}
-      />
-    ) : (
-      <MobileMenu
-        // activeSubmenu={activeSubmenu}
-        setActiveSubmenu={setActiveSubmenu}
-        setSubmenuItems={setSubmenuItems}
-        // submenuItems={submenuItems}
-        isOpen={isMobileMenuOpen}
-        onClose={() => setIsMobileMenuOpen(false)}
-        menuItems={menuList}
-        eventMenulist={EventMenulist}
-        contributorMenulist={ContributorMenulist(uuid as string)}
-        aboutMenulist={AboutMenulist}
-      />
-    );
-  }
 
-  return (
-    <nav className="w-full h-[72px] flex items-center justify-between shadow-sm z-10 top-0 px-4 xl:px-10  2xl:px-[80px] dark:border-b">
-      <section
-        className="flex items-center cursor-pointer"
-        onClick={() => router.push("/")}
-      >
-        <Image
-          src={logo}
-          width={80}
-          height={80}
-          alt=""
-          className=" xl:w-full xl:h-full"
-        />
-        <span className="text-medium-eng xl:text-title-eng text-iDonate-navy-primary font-medium dark:text-iDonate-navy-accent">
-          iDONATE
-        </span>
-      </section>
+    return (
+        <nav className="w-full h-[72px] flex items-center justify-between shadow-sm z-10  top-0 px-[100px]">
+            {/* Logo and Name */}
+            <section
+                className="flex items-center space-x-2 cursor-pointer"
+                onClick={() => router.push("/")}
+            >
+                 <div className="w-10 h-10 bg-iDonate-green-primary rounded-full"></div>
+                <span className="text-title-eng">iDonate</span>
+            </section>
 
       {/* Mobile Menu Button */}
       <Button
@@ -239,18 +208,9 @@ export default function NavbarComponent() {
                           <User className="text-white" size={20} />
                         </div>
                       )}
-                      <div className="text-sm">
-                        <div className="font-medium text-gray-900">
-                          {session?.user?.name ||
-                            userProfile?.username ||
-                            "Guest User"}
-                        </div>
-                        <div className="text-gray-500">
-                          {session?.user?.email ||
-                            userProfile?.email ||
-                            "No Email"}
-                        </div>
-                      </div>
+                      <span className={navActiveClass(isActive)}>
+                        {item.title}
+                      </span>
                     </div>
                   </div>
 

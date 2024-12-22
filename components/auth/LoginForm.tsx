@@ -16,7 +16,7 @@ import { motion } from "framer-motion";
 import BackgroundImage from "@/public/images/donation-login.jpg";
 import GoogleIcon from "@/public/images/google.png";
 import FacebookIcon from "@/public/images/facebook.png";
-import SampleLogo from "@/public/images/iDonateLogoSample.png";
+import SampleLogo from "@/public/logo/logodesign no background.png"
 import { useDispatch } from "react-redux";
 import { setToken } from "@/redux/features/auth/authSlice";
 import { useRouter } from "next/navigation";
@@ -122,10 +122,10 @@ export default function LoginForm() {
             <Image
               src={SampleLogo}
               alt="iDonate Logo"
-              width={100}
-              height={100}
-              className="rounded-full shadow-lg"
-              priority
+              width={160}
+              height={160}
+              // className="rounded-full p-4 shadow-lg"
+              unoptimized
             />
           </motion.div>
           <AnimatedText />
