@@ -357,7 +357,7 @@ export default function NavbarComponent() {
             {isMobileMenuOpen && (activeSubmenu ? <MobileSubmenu /> : <MobileMenu />)}
 
             {/* Desktop Navigation Menu */}
-            <Menubar className="border-0 hidden lg:flex space-x-4 bg-transparent">
+            <Menubar className="border-0 hidden lg:flex space-x-4 bg-transparent dark:text-white">
                 {/* Desktop menu code remains the same */}
                 {menuList.map((item, index) => {
                     const isActive = pathname === item.path;

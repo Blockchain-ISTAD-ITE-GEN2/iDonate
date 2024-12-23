@@ -10,7 +10,7 @@ import ProcessOrganisation from "@/public/howitwork/image.png"
 
 export default function HowItWorks() {
   return (
-    <div className="w-full">
+    <div className="w-full" lang="km">
     {/* Hero Section */}
     <section className="relative min-h-[400px] md:min-h-[600px] bg-gradient-to-br from-gray-50 to-gray-100 px-4 md:px-[100px]">
       <div className="absolute inset-0 bg-grid-gray-200 opacity-30" />
@@ -29,9 +29,9 @@ export default function HowItWorks() {
             <h3 className="text-xl md:text-2xl mb-6 font-siemreap text-iDonate-navy-secondary">
               និងការចែករំលែកទ្រព្យសម្បត្តិ
             </h3>
-            <p className="text-iDonate-navy-secondary mb-8 font-siemreap leading-loose text-sm md:text-base">
-              ដើម្បីជួយដល់អ្នកដែលខ្វះខាតក្នុងសង្គមយើង។ <br />
-              ការជួយគ្នាទៅវិញទៅមកគឺជាការបង្ហាញពីក្តីស្រលាញ់។ <br />
+            <p className="text-iDonate-navy-secondary mb-8 font-siemreap leading-loose text-sm md:text-base bg">
+              ដើម្បីជួយដល់អ្នកដែលខ្វះខាតក្នុងសង្គមយើង។ 
+              ការជួយគ្នាទៅវិញទៅមកគឺជាការបង្ហាញពីក្តីស្រលាញ់។ 
               បរិច្ចាគទ្រព្យសម្បត្តិដើម្បីជួយដល់អ្នកដទៃគឺជាទង្វើដ៏ល្អ។
             </p>
             <Button className="bg-[#1B2A4E] hover:bg-[#2a3e6d] w-full md:w-auto">
@@ -63,7 +63,7 @@ export default function HowItWorks() {
           animate={{ opacity: 1, y: 0 }}
           className="text-xl md:text-2xl font-bold mb-8 md:mb-12 font-siemreap text-center text-iDonate-navy-secondary"
         >
-          ក្រុមនីតិការរបស់មូលនិធិក្រ
+          
         </motion.h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
           <div className="space-y-6 md:space-y-8">

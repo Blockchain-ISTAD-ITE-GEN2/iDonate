@@ -4,8 +4,8 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "../ui/button";
 import Image from "next/image";
-import HeroSectionImage from "@/public/images/image (6).png";
-import HeroSectionImageOne from "@/public/images/image 1.png";
+import HeroSectionImageOne from "@/public/landing/RuralKidStudy.jpg";
+import HeroSectionImageTwo from "@/public/landing/RuralKidGroup.jpg";
 import { ArrowRight, ChevronDown } from 'lucide-react';
 import { useRouter } from "next/navigation";
 
@@ -44,21 +44,22 @@ export default function HeroSectionComponent() {
         initial="hidden"
         animate="visible"
       >
-        <div className="w-full md:w-2/3 space-y-8 md:space-y-6">
+        <div className="w-full md:w-2/3  space-y-2 md:space-y-4 lg:space-y-0">
           <motion.h1 
             className="text-4xl sm:text-5xl md:text-6xl font-semibold text-iDonate-navy-primary "
             variants={itemVariants}
           >
-            ការបរិច្ចាគដោយមានទំនុកចិត្ត​ <span className="lg:leading-loose md:leading-normal leading-relaxed ">និងតម្លាភាព</span>
+            ការបរិច្ចាគដោយមានទំនុកចិត្ត​ <span className=" lg:leading-relaxed">និងតម្លាភាព</span>
           </motion.h1>
           <motion.h2 
-            className="text-2xl sm:text-3xl md:text-4xl font-medium text-iDonate-green-primary leading-[-20px]"
+            className="text-2xl sm:text-3xl md:text-4xl font-medium text-iDonate-green-primary py-2 md:py-0"
             variants={itemVariants}
           >            
             មានប្រសិទ្ធភាព ជាមួយ <span className="font-inter">iDonate</span>
           </motion.h2>
+
           <motion.p 
-            className="text-gray-600 text-lg sm:text-xl md:text-xl leading-relaxed lg:w-4/5 md:w-full"
+            className="text-gray-600 text-lg sm:text-xl md:text-xl leading-relaxed lg:w-4/5 md:w-full md:py-0 lg:py-4"
             variants={itemVariants}
           >
             iDonate បានប្រើប្រាស់បច្ចេកវិទ្យា Blockchain
@@ -66,7 +67,7 @@ export default function HeroSectionComponent() {
             និងមានប្រសិទ្ធភាពខ្ពស់​ ដែលធ្វើឡើងដើម្បីធានាថាចំនួនទឹកប្រាក់ដែលបានបរិច្ចាគ ត្រូវបានដល់ដៃជនរងគ្រោះយ៉ាងពិតប្រាកដ​ ដោយគ្មានការក្លែងបន្លំ
           </motion.p>
           <motion.div 
-            className="flex flex-wrap gap-6"
+            className="flex flex-wrap gap-6 py-4"
             variants={itemVariants}
           >
             <Button className="bg-green-500 px-8 py-4 text-white text-lg hover:bg-green-600 transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg group" onClick={()=> router.push("/auth/login") }>
@@ -81,8 +82,8 @@ export default function HeroSectionComponent() {
         >
           <motion.div 
             className="absolute top-10 left-0 z-10 w-[220px] sm:w-[280px] lg:w-[350px] h-[220px] sm:h-[280px] lg:h-[350px] rounded-full overflow-hidden shadow-xl"
-            whileHover={{ scale: 1.05, rotate: -5 }}
-            transition={{ duration: 0.3 }}
+            // whileHover={{ scale: 1.05, rotate: -5 }}
+            // transition={{ duration: 0.3 }}
           >
             <Image
               src={HeroSectionImageOne}
@@ -96,11 +97,11 @@ export default function HeroSectionComponent() {
           </motion.div>
           <motion.div 
             className="absolute top-20 left-16 sm:left-[50px] md:left-[100px] lg:left-[220px] w-[300px] sm:w-[350px] md:w-[450px] lg:w-[500px] h-[300px] sm:h-[350px] md:h-[450px] lg:h-[500px] rounded-full overflow-hidden shadow-xl"
-            whileHover={{ scale: 1.05, rotate: 5 }}
-            transition={{ duration: 0.3 }}
+            // whileHover={{ scale: 1.05, rotate: 5 }}
+            // transition={{ duration: 0.3 }}
           >
             <Image
-              src={HeroSectionImage}
+              src={HeroSectionImageTwo}
               alt="Classroom scene with students and teacher"
               width={1000}
               height={1000}
@@ -112,7 +113,7 @@ export default function HeroSectionComponent() {
         </motion.div>
       </motion.div>
       
-      <motion.div 
+      {/* <motion.div 
         className="mt-16 md:mt-11 text-center"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -139,7 +140,7 @@ export default function HeroSectionComponent() {
             </motion.div>
           )}
         </AnimatePresence>
-      </motion.div>
+      </motion.div> */}
     </section>
   );
 }

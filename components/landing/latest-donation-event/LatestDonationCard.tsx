@@ -4,7 +4,7 @@ import { Heart, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import Image from "next/image";
-import FamilyImage from "@/public/images/family-photo.png";
+import FamilyImage from "@/public/landing/LateDonation.jpg";
 import { Users } from "lucide-react";
 import { CircleDollarSign } from "lucide-react";
 import FamilyOne from "@/public/images/Group 4630.png"
@@ -29,7 +29,7 @@ const donationCards: DonationCard[] = [
     description: "ផ្តល់ការអប់រំពេលចេញពីសាលាដល់កុមារនៅក្នុងតំបន់ដាច់ស្រយាល",
     donors: 1.2,
     amount: 1000,
-    isCurrent: true
+    isCurrent: false
   },
   {
     id: "2",
@@ -38,7 +38,7 @@ const donationCards: DonationCard[] = [
     description: "កុមារនឹងទទួលបានអាហារពេលចូលនិងថ្នាំពេទ្យពេលឈឺទៀតផង",
     donors: 1.2,
     amount: 1000,
-    isCurrent: true
+    isCurrent: false
   },
   {
     id: "3",
@@ -47,7 +47,7 @@ const donationCards: DonationCard[] = [
     description: "ផ្តល់ឱកាសដល់សិស្សក្រីក្រឱ្យកូនៗពួកគេទៅសាលារៀន",
     donors: 1.2,
     amount: 1000,
-    isCurrent: true
+    isCurrent: false
   },
 ];
 
@@ -56,12 +56,14 @@ export default function LatestDonationCard() {
   return (
         
     <div className="w-full lg:px-[100px] md:px-4 px-4 bg-transparent">
-      <Card className="overflow-hidden border border-none">
+      <Card className="overflow-hidden border border-none bg-red-500">
         <div className="grid lg:grid-cols-2 gap-0 ">
           {/* Image Section */}
-          <div className="relative h-[300px] lg:h-[500px]">
+          <div className="relative ">
             <Image
               src={FamilyImage}
+              width={50000}
+              height={50000}
               alt="Community support image"
               className="absolute inset-0 w-full h-full object-cover"
             />
@@ -74,18 +76,16 @@ export default function LatestDonationCard() {
                 className="text-2xl font-semibold leading-tight khmer-font"
                 lang="km"
               >
-                កិច្ចប្រឹងប្រែងកុមារការពារសេរីភាព
+                កិច្ចប្រឹងប្រែងការពារសេរីភាព និងសិទ្ធិរបស់កុមារ
               </h2>
-              <h3 className="text-xl font-medium khmer-font" lang="km">
-                និងសិទ្ធិរបស់កុមារ
-              </h3>
+            
             </div>
 
             <p
               className="text-sm opacity-90 khmer-font leading-relaxed"
               lang="km"
             >
-              កុមារទាំងនេះត្រូវការជំនួយការពារសេរីភាពនិងសិទ្ធិរបស់កុមារ
+              កុមារទាំងនេះត្រូវការជំនួយក្នុងការការពារសេរីភាពនិងសិទ្ធិរបស់កុមារ
               និងជួយធ្វើឱ្យពួកគេរស់នៅក្នុងសង្គម។
               <br />
               វាជាការលំបាកណាស់ដែលប្រឈមសេរីភាពរបស់កុមារគ្រប់ៗគ្នា។
@@ -120,21 +120,22 @@ export default function LatestDonationCard() {
 
       {/* current donation */}
    
-      <div className="w-full md:px-4 lg:px-0 py-8 " lang="km">
+      <div className="w-full md:px-4 lg:px-0 py-8 lg:py-12 " lang="km">
   <h2 className="text-2xl mb-6 text-iDonate-navy-primary khmer-font text-center">
     បច្ចុប្បន្នភាពនៃការបរិច្ចាគ
   </h2>
 
   {currentDonations.length > 0 ? (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 ">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-2">
       {currentDonations.map((card) => (
-        <Card key={card.id} className="overflow-hidden text-iDonate-navy-primary ">
+        <Card key={card.id} className="overflow-hidden text-iDonate-navy-primary p-4">
           <div className="relative h-64">
             <Image
               src={card.image}
               alt={card.title}
-              layout="fill"
-              objectFit="cover"
+              width={5000}
+              height={5000}
+              className="w-full h-full object-cover"
             />
           </div>
           <div className="p-4 space-y-4">
@@ -174,8 +175,6 @@ export default function LatestDonationCard() {
     </Card>
   )}
 </div>
-
-
     </div>
   );
 }

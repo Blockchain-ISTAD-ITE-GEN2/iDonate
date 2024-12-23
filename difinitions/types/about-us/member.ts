@@ -9,9 +9,9 @@ import TeacherKeo from '@/public/members/teacher-keo.jpeg';
 export const members = [   
      { image: SokcheatImage, name: "Srorng Sokcheat", role: "TEAM LEADER" },
     { image: ChiporImage, name: "Sreng Chipor", role: "BACKEND DEVELOPER"},
-    { image: PanhaImage, name: "Sanh Panha", role: "FRONTEND DEVELOOPER" },
-    { image: KangImage, name: "Kay Kang", role: "Smart Contract Specilist" },
-    { image: ReaksaImage, name: "Nouth ChanRaksa", role: "FRONTEND DEVELOOPER" },
+    { image: PanhaImage, name: "Sanh Panha", role: "FRONTEND DEVELOPER" },
+    { image: KangImage, name: "Kay Kang", role: "Smart Contract Developer" },
+    { image: ReaksaImage, name: "Nouth ChanRaksa", role: "FRONTEND DEVELOPER" },
 ];
 
 export const mentors = [

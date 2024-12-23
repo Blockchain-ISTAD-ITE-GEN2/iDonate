@@ -72,7 +72,7 @@ export default function AboutUsComponent() {
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.6 }}
-              className="text-gray-300 mb-8 text-sm sm:text-base"
+              className="text-iDonate-light-gray mb-8 text-sm sm:text-base"
             >
               ធ្វើ​ឲ្យ​មាន​ផ្លាស់ប្ដូរ​តាម​រយៈ​ការ​ផ្តល់​ជំនួយ
               ទឹកចិត្តបន្តិចបន្តួច​របស់​លោកអ្នកអាច​ជម្រុញ​ឲ្យ​មាន​ក្តីសង្ឃឹម​  និង 
@@ -86,7 +86,7 @@ export default function AboutUsComponent() {
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ duration: 0.8, delay: 0.8 }}
               >
-                <Button className="bg-iDonate-green-primary hover:bg-green-600 text-white text-sm sm:text-base" lang="km">
+                <Button className="bg-iDonate-green-primary hover:bg-iDonate-green-secondary text-white text-sm sm:text-base" lang="km">
                   តោះចាប់ផ្តើម
                 </Button>
               </motion.div>
@@ -103,18 +103,18 @@ export default function AboutUsComponent() {
             {[
               {
                 icon: TrustContent,
-                title: "មាតិកាដែលមានទុកចិត្ត",
-                description: "ការបង្កើតនិងការចែកចាយមាតិកាអប់រំដែលទុកចិត្ត គឺធ្វើឡើងដោយការចូលរួមរបស់អ្នកឧបត្ថម្ភ។ការគាំទ្ររបស់ពួកគេធានាថានឹងមានការចូលដំណើរការ។"
+                title: "មាតិកាដែលមានទំនុកចិត្ត",
+                description: "ផ្តល់នូវទំនុកចិត្តតាមរយៈការចែកចាយបន្តទៅកាន់អ្នកចូលរួមគ្រប់គ្នានៅក្នុងមាតិកាយ៉ាងទូលំទូលាយ"
               },
               {
                 icon: GiveAndRecieve,
-                title: "ការផ្តល់និងការទទួល",
-                description: "ការផ្លាស់ប្តូរការសកម្មភាព ការសំដែងចិត្ត ឬអារម្មណ៍រវាងមនុស្សគ្នា។វាបង្ហាញពីភាពសមស្របរបស់ការផ្តល់និងទទួលអ្វីមួយ។"
+                title: "ការផ្តល់ឲ្យនិងការទទួល",
+                description: "ការផ្លាស់ប្តូរការសកម្មភាព ការសំដែងសណ្តានចិត្ត ឬអារម្មណ៍រវាងមនុស្សគ្រប់ស្រទាប់ វណ្ណៈ។វាបង្ហាញពីភាពសមស្របរបស់ការផ្តល់ឲ្យនិងទទួលបានអ្វីមួយ"
               },
               {
                 icon: BlockchainTech,
-                title: "ឧបករណ៍ដើម្បីលើកកម្ពស់ការបរិច្ចាក",
-                description: "ឧបករណ៍ដែលទុកចិត្តនឹងនៅស្ថិតក្នុងលក្ខណៈឥតគិតថ្លៃ និងអាចប្រើបានសម្រាប់សិស្ស និងគ្រូបង្រៀននៅទូទាំងពិភពលោក។"
+                title: "បច្ចេកវិទ្យាប្លុកឆេនដើម្បីគាំទ្រការបរិច្ចាគ",
+                description: "ប្រព័ន្ធបរិច្ចាគរបស់យើងប្រើប្រាស់បច្ចេកវិទ្យាប្លុកឆេនដើម្បីធ្វើឱ្យប្រព័ន្ធបរិច្ចាគមានតម្លាភាព សុវត្ថិភាព និងមានប្រសិទ្ធភាពខ្ពស់"
               }
             ].map((feature, index) => (
               <motion.div
