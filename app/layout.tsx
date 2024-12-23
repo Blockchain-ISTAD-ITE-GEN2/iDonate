@@ -60,7 +60,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
                   </main>
                 </div>
               ) : (
-                <div className="flex-grow overflow-y-auto">
+                <div className="w-full flex-grow overflow-y-auto">
                   <main>
                     {children}
                   </main>

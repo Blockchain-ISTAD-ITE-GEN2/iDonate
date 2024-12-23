@@ -1,50 +1,13 @@
-import { Toolbar } from "@/components/filter/toolbar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { OrganizationEventType } from "@/difinitions/dto/Organization-event";
 import { Share2, Trash2 } from "lucide-react";
 import Image from "next/image";
-import { useEffect, useState } from "react";
 
-type OrganizationEventCardProps = {
-  events: OrganizationEventType[];
-  searchKey: string;
-  filtersFace: {
-    key: string;
-    title: string;
-    options: { label: string; value: string }[];
-  }[];
-  filtersDateRange: {
-    key: string;
-    title: string
-  }[];
-}
-
-export function OrganizationEventCard({
-  events,
-  searchKey,
-  filtersFace,
-  filtersDateRange,
-}: OrganizationEventCardProps) {
-    const [filteredEvents, setFilteredEvents] = useState<OrganizationEventType[]>(events);
-
-    useEffect(() => {
-        setFilteredEvents(events); // Reset filtered events whenever `events` prop changes
-      }, [events]);
-      
-
+export function OrganizationEventCard({ event }: { event: OrganizationEventType }) {
   return (
     <>
-      <Toolbar
-        events={events}
-        filtersFace={filtersFace}
-        searchKey={searchKey}
-        onFilterChange={setFilteredEvents}
-        filtersDateRange={filtersDateRange}
-      />
-      {filteredEvents.map((item, index) => (
         <Card
-          key={index}
           className="w-full h-[440px] bg-iDonate-white-space rounded-lg shadow-[1px_1px_1px_3px_rgba(0,0,0,0.03)] border p-7 flex flex-col gap-6 border-iDonate-navy-accent"
         >
           <CardContent
@@ -70,26 +33,29 @@ export function OrganizationEventCard({
 
           <div className="flex gap-6">
             <CardContent className="p-0 w-[300px] h-[300px] rounded-lg">
-              <Image
-                width={300}
-                height={300}
-                src={
-                  item.image ||
-                  "https://i.pinimg.com/236x/a9/9e/ff/a99eff25eb1ba71647fcd884c15c035a.jpg"
-                }
-                alt={item.title}
-                className="w-full h-full object-cover rounded-lg"
-              />
+              {event?.image ? (
+                  <Image
+                     width={300}
+                     height={300}
+                     src={event?.image }
+                     alt={event?.title}
+                     className="w-full h-full object-cover rounded-lg"
+                />
+              ) : (
+                    <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+                        <span>No Image</span>
+                    </div>
+              )}
             </CardContent>
 
             <div className="flex flex-col flex-1 justify-between h-full min-h-0">
               <CardContent className="p-0 flex flex-col gap-4 flex-grow">
                 <CardTitle className="text-3xl font-medium text-iDonate-navy-secondary p-0">
-                  {item.title}
+                {event?.title || "Untitled Event"}
                 </CardTitle>
 
                 <CardDescription className="text-xl leading-loose text-iDonate-navy-secondary p-0 overflow-hidden">
-                  {item.description}
+                  {event?.description || "No description available"}
                 </CardDescription>
               </CardContent>
 
@@ -99,7 +65,7 @@ export function OrganizationEventCard({
                     Order Date
                   </CardTitle>
                   <CardDescription className="text-xl font-inter text-iDonate-navy-primary p-0">
-                    {item.order_date}
+                    {event?.order_date || "12 September 2024"}
                   </CardDescription>
                 </div>
 
@@ -108,7 +74,7 @@ export function OrganizationEventCard({
                     End Date
                   </CardTitle>
                   <CardDescription className="text-xl font-inter text-iDonate-navy-primary p-0">
-                    {item.end_date}
+                    {event?.end_date || "12 September 2025"}
                   </CardDescription>
                 </div>
 
@@ -117,14 +83,13 @@ export function OrganizationEventCard({
                     Raised
                   </CardTitle>
                   <CardDescription className="text-xl font-inter text-iDonate-navy-primary p-0">
-                    ${item.total_raised}
+                    ${event?.total_raised || "No amount collected"}
                   </CardDescription>
                 </div>
               </CardContent>
             </div>
           </div>
         </Card>
-      ))}
     </>
   );
 }

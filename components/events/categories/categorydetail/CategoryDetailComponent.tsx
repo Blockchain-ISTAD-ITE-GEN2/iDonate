@@ -74,7 +74,9 @@ export  default  function CategoryDetailComponent (){
                         {/* List Organization Cards Start */}
                         <section className="my-[44px]">
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[44px]">
-                                <CommonEventCard events={eventData}/>
+                                {eventData.map((event, index) => (
+                                    <CommonEventCard key={index} event={event} />
+                                ))}
                             </div>
                         </section>
                         {/* List Organization Cards End */}

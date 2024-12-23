@@ -16,8 +16,7 @@ import {
     DropdownMenuLabel,
     DropdownMenuSeparator,
     DropdownMenuTrigger,
-} from "../ui/dropdown-menu";
-import { useTheme } from "next-themes";
+} from "@/components/ui/dropdown-menu";
 import SubNavbarComponent from "./sub-navbar/SubNavbartComponent";
 import { EventMenulist } from "./sub-navbar/EventMenu";
 import { AboutMenulist } from "./sub-navbar/AboutMenu";
@@ -159,6 +158,7 @@ export default function NavbarComponent() {
     ) {
         return null;
     }
+    
     const MobileSubmenu = () => (
       <div className="fixed inset-0 bg-white z-50 lg:hidden">
           <div className="p-4 flex justify-between items-center border-b bg-white ">

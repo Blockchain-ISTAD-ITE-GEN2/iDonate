@@ -1,10 +1,18 @@
 "use client";
-import transaction from "@/data/transactions.json";
+import transactions from "@/data/transactions.json";
 import { TransactionHistoryCard } from "./transaction-card";
 import { TransactionType } from "@/difinitions/types/table-type/transaction";
+import { Toolbar } from "@/components/filter/toolbar";
+import { useEffect, useState } from "react";
 
 export default function TransactionHistory() {
-  const typedTransactions: TransactionType[] = transaction.slice(0, 4);
+  const typedTransactions: TransactionType[] = transactions;
+
+  const [filteredtransactions, setFilteredtransactions] = useState<TransactionType[]>(transactions);
+  
+  useEffect(() => {
+    setFilteredtransactions(typedTransactions); // Reset filtered transactions whenever `transactions` prop changes
+  }, [typedTransactions]);
 
   const filtersFace = [
     {
@@ -38,13 +46,22 @@ export default function TransactionHistory() {
   ];
 
   return (
-    <section lang="km" className="flex flex-col p-9 gap-6">
-      <TransactionHistoryCard
-        transactions={typedTransactions}
-        searchKey="event"
-        filtersFace={filtersFace}
-        filtersDateRange={filtersDateRange}
+    <section className="flex flex-col gap-6">
+
+      <Toolbar
+          events={typedTransactions}
+          filtersFace={filtersFace}
+          searchKey={"event"}
+          onFilterChange={setFilteredtransactions}
+          // filtersDateRange={filtersDateRange}
       />
+
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+        {filteredtransactions.map((transaction, index) => (
+          <TransactionHistoryCard key={index} transaction={transaction} />
+      ))}
+      </div>
+      
     </section>
   );
 }

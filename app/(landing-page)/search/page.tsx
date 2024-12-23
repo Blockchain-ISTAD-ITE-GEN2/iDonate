@@ -1,47 +1,17 @@
-import { CommonEventCard } from "@/components/events/organization-event/CommonEventCad";
-import { EventType } from "@/difinitions/dto/EventType";
-import events from "@/data/events-data.json";
+import { SearchPage } from "@/components/search/SearchPage";
 
 export default function Events() {
-  const typedEvents: EventType[] = events;
 
-  const filtersFace = [
-    {
-      key: "title",
-      title: "Events",
-      options: Array.from(
-          new Set(typedEvents.map((event) => event.title))
-      ).map((event) => ({
-        label: event,
-        value: event,
-      })),
-    },
-    {
-      key: "total_donor",
-      title: "Donor Range",
-      options: Array.from(
-        new Set(typedEvents.map((event) => event.total_donor))
-      ).map((donor) => ({
-        label: donor.toString(),
-        value: donor.toString(),
-      })),
-    },
-
-    {
-      key: "total_amount",
-      title: "Amount Range",
-      options: Array.from(
-        new Set(typedEvents.map((event) => event.total_amount))
-      ).map((amount) => ({
-        label: amount.toString(),
-        value: amount.toString(),
-      })),
-    },
-  ];
 
     return (
-      <section className="py-9">
-          <CommonEventCard searchKey="title" filtersFace={filtersFace} events={typedEvents} />
+      <section className="flex flex-col py-9 gap-9">
+
+          <div lang="km" className="w-full flex flex-col items-center justify-center gap-2">
+            <h2 className="text-iDonate-navy-primary text-heading-one-khmer">ស្វែករក កម្មវិធីបរិច្ចាគដែលអ្នកពេញចិត្ត</h2>
+            <h4 className="text-iDonate-navy-primary text-medium-khmer"> ស្វែករកម្មបវិធី វៃអង្គាសដោយ ឈ្មោះនៃអង្កការភាព​  ប្រភេទ និង កាលបរិច្ឆេទ្នាំនៃកម្មវិធី</h4>
+          </div>
+
+          <SearchPage />
       </section>
     );
   }

@@ -109,7 +109,9 @@ export default function CategoryOnPageComponent() {
                 {/* List Organization Cards Start */}
                 <section className="mx-[100px] my-[44px]">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-[44px]">
-                        <CommonEventCard events={eventData}/>
+                        {eventData.map((event, index) => (
+                            <CommonEventCard key={index} event={event} />
+                        ))}
                     </div>
                 </section>
                 {/* List Organization Cards End */}
@@ -131,7 +133,9 @@ export default function CategoryOnPageComponent() {
                 {/* List Organization Cards Start */}
                 <section className="mx-[100px] my-[44px]">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-[44px]">
-                        <CommonEventCard events={eventData}/>
+                    {eventData.map((event, index) => (
+                            <CommonEventCard key={index} event={event} />
+                        ))}
                     </div>
                 </section>
                 {/* List Organization Cards End */}
@@ -153,7 +157,9 @@ export default function CategoryOnPageComponent() {
                 {/* List Organization Cards Start */}
                 <section className="mx-[100px] my-[44px]">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-[44px]">
-                        <CommonEventCard events={eventData}/>
+                    {eventData.map((event, index) => (
+                            <CommonEventCard key={index} event={event} />
+                        ))}
                     </div>
                 </section>
                 {/* List Organization Cards End */}
@@ -175,7 +181,9 @@ export default function CategoryOnPageComponent() {
                 {/* List Organization Cards Start */}
                 <section className="mx-[100px] my-[44px]">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-[44px]">
-                        <CommonEventCard events={eventData}/>
+                    {eventData.map((event, index) => (
+                            <CommonEventCard key={index} event={event} />
+                        ))}
                     </div>
                 </section>
                 {/* List Organization Cards End */}
