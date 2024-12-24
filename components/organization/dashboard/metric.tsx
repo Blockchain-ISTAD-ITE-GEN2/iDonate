@@ -1,25 +1,24 @@
-"use client"
+"use client";
 
-import { Area, AreaChart, CartesianGrid, XAxis } from "recharts"
+import { Area, AreaChart, CartesianGrid, XAxis } from "recharts";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
+} from "@/components/ui/card";
 import {
   ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-} from "@/components/ui/chart"
-import { AverageType } from "@/difinitions/types/chart/barchart"
-
+} from "@/components/ui/chart";
+import { AverageType } from "@/difinitions/types/chart/barchart";
 
 type AverageProps = {
   data: AverageType[];
-}
+};
 
 const chartConfig = {
   today: {
@@ -30,7 +29,7 @@ const chartConfig = {
     label: "Average",
     color: "iDonate-green-primary",
   },
-} satisfies ChartConfig
+} satisfies ChartConfig;
 
 export function CardsMetric({ data }: AverageProps) {
   return (
@@ -85,5 +84,5 @@ export function CardsMetric({ data }: AverageProps) {
         </ChartContainer>
       </CardContent>
     </Card>
-  )
+  );
 }

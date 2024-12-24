@@ -18,7 +18,8 @@ export default function OrganizationSidebarComponent() {
       isActive ? "text-iDonate-green-primary" : "text-iDonate-navy-primary"
     }`;
 
-    if(pathname === "/" || 
+  if (
+    pathname === "/" ||
     pathname === "/auth/login" ||
     pathname === "/auth/sign-up" ||
     pathname === "/auth/verification" ||
@@ -32,23 +33,36 @@ export default function OrganizationSidebarComponent() {
     pathname === "/mission-vision" ||
     pathname === "/organizations" ||
     pathname === "/how-it-works"
+  )
+    return null;
+  else
+    return (
+      <section className="flex flex-col h-full border-r-2 border-iDonate-navy-accent px-6 py-4 gap-y-3">
+        <SidebarGroupLabel className="text-sm text-iDonate-gray">
+          Organization
+        </SidebarGroupLabel>
+        {menuList.map((item, index) => {
+          const isActive = pathname === item.path;
 
-     ) return null;
-    else
-
-  return (
-    <section className="flex flex-col h-full border-r-2 border-iDonate-navy-accent px-6 py-4 gap-y-3">
-      <SidebarGroupLabel className="text-sm text-iDonate-gray">
-        Organization
-      </SidebarGroupLabel>
-      {menuList.map((item, index) => {
-        const isActive = pathname === item.path;
-
-        return (
-          <Fragment key={index}>
-            {item.path && !item.active ? (
-              <Button className={`${navActiveClass(isActive)} text-lg`}>
-                <Link key={index} href={item.path} className="flex">
+          return (
+            <Fragment key={index}>
+              {item.path && !item.active ? (
+                <Button className={`${navActiveClass(isActive)} text-lg`}>
+                  <Link key={index} href={item.path} className="flex">
+                    {item.icon && (
+                      <item.icon
+                        style={{
+                          width: "1.5rem",
+                          height: "1.5rem",
+                          marginRight: "0.5rem",
+                        }}
+                      />
+                    )}
+                    {item.title}
+                  </Link>
+                </Button>
+              ) : (
+                <Button className={`${navActiveClass(isActive)} text-lg`}>
                   {item.icon && (
                     <item.icon
                       style={{
@@ -59,26 +73,12 @@ export default function OrganizationSidebarComponent() {
                     />
                   )}
                   {item.title}
-                </Link>
-              </Button>
-            ) : (
-              <Button className={`${navActiveClass(isActive)} text-lg`}>
-                {item.icon && (
-                  <item.icon
-                    style={{
-                      width: "1.5rem",
-                      height: "1.5rem",
-                      marginRight: "0.5rem",
-                    }}
-                  />
-                )}
-                {item.title}
-              </Button>
-            )}
-            {index === menuList.length - 3 && <Separator className="m-2" />}
-          </Fragment>
-        );
-      })}
-    </section>
-  );
+                </Button>
+              )}
+              {index === menuList.length - 3 && <Separator className="m-2" />}
+            </Fragment>
+          );
+        })}
+      </section>
+    );
 }

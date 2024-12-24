@@ -17,7 +17,7 @@ type ToolbarProps = {
     title: string;
   }[];
   onFilterChange: (filteredEvents: any[]) => void;
-}
+};
 
 export function Toolbar({
   events,
@@ -27,8 +27,12 @@ export function Toolbar({
   onFilterChange,
 }: ToolbarProps) {
   const [searchValue, setSearchValue] = useState("");
-  const [selectedFilters, setSelectedFilters] = useState<Record<string, any>>({});
-  const [dateRange, setDateRange] = useState<Record<string, DateRange | undefined>>({});
+  const [selectedFilters, setSelectedFilters] = useState<Record<string, any>>(
+    {},
+  );
+  const [dateRange, setDateRange] = useState<
+    Record<string, DateRange | undefined>
+  >({});
   const [filters, setFilters] = useState<Record<string, any>>({});
 
   const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -42,7 +46,9 @@ export function Toolbar({
     });
   };
 
-  const handleDateRangeChange = (selectedRanges: Record<string, DateRange | undefined>) => {
+  const handleDateRangeChange = (
+    selectedRanges: Record<string, DateRange | undefined>,
+  ) => {
     setFilters((prev) => {
       const updatedFilters = { ...prev, ...selectedRanges };
       return updatedFilters;

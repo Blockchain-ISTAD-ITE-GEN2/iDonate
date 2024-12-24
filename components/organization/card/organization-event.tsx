@@ -6,24 +6,24 @@ import { OrganizationEventCard } from "./event-organization-card";
 import events from "@/data/organizaation-event-data.json";
 
 export function OrganizationEventPage() {
-    const typedEvents: OrganizationEventType[] = events;
+  const typedEvents: OrganizationEventType[] = events;
 
   const filtersFace = [
     {
       key: "title",
       title: "Events",
-      options: Array.from(
-          new Set(typedEvents.map((event) => event.title))
-      ).map((event) => ({
-        label: event,
-        value: event,
-      })),
+      options: Array.from(new Set(typedEvents.map((event) => event.title))).map(
+        (event) => ({
+          label: event,
+          value: event,
+        }),
+      ),
     },
     {
       key: "total_raised",
       title: "Amount Range",
       options: Array.from(
-        new Set(typedEvents.map((event) => event.total_raised))
+        new Set(typedEvents.map((event) => event.total_raised)),
       ).map((amount) => ({
         label: amount.toString(),
         value: amount.toString(),
@@ -31,19 +31,19 @@ export function OrganizationEventPage() {
     },
   ];
 
-    const filtersDateRange = [
-        {
-        key: "order_date", // Assuming we are filtering by the event's order_date
-        title: "Date Range",
-        },
-    ];
+  const filtersDateRange = [
+    {
+      key: "order_date", // Assuming we are filtering by the event's order_date
+      title: "Date Range",
+    },
+  ];
 
-    const [filteredEvents, setFilteredEvents] = useState<OrganizationEventType[]>(typedEvents);
+  const [filteredEvents, setFilteredEvents] =
+    useState<OrganizationEventType[]>(typedEvents);
 
-    useEffect(() => {
-        setFilteredEvents(typedEvents); // Reset filtered events whenever `events` prop changes
-      }, [typedEvents]);
-      
+  useEffect(() => {
+    setFilteredEvents(typedEvents); // Reset filtered events whenever `events` prop changes
+  }, [typedEvents]);
 
   return (
     <>

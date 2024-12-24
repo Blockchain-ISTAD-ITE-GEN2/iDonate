@@ -1,8 +1,8 @@
-import { Column } from "@tanstack/react-table"
-import { Check, PlusCircle } from "lucide-react"
-import { cn } from "@/lib/utils"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
+import { Column } from "@tanstack/react-table";
+import { Check, PlusCircle } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   Command,
   CommandEmpty,
@@ -11,34 +11,35 @@ import {
   CommandItem,
   CommandList,
   CommandSeparator,
-} from "@/components/ui/command"
+} from "@/components/ui/command";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover"
-import { Separator } from "@/components/ui/separator"
-import { ComponentType } from "react"
+} from "@/components/ui/popover";
+import { Separator } from "@/components/ui/separator";
+import { ComponentType } from "react";
 
-interface DataTableFacetedFilterProps<TData, TValue> {
-  column?: Column<TData, TValue>
-  title?: string
+type DataTableFacetedFilterProps<TData, TValue> = {
+  column?: Column<TData, TValue>;
+  title?: string;
   options: {
-    label: number | string
-    value: number | string
-    icon?: React.ComponentType<{ className?: string }>
-  }[]
-}
+    label: number | string;
+    value: number | string;
+    icon?: React.ComponentType<{ className?: string }>;
+  }[];
+};
 
 export function DataTableFacetedFilter<TData, TValue>({
   column,
   title,
   options,
 }: DataTableFacetedFilterProps<TData, TValue>) {
-  const facets = column?.getFacetedUniqueValues()
+  const facets = column?.getFacetedUniqueValues();
   // const selectedValues = new Set(column?.getFilterValue() as string[])
-  const selectedValues = new Set<string | number | boolean>(column?.getFilterValue() as (string | number | boolean)[]); 
-
+  const selectedValues = new Set<string | number | boolean>(
+    column?.getFilterValue() as (string | number | boolean)[],
+  );
 
   return (
     <Popover>
@@ -65,7 +66,9 @@ export function DataTableFacetedFilter<TData, TValue>({
                   </Badge>
                 ) : (
                   options
-                    .filter((option: { value: number | string }) => selectedValues.has(option.value))
+                    .filter((option: { value: number | string }) =>
+                      selectedValues.has(option.value),
+                    )
                     .map((option) => (
                       <Badge
                         variant="secondary"
@@ -81,68 +84,74 @@ export function DataTableFacetedFilter<TData, TValue>({
           )}
         </Button>
       </PopoverTrigger>
-      
+
       <PopoverContent className="w-auto p-0" align="start">
         <Command>
           <CommandInput placeholder={title} />
           <CommandList>
             <CommandEmpty>No results found.</CommandEmpty>
             <CommandGroup>
-          {options
-            .sort((a, b) => {
-              const aValue = typeof a.value === "number" ? a.value : Number(a.value);
-              const bValue = typeof b.value === "number" ? b.value : Number(b.value);
+              {options
+                .sort((a, b) => {
+                  const aValue =
+                    typeof a.value === "number" ? a.value : Number(a.value);
+                  const bValue =
+                    typeof b.value === "number" ? b.value : Number(b.value);
 
-              if (!isNaN(aValue) && !isNaN(bValue)) {
-                // Both values are valid numbers, sort numerically
-                return aValue - bValue;
-              }
+                  if (!isNaN(aValue) && !isNaN(bValue)) {
+                    // Both values are valid numbers, sort numerically
+                    return aValue - bValue;
+                  }
 
-              // Fallback: handle as strings if values can't be converted to numbers
-              return String(a.value).localeCompare(String(b.value));
-            })
-            .map((option: { label: number | string; value: number | string; icon?: ComponentType<{ className?: string }> }) => {
-              const isSelected = selectedValues.has(option.value);
-              return (
-                <CommandItem
-                  key={option.value}
-                  onSelect={() => {
-                    if (isSelected) {
-                      selectedValues.delete(option.value);
-                    } else {
-                      selectedValues.add(option.value);
-                    }
-                    const filterValues = Array.from(selectedValues);
-                    column?.setFilterValue(
-                      filterValues.length ? filterValues : undefined
+                  // Fallback: handle as strings if values can't be converted to numbers
+                  return String(a.value).localeCompare(String(b.value));
+                })
+                .map(
+                  (option: {
+                    label: number | string;
+                    value: number | string;
+                    icon?: ComponentType<{ className?: string }>;
+                  }) => {
+                    const isSelected = selectedValues.has(option.value);
+                    return (
+                      <CommandItem
+                        key={option.value}
+                        onSelect={() => {
+                          if (isSelected) {
+                            selectedValues.delete(option.value);
+                          } else {
+                            selectedValues.add(option.value);
+                          }
+                          const filterValues = Array.from(selectedValues);
+                          column?.setFilterValue(
+                            filterValues.length ? filterValues : undefined,
+                          );
+                        }}
+                      >
+                        <div
+                          className={cn(
+                            "mr-2 flex h-4 w-4 items-center justify-center rounded-sm border border-primary",
+                            isSelected
+                              ? "bg-primary text-primary-foreground"
+                              : "opacity-50 [&_svg]:invisible",
+                          )}
+                        >
+                          <Check />
+                        </div>
+                        {option.icon && (
+                          <option.icon className="mr-2 h-4 w-4 text-muted-foreground" />
+                        )}
+                        <span>{option.label}</span>
+                        {facets?.get(option.value) && (
+                          <span className="ml-auto flex h-4 w-4 items-center justify-center font-mono text-xs">
+                            {facets.get(option.value)}
+                          </span>
+                        )}
+                      </CommandItem>
                     );
-                  }}
-                >
-                  <div
-                    className={cn(
-                      "mr-2 flex h-4 w-4 items-center justify-center rounded-sm border border-primary",
-                      isSelected
-                        ? "bg-primary text-primary-foreground"
-                        : "opacity-50 [&_svg]:invisible"
-                    )}
-                  >
-                    <Check />
-                  </div>
-                  {option.icon && (
-                    <option.icon className="mr-2 h-4 w-4 text-muted-foreground" />
-                  )}
-                  <span>{option.label}</span>
-                  {facets?.get(option.value) && (
-                    <span className="ml-auto flex h-4 w-4 items-center justify-center font-mono text-xs">
-                      {facets.get(option.value)}
-                    </span>
-                  )}
-                </CommandItem>
-              );
-            })}
-        </CommandGroup>
-
-
+                  },
+                )}
+            </CommandGroup>
 
             {selectedValues.size > 0 && (
               <>
@@ -161,5 +170,5 @@ export function DataTableFacetedFilter<TData, TValue>({
         </Command>
       </PopoverContent>
     </Popover>
-  )
+  );
 }

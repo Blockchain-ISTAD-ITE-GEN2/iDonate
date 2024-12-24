@@ -1,6 +1,6 @@
 on:
   push:
-    branches: [ "development" ]
+    branches: ["development"]
 
 env:
   # NEXUS_REGISTRY: registry-new.devnerd.store # nexus repo for storing docker image
@@ -11,7 +11,7 @@ env:
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
-#    environment: DOCKER_REPOSITORY
+    #    environment: DOCKER_REPOSITORY
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3

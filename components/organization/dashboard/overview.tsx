@@ -1,22 +1,23 @@
 "use client";
 import { BarchartType } from "@/difinitions/types/chart/barchart";
-import { Bar, BarChart, CartesianGrid, ResponsiveContainer, XAxis, YAxis } from "recharts";
+import {
+  Bar,
+  BarChart,
+  CartesianGrid,
+  ResponsiveContainer,
+  XAxis,
+  YAxis,
+} from "recharts";
 
 type OverviewProps = {
   data: BarchartType[];
-}
+};
 
 export function Overview({ data }: OverviewProps) {
-
   return (
     <ResponsiveContainer width="100%" height={480}>
       <BarChart data={data}>
-        <XAxis
-          dataKey="name"
-          fontSize={12}
-          tickLine={false}
-          axisLine={false}
-        />
+        <XAxis dataKey="name" fontSize={12} tickLine={false} axisLine={false} />
         <YAxis
           fontSize={12}
           tickLine={false}
@@ -24,7 +25,7 @@ export function Overview({ data }: OverviewProps) {
           tickFormatter={(value) => `$${value}`}
         />
 
-        <CartesianGrid 
+        <CartesianGrid
           className="stroke-1 stroke-iDonate-navy-accent"
           vertical={false} // Disable vertical grid lines, leaving only horizontal lines
         />

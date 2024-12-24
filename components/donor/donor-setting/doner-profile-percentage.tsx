@@ -2,12 +2,7 @@
 
 import { Label, Pie, PieChart } from "recharts";
 
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   ChartConfig,
   ChartContainer,
@@ -68,29 +63,34 @@ type DonorProfilePercentageProps = {
   percentages: number[];
 };
 
-export function DonorProfilePercentage({ percentages }: DonorProfilePercentageProps) {
+export function DonorProfilePercentage({
+  percentages,
+}: DonorProfilePercentageProps) {
   // Merge static categories with dynamic percentages
-  
+
   const chartData = useMemo(() => {
     // Normalize percentages to ensure they don't exceed 100
     const totalInput = percentages.reduce((acc, curr) => acc + curr, 0);
-    
+
     const normalizedPercentages =
       totalInput > 100
         ? percentages.map((p) => (p / totalInput) * 100) // Scale down to 100%
         : percentages;
-  
+
     // Create base data with normalized values
     const baseData = staticCategories.map((category, index) => ({
       ...category,
       completion: normalizedPercentages[index] || 0,
       fill: normalizedPercentages[index] > 0 ? category.fill : "#FF0000", // Red for 0%
     }));
-  
+
     // Calculate remaining percentage
-    const totalCompletion = baseData.reduce((acc, curr) => acc + curr.completion, 0);
+    const totalCompletion = baseData.reduce(
+      (acc, curr) => acc + curr.completion,
+      0,
+    );
     const remainingPercentage = Math.max(100 - totalCompletion, 0);
-  
+
     // Add "Remaining" category only if needed
     if (remainingPercentage > 0) {
       baseData.push({
@@ -99,10 +99,10 @@ export function DonorProfilePercentage({ percentages }: DonorProfilePercentagePr
         fill: "#DCE3F0",
       });
     }
-  
+
     return baseData;
   }, [percentages]);
-  
+
   return (
     <Card className="h-[580px] flex flex-col rounded-lg border-2 border-iDonate-navy-accent shadow-light">
       <CardHeader className="items-center pb-0">
@@ -128,37 +128,41 @@ export function DonorProfilePercentage({ percentages }: DonorProfilePercentagePr
               innerRadius={60}
               strokeWidth={5}
             >
-            <Label
-              content={({ viewBox }) => {
-                if (viewBox && "cx" in viewBox && "cy" in viewBox) {
-                  const { cx, cy } = viewBox;
-                  return (
-                    <text
-                      x={cx}
-                      y={cy}
-                      textAnchor="middle"
-                      dominantBaseline="middle"
-                    >
-                      <tspan
+              <Label
+                content={({ viewBox }) => {
+                  if (viewBox && "cx" in viewBox && "cy" in viewBox) {
+                    const { cx, cy } = viewBox;
+                    return (
+                      <text
                         x={cx}
                         y={cy}
-                        className="fill-iDonate-green-primary text-3xl font-bold"
+                        textAnchor="middle"
+                        dominantBaseline="middle"
                       >
-                        {Math.min(percentages.reduce((acc, curr) => acc + curr, 0), 100)}%
-                      </tspan>
-                      <tspan
-                        x={cx}
-                        y={(cy || 0) + 24}
-                        className="fill-muted-foreground"
-                      >
-                        Completed
-                      </tspan>
-                    </text>
-                  );
-                }
-                return null;
-              }}
-            />
+                        <tspan
+                          x={cx}
+                          y={cy}
+                          className="fill-iDonate-green-primary text-3xl font-bold"
+                        >
+                          {Math.min(
+                            percentages.reduce((acc, curr) => acc + curr, 0),
+                            100,
+                          )}
+                          %
+                        </tspan>
+                        <tspan
+                          x={cx}
+                          y={(cy || 0) + 24}
+                          className="fill-muted-foreground"
+                        >
+                          Completed
+                        </tspan>
+                      </text>
+                    );
+                  }
+                  return null;
+                }}
+              />
             </Pie>
           </PieChart>
         </ChartContainer>

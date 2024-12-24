@@ -1,6 +1,6 @@
-import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "@/redux/store";
-import axios from 'axios';
+import axios from "axios";
 
 interface AuthState {
   token: string | null;
@@ -29,51 +29,51 @@ const initialState: AuthState = {
 };
 
 export const loginWithGoogle = createAsyncThunk(
-  'auth/loginWithGoogle',
+  "auth/loginWithGoogle",
   async (token: string, { rejectWithValue }) => {
     try {
-      const response = await axios.post('/api/auth/google', { token });
+      const response = await axios.post("/api/auth/google", { token });
       return response.data;
     } catch (error) {
-      return rejectWithValue('Failed to login with Google');
+      return rejectWithValue("Failed to login with Google");
     }
-  }
+  },
 );
 
 export const loginWithFacebook = createAsyncThunk(
-  'auth/loginWithFacebook',
+  "auth/loginWithFacebook",
   async (token: string, { rejectWithValue }) => {
     try {
-      const response = await axios.post('/api/auth/facebook', { token });
+      const response = await axios.post("/api/auth/facebook", { token });
       return response.data;
     } catch (error) {
-      return rejectWithValue('Failed to login with Facebook');
+      return rejectWithValue("Failed to login with Facebook");
     }
-  }
+  },
 );
 
 const authSlice = createSlice({
-  name: 'auth',
+  name: "auth",
   initialState,
   reducers: {
     setToken: (state, action: PayloadAction<string>) => {
       state.token = action.payload;
-  },
-  setVerifyToken: (state, action: PayloadAction<string>) => {
+    },
+    setVerifyToken: (state, action: PayloadAction<string>) => {
       state.verifyToken = action.payload;
-  },
-  setResendToken: (state, action: PayloadAction<string>) => {
+    },
+    setResendToken: (state, action: PayloadAction<string>) => {
       state.resendToken = action.payload;
-  },
-  setForgotToken: (state, action: PayloadAction<string>) => {
+    },
+    setForgotToken: (state, action: PayloadAction<string>) => {
       state.forgetToken = action.payload;
-  },
-  setEmail: (state, action: PayloadAction<string>) => {
+    },
+    setEmail: (state, action: PayloadAction<string>) => {
       state.email = action.payload;
-  },
-  setUser: (state, action: PayloadAction<string>) => {
+    },
+    setUser: (state, action: PayloadAction<string>) => {
       state.userUuid = action.payload;
-  },
+    },
     logout: (state) => {
       state.user = null;
       state.isAuthenticated = false;
@@ -110,7 +110,14 @@ const authSlice = createSlice({
   },
 });
 
-export const { logout, setToken, setResendToken, setForgotToken, setEmail, setUser } = authSlice.actions;
+export const {
+  logout,
+  setToken,
+  setResendToken,
+  setForgotToken,
+  setEmail,
+  setUser,
+} = authSlice.actions;
 
 export default authSlice.reducer;
 

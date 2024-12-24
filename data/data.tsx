@@ -1,4 +1,4 @@
-import {User} from '@/difinitions/types/media/user';
+import { User } from "@/difinitions/types/media/user";
 
 import {
   ArrowDown,
@@ -9,7 +9,7 @@ import {
   CircleOff,
   HelpCircle,
   Timer,
-} from "lucide-react"
+} from "lucide-react";
 
 export const labels = [
   {
@@ -24,7 +24,7 @@ export const labels = [
     value: "documentation",
     label: "Documentation",
   },
-]
+];
 
 export const statuses = [
   {
@@ -52,7 +52,7 @@ export const statuses = [
     label: "Canceled",
     icon: CircleOff,
   },
-]
+];
 
 export const priorities = [
   {
@@ -70,20 +70,20 @@ export const priorities = [
     value: "high",
     icon: ArrowUp,
   },
-]
+];
 
 export const mockUsers: User[] = [
   {
-        id: '1',
-        firstname: 'John',
-        lastname: 'Doe',
-        gender:"male",
-        phoneNumber: '123456789',
-        email: 'johndoe@gmail.com',
-        username: 'johndoe',
-        password:'123',
-        dateOfBirth:'12/12/1990',
-        isActive: true,
-        lastLogin: new Date(),
-  }
-]
+    id: "1",
+    firstname: "John",
+    lastname: "Doe",
+    gender: "male",
+    phoneNumber: "123456789",
+    email: "johndoe@gmail.com",
+    username: "johndoe",
+    password: "123",
+    dateOfBirth: "12/12/1990",
+    isActive: true,
+    lastLogin: new Date(),
+  },
+];

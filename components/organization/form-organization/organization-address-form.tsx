@@ -1,7 +1,7 @@
-"use client"
-import { z } from "zod"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { Button } from "@/components/ui/button"
+"use client";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -10,19 +10,24 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { useForm } from "react-hook-form"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { useState } from "react"
-import { SquarePen } from "lucide-react"
-import {organizationAddressSchema} from "@/components/schema/schema";
-import {AlertComfirmDialog} from "@/components/Alert/Alert-Dialog";
-
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { useForm } from "react-hook-form";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { useState } from "react";
+import { SquarePen } from "lucide-react";
+import { organizationAddressSchema } from "@/components/schema/schema";
+import { AlertComfirmDialog } from "@/components/Alert/Alert-Dialog";
 
 export function OrganizationAddressForm() {
   // 1. State to toggle between view and edit mode
-  const [isEditing, setIsEditing] = useState(false)
+  const [isEditing, setIsEditing] = useState(false);
 
   // 2. Define your form.
   const form = useForm<z.infer<typeof organizationAddressSchema>>({
@@ -30,18 +35,18 @@ export function OrganizationAddressForm() {
     defaultValues: {
       address: "",
     },
-  })
+  });
 
   // 3. Define a submit handler.
   function onSubmit(values: z.infer<typeof organizationAddressSchema>) {
-    console.log(values)
+    console.log(values);
     // Switch back to view mode after submitting
-    setIsEditing(false)
+    setIsEditing(false);
   }
 
   function handleCancel() {
-    form.reset() // Reset the form
-    setIsEditing(false) // Switch back to view mode
+    form.reset(); // Reset the form
+    setIsEditing(false); // Switch back to view mode
   }
 
   return (
@@ -52,7 +57,7 @@ export function OrganizationAddressForm() {
           <Card className="flex flex-col rounded-lg border-2 border-iDonate-navy-accent gap-6 p-9">
             <CardHeader className="flex flex-row items-center justify-between p-0 m-0">
               <CardTitle className="text-2xl font-medium text-iDonate-navy-secondary">
-              Location
+                Location
               </CardTitle>
 
               <Button
@@ -66,7 +71,9 @@ export function OrganizationAddressForm() {
 
             <CardContent className="flex w-fle gap-9 p-0 m-0">
               <div className="flex flex-col space-y-3">
-                <CardDescription className="text-xl text-iDonate-navy-primary">Norodom Blvd, 41, Phnom Penh</CardDescription>
+                <CardDescription className="text-xl text-iDonate-navy-primary">
+                  Norodom Blvd, 41, Phnom Penh
+                </CardDescription>
               </div>
             </CardContent>
           </Card>
@@ -139,5 +146,5 @@ export function OrganizationAddressForm() {
         )}
       </form>
     </Form>
-  )
+  );
 }

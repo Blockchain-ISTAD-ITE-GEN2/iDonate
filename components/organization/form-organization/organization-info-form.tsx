@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
-import { z } from "zod"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { Button } from "@/components/ui/button"
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -11,19 +11,24 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { useForm } from "react-hook-form"
-import { useState } from "react"
-import { SquarePen } from "lucide-react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import {organizationInfomationSchema} from "@/components/schema/schema";
-import {AlertComfirmDialog} from "@/components/Alert/Alert-Dialog";
-
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { useForm } from "react-hook-form";
+import { useState } from "react";
+import { SquarePen } from "lucide-react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { organizationInfomationSchema } from "@/components/schema/schema";
+import { AlertComfirmDialog } from "@/components/Alert/Alert-Dialog";
 
 export function OrganizationInfoForm() {
   // 1. State to toggle between view and edit mode
-  const [isEditing, setIsEditing] = useState(false)
+  const [isEditing, setIsEditing] = useState(false);
 
   // 2. Define your form.
   const form = useForm<z.infer<typeof organizationInfomationSchema>>({
@@ -33,20 +38,19 @@ export function OrganizationInfoForm() {
       email: "",
       contact: "",
     },
-  })
+  });
 
   // 3. Define a submit handler.
   function onSubmit(values: z.infer<typeof organizationInfomationSchema>) {
-    console.log(values)
+    console.log(values);
     // Switch back to view mode after submitting
-    setIsEditing(false)
+    setIsEditing(false);
   }
 
   function handleCancel() {
-    form.reset() // Reset the form
-    setIsEditing(false) // Switch back to view mode
+    form.reset(); // Reset the form
+    setIsEditing(false); // Switch back to view mode
   }
-
 
   return (
     <Form {...form}>
@@ -70,20 +74,30 @@ export function OrganizationInfoForm() {
 
             <CardContent className="flex w-fle gap-9 p-0 m-0">
               <div className="flex flex-col space-y-3">
-                <CardDescription className="text-lg text-iDonate-gray">Full Name</CardDescription>
-                <CardDescription className="text-xl text-iDonate-navy-primary">Elizabeth Joe</CardDescription>
+                <CardDescription className="text-lg text-iDonate-gray">
+                  Full Name
+                </CardDescription>
+                <CardDescription className="text-xl text-iDonate-navy-primary">
+                  Elizabeth Joe
+                </CardDescription>
               </div>
 
               <div className="flex flex-col space-y-3">
-                <CardDescription className="text-lg text-iDonate-gray">Email</CardDescription>
+                <CardDescription className="text-lg text-iDonate-gray">
+                  Email
+                </CardDescription>
                 <CardDescription className="text-xl text-iDonate-navy-primary">
                   ElizabethJoe@gmail.com
                 </CardDescription>
               </div>
 
               <div className="flex flex-col space-y-3">
-                <CardDescription className="text-lg text-iDonate-gray">Contact</CardDescription>
-                <CardDescription className="text-xl text-iDonate-navy-primary">+855 12345678</CardDescription>
+                <CardDescription className="text-lg text-iDonate-gray">
+                  Contact
+                </CardDescription>
+                <CardDescription className="text-xl text-iDonate-navy-primary">
+                  +855 12345678
+                </CardDescription>
               </div>
             </CardContent>
           </Card>
@@ -92,12 +106,12 @@ export function OrganizationInfoForm() {
         {/* Edit Mode */}
         {isEditing && (
           <Card className="flex flex-col bg-iDonate-light-gray rounded-lg border-2 border-iDonate-navy-accent gap-6 p-9">
-          <CardHeader className="flex flex-row items-center justify-between p-0 m-0">
-            <CardTitle className="text-2xl font-medium text-iDonate-navy-secondary">
-              Organization Information
-            </CardTitle>
-        
-            <div className="flex gap-3">
+            <CardHeader className="flex flex-row items-center justify-between p-0 m-0">
+              <CardTitle className="text-2xl font-medium text-iDonate-navy-secondary">
+                Organization Information
+              </CardTitle>
+
+              <div className="flex gap-3">
                 {/* Cancel Button */}
                 {form.formState.isDirty ? (
                   <AlertComfirmDialog
@@ -133,63 +147,81 @@ export function OrganizationInfoForm() {
                   Submit
                 </Button>
               </div>
-          </CardHeader>
-        
-          <CardContent className="flex gap-9 p-0 m-0">
-            <FormField
-              control={form.control}
-              name="fullName"
-              render={({ field }) => (
-                <FormItem className="flex-1">
-                  <FormLabel className="text-sm text-iDonate-navy-secondary">Full Name</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Elizabeth Joe" className="w-full" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                  <FormDescription className="text-iDonate-gray text-sm">
-                    This is your organization's full name.
-                  </FormDescription>
-                </FormItem>
-              )}
-            />
-        
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem className="flex-1">
-                  <FormLabel className="text-sm text-iDonate-navy-secondary">Email</FormLabel>
-                  <FormControl>
-                    <Input placeholder="ElizabethJoe@gmail.com" className="w-full" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                  <FormDescription className="text-iDonate-gray text-sm">
-                    This is your organization's contact email.
-                  </FormDescription>
-                </FormItem>
-              )}
-            />
-        
-            <FormField
-              control={form.control}
-              name="contact"
-              render={({ field }) => (
-                <FormItem className="flex-1">
-                  <FormLabel className="text-sm text-iDonate-navy-secondary">Contact</FormLabel>
-                  <FormControl>
-                    <Input placeholder="+855 12345678" className="w-full" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                  <FormDescription className="text-iDonate-gray text-sm">
-                    This is your organization's contact number.
-                  </FormDescription>
-                </FormItem>
-              )}
-            />
-          </CardContent>
-        </Card>        
+            </CardHeader>
+
+            <CardContent className="flex gap-9 p-0 m-0">
+              <FormField
+                control={form.control}
+                name="fullName"
+                render={({ field }) => (
+                  <FormItem className="flex-1">
+                    <FormLabel className="text-sm text-iDonate-navy-secondary">
+                      Full Name
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Elizabeth Joe"
+                        className="w-full"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                    <FormDescription className="text-iDonate-gray text-sm">
+                      This is your organization's full name.
+                    </FormDescription>
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem className="flex-1">
+                    <FormLabel className="text-sm text-iDonate-navy-secondary">
+                      Email
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="ElizabethJoe@gmail.com"
+                        className="w-full"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                    <FormDescription className="text-iDonate-gray text-sm">
+                      This is your organization's contact email.
+                    </FormDescription>
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="contact"
+                render={({ field }) => (
+                  <FormItem className="flex-1">
+                    <FormLabel className="text-sm text-iDonate-navy-secondary">
+                      Contact
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="+855 12345678"
+                        className="w-full"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                    <FormDescription className="text-iDonate-gray text-sm">
+                      This is your organization's contact number.
+                    </FormDescription>
+                  </FormItem>
+                )}
+              />
+            </CardContent>
+          </Card>
         )}
       </form>
     </Form>
-  )
+  );
 }

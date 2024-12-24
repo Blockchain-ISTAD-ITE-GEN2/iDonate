@@ -8,8 +8,9 @@ import { useEffect, useState } from "react";
 export default function TransactionHistory() {
   const typedTransactions: TransactionType[] = transactions;
 
-  const [filteredtransactions, setFilteredtransactions] = useState<TransactionType[]>(transactions);
-  
+  const [filteredtransactions, setFilteredtransactions] =
+    useState<TransactionType[]>(transactions);
+
   useEffect(() => {
     setFilteredtransactions(typedTransactions); // Reset filtered transactions whenever `transactions` prop changes
   }, [typedTransactions]);
@@ -19,7 +20,7 @@ export default function TransactionHistory() {
       key: "event",
       title: "Events",
       options: Array.from(
-          new Set(typedTransactions.map((transaction) => transaction.event))
+        new Set(typedTransactions.map((transaction) => transaction.event)),
       ).map((transaction) => ({
         label: transaction,
         value: transaction,
@@ -30,7 +31,7 @@ export default function TransactionHistory() {
       key: "amount",
       title: "Amount Range",
       options: Array.from(
-        new Set(typedTransactions.map((transaction) => transaction.amount))
+        new Set(typedTransactions.map((transaction) => transaction.amount)),
       ).map((amount) => ({
         label: amount.toString(),
         value: amount.toString(),
@@ -47,21 +48,19 @@ export default function TransactionHistory() {
 
   return (
     <section className="flex flex-col gap-6">
-
       <Toolbar
-          events={typedTransactions}
-          filtersFace={filtersFace}
-          searchKey={"event"}
-          onFilterChange={setFilteredtransactions}
-          // filtersDateRange={filtersDateRange}
+        events={typedTransactions}
+        filtersFace={filtersFace}
+        searchKey={"event"}
+        onFilterChange={setFilteredtransactions}
+        // filtersDateRange={filtersDateRange}
       />
 
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
         {filteredtransactions.map((transaction, index) => (
           <TransactionHistoryCard key={index} transaction={transaction} />
-      ))}
+        ))}
       </div>
-      
     </section>
   );
 }

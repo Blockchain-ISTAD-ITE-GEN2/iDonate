@@ -5,27 +5,27 @@ import { EventType } from "@/difinitions/dto/EventType";
 import { CommonEventCard } from "../events/organization-event/CommonEventCad";
 import events from "@/data/events-data.json";
 
-
 export function SearchPage() {
-    const typedEvents: EventType[] = events;
-  const [filteredEvents, setFilteredEvents] = useState<EventType[]>(typedEvents);
+  const typedEvents: EventType[] = events;
+  const [filteredEvents, setFilteredEvents] =
+    useState<EventType[]>(typedEvents);
 
   const filtersFace = [
     {
       key: "title",
       title: "Events",
-      options: Array.from(
-          new Set(typedEvents.map((event) => event.title))
-      ).map((event) => ({
-        label: event,
-        value: event,
-      })),
+      options: Array.from(new Set(typedEvents.map((event) => event.title))).map(
+        (event) => ({
+          label: event,
+          value: event,
+        }),
+      ),
     },
     {
       key: "total_donor",
       title: "Donor Range",
       options: Array.from(
-        new Set(typedEvents.map((event) => event.total_donor))
+        new Set(typedEvents.map((event) => event.total_donor)),
       ).map((donor) => ({
         label: donor.toString(),
         value: donor.toString(),
@@ -36,7 +36,7 @@ export function SearchPage() {
       key: "total_amount",
       title: "Amount Range",
       options: Array.from(
-        new Set(typedEvents.map((event) => event.total_amount))
+        new Set(typedEvents.map((event) => event.total_amount)),
       ).map((amount) => ({
         label: amount.toString(),
         value: amount.toString(),

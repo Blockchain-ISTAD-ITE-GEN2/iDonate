@@ -1,4 +1,4 @@
-export type UserRole = 'donor' | 'organization' ;
+export type UserRole = "donor" | "organization";
 
 export interface User {
   id: string;
@@ -10,5 +10,4 @@ export interface User {
   lastLogin?: Date;
   createdAt: Date;
   updatedAt: Date;
-
-} 
+}

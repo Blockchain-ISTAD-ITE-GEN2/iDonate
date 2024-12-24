@@ -1,19 +1,19 @@
-'use client'
+"use client";
 
-import { Heart } from 'lucide-react'
-import { Button } from "@/components/ui/button"
-import Group from '@/public/images/group.png'
+import { Heart } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import Group from "@/public/images/group.png";
 
 export default function BannerLandingCard() {
   return (
     <div className="relative min-h-[500px] flex items-center justify-center overflow-hidden lg:px-[100px]">
       {/* Background Image */}
-      <div 
+      <div
         className="absolute inset-0 z-0"
         style={{
           backgroundImage: `url(${Group.src})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center'
+          backgroundSize: "cover",
+          backgroundPosition: "center",
         }}
       >
         {/* Green Overlay */}
@@ -30,14 +30,17 @@ export default function BannerLandingCard() {
 
       {/* Content */}
       <div className="relative z-20 text-center px-4 max-w-4xl mx-auto text-white">
-        <p className="text-xl sm:text-2xl mb-4 khmer-font" lang='km'>
+        <p className="text-xl sm:text-2xl mb-4 khmer-font" lang="km">
           រួមចំណែកជាមួយដើម្បី សង្គមយើងប្រសើរឡើង
         </p>
-        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 sm:mb-8 khmer-font leading-relaxed" lang='km'>
+        <h1
+          className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 sm:mb-8 khmer-font leading-relaxed"
+          lang="km"
+        >
           ការបរិច្ចាគរបស់គឺន័យខ្លាំងណាស់សម្រាប់ពួកគាត់ <br />
-          <span className='leading-loose'>ចែករំលែកអ្វីអ្នកអាចចែកបាន</span>
+          <span className="leading-loose">ចែករំលែកអ្វីអ្នកអាចចែកបាន</span>
         </h1>
       </div>
     </div>
-  )
+  );
 }
