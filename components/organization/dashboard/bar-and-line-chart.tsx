@@ -12,7 +12,7 @@ import { TransactionType } from "@/difinitions/types/table-type/transaction";
 import barchart from "@/data/barchart.json";
 import averages from "@/data/average-data.json";
 import transactions from "@/data/transactions.json";
-import { ReacentTransacctions } from "./ReacentTransacctions";
+import { ReacentTransacctions } from "@/components/organization/dashboard/ReacentTransacctions";
 
 export function BarAndLineChart() {
   const barchartdata: BarchartType[] = Object.entries(barchart).map(

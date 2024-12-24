@@ -66,3 +66,11 @@ export const organizationMediaSchema = z.object({
 export const organizationReferenceSchema = z.object({
   images: z.array(z.instanceof(File)),
 });
+
+export const donationSchema = z.object({
+  remark: z
+    .string()
+    .max(500, "Remark cannot exceed 500 characters.")
+    .nullable(),
+  visibily: z.boolean(),
+});
