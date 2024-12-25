@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { SearchInput } from "@/components/ui/SearchInput";
 import { DropDownButtonComponent } from "@/components/dropdown-button/DropDownButtonComponent";
 import { EventTypeParam } from "@/difinitions/types/media/organization";
-import { CommonEventCard } from "@/components/events/organization-event/CommonEventCad";
+import { CommonEventCard } from "@/components/events/common-card/CommonEventCad";
 import { Button } from "@/components/ui/button";
 
 export default function CategoryOnPageComponent() {

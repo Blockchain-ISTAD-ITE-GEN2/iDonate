@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { CommonEventCard } from "@/components/events/organization-event/CommonEventCad";
+import { CommonEventCard } from "@/components/events/common-card/CommonEventCad";
 import { Button } from "@/components/ui/button";
 import { EventTypeParam } from "@/difinitions/types/media/organization";
 import { AccordionCategory } from "@/components/events/categories/categorydetail/AccordionCategory";
