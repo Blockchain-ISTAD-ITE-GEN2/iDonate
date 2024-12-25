@@ -1,8 +1,8 @@
-'use client'
+"use client";
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import HeroSectionImageOne from "@/public/landing/RuralKidStudy.jpg";
 import HeroSectionImageTwo from "@/public/landing/RuralKidGroup.jpg";
@@ -38,7 +38,7 @@ export default function HeroSectionComponent() {
       className="w-full px-5 py-16 md:py-14 lg:px-[100px] mx-auto overflow-hidden bg-gradient-to-br from-slate-100 to-slate-200"
       lang="km"
     >
-      <motion.div 
+      <motion.div
         className="flex flex-wrap md:flex-nowrap items-start md:items-center justify-between"
         variants={containerVariants}
         initial="hidden"
@@ -54,7 +54,7 @@ export default function HeroSectionComponent() {
           <motion.h2 
             className="text-2xl sm:text-3xl md:text-4xl font-medium text-iDonate-green-primary py-2 md:py-0"
             variants={itemVariants}
-          >            
+          >
             មានប្រសិទ្ធភាព ជាមួយ <span className="font-inter">iDonate</span>
           </motion.h2>
 
@@ -64,7 +64,9 @@ export default function HeroSectionComponent() {
           >
             iDonate បានប្រើប្រាស់បច្ចេកវិទ្យា Blockchain
             ដើម្បីធ្វើឱ្យប្រព័ន្ធបរិច្ចាគមាន តម្លាភាព សុវត្ថិភាព
-            និងមានប្រសិទ្ធភាពខ្ពស់​ ដែលធ្វើឡើងដើម្បីធានាថាចំនួនទឹកប្រាក់ដែលបានបរិច្ចាគ ត្រូវបានដល់ដៃជនរងគ្រោះយ៉ាងពិតប្រាកដ​ ដោយគ្មានការក្លែងបន្លំ
+            និងមានប្រសិទ្ធភាពខ្ពស់​
+            ដែលធ្វើឡើងដើម្បីធានាថាចំនួនទឹកប្រាក់ដែលបានបរិច្ចាគ
+            ត្រូវបានដល់ដៃជនរងគ្រោះយ៉ាងពិតប្រាកដ​ ដោយគ្មានការក្លែងបន្លំ
           </motion.p>
           <motion.div 
             className="flex flex-wrap gap-6 py-4"
@@ -76,11 +78,11 @@ export default function HeroSectionComponent() {
             </Button>
           </motion.div>
         </div>
-        <motion.div 
+        <motion.div
           className="relative w-full md:w-3/5 h-[450px] sm:h-[500px] md:h-[600px] flex items-center justify-center py-8 md:py-14"
           variants={itemVariants}
         >
-          <motion.div 
+          <motion.div
             className="absolute top-10 left-0 z-10 w-[220px] sm:w-[280px] lg:w-[350px] h-[220px] sm:h-[280px] lg:h-[350px] rounded-full overflow-hidden shadow-xl"
             // whileHover={{ scale: 1.05, rotate: -5 }}
             // transition={{ duration: 0.3 }}
@@ -95,7 +97,7 @@ export default function HeroSectionComponent() {
               quality={100}
             />
           </motion.div>
-          <motion.div 
+          <motion.div
             className="absolute top-20 left-16 sm:left-[50px] md:left-[100px] lg:left-[220px] w-[300px] sm:w-[350px] md:w-[450px] lg:w-[500px] h-[300px] sm:h-[350px] md:h-[450px] lg:h-[500px] rounded-full overflow-hidden shadow-xl"
             // whileHover={{ scale: 1.05, rotate: 5 }}
             // transition={{ duration: 0.3 }}
@@ -125,18 +127,25 @@ export default function HeroSectionComponent() {
           className="text-iDonate-navy-primary hover:bg-transparent hover:text-iDonate-green-primary transition-colors duration-300 "
         >
           ស្វែងយល់បន្ថែម អំពី iDonate
-          <ChevronDown className={`ml-2 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`} />
+          <ChevronDown
+            className={`ml-2 transition-transform duration-300 ${isExpanded ? "rotate-180" : ""}`}
+          />
         </Button>
         <AnimatePresence>
           {isExpanded && (
             <motion.div
               initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
+              animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.3 }}
               className="mt-4 text-gray-600 text-lg leading-relaxed max-w-3xl mx-auto"
             >
-              iDonate គឺជាកម្មវិធីបរិច្ចាគតាមប្រព័ន្ធអេឡិចត្រូនិចដែលប្រើប្រាស់បច្ចេកវិទ្យា Blockchain ដើម្បីធានានូវតម្លាភាព និងសុវត្ថិភាពខ្ពស់។ យើងផ្តល់នូវវេទិកាងាយស្រួលប្រើប្រាស់សម្រាប់អ្នកបរិច្ចាគ និងអង្គការសប្បុរសធម៌ ដោយធានាថាការបរិច្ចាគរបស់អ្នកទៅដល់អ្នកដែលត្រូវការវាពិតប្រាកដ។
+              iDonate
+              គឺជាកម្មវិធីបរិច្ចាគតាមប្រព័ន្ធអេឡិចត្រូនិចដែលប្រើប្រាស់បច្ចេកវិទ្យា
+              Blockchain ដើម្បីធានានូវតម្លាភាព និងសុវត្ថិភាពខ្ពស់។
+              យើងផ្តល់នូវវេទិកាងាយស្រួលប្រើប្រាស់សម្រាប់អ្នកបរិច្ចាគ
+              និងអង្គការសប្បុរសធម៌
+              ដោយធានាថាការបរិច្ចាគរបស់អ្នកទៅដល់អ្នកដែលត្រូវការវាពិតប្រាកដ។
             </motion.div>
           )}
         </AnimatePresence>

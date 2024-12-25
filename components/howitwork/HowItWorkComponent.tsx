@@ -1,12 +1,12 @@
-"use client"
+"use client";
 
-import Image from "next/image"
-import { Button } from "@/components/ui/button"
-import { motion } from "framer-motion"
-import StudentHeroSection from "@/public/howitwork/students.png"
-import TransactionCommunication from "@/public/howitwork/image 24.png"
-import ProcessIllustration from "@/public/howitwork/Rectangle10206.png"
-import ProcessOrganisation from "@/public/howitwork/image.png"
+import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
+import StudentHeroSection from "@/public/howitwork/students.png";
+import TransactionCommunication from "@/public/howitwork/image 24.png";
+import ProcessIllustration from "@/public/howitwork/Rectangle10206.png";
+import ProcessOrganisation from "@/public/howitwork/image.png";
 
 export default function HowItWorks() {
   return (
@@ -119,142 +119,160 @@ export default function HowItWorks() {
       </div>
     </section>
 
-    {/* Community Section */}
-    <section className="relative py-10 md:py-20 bg-cover bg-center" style={{ backgroundImage:`url(${ProcessIllustration.src})` }}>
-      <div className="absolute inset-0 bg-black bg-opacity-50" />
-      <div className="container mx-auto px-4 relative">
-        <div className="max-w-3xl mx-auto text-center">
+      {/* Community Section */}
+      <section
+        className="relative py-10 md:py-20 bg-cover bg-center"
+        style={{ backgroundImage: `url(${ProcessIllustration.src})` }}
+      >
+        <div className="absolute inset-0 bg-black bg-opacity-50" />
+        <div className="container mx-auto px-4 relative">
+          <div className="max-w-3xl mx-auto text-center">
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-2xl md:text-3xl font-bold mb-4 md:mb-6 font-siemreap text-white"
+            >
+              ដំណើរការរបស់សប្បុរសជន
+            </motion.h2>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="text-base md:text-lg mb-6 md:mb-8 font-siemreap px-4 text-white"
+            >
+              បង្កើតគណនីហើយចាប់ផ្តើមធ្វើការបរិច្ចាគ និងតាមដាន
+              ការបរិច្ចាគរបស់អ្នកត្រូវបានប្រើប្រាស់ដើម្បីជួយដល់សហគមន៍។
+              ក្នុងនាមជាសប្បុរសជនម្នាក់
+              អ្នកអាចមើលឃើញថាតើការបរិច្ចាគរបស់អ្នកបានជួយប្រជាជនប៉ុន្មាននាក់។
+            </motion.p>
+            <Button className="bg-green-500 hover:bg-green-600 w-full md:w-auto">
+              ចាប់ផ្តើមការបរិច្ចាគ
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* Process Section */}
+      <section className="py-10 md:py-20 bg-white">
+        <div className="container mx-auto px-4">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-2xl md:text-3xl font-bold mb-4 md:mb-6 font-siemreap text-white"
+            className="text-xl md:text-2xl font-bold mb-8 md:mb-12 font-siemreap text-center text-iDonate-navy-secondary"
           >
             ដំណើរការរបស់សប្បុរសជន
           </motion.h2>
-          <motion.p
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              className="order-last md:order-first"
+            >
+              <Image
+                src={ProcessOrganisation}
+                alt="Process steps"
+                width={500}
+                height={400}
+                className="w-full"
+              />
+            </motion.div>
+            <div className="space-y-6 md:space-y-8">
+              {[
+                {
+                  number: "១",
+                  title: "ជំហានទី ១៖ ចុះឈ្មោះជាអ្នកផ្តល់ជំនួយ",
+                  description:
+                    "ចុះឈ្មោះជា 'Contributor' ដើម្បីចាប់ផ្តើមធ្វើការបរិច្ចាគប្រកបដោយតម្លាភាព",
+                },
+                {
+                  number: "២",
+                  title: "ជំហានទី ២៖ ធ្វើការបរិច្ចាគ",
+                  description:
+                    "ជាមួយនឹងការសន្យាថាការបរិច្ចាគរបស់អ្នក ១០០% នឹងដល់ដៃអ្នកទទួលផ្ទាល់ដោយគ្មានការកាត់ថ្លៃសេវា",
+                },
+                {
+                  number: "៣",
+                  title: "ជំហានទី ៣៖ តាមដានការបរិច្ចាគរបស់អ្នក",
+                  description:
+                    "មើលថាតើការបរិច្ចាគរបស់អ្នក បានជួយដល់មនុស្សប៉ុន្មាននាក់ហើយ",
+                },
+              ].map((step, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.2 }}
+                  className="flex gap-4"
+                >
+                  <div className="flex-shrink-0 w-8 h-8 bg-green-100 rounded-full flex items-center justify-center text-green-600 font-bold">
+                    {step.number}
+                  </div>
+                  <div>
+                    <h3 className="font-semibold mb-2 font-siemreap text-sm md:text-base text-iDonate-navy-secondary">
+                      {step.title}
+                    </h3>
+                    <p className="text-iDonate-navy-secondary font-siemreap text-sm md:text-base">
+                      {step.description}
+                    </p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Features Section */}
+      <section className="py-10 md:py-20">
+        <div className="container mx-auto px-4 md:px-[100px]">
+          <motion.h2
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="text-base md:text-lg mb-6 md:mb-8 font-siemreap px-4 text-white"
+            className="text-iDonate-navy-secondary text-xl md:text-2xl font-bold mb-8 md:mb-12 font-siemreap text-center"
           >
-            បង្កើតគណនីហើយចាប់ផ្តើមធ្វើការបរិច្ចាគ និងតាមដាន
-            ការបរិច្ចាគរបស់អ្នកត្រូវបានប្រើប្រាស់ដើម្បីជួយដល់សហគមន៍។
-            ក្នុងនាមជាសប្បុរសជនម្នាក់ អ្នកអាចមើលឃើញថាតើការបរិច្ចាគរបស់អ្នកបានជួយប្រជាជនប៉ុន្មាននាក់។
-          </motion.p>
-          <Button className="bg-green-500 hover:bg-green-600 w-full md:w-auto">
-            ចាប់ផ្តើមការបរិច្ចាគ
-          </Button>
-        </div>
-      </div>
-    </section>
-
-    {/* Process Section */}
-    <section className="py-10 md:py-20 bg-white">
-      <div className="container mx-auto px-4">
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-xl md:text-2xl font-bold mb-8 md:mb-12 font-siemreap text-center text-iDonate-navy-secondary"
-        >
-          ដំណើរការរបស់សប្បុរសជន
-        </motion.h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="order-last md:order-first"
-          >
-            <Image
-              src={ProcessOrganisation}
-              alt="Process steps"
-              width={500}
-              height={400}
-              className="w-full"
-            />
-          </motion.div>
-          <div className="space-y-6 md:space-y-8">
+            រយៈពេលនិងដំណើរការនៃមូលនិធិនៅ iDonate
+          </motion.h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
             {[
               {
-                number: "១",
-                title: "ជំហានទី ១៖ ចុះឈ្មោះជាអ្នកផ្តល់ជំនួយ",
-                description: "ចុះឈ្មោះជា 'Contributor' ដើម្បីចាប់ផ្តើមធ្វើការបរិច្ចាគប្រកបដោយតម្លាភាព"
+                icon: "⭐",
+                title: "ត្រូវការជំនួយដើម្បី iDonateមូលនិធិនៅ និងជួយក្នុង",
+                description: "ដើម្បីធ្វើឲ្យការងាររបស់អ្នកកាន់តែមានប្រសិទ្ធភាព!",
               },
               {
-                number: "២",
-                title: "ជំហានទី ២៖ ធ្វើការបរិច្ចាគ",
-                description: "ជាមួយនឹងការសន្យាថាការបរិច្ចាគរបស់អ្នក ១០០% នឹងដល់ដៃអ្នកទទួលផ្ទាល់ដោយគ្មានការកាត់ថ្លៃសេវា"
+                icon: "⭐",
+                title: "ចាប់ផ្តើមជា iDonate",
+                description:
+                  "ចាប់ផ្តើមធ្វើការជាមួយមូលនិធិក្នុង និងជួយសហគមន៍តាមរយៈការបរិច្ចាគរបស់អ្នក!",
               },
               {
-                number: "៣",
-                title: "ជំហានទី ៣៖ តាមដានការបរិច្ចាគរបស់អ្នក",
-                description: "មើលថាតើការបរិច្ចាគរបស់អ្នក បានជួយដល់មនុស្សប៉ុន្មាននាក់ហើយ"
-              }
-            ].map((step, index) => (
+                icon: "⭐",
+                title: "iDonate",
+                description:
+                  "ធ្វើឲ្យការបរិច្ចាគរបស់អ្នកមានតម្លាភាពនិងប្រសិទ្ធភាព ហើយអាចតាមដានការប្រើប្រាស់ថវិការបស់អ្នកបាន!",
+              },
+            ].map((feature, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.2 }}
-                className="flex gap-4"
+                className="p-4 md:p-6 bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow"
               >
-                <div className="flex-shrink-0 w-8 h-8 bg-green-100 rounded-full flex items-center justify-center text-green-600 font-bold">
-                  {step.number}
+                <div className="text-3xl md:text-4xl mb-3 md:mb-4 text-center">
+                  {feature.icon}
                 </div>
-                <div>
-                  <h3 className="font-semibold mb-2 font-siemreap text-sm md:text-base text-iDonate-navy-secondary">{step.title}</h3>
-                  <p className="text-iDonate-navy-secondary font-siemreap text-sm md:text-base">{step.description}</p>
-                </div>
+                <h3 className="text-sm md:text-base font-semibold mb-3 md:mb-4 font-siemreap text-iDonate-navy-secondary">
+                  {feature.title}
+                </h3>
+                <p className="text-sm md:text-base text-iDonate-navy-secondary font-siemreap">
+                  {feature.description}
+                </p>
               </motion.div>
             ))}
           </div>
         </div>
-      </div>
-    </section>
-
-     {/* Features Section */}
-<section className="py-10 md:py-20">
-  <div className="container mx-auto px-4 md:px-[100px]">
-    <motion.h2
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      className="text-iDonate-navy-secondary text-xl md:text-2xl font-bold mb-8 md:mb-12 font-siemreap text-center"
-    >
-      រយៈពេលនិងដំណើរការនៃមូលនិធិនៅ iDonate
-    </motion.h2>
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
-      {[
-        {
-          icon: "⭐",
-          title: "ត្រូវការជំនួយដើម្បី iDonateមូលនិធិនៅ និងជួយក្នុង",
-          description: "ដើម្បីធ្វើឲ្យការងាររបស់អ្នកកាន់តែមានប្រសិទ្ធភាព!"
-        },
-        {
-          icon: "⭐",
-          title: "ចាប់ផ្តើមជា iDonate",
-          description: "ចាប់ផ្តើមធ្វើការជាមួយមូលនិធិក្នុង និងជួយសហគមន៍តាមរយៈការបរិច្ចាគរបស់អ្នក!"
-        },
-        {
-          icon: "⭐",
-          title: "iDonate",
-          description: "ធ្វើឲ្យការបរិច្ចាគរបស់អ្នកមានតម្លាភាពនិងប្រសិទ្ធភាព ហើយអាចតាមដានការប្រើប្រាស់ថវិការបស់អ្នកបាន!"
-        }
-      ].map((feature, index) => (
-        <motion.div
-          key={index}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: index * 0.2 }}
-          className="p-4 md:p-6 bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow"
-        >
-          <div className="text-3xl md:text-4xl mb-3 md:mb-4 text-center">{feature.icon}</div>
-          <h3 className="text-sm md:text-base font-semibold mb-3 md:mb-4 font-siemreap text-iDonate-navy-secondary">{feature.title}</h3>
-          <p className="text-sm md:text-base text-iDonate-navy-secondary font-siemreap">{feature.description}</p>
-        </motion.div>
-      ))}
+      </section>
     </div>
-  </div>
-</section>
-    </div>
-  )
+  );
 }
-

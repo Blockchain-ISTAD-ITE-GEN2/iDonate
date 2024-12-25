@@ -1,15 +1,15 @@
-'use client'
+"use client";
 
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { useInView } from 'react-intersection-observer';
-import { Building2, Gift, Users, CalendarDays } from 'lucide-react';
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
+import { Building2, Gift, Users, CalendarDays } from "lucide-react";
 
 const dataofTotalOrganization = [
-  { amount: 27, desc: 'ចំនួនសរុប', title: 'អង្គការភាព', icon: Building2 },
-  { amount: 18, desc: 'ចំនួនសរុប', title: 'កម្មវិធីបរិច្ចាគ', icon: Gift },
-  { amount: 99, desc: 'ចំនួនសរុប', title: 'អ្នកស្ម័គ្រចិត្ត', icon: Users },
-  { amount: 1, desc: 'ឆ្នាំ', title: 'នៃការបង្កើត', icon: CalendarDays }
+  { amount: 27, desc: "ចំនួនសរុប", title: "អង្គការភាព", icon: Building2 },
+  { amount: 18, desc: "ចំនួនសរុប", title: "កម្មវិធីបរិច្ចាគ", icon: Gift },
+  { amount: 99, desc: "ចំនួនសរុប", title: "អ្នកស្ម័គ្រចិត្ត", icon: Users },
+  { amount: 1, desc: "ឆ្នាំ", title: "នៃការបង្កើត", icon: CalendarDays },
 ];
 
 const CounterAnimation = ({ target }: { target: number }) => {
@@ -71,8 +71,10 @@ export default function TotalOrganizationComponent() {
                 lang="km"
               >
                 <span className="text-3xl sm:text-4xl md:text-5xl mb-2 sm:mb-4">
-                  <item.icon className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 mb-2 sm:mb-4 text-iDonate-green-primary"
-                  style={{ strokeWidth: 2 }} />
+                  <item.icon
+                    className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 mb-2 sm:mb-4 text-iDonate-green-primary"
+                    style={{ strokeWidth: 2 }}
+                  />
                 </span>
                 <span className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-iDonate-green-primary">
                   <CounterAnimation target={item.amount} />
@@ -89,12 +91,26 @@ export default function TotalOrganizationComponent() {
         </div>
       </motion.div>
       <div className="absolute top-0 left-0 w-full h-full bg-iDonate-navy-primary opacity-10 z-0">
-        <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+        <svg
+          className="w-full h-full"
+          viewBox="0 0 100 100"
+          preserveAspectRatio="none"
+        >
           <path d="M0,0 L100,0 L100,100 L0,100 Z" fill="url(#grid)" />
         </svg>
         <defs>
-          <pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse">
-            <path d="M 10 0 L 0 0 0 10" fill="none" stroke="white" strokeWidth="0.5" />
+          <pattern
+            id="grid"
+            width="10"
+            height="10"
+            patternUnits="userSpaceOnUse"
+          >
+            <path
+              d="M 10 0 L 0 0 0 10"
+              fill="none"
+              stroke="white"
+              strokeWidth="0.5"
+            />
           </pattern>
         </defs>
       </div>

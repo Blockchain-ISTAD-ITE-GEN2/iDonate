@@ -1,10 +1,10 @@
 import { Input } from "@/components/ui/input";
-import { FacetedFilter } from "./faceted-filter";
+import { FacetedFilter } from "@/components/filter/faceted-filter";
 import { ChangeEvent, useState, useMemo, useEffect } from "react";
-import { DateRangePicker } from "./date-range-picker";
+import { DateRangePicker } from "@/components/filter/date-range-picker";
 import { DateRange } from "react-day-picker";
 
-interface ToolbarProps {
+type ToolbarProps = {
   events: { [key: string]: string | number | Date }[];
   searchKey: string;
   filtersFace: {
@@ -12,12 +12,12 @@ interface ToolbarProps {
     title: string;
     options: { label: string; value: string }[];
   }[];
-  filtersDateRange: {
+  filtersDateRange?: {
     key: string;
     title: string;
   }[];
   onFilterChange: (filteredEvents: any[]) => void;
-}
+};
 
 export function Toolbar({
   events,
@@ -27,8 +27,12 @@ export function Toolbar({
   onFilterChange,
 }: ToolbarProps) {
   const [searchValue, setSearchValue] = useState("");
-  const [selectedFilters, setSelectedFilters] = useState<Record<string, any>>({});
-  const [dateRange, setDateRange] = useState<Record<string, DateRange | undefined>>({});
+  const [selectedFilters, setSelectedFilters] = useState<Record<string, any>>(
+    {},
+  );
+  const [dateRange, setDateRange] = useState<
+    Record<string, DateRange | undefined>
+  >({});
   const [filters, setFilters] = useState<Record<string, any>>({});
 
   const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -42,7 +46,9 @@ export function Toolbar({
     });
   };
 
-  const handleDateRangeChange = (selectedRanges: Record<string, DateRange | undefined>) => {
+  const handleDateRangeChange = (
+    selectedRanges: Record<string, DateRange | undefined>,
+  ) => {
     setFilters((prev) => {
       const updatedFilters = { ...prev, ...selectedRanges };
       return updatedFilters;
@@ -88,7 +94,7 @@ export function Toolbar({
           className="h-8 w-[150px] lg:w-[250px]"
         />
 
-        {filtersFace.map(({ key, title, options }) => (
+        {filtersFace?.map(({ key, title, options }) => (
           <FacetedFilter
             key={key}
             filters={[{ key, title, options }]}
@@ -98,7 +104,7 @@ export function Toolbar({
           />
         ))}
 
-        {filtersDateRange.length > 0 && (
+        {filtersDateRange && filtersDateRange.length > 0 && (
           <DateRangePicker
             filters={filtersDateRange}
             onChange={handleDateRangeChange} // Pass the selected ranges to handleDateRangeChange

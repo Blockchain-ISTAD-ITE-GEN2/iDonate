@@ -1,17 +1,17 @@
-'use client';
+"use client";
 
 import { signIn, useSession } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";  
+import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
-import { Loader2, Eye, EyeOff, Mail, Lock } from 'lucide-react';
+import { Loader2, Eye, EyeOff, Mail, Lock } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { toast, Toaster } from 'react-hot-toast';
+import { toast, Toaster } from "react-hot-toast";
 import { motion } from "framer-motion";
 import BackgroundImage from "@/public/images/donation-login.jpg";
 import GoogleIcon from "@/public/images/google.png";
@@ -25,16 +25,21 @@ const loginSchema = z.object({
     .nonempty("Email is required")
     .trim()
     .toLowerCase()
-    .regex(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, "Invalid email format"),
-  
+    .regex(
+      /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+      "Invalid email format",
+    ),
+
   password: z
     .string()
     .min(6, "Password must be at least 6 characters")
     .max(50, "Password cannot exceed 50 characters")
-    .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/, 
-      "Password must include at least one uppercase letter, one lowercase letter, one number, and one special character")
+    .regex(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/,
+      "Password must include at least one uppercase letter, one lowercase letter, one number, and one special character",
+    )
     .nonempty("Password is required"),
-  
+
   rememberMe: z.boolean().default(false),
 });
 
@@ -68,8 +73,14 @@ export default function LoginForm() {
       });
 
       if (result?.error) {
-        setError("email", { type: "manual", message: "Invalid email or password" });
-        setError("password", { type: "manual", message: "Invalid email or password" });
+        setError("email", {
+          type: "manual",
+          message: "Invalid email or password",
+        });
+        setError("password", {
+          type: "manual",
+          message: "Invalid email or password",
+        });
         toast.error("Invalid email or password");
       } else {
         toast.success("Login successful!");
@@ -129,11 +140,19 @@ export default function LoginForm() {
             </span>
           </h1>
 
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 sm:space-y-6">
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="space-y-4 sm:space-y-6"
+          >
             <div>
-              <label htmlFor="email" className="flex items-center space-x-2 text-sm font-medium text-gray-700 mb-1">
+              <label
+                htmlFor="email"
+                className="flex items-center space-x-2 text-sm font-medium text-gray-700 mb-1"
+              >
                 <Mail className="w-4 h-4 text-iDonate-navy-primary" />
-                <span>Email <span className="text-red-500">*</span></span>
+                <span>
+                  Email <span className="text-red-500">*</span>
+                </span>
               </label>
               <Input
                 id="email"
@@ -154,9 +173,14 @@ export default function LoginForm() {
             </div>
 
             <div className="relative">
-              <label htmlFor="password" className="flex items-center space-x-2 text-sm font-medium text-gray-700 mb-1">
+              <label
+                htmlFor="password"
+                className="flex items-center space-x-2 text-sm font-medium text-gray-700 mb-1"
+              >
                 <Lock className="w-4 h-4 text-iDonate-navy-primary" />
-                <span>Password <span className="text-red-500">*</span></span>
+                <span>
+                  Password <span className="text-red-500">*</span>
+                </span>
               </label>
               <Input
                 id="password"
@@ -221,7 +245,9 @@ export default function LoginForm() {
 
           <div className="flex items-center my-4 mb-0">
             <span className="flex-grow border-t border-gray-400"></span>
-            <span className="mx-4 text-sm text-gray-500 font-medium">or continue with</span>
+            <span className="mx-4 text-sm text-gray-500 font-medium">
+              or continue with
+            </span>
             <span className="flex-grow border-t border-gray-400"></span>
           </div>
 
@@ -232,12 +258,7 @@ export default function LoginForm() {
                 className="w-20 h-20 rounded-full bg-transparent border-none hover:bg-transparent transition-colors duration-200"
                 onClick={() => signIn("google", { callbackUrl: "/" })}
               >
-                <Image
-                  src={GoogleIcon}
-                  alt="Google"
-                  width={60}
-                  height={60}
-                />
+                <Image src={GoogleIcon} alt="Google" width={60} height={60} />
               </Button>
             </motion.div>
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
@@ -271,4 +292,3 @@ export default function LoginForm() {
     </div>
   );
 }
-

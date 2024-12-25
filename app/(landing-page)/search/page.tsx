@@ -1,15 +1,23 @@
-import { CommonEventCard } from "@/components/events/organization-event/CommonEventCad";
-import { EventType } from "@/difinitions/dto/EventType";
-import events from "@/data/events-data.json";
+import { SearchPage } from "@/components/search/SearchPage";
 
 export default function Events() {
-  const typedEvent: EventType[] = events;
+  return (
+    <section className="flex flex-col py-9 gap-9">
+      <div
+        lang="km"
+        className="w-full flex flex-col items-center justify-center gap-2"
+      >
+        <h2 className="text-iDonate-navy-primary text-heading-one-khmer">
+          ស្វែករក កម្មវិធីបរិច្ចាគដែលអ្នកពេញចិត្ត
+        </h2>
+        <h4 className="text-iDonate-navy-primary text-medium-khmer">
+          {" "}
+          ស្វែករកម្មបវិធី វៃអង្គាសដោយ ឈ្មោះនៃអង្កការភាព​ ប្រភេទ និង
+          កាលបរិច្ឆេទ្នាំនៃកម្មវិធី
+        </h4>
+      </div>
 
-    return (
-      <section className="flex flex-col">
-        <section lang="km"  className="w-full grid grid-cols-6 gap-9 mx-auto justify-items-center">
-          <CommonEventCard events={typedEvent} />
-        </section>
-      </section>
-    );
-  }
+      <SearchPage />
+    </section>
+  );
+}

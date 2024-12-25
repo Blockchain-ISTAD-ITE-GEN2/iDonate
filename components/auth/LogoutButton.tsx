@@ -1,29 +1,29 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { useRouter } from 'next/navigation'
-import { Button } from '@/components/ui/button'
-import { Loader2 } from 'lucide-react'
-import { logoutUser } from '@/store/slices/authSlice'
-import type { AppDispatch } from '@/store/store'
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { Loader2 } from "lucide-react";
+import { logoutUser } from "@/store/slices/authSlice";
+import type { AppDispatch } from "@/store/store";
 
 export function LogoutButton() {
-  const dispatch = useDispatch<AppDispatch>()
-  const router = useRouter()
-  const [isLoading, setIsLoading] = useState(false)
+  const dispatch = useDispatch<AppDispatch>();
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleLogout = async () => {
-    setIsLoading(true)
+    setIsLoading(true);
     try {
-      await dispatch(logoutUser()).unwrap()
-      router.push('/auth/sign-in') // Redirect to login page after logout
+      await dispatch(logoutUser()).unwrap();
+      router.push("/auth/sign-in"); // Redirect to login page after logout
     } catch (error) {
-      console.error('Logout failed:', error)
+      console.error("Logout failed:", error);
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   return (
     <Button onClick={handleLogout} disabled={isLoading}>
@@ -33,9 +33,8 @@ export function LogoutButton() {
           Logging out...
         </>
       ) : (
-        'Logout'
+        "Logout"
       )}
     </Button>
-  )
+  );
 }
-

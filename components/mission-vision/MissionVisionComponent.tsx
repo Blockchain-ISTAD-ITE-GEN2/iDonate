@@ -1,28 +1,28 @@
-"use client"
+"use client";
 
-import Image from "next/image"
-import { Button } from "@/components/ui/button"
-import { motion } from "framer-motion"
+import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion"
-import { PlayCircle } from 'lucide-react'
+} from "@/components/ui/accordion";
+import { PlayCircle } from "lucide-react";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "@/components/ui/carousel"
+} from "@/components/ui/carousel";
 
-import HeroSectionImage from "@/public/missionandvission/HeroSection.png"
-import ISTAD from "@/public/missionandvission/Frame1000005253.png"
-import MPTC from "@/public/missionandvission/Frame1000005266.png"
-import CBRD from "@/public/missionandvission/Frame1000005267.png"
-import LEADER from "@/public/missionandvission/Frame1000005268.png"
+import HeroSectionImage from "@/public/missionandvission/HeroSection.png";
+import ISTAD from "@/public/missionandvission/Frame1000005253.png";
+import MPTC from "@/public/missionandvission/Frame1000005266.png";
+import CBRD from "@/public/missionandvission/Frame1000005267.png";
+import LEADER from "@/public/missionandvission/Frame1000005268.png";
 
 export default function MissionVision() {
   const stats = [
@@ -30,57 +30,49 @@ export default function MissionVision() {
     { icon: "👥", value: "2,849", label: "មនុស្សដែលត្រូវបានជួយ" },
     { icon: "🏢", value: "150+", label: "អង្គការភាព" },
     { icon: "🌍", value: "25+", label: "ប្រទេសដែលចូលរួម" },
-  ]
+  ];
 
   const features = [
     {
       icon: "📚",
       title: "អប់រំ",
-      description: "ផ្តល់ឱកាសអប់រំដល់កុមារ និងយុវជនខ្វះខាត"
+      description: "ផ្តល់ឱកាសអប់រំដល់កុមារ និងយុវជនខ្វះខាត",
     },
     {
       icon: "🤝",
       title: "ទំនួលខុសត្រូវ",
-      description: "ផ្តល់ការគាំទ្រដល់សហគមន៍ក្រីក្រ"
+      description: "ផ្តល់ការគាំទ្រដល់សហគមន៍ក្រីក្រ",
     },
     {
       icon: "🔄",
       title: "តម្លាភាពគណនេយ្យ",
-      description: "ធានាការប្រើប្រាស់ថវិកាប្រកបដោយតម្លាភាព"
+      description: "ធានាការប្រើប្រាស់ថវិកាប្រកបដោយតម្លាភាព",
     },
     {
       icon: "🌟",
       title: "សមធម៌និងយុត្តិធម៌",
-      description: "ការបែងចែកធនធានដោយស្មើភាព"
-    }
-  ]
+      description: "ការបែងចែកធនធានដោយស្មើភាព",
+    },
+  ];
 
   const faqs = [
     {
       question: "តើធ្វើដូចម្តេចដើម្បីក្លាយជាអ្នកស្ម័គ្រចិត្ត?",
-      answer: "ចូលទៅកាន់ គេហទំព័ររបស់យើងហើយចុះឈ្មោះជាអ្នកស្ម័គ្រចិត្ត។"
+      answer: "ចូលទៅកាន់ គេហទំព័ររបស់យើងហើយចុះឈ្មោះជាអ្នកស្ម័គ្រចិត្ត។",
     },
     {
       question: "តើខ្ញុំអាចជួយអ្វីបាន ក្រៅពីការ បរិច្ចាគ?",
-      answer: "អ្នកអាចចូលរួមក្នុងកម្មវិធីស្ម័គ្រចិត្ត ឬជួយផ្សព្វផ្សាយអំពីបេសកកម្មរបស់យើង។"
+      answer:
+        "អ្នកអាចចូលរួមក្នុងកម្មវិធីស្ម័គ្រចិត្ត ឬជួយផ្សព្វផ្សាយអំពីបេសកកម្មរបស់យើង។",
     },
     {
       question: "តើប្រាក់បរិច្ចាគត្រូវបានប្រើយ៉ាងដូចម្តេច?",
-      answer: "ប្រាក់បរិច្ចាគត្រូវបានប្រើប្រាស់ដោយផ្ទាល់ដើម្បីគាំទ្រកម្មវិធីជួយសហគមន៍។"
-    }
-  ]
+      answer:
+        "ប្រាក់បរិច្ចាគត្រូវបានប្រើប្រាស់ដោយផ្ទាល់ដើម្បីគាំទ្រកម្មវិធីជួយសហគមន៍។",
+    },
+  ];
 
-  const partners = [
-    ISTAD,
-    MPTC,
-    CBRD,
-    LEADER,
-    ISTAD,
-    MPTC,
-    CBRD,
-    LEADER
-
-  ]
+  const partners = [ISTAD, MPTC, CBRD, LEADER, ISTAD, MPTC, CBRD, LEADER];
 
   return (
     <div className="w-full bg-white" lang="km">
@@ -101,9 +93,13 @@ export default function MissionVision() {
             className="max-w-2xl px-[70px]"
           >
             <h1 className="text-5xl font-bold mb-4">Give Hope, Save Lives</h1>
-            <p className="text-xl mb-8 text-gray-200 font-siemreap leading-relaxed" lang="km"> 
-
-            នៅក្នុងពិភពលោកដែលពោរពេញដោយបញ្ហាប្រឈម ជំនួយរបស់អ្នកអាចជាសញ្ញានៃក្តីសង្ឃឹម ដែលនាំនរណាម្នាក់ទៅកាន់ថ្ងៃស្អែកកាន់តែប្រសើរ។
+            <p
+              className="text-xl mb-8 text-gray-200 font-siemreap leading-relaxed"
+              lang="km"
+            >
+              នៅក្នុងពិភពលោកដែលពោរពេញដោយបញ្ហាប្រឈម
+              ជំនួយរបស់អ្នកអាចជាសញ្ញានៃក្តីសង្ឃឹម
+              ដែលនាំនរណាម្នាក់ទៅកាន់ថ្ងៃស្អែកកាន់តែប្រសើរ។
             </p>
             <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
               {stats.map((stat, index) => (
@@ -142,13 +138,20 @@ export default function MissionVision() {
                 className="text-center"
               >
                 <div className="w-16 h-16 md:w-20 md:h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-10 h-10 text-blue-600" viewBox="0 0 24 24" fill="currentColor">
+                  <svg
+                    className="w-10 h-10 text-blue-600"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                  >
                     <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
                   </svg>
                 </div>
-                <h3 className="text-lg md:text-2xl font-bold mb-2 text-iDonate-navy-secondary">បេសកកម្ម</h3>
+                <h3 className="text-lg md:text-2xl font-bold mb-2 text-iDonate-navy-secondary">
+                  បេសកកម្ម
+                </h3>
                 <p className="text-iDonate-navy-secondary font-siemreap">
-                  ដើម្បីផ្តល់ជំនួយដល់អ្នកដែលត្រូវការជំនួយក្នុងសហគមន៍របស់យើង តាមរយៈការបរិច្ចាគដោយផ្ទាល់និងតម្លាភាព។
+                  ដើម្បីផ្តល់ជំនួយដល់អ្នកដែលត្រូវការជំនួយក្នុងសហគមន៍របស់យើង
+                  តាមរយៈការបរិច្ចាគដោយផ្ទាល់និងតម្លាភាព។
                 </p>
               </motion.div>
               <motion.div
@@ -157,13 +160,20 @@ export default function MissionVision() {
                 className="text-center"
               >
                 <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <svg className="w-10 h-10 text-green-600" viewBox="0 0 24 24" fill="currentColor">
+                  <svg
+                    className="w-10 h-10 text-green-600"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                  >
                     <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z" />
                   </svg>
                 </div>
-                <h3 className="text-2xl font-bold mb-4 font-siemreap text-iDonate-navy-secondary">ចក្ខុវិស័យ</h3>
+                <h3 className="text-2xl font-bold mb-4 font-siemreap text-iDonate-navy-secondary">
+                  ចក្ខុវិស័យ
+                </h3>
                 <p className="text-iDonate-navy-secondary font-siemreap">
-                  បង្កើតសហគមន៍ដែលមានការយកចិត្តទុកដាក់និងការចែករំលែក ដើម្បីលើកកម្ពស់គុណភាពជីវិតរបស់អ្នកដែលខ្វះខាត។
+                  បង្កើតសហគមន៍ដែលមានការយកចិត្តទុកដាក់និងការចែករំលែក
+                  ដើម្បីលើកកម្ពស់គុណភាពជីវិតរបស់អ្នកដែលខ្វះខាត។
                 </p>
               </motion.div>
             </div>
@@ -248,7 +258,7 @@ export default function MissionVision() {
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-2xl font-bold mb-12 text-center font-siemreap text-iDonate-navy-secondary" 
+            className="text-2xl font-bold mb-12 text-center font-siemreap text-iDonate-navy-secondary"
           >
             ដៃគូសហការ
           </motion.h2>
@@ -262,7 +272,10 @@ export default function MissionVision() {
             >
               <CarouselContent>
                 {partners.map((partner, index) => (
-                  <CarouselItem key={index} className="md:basis-1/3 lg:basis-1/5">
+                  <CarouselItem
+                    key={index}
+                    className="md:basis-1/3 lg:basis-1/5"
+                  >
                     <div className="p-4">
                       <Image
                         src={partner}
@@ -282,6 +295,5 @@ export default function MissionVision() {
         </div>
       </section>
     </div>
-  )
+  );
 }
-

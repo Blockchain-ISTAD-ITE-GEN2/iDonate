@@ -1,5 +1,5 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { signIn } from 'next-auth/react';
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { signIn } from "next-auth/react";
 
 interface RegisterState {
   loading: boolean;
@@ -16,16 +16,19 @@ const initialState: RegisterState = {
 };
 
 export const registerUser = createAsyncThunk(
-  'register/registerUser',
+  "register/registerUser",
   async (userData: any, { rejectWithValue }) => {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/register`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/register`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(userData),
         },
-        body: JSON.stringify(userData),
-      });
+      );
 
       if (!response.ok) {
         const error = await response.json();
@@ -35,13 +38,13 @@ export const registerUser = createAsyncThunk(
       const data = await response.json();
       return data;
     } catch (error) {
-      return rejectWithValue('Registration failed. Please try again.');
+      return rejectWithValue("Registration failed. Please try again.");
     }
-  }
+  },
 );
 
 const registerSlice = createSlice({
-  name: 'register',
+  name: "register",
   initialState,
   reducers: {
     setStep: (state, action) => {
@@ -70,4 +73,3 @@ const registerSlice = createSlice({
 
 export const { setStep, resetRegister } = registerSlice.actions;
 export default registerSlice.reducer;
-

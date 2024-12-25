@@ -1,18 +1,26 @@
 import { AverageType, BarchartType } from "@/difinitions/types/chart/barchart";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "../../ui/card";
 import { CardsMetric } from "./metric";
 import { Overview } from "./overview";
 import { TransactionType } from "@/difinitions/types/table-type/transaction";
 import barchart from "@/data/barchart.json";
 import averages from "@/data/average-data.json";
 import transactions from "@/data/transactions.json";
-import { ReacentTransacctions } from "./ReacentTransacctions";
+import { ReacentTransacctions } from "@/components/organization/dashboard/ReacentTransacctions";
 
 export function BarAndLineChart() {
-  const barchartdata: BarchartType[] = Object.entries(barchart).map(([name, values]) => ({
-    name,
-    ...values,
-  }));
+  const barchartdata: BarchartType[] = Object.entries(barchart).map(
+    ([name, values]) => ({
+      name,
+      ...values,
+    }),
+  );
 
   const recentTransactions: TransactionType[] = transactions.slice(0, 9);
   const averageDate: AverageType[] = averages;

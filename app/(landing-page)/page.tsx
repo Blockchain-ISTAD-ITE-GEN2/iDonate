@@ -16,7 +16,6 @@ export default function Homepage() {
     <section className="flex flex-col items-center">
       <section>
       <HeroSectionComponent />
-      </section>
 
       <section className="w-full  px-4 py-12  space-y-4 text-center">
         <h2 lang="km" className="text-xl text-iDonate-green-primary">

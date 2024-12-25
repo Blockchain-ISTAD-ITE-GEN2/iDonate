@@ -4,8 +4,8 @@
 
 /* Define default fonts using font variables */
 html {
-  --font-suwannaphum: 'Suwannaphum', serif;
-  --font-inter: 'Inter', serif; 
+  --font-suwannaphum: "Suwannaphum", serif;
+  --font-inter: "Inter", serif;
 }
 
 /* Apply default font families */
@@ -15,7 +15,9 @@ body {
 
 /* Apply suwannphum font for Khmer text */
 :lang(km) {
-  font-family: var(--font-suwannaphum); /* Automatically applies to Khmer content */
+  font-family: var(
+    --font-suwannaphum
+  ); /* Automatically applies to Khmer content */
 }
 
 @layer utilities {

@@ -1,21 +1,21 @@
-'use client'
+"use client";
 
-import { useRef, useState } from 'react'
-import * as THREE from 'three'
-import { Canvas, useFrame, ThreeElements } from '@react-three/fiber'
-import { OrbitControls, useTexture } from '@react-three/drei'
-import HeroSectionImage from "@/public/images/aboutus-bg.png"
+import { useRef, useState } from "react";
+import * as THREE from "three";
+import { Canvas, useFrame, ThreeElements } from "@react-three/fiber";
+import { OrbitControls, useTexture } from "@react-three/drei";
+import HeroSectionImage from "@/public/images/aboutus-bg.png";
 
-function Box(props: ThreeElements['mesh']) {
-  const meshRef = useRef<THREE.Mesh>(null!)
-  const [hovered, setHover] = useState(false)
-  const [active, setActive] = useState(false)
-  const texture = useTexture(HeroSectionImage.src)
+function Box(props: ThreeElements["mesh"]) {
+  const meshRef = useRef<THREE.Mesh>(null!);
+  const [hovered, setHover] = useState(false);
+  const [active, setActive] = useState(false);
+  const texture = useTexture(HeroSectionImage.src);
 
   useFrame((state, delta) => {
-    meshRef.current.rotation.x += delta * 0.2
-    meshRef.current.rotation.y += delta * 0.2
-  })
+    meshRef.current.rotation.x += delta * 0.2;
+    meshRef.current.rotation.y += delta * 0.2;
+  });
 
   return (
     <mesh
@@ -29,7 +29,7 @@ function Box(props: ThreeElements['mesh']) {
       <boxGeometry args={[2.5, 2.5, 0.2]} />
       <meshStandardMaterial map={texture} />
     </mesh>
-  )
+  );
 }
 
 export default function DonationBox3D() {
@@ -41,6 +41,5 @@ export default function DonationBox3D() {
       <Box position={[0, 0, 0]} />
       <OrbitControls enableZoom={false} />
     </Canvas>
-  )
+  );
 }
-

@@ -1,17 +1,16 @@
 import { mockUsers } from "@/data/data";
 import { User } from "@/difinitions/types/media/user";
 
-
-
 export const authService = {
   login: async (email: string, password: string): Promise<User | null> => {
     // Simulate API delay
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
     // Find user by email and password
-    const user = mockUsers.find(u => 
-      u.email.toLowerCase() === email.toLowerCase() && 
-      u.password === password
+    const user = mockUsers.find(
+      (u) =>
+        u.email.toLowerCase() === email.toLowerCase() &&
+        u.password === password,
     );
 
     if (!user) {
@@ -32,7 +31,7 @@ export const authService = {
 
   logout: async (): Promise<void> => {
     // Simulate API delay
-    await new Promise(resolve => setTimeout(resolve, 500));
+    await new Promise((resolve) => setTimeout(resolve, 500));
   },
 
   getCurrentUser: async (): Promise<User | null> => {
@@ -40,4 +39,4 @@ export const authService = {
     const { password: _, ...userWithoutPassword } = mockUsers[0];
     return userWithoutPassword;
   },
-}; 
+};

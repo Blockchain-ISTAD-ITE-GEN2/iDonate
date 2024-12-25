@@ -216,7 +216,7 @@ declare interface TotalBalanceBoxProps {
 
 declare interface FooterProps {
   user: User;
-  type?: 'mobile' | 'desktop'
+  type?: "mobile" | "desktop";
 }
 
 declare interface RightSidebarProps {
@@ -285,7 +285,6 @@ declare interface CreateFundingSourceOptions {
   _links: object; // Dwolla On Demand Authorization Link
 }
 
-
 declare interface CreateTransactionProps {
   name: string;
   amount: string;
@@ -343,7 +342,7 @@ declare module "next-auth" {
       email: string;
       name?: string | null;
       image?: string | null;
-    }
+    };
   }
 
   interface User {
@@ -353,7 +352,6 @@ declare module "next-auth" {
     name?: string;
     image?: string;
   }
-
 }
 
 declare module "next-auth/jwt" {

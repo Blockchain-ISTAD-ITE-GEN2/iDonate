@@ -1,9 +1,9 @@
-"use client"
+"use client";
 
-import { Row } from "@tanstack/react-table"
-import { MoreHorizontal } from "lucide-react"
+import { Row } from "@tanstack/react-table";
+import { MoreHorizontal } from "lucide-react";
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,15 +11,17 @@ import {
   DropdownMenuSeparator,
   DropdownMenuShortcut,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu";
 
-interface DataTableRowActionsProps<TData> {
-  row: Row<TData>
-}
+type DataTableRowActionsProps<TData> = {
+  row: Row<TData>;
+};
 
-export function DataTableRowActions<TData>({
-  // row,
-}: DataTableRowActionsProps<TData>) {
+export function DataTableRowActions<TData>(
+  {
+    // row,
+  }: DataTableRowActionsProps<TData>,
+) {
   // const view = row.original
 
   return (
@@ -44,5 +46,5 @@ export function DataTableRowActions<TData>({
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
-  )
+  );
 }

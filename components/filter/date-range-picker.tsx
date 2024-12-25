@@ -11,24 +11,21 @@ import { Calendar } from "@/components/ui/calendar";
 import { format } from "date-fns";
 import { useState } from "react";
 import { DateRange } from "react-day-picker";
+import { DateRangeType } from "@/difinitions/types/filter/filter";
 
-interface DateRangeProps {
-  filters: {
-    key: string;
-    title: string;
-  }[];
-  onChange: (selectedFilters: Record<string, DateRange>) => void; // Handle multiple filter types
-}
-
-export function DateRangePicker({ filters, onChange }: DateRangeProps) {
-  const [selectedFilters, setSelectedFilters] = useState<Record<string, DateRange | undefined>>({});
+export function DateRangePicker({ filters, onChange }: DateRangeType) {
+  const [selectedFilters, setSelectedFilters] = useState<
+    Record<string, DateRange | undefined>
+  >({});
 
   const updateDateRange = (key: string, range: DateRange) => {
     // Update the selected date range for the specific filter key
     setSelectedFilters((prev) => {
       const updatedFilters = { ...prev, [key]: range };
       const validFilters = Object.fromEntries(
-        Object.entries(updatedFilters).filter(([_, value]) => value !== undefined)
+        Object.entries(updatedFilters).filter(
+          ([_, value]) => value !== undefined,
+        ),
       );
       onChange(validFilters as Record<string, DateRange>); // Notify parent of the change
       return updatedFilters;
@@ -39,15 +36,11 @@ export function DateRangePicker({ filters, onChange }: DateRangeProps) {
     <div className="space-y-4">
       {filters.map(({ key, title }) => {
         const range = selectedFilters[key];
-        
+
         return (
           <Popover key={key}>
             <PopoverTrigger asChild>
-              <Button
-                variant="outline"
-                size="sm"
-                className="h-8 border-dashed"
-              >
+              <Button variant="outline" size="sm" className="h-8 border-dashed">
                 <CalendarIcon className="mr-2 h-4 w-4" />
                 {title}
                 {range?.from && range?.to ? (

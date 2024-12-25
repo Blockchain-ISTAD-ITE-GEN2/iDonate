@@ -1,20 +1,20 @@
-"use client"
+"use client";
 
-import Image from "next/image"
-import { Facebook, Mail, Github } from 'lucide-react'
-import { StaticImageData } from "next/image"
-import {motion} from "framer-motion"
+import Image from "next/image";
+import { Facebook, Mail, Github } from "lucide-react";
+import { StaticImageData } from "next/image";
+import { motion } from "framer-motion";
 
-interface TeamMember {
-  image: StaticImageData
-  name: string
-  role: string
-}
+type TeamMember = {
+  image: StaticImageData;
+  name: string;
+  role: string;
+};
 
-interface TeamSectionProps {
-  mentors: TeamMember[]
-  members: TeamMember[]
-}
+type TeamSectionProps = {
+  mentors: TeamMember[];
+  members: TeamMember[];
+};
 
 function MemberCard({ member }: { member: TeamMember }) {
   return (
@@ -38,7 +38,9 @@ function MemberCard({ member }: { member: TeamMember }) {
           className="w-full h-full object-cover"
         />
       </motion.div>
-      <h3 className="font-bold text-lg sm:text-xl text-center mb-2 text-iDonate-navy-secondary">{member.name}</h3>
+      <h3 className="font-bold text-lg sm:text-xl text-center mb-2 text-iDonate-navy-secondary">
+        {member.name}
+      </h3>
       <p className="text-xs sm:text-sm text-iDonate-green-primary bg-green-100 px-3 py-1 sm:px-4 sm:py-2 rounded-full mb-4 font-semibold uppercase">
         {member.role}
       </p>
@@ -51,9 +53,9 @@ function MemberCard({ member }: { member: TeamMember }) {
           visible: {
             opacity: 1,
             transition: {
-              staggerChildren: 0.2
-            }
-          }
+              staggerChildren: 0.2,
+            },
+          },
         }}
       >
         {[Facebook, Mail, Github].map((Icon, index) => (
@@ -63,7 +65,7 @@ function MemberCard({ member }: { member: TeamMember }) {
             className="text-iDonate-navy-primary hover:text-green-600 transition-colors duration-300 border border-iDonate-green-primary rounded-full p-1 sm:p-2"
             variants={{
               hidden: { scale: 0 },
-              visible: { scale: 1 }
+              visible: { scale: 1 },
             }}
             whileHover={{ y: -5 }}
           >
@@ -72,7 +74,7 @@ function MemberCard({ member }: { member: TeamMember }) {
         ))}
       </motion.div>
     </motion.div>
-  )
+  );
 }
 
 export default function TeamSection({ mentors, members }: TeamSectionProps) {
@@ -96,16 +98,16 @@ export default function TeamSection({ mentors, members }: TeamSectionProps) {
             visible: {
               opacity: 1,
               transition: {
-                staggerChildren: 0.2
-              }
-            }
+                staggerChildren: 0.2,
+              },
+            },
           }}
         >
           {mentors.map((mentor, index) => (
             <MemberCard key={index} member={mentor} />
           ))}
         </motion.div>
-       
+
         <motion.h2
           className="text-2xl sm:text-3xl font-bold text-center mt-16 sm:mt-24 mb-8 sm:mb-16 text-gray-800"
           initial={{ opacity: 0, y: -20 }}
@@ -125,9 +127,9 @@ export default function TeamSection({ mentors, members }: TeamSectionProps) {
               opacity: 1,
               transition: {
                 staggerChildren: 0.2,
-                delayChildren: 0.5
-              }
-            }
+                delayChildren: 0.5,
+              },
+            },
           }}
         >
           {members.map((member, index) => (
@@ -136,6 +138,5 @@ export default function TeamSection({ mentors, members }: TeamSectionProps) {
         </motion.div>
       </div>
     </section>
-  )
+  );
 }
-

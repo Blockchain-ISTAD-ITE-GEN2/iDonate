@@ -1,13 +1,14 @@
-
+"use client";
 import localFont from "next/font/local";
 import "./globals.css";
 import { ReactNode } from "react";
 import NavbarComponent from "@/components/navbar/NavbarComponent";
 import { ThemeProvider } from "next-themes";
 import OrganizationSidebarComponent from "@/components/organization/sidebar/OrganizationSidebarComponent";
-import SessionWrapper from "@/components/SessionWrapper";
-import FooterComponent from "@/components/footer/FooterComopent"
+import SessionWrapper from "@/components/session/SessionWrapper";
+import FooterComponent from "@/components/footer/FooterComopent";
 import { ThemeProviders } from "./providers";
+import { usePathname } from "next/navigation";
 
 const suwannaphum = localFont({
   src: "/fonts/Suwannaphum-Regular.ttf",
@@ -30,12 +31,15 @@ type RootLayoutProps = {
 };
 
 export default function RootLayout({ children }: RootLayoutProps) {
-
+  const pathname = usePathname();
+  const showSidebar = pathname.startsWith("/organization-dashboard/");
 
   return (
-    <html lang="en" className={`min-h-screen w-full overflow-auto scrollbar-hide ${suwannaphum.variable} ${inter.variable}`}>
+    <html
+      lang="en"
+      className={`min-h-screen w-full overflow-auto scrollbar-hide ${suwannaphum.variable} ${inter.variable}`}
+    >
       <body className="flex flex-col h-full bg-background text-foreground">
-
         <SessionWrapper>
           <ThemeProviders>
             <div className="flex flex-col h-full w-full">
@@ -43,11 +47,12 @@ export default function RootLayout({ children }: RootLayoutProps) {
                 <NavbarComponent />
               </header>
 
-              {/* {showSidebar ? ( */}
+              {showSidebar ? (
                 <div className="w-full h-full flex flex-grow">
                   {/* Sidebar */}
                   <aside className="flex-shrink-0 hidden md:block flex-grow">
                     <OrganizationSidebarComponent />
+                    {/* {children} */}
                   </aside>
 
                   {/* Main Content */}
@@ -55,26 +60,21 @@ export default function RootLayout({ children }: RootLayoutProps) {
                     {children}
                   </main>
                 </div>
-              {/* ) : (
-                <div className="flex-grow overflow-y-auto">
-                  <main>
-                    {children}
-                  </main>
+              ) : (
+                <div className="w-full flex-grow overflow-y-auto">
+                  <main>{children}</main>
                 </div>
-              )} */}
+              )}
 
-
-             {/* {!showSidebar && ( */}
-              <footer className="bg-iDonate-white-space">
-                <FooterComponent />
-              </footer>
-              {/* )} */}
+              {!showSidebar && (
+                <footer className="bg-iDonate-white-space">
+                  <FooterComponent />
+                </footer>
+              )}
             </div>
-
           </ThemeProviders>
         </SessionWrapper>
       </body>
     </html>
   );
 }
-

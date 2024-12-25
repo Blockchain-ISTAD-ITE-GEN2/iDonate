@@ -19,18 +19,12 @@ import {
 } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
 import { useState } from "react";
+import { FacetedFilterType } from "@/difinitions/types/filter/filter";
 
-interface FacetedFilterProps {
-  filters: {
-    key: string;
-    title: string;
-    options: { label: string; value: string }[];
-  }[];
-  onChange: (selectedFilters: Record<string, string[]>) => void; // Changed to handle multiple selected filters
-}
-
-export function FacetedFilter({ filters, onChange }: FacetedFilterProps) {
-  const [selectedFilters, setSelectedFilters] = useState<Record<string, Set<string>>>({});
+export function FacetedFilter({ filters, onChange }: FacetedFilterType) {
+  const [selectedFilters, setSelectedFilters] = useState<
+    Record<string, Set<string>>
+  >({});
 
   // Toggle selection for a filter
   const toggleSelection = (filterKey: string, value: string) => {
@@ -44,8 +38,8 @@ export function FacetedFilter({ filters, onChange }: FacetedFilterProps) {
     setSelectedFilters(newFilters);
     onChange(
       Object.fromEntries(
-        Object.entries(newFilters).map(([key, set]) => [key, Array.from(set)])
-      )
+        Object.entries(newFilters).map(([key, set]) => [key, Array.from(set)]),
+      ),
     );
   };
 
@@ -114,7 +108,7 @@ export function FacetedFilter({ filters, onChange }: FacetedFilterProps) {
                               "mr-2 flex h-4 w-4 items-center justify-center rounded-sm border border-primary",
                               isSelected
                                 ? "bg-primary text-primary-foreground"
-                                : "opacity-50 [&_svg]:invisible"
+                                : "opacity-50 [&_svg]:invisible",
                             )}
                           >
                             <Check />

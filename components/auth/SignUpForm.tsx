@@ -37,10 +37,12 @@ const step2Schema = z.object({
   firstName: z.string().min(2, "First name must be at least 2 characters"),
   lastName: z.string().min(2, "Last name must be at least 2 characters"),
   gender: z.enum(["Male", "Female"], { required_error: "Gender is required" }),
-  dateOfBirth: z.date({
-    required_error: "Date of birth is required",
-    invalid_type_error: "That's not a date!",
-  }).max(new Date(), "Date of birth cannot be in the future"),
+  dateOfBirth: z
+    .date({
+      required_error: "Date of birth is required",
+      invalid_type_error: "That's not a date!",
+    })
+    .max(new Date(), "Date of birth cannot be in the future"),
   phoneNumber: z
     .string()
     .regex(/^\d{10,}$/, "Phone number must be at least 10 digits"),
@@ -59,13 +61,13 @@ function StepIndicator({ step }: { step: number }) {
         <span
           className={cn(
             "h-2 w-2 rounded-full",
-            step === 1 ? "bg-blue-500" : "bg-gray-300"
+            step === 1 ? "bg-blue-500" : "bg-gray-300",
           )}
         />
         <span
           className={cn(
             "h-2 w-2 rounded-full",
-            step === 2 ? "bg-blue-500" : "bg-gray-300"
+            step === 2 ? "bg-blue-500" : "bg-gray-300",
           )}
         />
       </div>
@@ -96,7 +98,7 @@ function DateOfBirthPicker({
               variant={"outline"}
               className={cn(
                 "w-full pl-3 text-left font-normal",
-                !watch("dateOfBirth") && "text-muted-foreground"
+                !watch("dateOfBirth") && "text-muted-foreground",
               )}
             >
               {watch("dateOfBirth") ? (
@@ -117,7 +119,6 @@ function DateOfBirthPicker({
               }
               initialFocus
               month={new Date(year, 0)}
-
             />
           </PopoverContent>
         </Popover>
@@ -192,7 +193,10 @@ export default function SignUpForm() {
         </div>
         <Card className="w-full mx-auto p-4 sm:p-10 bg-transparent">
           <StepIndicator step={step} />
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 sm:space-y-6">
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="space-y-4 sm:space-y-6"
+          >
             {step === 1 ? (
               <>
                 {/* Step 1: Email and Password */}

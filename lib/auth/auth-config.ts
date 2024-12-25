@@ -45,7 +45,10 @@ export const authConfig: NextAuthOptions = {
         if (!credentials?.email || !credentials?.password) {
           return null;
         }
-        const user = await authService.login(credentials.email, credentials.password);
+        const user = await authService.login(
+          credentials.email,
+          credentials.password,
+        );
         if (!user) {
           return null;
         }
@@ -75,21 +78,27 @@ export const authConfig: NextAuthOptions = {
             image: user.image,
           },
           expires: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
-        }
+        };
 
         console.log("gogolepayload", gogolepayload);
 
         try {
-          const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/sessions/google-payload`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
+          const response = await fetch(
+            `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/sessions/google-payload`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(gogolepayload),
             },
-            body: JSON.stringify(gogolepayload),
-          });
+          );
 
           if (!response.ok) {
-            console.error("Failed to register user via API:", await response.json());
+            console.error(
+              "Failed to register user via API:",
+              await response.json(),
+            );
             return false; // Prevent sign-in if API registration fails
           }
         } catch (error) {
@@ -117,9 +126,6 @@ export const authConfig: NextAuthOptions = {
       return session;
     },
   },
-  session: {
-
-  },
+  session: {},
   // debug: process.env.NODE_ENV === "development",
 };
-

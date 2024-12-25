@@ -1,10 +1,10 @@
 services:
   reactjs-srv:
     image: imagename
-#    build:
-#      context: .
-#      dockerfile: Dockerfile
-#    pull_policy: always
+    #    build:
+    #      context: .
+    #      dockerfile: Dockerfile
+    #    pull_policy: always
     container_name: reactjs-container
     ports:
       - "3000:3000"
@@ -19,4 +19,4 @@ services:
       - proxy
 networks:
   proxy:
-    external: true 
+    external: true

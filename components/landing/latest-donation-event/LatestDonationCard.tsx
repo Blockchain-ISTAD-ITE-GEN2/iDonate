@@ -7,7 +7,7 @@ import Image from "next/image";
 import FamilyImage from "@/public/landing/LateDonation.jpg";
 import { Users } from "lucide-react";
 import { CircleDollarSign } from "lucide-react";
-import FamilyOne from "@/public/images/Group 4630.png"
+import FamilyOne from "@/public/images/Group 4630.png";
 import FamilyTwo from "@/public/images/image (7).png";
 import FamilyThree from "@/public/images/image (8).png";
 
@@ -52,9 +52,8 @@ const donationCards: DonationCard[] = [
 ];
 
 export default function LatestDonationCard() {
-  const currentDonations = donationCards.filter(card => card.isCurrent);
+  const currentDonations = donationCards.filter((card) => card.isCurrent);
   return (
-        
     <div className="w-full lg:px-[100px] md:px-4 px-4 bg-transparent">
       <Card className="overflow-hidden border border-none bg-red-500">
         <div className="grid lg:grid-cols-2 gap-0 ">
@@ -100,10 +99,11 @@ export default function LatestDonationCard() {
                   <Users className="h-4 w-4" />
                 </div>
                 <span className="khmer-font text-iDonate-navy-primary">
-                  អ្នកបរិច្ចាគ៖ 1.2 ពាន់នាក់                </span>
+                  អ្នកបរិច្ចាគ៖ 1.2 ពាន់នាក់{" "}
+                </span>
               </div>
               <div className=" text-iDonate-navy-primary">
-              ​​ទឹកប្រាក់ទទួលបាន៖ $100
+                ​​ទឹកប្រាក់ទទួលបាន៖ $100
               </div>
             </div>
 
@@ -115,7 +115,6 @@ export default function LatestDonationCard() {
             </Button>
           </div>
         </div>
-        
       </Card>
 
       {/* current donation */}
