@@ -18,14 +18,14 @@ export function SearchPage() {
         (event) => ({
           label: event,
           value: event,
-        }),
+        })
       ),
     },
     {
       key: "total_donor",
       title: "Donor Range",
       options: Array.from(
-        new Set(typedEvents.map((event) => event.total_donor)),
+        new Set(typedEvents.map((event) => event.total_donor))
       ).map((donor) => ({
         label: donor.toString(),
         value: donor.toString(),
@@ -36,7 +36,7 @@ export function SearchPage() {
       key: "total_amount",
       title: "Amount Range",
       options: Array.from(
-        new Set(typedEvents.map((event) => event.total_amount)),
+        new Set(typedEvents.map((event) => event.total_amount))
       ).map((amount) => ({
         label: amount.toString(),
         value: amount.toString(),
@@ -49,16 +49,15 @@ export function SearchPage() {
   }, [typedEvents]);
 
   return (
-    <section className="flex flex-col gap-6 container mx-auto">
+    <section className="flex flex-col gap-6 px-4 2xl:container 2xl:mx-auto">
       <Toolbar
         events={typedEvents}
         filtersFace={filtersFace}
         searchKey={"title"}
         onFilterChange={setFilteredEvents}
-        // filtersDateRange=
       />
 
-      <div className="w-full grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+      <div className="w-full grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3  xl:grid-cols-4 2xl:grid-cols-5">
         {filteredEvents.map((event, index) => (
           <CommonEventCard key={index} event={event} />
         ))}

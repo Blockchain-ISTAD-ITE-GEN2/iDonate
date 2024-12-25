@@ -1,6 +1,6 @@
 "use client";
 
-import { Area, AreaChart, CartesianGrid, XAxis } from "recharts";
+import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts";
 import {
   Card,
   CardContent,
@@ -22,11 +22,11 @@ type AverageProps = {
 
 const chartConfig = {
   today: {
-    label: "Today",
+    label: "Amount",
     color: "iDonate-navy-primary",
   },
   average: {
-    label: "Average",
+    label: "Date",
     color: "iDonate-green-primary",
   },
 } satisfies ChartConfig;
@@ -39,7 +39,7 @@ export function CardsMetric({ data }: AverageProps) {
           Overall Transaction
         </CardTitle>
         <CardDescription className="text-sub-description-eng text-iDonate-navy-secondary">
-          Your exercise minutes are ahead of where you normally are.
+          Total transactions caculated daily
         </CardDescription>
       </CardHeader>
       <CardContent className="pb-4">
@@ -56,25 +56,25 @@ export function CardsMetric({ data }: AverageProps) {
           >
             <CartesianGrid vertical={false} />
             <XAxis
-              dataKey="average"
+              dataKey="date"
               tickLine={false}
               axisLine={false}
               tickMargin={8}
               tickFormatter={(value) => value}
             />
-            <Area
-              type="monotone"
-              strokeWidth={2}
-              dataKey="average"
-              fill="fill-iDonate-green-primary"
-              className="fill-iDonate-green-primary"
+            <YAxis
+              dataKey="amount"
+              tickLine={false}
+              axisLine={false}
+              tickMargin={30}
+              tickFormatter={(value) => value}
             />
             <Area
               type="monotone"
-              dataKey="today"
               strokeWidth={2}
-              fill="fill-iDonate-navy-primary"
-              className="fill-iDonate-navy-primary"
+              dataKey="amount"
+              fill="fill-iDonate-green-primary"
+              className="fill-iDonate-green-primary"
             />
             <ChartTooltip
               cursor={false}

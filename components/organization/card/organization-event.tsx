@@ -4,8 +4,12 @@ import { OrganizationEventType } from "@/difinitions/dto/Organization-event";
 import { useEffect, useState } from "react";
 import { OrganizationEventCard } from "@/components/organization/card/event-organization-card";
 import events from "@/data/organizaation-event-data.json";
+import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
 export function OrganizationEventPage() {
+  const router = useRouter();
+
   const typedEvents: OrganizationEventType[] = events;
 
   const filtersFace = [
@@ -47,13 +51,20 @@ export function OrganizationEventPage() {
 
   return (
     <>
-      <Toolbar
-        events={typedEvents}
-        filtersFace={filtersFace}
-        searchKey={"title"}
-        onFilterChange={setFilteredEvents}
-        filtersDateRange={filtersDateRange}
-      />
+      <div className="flex justify-between items-center">
+        <Toolbar
+          events={typedEvents}
+          filtersFace={filtersFace}
+          searchKey={"title"}
+          onFilterChange={setFilteredEvents}
+          filtersDateRange={filtersDateRange}
+        />
+
+        <Button variant="outline" onClick={()=>{router.push("/organization-dashboard/event-creation")}}>New Event</Button>
+      </div>
+      
+
+
       {filteredEvents.map((event, index) => (
         <OrganizationEventCard key={index} event={event} />
       ))}

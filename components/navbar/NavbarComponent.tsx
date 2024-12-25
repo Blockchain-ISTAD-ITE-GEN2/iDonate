@@ -38,6 +38,7 @@ import { ContributorMenulist } from "./sub-navbar/ContributorMenu";
 import { NavMenuType } from "@/difinitions/types/components-type/NavMenuType";
 import { signOut, useSession } from "next-auth/react";
 import ThemeSwitch from "../theme/ThemeSwitches";
+import logo from "@/public/logo/logodesign no background.png";
 
 const ProfileDropdown = ({
   session,
@@ -247,7 +248,8 @@ export default function NavbarComponent() {
           >
             <X className="w-6 h-6 text-iDonate-navy-primary" />
           </button>
-          <div className="w-8 h-8 bg-iDonate-green-primary rounded-full"></div>
+          <Image src={logo} width={80} height={80} alt=""/>
+          {/* <div className="w-8 h-8 bg-iDonate-green-primary rounded-full"></div> */}
           <span className="text-lg dark:text-white text-iDonate-navy-primary">
             iDonate
           </span>
@@ -376,7 +378,7 @@ export default function NavbarComponent() {
         className="flex items-center space-x-2 cursor-pointer"
         onClick={() => router.push("/")}
       >
-        <div className="w-8 h-8 lg:w-10 lg:h-10 bg-iDonate-green-primary rounded-full"></div>
+        <Image src={logo} width={80} height={80} alt=""/>
         <span className="text-lg lg:text-title-eng">iDonate</span>
       </section>
 

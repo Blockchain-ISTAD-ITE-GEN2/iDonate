@@ -5,6 +5,6 @@ export type BarchartType = {
 };
 
 export type AverageType = {
-  average: number;
-  today: number;
+  amount: number;
+  date: string;
 };
