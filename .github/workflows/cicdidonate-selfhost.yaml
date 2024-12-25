@@ -1,53 +1,62 @@
 on:
   push:
-    branches: ["development"]
+    branches: [ "development" ]
 
 env:
-  # NEXUS_REGISTRY: registry-new.devnerd.store # nexus repo for storing docker image
   IMAGE_NAME: idonate-image
-  # TAG: "v0.1.0" # version dynamic
-  # HELM_REPO: keoKAY/helm-sample-one.git
 
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
-    #    environment: DOCKER_REPOSITORY
+
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
-      - name: Use with SHA
+      - name: Set TAG with SHA
         run: |
           echo "TAG=${GITHUB_SHA::8}" >> $GITHUB_ENV
-      - name: Show the TAGS values
+      - name: Show the TAG value
         run: |
-          echo "TAG value is : ${{ env.TAG }}"
+          echo "TAG value is: $TAG"
       - name: Login to Docker Registry
         run: |
           echo "${{ secrets.PASSWORD }}" | docker login -u ${{ secrets.USERNAME }} --password-stdin
       - name: Build Docker Image
-        run: docker build -t ${{ secrets.USERNAME }}/${{env.IMAGE_NAME }}:${{ env.TAG }} .
+        run: docker build -t ${{ secrets.USERNAME }}/${{ env.IMAGE_NAME }}:$TAG .
       - name: Push the Docker image
-        run: |
-          docker push ${{ secrets.USERNAME }}/${{env.IMAGE_NAME }}:${{ env.TAG }}
+        run: docker push ${{ secrets.USERNAME }}/${{ env.IMAGE_NAME }}:$TAG
       - name: Logout from the Registry
         if: always()
         run: |
           docker logout
+
   deploy-service:
     needs: build-and-push
-    runs-on: self-hosted # self-hosted is the our machine
+    runs-on: self-hosted
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
-      - name: Use with SHA
+      - name: Set TAG with SHA
         run: |
           echo "TAG=${GITHUB_SHA::8}" >> $GITHUB_ENV
       - name: Stop the container
+        run: sudo docker compose down
+      - name: Update Docker Compose
         run: |
-          sudo docker compose down
-      - name: Using yq in order to edit the docker compose part
-        run: |
-          yq eval '.services.reactjs-srv.image="kevintido/${{env.IMAGE_NAME }}:${{ env.TAG }}"' -i docker-compose.yaml
+          yq eval ".services.reactjs-srv.image=\"kevintido/${{ env.IMAGE_NAME }}:$TAG\"" -i docker-compose.yaml
       - name: Run the container
+        run: sudo docker compose up -d
+      - name: Send Telegram Notification on Deploy Success
+        if: success()
         run: |
-          sudo docker compose up -d
+          curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
+          -d chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" \
+          -d parse_mode=Markdown \
+          -d text="*Idonate Deployment Successful:*\n- *Container:* kevintido/${{ env.IMAGE_NAME }}\n- *Tag:* $TAG\n- *Branch:* development\n- *Deployment URL:* [idonate](https://idonate.kangtido.life)"
+      - name: Send Telegram Notification on Failure
+        if: failure()
+        run: |
+          curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
+          -d chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" \
+          -d parse_mode=Markdown \
+          -d text="*Deployment Failed:*\n- *Container:* kevintido/${{ env.IMAGE_NAME }}\n- *Tag:* $TAG"
