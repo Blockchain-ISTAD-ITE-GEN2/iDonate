@@ -20,7 +20,7 @@ type TransactionProps = {
   data: TransactionType[];
 };
 
-const chartConfig = {   
+const chartConfig = {
   amount: {
     label: "Amount",
     color: "iDonate-navy-primary",
@@ -33,18 +33,18 @@ const chartConfig = {
 
 export function DonorCardsMetric({ data }: TransactionProps) {
   return (
-    <Card className="w-full h-auto bg-iDonate-light-gray rounded-lg border border-iDonate-navy-accent">
+    <Card className="w-full bg-iDonate-light-gray rounded-lg border border-iDonate-navy-accent">
       <CardHeader>
         <CardTitle className="text-medium-eng font-normal text-iDonate-navy-secondary">
           Overall Transaction
         </CardTitle>
         <CardDescription className="text-sub-description-eng text-iDonate-navy-secondary">
-          All transactions made by you
+          All transactions made by you.
         </CardDescription>
       </CardHeader>
 
       <CardContent className="pb-4">
-        <ChartContainer config={chartConfig} className="h-[400px] w-full">
+        <ChartContainer config={chartConfig} className="h-[200px] w-full">
           <AreaChart
             accessibilityLayer
             data={data}
@@ -69,9 +69,8 @@ export function DonorCardsMetric({ data }: TransactionProps) {
               dataKey="amount"
               tickLine={false}
               axisLine={false}
-              tickMargin={30}
+              tickMargin={8}
               tickFormatter={(value) => value}
-
             />
 
             <Area

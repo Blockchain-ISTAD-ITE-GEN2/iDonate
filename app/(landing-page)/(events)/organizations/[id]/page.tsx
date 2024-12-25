@@ -2,7 +2,7 @@ import OrganizationDetailHeroSection from "@/components/herosection/Organization
 import { SearchInput } from "@/components/ui/SearchInput";
 import { DropDownButtonComponent } from "@/components/dropdown-button/DropDownButtonComponent";
 import { DatePickerDemo } from "@/components/events/organization-event/detail-event/DatePickerDemo";
-import { CommonEventCard } from "@/components/events/common-card/CommonEventCad";
+import { CommonEventCard } from "@/components/events/organization-event/CommonEventCad";
 import { Button } from "@/components/ui/button"; // Ensure this imports the correct type
 import { EventType } from "@/difinitions/dto/EventType";
 
