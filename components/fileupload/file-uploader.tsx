@@ -8,7 +8,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { useControllableState } from "@/hooks/use-controllable-state";
 import toast from "react-hot-toast";
 import { FileUploaderProps } from "@/difinitions/types/fileupload/FileUploadType";
-import { FileCard, isFileWithPreview } from "./file-card";
+import { FileCard, isFileWithPreview } from "@/components/fileupload/file-card";
 
 export function FileUploader(props: FileUploaderProps) {
   const {

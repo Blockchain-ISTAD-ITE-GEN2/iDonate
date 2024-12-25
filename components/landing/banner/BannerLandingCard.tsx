@@ -1,7 +1,6 @@
 "use client";
 
 import { Heart } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import Group from "@/public/images/group.png";
 
 export default function BannerLandingCard() {

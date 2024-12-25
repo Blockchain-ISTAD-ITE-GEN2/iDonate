@@ -2,7 +2,7 @@ import Image from "next/image";
 
 import { Card, CardContent, CardDescription } from "@/components/ui/card";
 import { UploadedFile } from "@/difinitions/types/fileupload";
-import { EmptyCard } from "./empty-card";
+import { EmptyCard } from "@/components/fileupload/empty-card";
 import { FileText } from "lucide-react";
 
 type UploadedFilesCardProps = {

@@ -2,7 +2,7 @@
 import React, { Fragment, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { OrganizationSidebarMenuList } from "./OrganizationSidebarMenu";
+import { OrganizationSidebarMenuList } from "@/components/organization/sidebar/OrganizationSidebarMenu";
 import { SubNavbarMenuType } from "@/difinitions/types/components-type/SubNavbarMenuType";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";

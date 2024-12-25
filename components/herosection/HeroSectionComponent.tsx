@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import HeroSectionImage from "@/public/images/image (6).png";
 import HeroSectionImageOne from "@/public/images/image 1.png";

@@ -1,7 +1,7 @@
 import { FileText, X } from "lucide-react";
 import Image from "next/image";
-import { Progress } from "../ui/progress";
-import { Button } from "../ui/button";
+import { Progress } from "@/components/ui/progress";
+import { Button } from "@/components/ui/button";
 import { formatBytes } from "@/lib/utils";
 import {
   FileCardProps,

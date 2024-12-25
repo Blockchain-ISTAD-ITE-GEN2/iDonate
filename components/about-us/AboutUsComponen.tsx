@@ -1,16 +1,13 @@
 "use client";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { members, mentors } from "@/difinitions/types/about-us/member";
-import localFont from "next/font/local";
 import AboutUsHeroSection from "@/public/about-us/AboutUsHeroSection.webp.webp";
 import { motion } from "framer-motion";
 import TrustContent from "@/public/images/trust-content.png";
 import GiveAndRecieve from "@/public/images/give-and-recieve.png";
 import BlockchainTech from "@/public/images/blockchain.png";
-import TeamSection from "./TeamSection";
-import { Facebook, Instagram, Twitter } from "lucide-react";
+import TeamSection from "@/components/about-us/TeamSection";
 
 export default function AboutUsComponent() {
   const featureVariants = {

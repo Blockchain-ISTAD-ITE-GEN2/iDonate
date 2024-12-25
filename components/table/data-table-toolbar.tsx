@@ -5,8 +5,8 @@ import { X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { DataTableViewOptions } from "@/components/table/data-table-view-options";
-import { DataTableFacetedFilter } from "./data-table-faceted-filter";
-import { TableCalendarDateRangePicker } from "./data-table-date-range-picker";
+import { DataTableFacetedFilter } from "@/components/table/data-table-faceted-filter";
+import { TableCalendarDateRangePicker } from "@/components/table/data-table-date-range-picker";
 import { useState } from "react";
 
 type DataTableToolbarProps<TData> = {

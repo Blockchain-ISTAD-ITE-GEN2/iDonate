@@ -2,7 +2,7 @@
 import Image from "next/image";
 import event from "@/public/images/image (8).png";
 import { TabEventDetail } from "@/components/events/even-detail/tab-event-detail";
-import { EventDetailBanner } from "./event-detail-banner";
+import { EventDetailBanner } from "@/components/events/even-detail/event-detail-banner";
 
 export function EventDetail() {
   return (

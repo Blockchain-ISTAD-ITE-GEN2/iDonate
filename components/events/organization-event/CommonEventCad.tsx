@@ -11,7 +11,7 @@ export function CommonEventCard({ event }: { event: EventType }) {
   return (
     <Card
       onClick={() => router.push(`/event-detail`)}
-      className="w-[280px] h-[400px] rounded-[10px] bg-iDonate-light-gray p-0 m-0 border-0 cursor-pointer"
+      className="w-[280px] min-h-[400px] rounded-[10px] bg-iDonate-light-gray p-0 m-0 border-0 cursor-pointer"
     >
       {/* Header with Image */}
       <CardHeader
@@ -34,8 +34,10 @@ export function CommonEventCard({ event }: { event: EventType }) {
       </CardHeader>
 
       {/* Content */}
-      <CardContent className="px-4 flex flex-col justify-between h-[220px] gap-6">
-        <div className="mt-[18px]">
+      <CardContent className="px-4 flex flex-grow flex-col justify-between min-h-[220px] gap-6">
+        <div></div>
+
+        <div className="flex flex-col flex-1">
           <h3
             lang="km"
             className="font-extrabold text-medium-khmer line-clamp-1 text-left text-iDonate-navy-primary"

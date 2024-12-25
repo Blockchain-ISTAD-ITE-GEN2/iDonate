@@ -10,7 +10,7 @@ export function TabEventDetail() {
           className="border-2 rounded-lg px-9 border-iDonate-navy-accent data-[state=active]:bg-iDonate-navy-accent data-[state=active]:text-iDonate-navy-secondary dat`a-[state=active]:shadow-none"
           value="event-description"
         >
-          Description
+          xa Description
         </TabsTrigger>
         <TabsTrigger
           className="border-2 rounded-lg px-9  border-iDonate-navy-accent data-[state=active]:bg-iDonate-navy-accent data-[state=active]:text-iDonate-navy-secondary dat`a-[state=active]:shadow-none"

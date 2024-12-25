@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { Toolbar } from "@/components/filter/toolbar";
 import { EventType } from "@/difinitions/dto/EventType";
-import { CommonEventCard } from "../events/organization-event/CommonEventCad";
+import { CommonEventCard } from "@/components/events/organization-event/CommonEventCad";
 import events from "@/data/events-data.json";
 
 export function SearchPage() {

@@ -27,7 +27,6 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import Image from "next/image";
 import payment from "@/public/images/payment.jpg";
-import { Separator } from "@/components/ui/separator";
 import { HeartIcon } from "lucide-react";
 
 export function DonotionForm() {
