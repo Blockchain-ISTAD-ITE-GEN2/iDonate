@@ -46,10 +46,9 @@ type EventInfoFormProps = {
   onEndDatePercentageUpdate: (addressPercentage: number) => void;
   onContactPercentageUpdate: (bioPercentage: number) => void;
   onImagePercentageUpdate: (imagePercentage: number) => void;
-  onCategoryPercentageUpdate: (categoryPercentage: number) => void;
 };
 
-export function EventInfoForm({
+export function EventInfoFormEdition({
   onTitlePercentageUpdate,
   onDescriptionPercentageUpdate,
   onOrderDatePercentageUpdate,
@@ -100,7 +99,7 @@ export function EventInfoForm({
     // Calculate percentage for each field
     const calculateCompletionPercentage = () => {
       const titlePercentage = title.trim() ? 20 : 0;
-      const descriptionPercentage = description.trim() ? 20 : 0;
+      const descriptionPercentage = description.trim() ? 10 : 0;
       const orderDatePercentage = orderDate ? 10 : 0;
       const endDatePercentage = endDate ? 10 : 0;
       const contactPercentage = contact.trim() ? 10 : 0;
@@ -390,7 +389,7 @@ export function EventInfoForm({
                 />
               </CardContent>
 
-              <CardContent className="flex-1 flex flex-col gap-9 p-0 m-0">
+              <CardContent className="flex-1 flex flex-col gap-6 p-0 m-0">
                 <FormField
                   control={control}
                   name="title"

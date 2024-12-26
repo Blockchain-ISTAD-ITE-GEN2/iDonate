@@ -1,4 +1,4 @@
-import { EventForm } from "@/components/organization/event-creation/event-form";
+import { EventFormCreation } from "@/components/organization/event-creation/event-form";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -32,7 +32,7 @@ export default function EventCreation() {
         </BreadcrumbList>
       </Breadcrumb>
 
-      <EventForm />
+      <EventFormCreation />
     </section>
   );
 }

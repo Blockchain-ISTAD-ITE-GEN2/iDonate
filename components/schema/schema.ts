@@ -84,6 +84,7 @@ export const eventInfoSchema = z.object({
   description: z.string().min(10, { message: "Description is required" }),
   startDate: z.string(),
   endDate: z.string(),
+  category: z.string().min(1, { message: "Category is required" }),
   contact: z.string().regex(/^\+?\d{10,15}$/, {
     message: "Contact must be a valid phone number with 10-15 digits",
   }),

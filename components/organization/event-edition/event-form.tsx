@@ -1,8 +1,8 @@
 "use client";
 import { EventCategoryFormEdition } from "@/components/organization/event-edition/event-category-form";
 import { useState } from "react";
-import { EventInfoForm } from "@/components/organization/event-edition/event-info-form";
-import { ProgressEvent } from "@/components/organization/event-edition/event-progess";
+import { EventInfoFormEdition } from "@/components/organization/event-edition/event-info-form";
+import { ProgressEvent } from "@/components/organization/event-progress/event-progess";
 
 export function EventFormEdition() {
   const [titlePercentage, setTitlePercentage] = useState(0);
@@ -29,14 +29,13 @@ export function EventFormEdition() {
       </div>
 
       <div className="w-full flex flex-col gap-6 border-iDonate-navy-accent">
-        <EventInfoForm
+        <EventInfoFormEdition
           onTitlePercentageUpdate={setTitlePercentage}
           onDescriptionPercentageUpdate={setDescriptionPercentage}
           onImagePercentageUpdate={setImagePercentage}
           onOrderDatePercentageUpdate={setStartDatePercentage}
           onEndDatePercentageUpdate={setEndDatePercentage}
           onContactPercentageUpdate={setContactPercentage}
-          onCategoryPercentageUpdate={setCategoryPercentage}
         />
       </div>
     </section>
