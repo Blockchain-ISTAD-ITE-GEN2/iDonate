@@ -52,7 +52,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
                   {/* Sidebar */}
                   <aside className="flex-shrink-0 hidden md:block flex-grow">
                     <OrganizationSidebarComponent />
-                    {/* {children} */}
+                    {/*   {children} */}
                   </aside>
 
                   {/* Main Content */}
