@@ -2,9 +2,7 @@
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
-import {
-  Form
-} from "@/components/ui/form";
+import { Form } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
 import {
   Card,
@@ -26,8 +24,7 @@ export function EventCategoryFormEdition({
 }: {
   onPercentageUpdate: (percentage: number) => void;
 }) {
-
-  const typedCategory : CategoryType[] = categories;
+  const typedCategory: CategoryType[] = categories;
 
   const [isEditing, setIsEditing] = useState(false);
 
@@ -43,7 +40,7 @@ export function EventCategoryFormEdition({
 
   // Track if the form is filled
   const isFormFilled = !!categoryValue.trim();
-  
+
   // Update percentage based on input
   useEffect(() => {
     if (isFormFilled) {
@@ -53,6 +50,21 @@ export function EventCategoryFormEdition({
     }
   }, [isFormFilled, onPercentageUpdate]);
 
+  useEffect(() => {
+    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+      if (isFormFilled) {
+        event.preventDefault();
+        event.returnValue =
+          "You have unsaved changes. Are you sure you want to leave?";
+      }
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, [isFormFilled]);
 
   function onSubmit(values: z.infer<typeof eventSchema>) {
     console.log(values);
@@ -66,7 +78,7 @@ export function EventCategoryFormEdition({
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         {/* View Mode */}
         {!isEditing && (
           <Card className="flex flex-col rounded-lg border-2 border-iDonate-navy-accent gap-2 p-9">
@@ -85,18 +97,17 @@ export function EventCategoryFormEdition({
             </CardHeader>
 
             <CardContent className="border-2 flex flex-col items-center justify-center border-iDonate-navy-accent  w-[200px] h-[200px] gap-4 p-0 m-0 rounded-lg">
-
               <div className=" w-[100px] h-[100px] bg-iDonate-navy-accent rounded-full border flex items-center justify-center">
                 <Image
-                    width={60}
-                    height={60}
-                    src="https://charius-next.netlify.app/_next/static/media/3.0714cc33.svg"
-                    alt={"Media"}
-                  />
+                  width={60}
+                  height={60}
+                  src="https://charius-next.netlify.app/_next/static/media/3.0714cc33.svg"
+                  alt={"Media"}
+                />
               </div>
 
               <CardDescription className="text-iDonate-navy-secondary text-xl">
-                   អាហារ សុខភាព
+                អាហារ សុខភាព
               </CardDescription>
             </CardContent>
           </Card>
@@ -150,27 +161,31 @@ export function EventCategoryFormEdition({
 
             <div className="flex items-center gap-9">
               {typedCategory.map((item, index) => (
-                <CardContent key={index} className="border-2 flex flex-col items-center justify-center border-iDonate-navy-accent w-[200px] h-[200px] gap-4 p-0 m-0 rounded-lg">
-                  
+                <CardContent
+                  key={index}
+                  className="border-2 flex flex-col items-center justify-center border-iDonate-navy-accent w-[200px] h-[200px] gap-4 p-0 m-0 rounded-lg"
+                >
                   <div className="w-[100px] h-[100px] bg-iDonate-navy-accent rounded-full border flex items-center justify-center">
                     <Image
                       width={60}
                       height={60}
-                      src={item.media || "https://charius-next.netlify.app/_next/static/media/3.0714cc33.svg"}
+                      src={
+                        item.media ||
+                        "https://charius-next.netlify.app/_next/static/media/3.0714cc33.svg"
+                      }
                       alt="Media"
                     />
                   </div>
 
                   <CardDescription className="text-iDonate-navy-secondary text-xl">
-                    {item.title || ""} {/* Assuming 'item.name' holds the category name */}
+                    {item.title || ""}{" "}
+                    {/* Assuming 'item.name' holds the category name */}
                   </CardDescription>
                 </CardContent>
               ))}
-
             </div>
           </Card>
         )}
-        
       </form>
     </Form>
   );

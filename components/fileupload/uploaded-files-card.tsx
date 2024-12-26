@@ -38,8 +38,8 @@ function formatFileSize(sizeInBytes: number): string {
 
 export function UploadedFilesCard({ uploadedFiles }: UploadedFilesCardProps) {
   return (
-    <Card className="p-0 m-0 border-0 shadow-none">
-      <CardContent className="p-0 m-0 border-0">
+    <Card className="flex-1 p-0 m-0 border-0 shadow-none">
+      <CardContent className="p-0 m-0 border-0 h-full">
         {uploadedFiles.length > 0 ? (
           <div className="flex flex-col w-full gap-2">
             {uploadedFiles.map((file) => (
@@ -64,7 +64,7 @@ export function UploadedFilesCard({ uploadedFiles }: UploadedFilesCardProps) {
           <EmptyCard
             title="No files uploaded"
             description="Upload some files to see them here"
-            className="w-full border-[1.5px] border-iDonate-navy-accent"
+            className="w-full h-full border-[1.5px] border-iDonate-navy-accent"
           />
         )}
       </CardContent>

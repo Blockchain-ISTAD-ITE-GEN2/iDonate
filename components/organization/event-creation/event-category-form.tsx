@@ -32,7 +32,6 @@ export function VEventCategoryForm({
 }) {
   const [isEditing, setIsEditing] = useState(false);
 
-
   const form = useForm<z.infer<typeof organizationAddressSchema>>({
     resolver: zodResolver(organizationAddressSchema),
     defaultValues: {
@@ -45,7 +44,7 @@ export function VEventCategoryForm({
 
   // Track if the form is filled
   const isFormFilled = !!addressValue.trim();
-  
+
   // Update percentage based on input
   useEffect(() => {
     if (isFormFilled) {
@@ -54,7 +53,6 @@ export function VEventCategoryForm({
       onPercentageUpdate(0); // Address field empty, reset percentage
     }
   }, [isFormFilled, onPercentageUpdate]);
-
 
   function onSubmit(values: z.infer<typeof organizationAddressSchema>) {
     console.log(values);
@@ -161,7 +159,6 @@ export function VEventCategoryForm({
             </CardContent>
           </Card>
         )}
-        
       </form>
     </Form>
   );

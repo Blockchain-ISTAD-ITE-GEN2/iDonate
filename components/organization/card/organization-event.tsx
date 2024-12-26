@@ -60,10 +60,15 @@ export function OrganizationEventPage() {
           filtersDateRange={filtersDateRange}
         />
 
-        <Button variant="outline" onClick={()=>{router.push("/organization-dashboard/event-creation")}}>New Event</Button>
+        <Button
+          variant="outline"
+          onClick={() => {
+            router.push("/organization-dashboard/event-creation");
+          }}
+        >
+          New Event
+        </Button>
       </div>
-      
-
 
       {filteredEvents.map((event, index) => (
         <OrganizationEventCard key={index} event={event} />

@@ -78,3 +78,14 @@ export const donationSchema = z.object({
 export const eventSchema = z.object({
   title: z.string().min(1, { message: "Title is required" }),
 });
+
+export const eventInfoSchema = z.object({
+  title: z.string().min(1, { message: "Title is required" }),
+  description: z.string().min(10, { message: "Description is required" }),
+  startDate: z.string(),
+  endDate: z.string(),
+  contact: z.string().regex(/^\+?\d{10,15}$/, {
+    message: "Contact must be a valid phone number with 10-15 digits",
+  }),
+  image: z.array(z.instanceof(File)),
+});

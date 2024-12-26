@@ -18,8 +18,6 @@ export function EventForm() {
         <OrganizationAddressForm />
 
         <OrganizationReferenceForm />
-
-
       </div>
     </section>
   );
