@@ -7,7 +7,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.reactjs.tls=true"
-      - "traefik.http.routers.reactjs.rule=Host(`idonate.ui.kangtido.life`)"
+      - "traefik.http.routers.reactjs.rule=Host(`idonate.kangtido.life`)"
       - "traefik.http.routers.reactjs.entrypoints=web,websecure"
       - "traefik.http.routers.reactjs.tls.certresolver=letsencrypt"
       # - "traefik.http.services.reactjs.loadbalancer.server.port=3000"

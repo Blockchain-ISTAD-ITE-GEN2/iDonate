@@ -52,7 +52,7 @@ jobs:
           curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
           -d chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" \
           -d parse_mode=Markdown \
-          -d text="*Idonate Deployment Successful:*\n- *Container:* kevintido/${{ env.IMAGE_NAME }}\n- *Tag:* $TAG\n- *Branch:* development\n- *Deployment URL:* [https://idonate.ui.kangtido.life](https://idonate.ui.kangtido.life)"
+          -d text="*Idonate UI  Deployment Successful:* \n- *Container:* kevintido/${{ env.IMAGE_NAME }} \n- *Tag:* $TAG\n- *Branch:* development\n- *Deployment URL:* [https://idonate.ui.kangtido.life](https://idonate.ui.kangtido.life)"
       - name: Send Telegram Notification on Failure
         if: failure()
         run: |
