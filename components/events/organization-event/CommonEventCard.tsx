@@ -4,8 +4,10 @@ import { Card, CardContent, CardHeader } from "../../ui/card";
 import { CircleDollarSign, Users } from "lucide-react";
 import { EventType } from "@/difinitions/dto/EventType";
 import { useRouter } from "next/navigation";
+import {number} from "yup";
 
-export function CommonEventCard({ event }: { event: EventType }) {
+export function CommonEventCard({event, key}: { event: EventType, key?: number }) {
+
   const router = useRouter();
 
   return (
@@ -23,7 +25,7 @@ export function CommonEventCard({ event }: { event: EventType }) {
             className="rounded-t-[10px]"
             width={280}
             height={180}
-            src={event?.image}
+            src={event?.image || "https://i.pinimg.com/736x/2a/86/a5/2a86a560f0559704310d98fc32bd3d32.jpg"}
             alt={event?.title || "Media"}
           />
         ) : (

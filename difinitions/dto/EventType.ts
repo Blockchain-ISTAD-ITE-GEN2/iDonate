@@ -5,4 +5,5 @@ export type EventType = {
   total_amount: number;
   total_donor: number;
   date?: string;
+  key?: number;
 };

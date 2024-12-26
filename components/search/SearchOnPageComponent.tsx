@@ -1,19 +1,18 @@
-"use client"
-import {SearchBar} from "@/components/search/SearchBar";
+"use client";
+
+import { SearchBar } from "@/components/search/SearchBar";
 import { CalendarInput } from "./CalendarInput";
-import { CommonEventCard } from "../events/organization-event/CommonEventCad";
-import { Button } from "react-day-picker";
+import { CommonEventCard } from "../events/organization-event/CommonEventCard";
+import { Button } from "@/components/ui/button"; // Correct Button import
 import { EventTypeParam } from "@/difinitions/types/media/organization";
-import { ArrowRight ,AlignLeft} from "lucide-react";
-import {GetMostDonationCardComponent} from "@/components/search/GetMostDonationCardComponent";
-import {FitterType} from "@/components/search/FitterType";
-import {FitterOrganization} from "@/components/search/FitterOrganization";
+import { ArrowRight } from "lucide-react";
+import { GetMostDonationCardComponent } from "@/components/search/GetMostDonationCardComponent";
+import { FitterType } from "@/components/search/FitterType";
+import { FitterOrganization } from "@/components/search/FitterOrganization";
 
-
-export  default  function SearchOnPageComponent(){
-
+export default function SearchOnPageComponent() {
     // Correct the type to EventTypeParam[]
-       const eventData: EventTypeParam[] = [
+    const eventData: EventTypeParam[] = [
         {
             image: "https://media.istockphoto.com/id/547404780/photo/local-students-in-cambodia.jpg?s=612x612&w=0&k=20&c=e5bAh7pAa87T2eKj1XJ9PgaMztkImfSVS4UAwb8zF-o=",
             title: "កម្មវិធីជំនួយសិស្សនៅខេត្តកំពង់ធំ",
@@ -45,7 +44,7 @@ export  default  function SearchOnPageComponent(){
 
 
 
-        ];
+    ];
 
     // Correct the type to EventTypeParam[]
     const mostDonation: EventTypeParam[] = [
@@ -88,73 +87,86 @@ export  default  function SearchOnPageComponent(){
 
     return (
         <section className="">
-            {/* Start search section title and descirpotin  */}
+            {/* Start search section title and description */}
             <section className="my-[36px]">
                 <div className="flex items-center justify-center">
-                    <h2 lang={"km"} className="text-iDonate-navy-primary text-heading-two-khmer">
+                    <h2
+                        lang={"km"}
+                        className="text-iDonate-navy-primary text-heading-two-khmer"
+                    >
                         ស្វែករក កម្មវិធីបរិច្ចាគដែលអ្នកពេញចិត្ត
                     </h2>
                 </div>
                 <div className="flex items-center justify-center">
-                    <p lang={"km"} className="text-iDonate-navy-primary text-medium-khmer">
-                        ស្វែករកម្មបវិធី វៃអង្គាសដោយ ឈ្មោះនៃអង្កការភាព​ ប្រភេទ និង កាលបរិច្ឆេទ្នាំនៃកម្មវិធី
+                    <p
+                        lang={"km"}
+                        className="text-iDonate-navy-primary text-medium-khmer"
+                    >
+                        ស្វែករកកម្មបវិធី វៃអង្គាសដោយ ឈ្មោះនៃអង្កការភាព​ ប្រភេទ និង
+                        កាលបរិច្ឆេទនៃកម្មវិធី
                     </p>
                 </div>
             </section>
-            {/*End search section title and description  */}
+            {/* End search section title and description */}
 
-            {/*Start  search bar select data type and organization */}
+            {/* Start search bar and filters */}
             <section className="mb-[36px]">
-                <div className="flex flex-cols">
-                    <SearchBar/>
-                    <CalendarInput/>
-                    <FitterType/>
-                    <FitterOrganization/>
+                <div className="flex flex-wrap gap-4">
+                    <SearchBar />
+                    <CalendarInput />
+                    <FitterType />
+                    <FitterOrganization />
                 </div>
             </section>
-            {/*End search bar select data type and organization */}
+            {/* End search bar and filters */}
 
-            {/*Start Most Donate */}
+            {/* Start Most Donate */}
             <section className="mx-[100px]">
-                <div className="">
+                <div>
                     <h2
                         lang={"km"}
                         className="text-iDonate-navy-primary text-heading-two-khmer mb-[16px]"
-                    >កម្មវិធី កំពង់ទទួលបានការបរិច្ចាគច្រើន</h2>
+                    >
+                        កម្មវិធី កំពង់ទទួលបានការបរិច្ចាគច្រើន
+                    </h2>
                 </div>
 
                 <div>
-                    <GetMostDonationCardComponent
-                        events={mostDonation}
-                    />
+                    <GetMostDonationCardComponent events={mostDonation} />
                 </div>
             </section>
+            {/* End Most Donate */}
 
-            {/*End Most Donate */}
-
-            {/* Start close to goal  */}
+            {/* Start Close to Goal */}
             <section className="mt-[36px]">
-                <h3 lang={"eng"} className="ml-[106px] text-heading-two-eng text-iDonate-navy-primary">
+                <h3
+                    lang={"eng"}
+                    className="ml-[106px] text-heading-two-eng text-iDonate-navy-primary"
+                >
                     Close to Goal
                 </h3>
 
-                {/* List Organization Cards Start */}
                 <section className="mx-[100px] my-[44px]">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-[44px]">
-                        <CommonEventCard events={eventData}/>
+                        {eventData.map((event, index) => (
+                            <CommonEventCard key={index} event={event} />
+                        ))}
                     </div>
                 </section>
-                {/* List Organization Cards End */}
-                <div lang={"eng"} className="flex flex-wrap justify-end my-[24px] mr-[100px]">
+
+                <div
+                    lang={"eng"}
+                    className="flex flex-wrap justify-end my-[24px] mr-[100px]"
+                >
                     <Button
-                        className="flex items-center justify-center gap-[8px] w-[170px] h-[50px] rounded-[15px] text-medium-eng text-iDonate-navy-primary bg-iDonate-white-space border-2 border-iDonate-navy-primary hover:text-iDonate-green-secondary hover:bg-iDonate-navy-primary">
+                        className="flex items-center justify-center gap-[8px] w-[170px] h-[50px] rounded-[15px] text-medium-eng text-iDonate-navy-primary bg-iDonate-white-space border-2 border-iDonate-navy-primary hover:text-iDonate-green-secondary hover:bg-iDonate-navy-primary"
+                    >
                         Show More
                         <ArrowRight className="w-[12px] h-[12px]" />
                     </Button>
                 </div>
-
             </section>
-            {/* End Cloast to goal  */}
+            {/* End Close to Goal */}
         </section>
-    )
+    );
 }
