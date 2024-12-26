@@ -10,7 +10,7 @@ services:
       - "traefik.http.routers.reactjs.rule=Host(`idonate.kangtido.life`)"
       - "traefik.http.routers.reactjs.entrypoints=web,websecure"
       - "traefik.http.routers.reactjs.tls.certresolver=letsencrypt"
-      # - "traefik.http.services.reactjs.loadbalancer.server.port=3000"
+      #- - "traefik.http.services.reactjs.loadbalancer.server.port=3000"
     networks:
       - proxy
 networks:
