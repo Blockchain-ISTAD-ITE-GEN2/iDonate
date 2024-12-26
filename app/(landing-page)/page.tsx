@@ -18,7 +18,7 @@ export default function Homepage() {
 
       <section className="w-full  px-4 py-12  space-y-4 text-center">
         <h2 lang="km" className="text-xl text-iDonate-green-primary">
-          តើអ្វីខ្លះដែលយើងត្រូវធ្វើ Github action
+          តើអ្វីខ្លះដែលយើងត្រូវធ្វើ
         </h2>
         <h3 lang="km" className="text-2xl text-iDonate-navy-primary">
           ការបរិច្ចាគរបស់អ្នក ជាសេចក្តីអំណរបស់អ្នកដទៃ
