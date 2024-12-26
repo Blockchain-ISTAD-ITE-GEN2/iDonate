@@ -62,6 +62,7 @@ export default function Homepage() {
 
       <section className="w-full py-12 ">
         <div className=" mx-auto space-y-4 text-center">
+
           <h2 lang="km" className="text-xl text-iDonate-green-primary">
             តោះ ចាប់ផ្ដើមជួយពួកគាត់ទាំងអស់គ្នា!
           </h2>
