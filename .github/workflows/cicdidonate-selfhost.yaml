@@ -6,7 +6,7 @@ env:
   IMAGE_NAME: idonate-image
 
 jobs:
-  build-and-push:
+  build-run-service:
     runs-on: ubuntu-latest
 
     steps:
@@ -31,7 +31,7 @@ jobs:
           docker logout
 
   deploy-service:
-    needs: build-and-push
+    needs: build-run-service
     runs-on: self-hosted
     steps:
       - name: Checkout Code
