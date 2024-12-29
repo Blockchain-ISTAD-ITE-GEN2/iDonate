@@ -27,7 +27,7 @@ export function CalendarInput() {
                             )}
                         >
                             <CalendarIcon className="mr-2 h-4 w-4" />
-                            {date ? format(date, "PPP") : <span lang="km" className="text-iDonate-navy-seconary text-description-khmer hover:text-iDonate-navy-primary">ជ្រើសរើស កាលបរិច្ឆេទ</span>}
+                            {date ? format(date, "PPP") : <span className="text-iDonate-navy-seconary text-description-khmer hover:text-iDonate-navy-primary">ជ្រើសរើស កាលបរិច្ឆេទ</span>}
                         </Button>
                     </PopoverTrigger>
                     <PopoverContent className="w-auto m-0">

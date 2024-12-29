@@ -50,18 +50,22 @@ export function SearchPage() {
 
     return (
         <section className="flex flex-col gap-6 px-4 2xl:container 2xl:mx-auto">
-            <Toolbar
-                events={typedEvents}
-                filtersFace={filtersFace}
-                searchKey={"title"}
-                onFilterChange={setFilteredEvents}
-            />
+            <div className="px-6 md:px-10 lg:px-10 xl:px-0">
+                <Toolbar
+                    events={typedEvents}
+                    filtersFace={filtersFace}
+                    searchKey={"title"}
+                    onFilterChange={setFilteredEvents}
+                />
 
-            <div className="w-full grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3  xl:grid-cols-4 2xl:grid-cols-5">
+            </div>
+            <div className="w-full justify-center px-10 md:px-14 lg:px-10 xl:px-0 grid gap-6 grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
                 {filteredEvents.map((event, index) => (
                     <CommonEventCard key={index} event={event} />
                 ))}
             </div>
+
+
         </section>
     );
 }

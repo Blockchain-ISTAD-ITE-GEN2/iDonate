@@ -75,7 +75,7 @@ export default function MissionVision() {
   const partners = [ISTAD, MPTC, CBRD, LEADER, ISTAD, MPTC, CBRD, LEADER];
 
   return (
-    <div className="w-full bg-white">
+    <div className="w-full bg-white" >
       {/* Hero Section */}
       <section className="relative h-[600px] sm:h-[400px] text-white ">
         <Image
@@ -95,7 +95,7 @@ export default function MissionVision() {
             <h1 className="text-5xl font-bold mb-4">Give Hope, Save Lives</h1>
             <p
               className="text-xl mb-8 text-gray-200 font-siemreap leading-relaxed"
-              lang="km"
+              
             >
               នៅក្នុងពិភពលោកដែលពោរពេញដោយបញ្ហាប្រឈម
               ជំនួយរបស់អ្នកអាចជាសញ្ញានៃក្តីសង្ឃឹម
@@ -110,7 +110,7 @@ export default function MissionVision() {
                   transition={{ delay: index * 0.1 }}
                   className="text-center"
                 >
-                  <span className="text-2xl mb-2">{stat.icon}</span>
+                  <span className="text-4xl mb-2">{stat.icon}</span>
                   <div className="text-2xl font-bold">{stat.value}</div>
                   <div className="text-sm text-gray-300">{stat.label}</div>
                 </motion.div>
@@ -215,13 +215,9 @@ export default function MissionVision() {
                   transition={{ delay: index * 0.1 }}
                   className="text-center text-iDonate-navy-secondary"
                 >
-                  <div className="text-4xl mb-4">{feature.icon}</div>
-                  <h3 className="font-semibold mb-2 font-siemreap text-iDonate-navy-secondary">
-                    {feature.title}
-                  </h3>
-                  <p className="text-sm  font-siemreap text-iDonate-navy-secondary">
-                    {feature.description}
-                  </p>
+                  <div className="text-6xl mb-4">{feature.icon}</div>
+                  <h3 className="font-semibold mb-2 font-siemreap text-iDonate-navy-secondary">{feature.title}</h3>
+                  <p className="text-sm  font-siemreap text-iDonate-navy-secondary">{feature.description}</p>
                 </motion.div>
               ))}
             </div>
@@ -243,7 +239,7 @@ export default function MissionVision() {
             <Accordion type="single" collapsible>
               {faqs.map((faq, index) => (
                 <AccordionItem key={index} value={`item-${index}`}>
-                  <AccordionTrigger className="font-siemreap text-iDonate-navy-secondary">
+                  <AccordionTrigger className="font-siemreap text-gray-800">
                     {faq.question}
                   </AccordionTrigger>
                   <AccordionContent className="font-siemreap text-iDonate-navy-secondary">

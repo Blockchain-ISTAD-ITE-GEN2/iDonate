@@ -10,21 +10,23 @@ import BannerLandingCard from "@/components/landing/banner/BannerLandingCard";
 import UpcomingEvents from "@/components/landing/upcoming-event/UpComingEventComponent";
 
 export default function Homepage() {
+  
   const typedCategory: CategoryType[] = categories;
-
   return (
     <section className="flex flex-col items-center">
+      <section>
       <HeroSectionComponent />
+      </section>
 
       <section className="w-full  px-4 py-12  space-y-4 text-center">
-        <h2 lang="km" className="text-xl text-iDonate-green-primary">
+        <h2 className="text-xl text-iDonate-green-primary">
           តើអ្វីខ្លះដែលយើងត្រូវធ្វើ
         </h2>
-        <h3 lang="km" className="text-2xl text-iDonate-navy-primary">
+        <h3 className="text-2xl text-iDonate-navy-primary">
           ការបរិច្ចាគរបស់អ្នក ជាសេចក្តីអំណរបស់អ្នកដទៃ
         </h3>
         <div
-          lang="km"
+          
           className="grid grid-cols-1 md:grid-cols-2  lg:grid-cols-4 gap-12 mt-8 lg:px-[100px]"
         >
           <CategoryCardComponent categories={typedCategory} />
@@ -40,7 +42,7 @@ export default function Homepage() {
         <div className="mx-auto space-y-8">
             {/*Test Github actions 3 */}
           <h3
-            lang="km"
+            
             className="text-2xl text-iDonate-navy-primary text-center"
           >
             កម្មវិធីបរិច្ចាគចុងក្រោយបំផុត
@@ -64,10 +66,10 @@ export default function Homepage() {
       <section className="w-full py-12 ">
         <div className=" mx-auto space-y-4 text-center">
 
-          <h2 lang="km" className="text-xl text-iDonate-green-primary">
+          <h2  className="text-xl text-iDonate-green-primary">
             តោះ ចាប់ផ្ដើមជួយពួកគាត់ទាំងអស់គ្នា!
           </h2>
-          <h3 lang="km" className="text-2xl text-iDonate-navy-primary">
+          <h3  className="text-2xl text-iDonate-navy-primary">
             កម្មវិធីបរិច្ចាគ ដែលនិងកើតឡើងឆាប់នេះ!
           </h3>
           <UpcomingEvents />

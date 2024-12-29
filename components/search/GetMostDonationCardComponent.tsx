@@ -16,7 +16,7 @@ export function GetMostDonationCardComponent({ events }: { events: EventType[] }
                     }`}
                 >
                     <CardHeader
-                        lang="km"
+                       
                         className={`w-full p-0 rounded-t-[10px] box-border ${
                             index === 0 ? "h-[520px]" : "h-[520px] md:h-[520px] lg:h-[141px]"
                         }`}
@@ -42,7 +42,7 @@ export function GetMostDonationCardComponent({ events }: { events: EventType[] }
                         <div className={index === 0 ? "mt-[30px]" : "mt-[30px]"}>
                             {item.title && (
                                 <h3
-                                    lang="km"
+                                   
                                     className={`font-extrabold text-medium-khmer text-left ${
                                         index === 0 ? "line-clamp-2 text-iDonate-navy-primary" : "line-clamp-1 text-iDonate-navy-primary"
                                     }`}
@@ -52,7 +52,7 @@ export function GetMostDonationCardComponent({ events }: { events: EventType[] }
                             )}
                             {item.description && (
                                 <p
-                                    lang="km"
+                                   
                                     className={`font-thin text-iDonate-navy-secondary text-title-card text-start ${
                                         index === 0 ? "line-clamp-3" : "line-clamp-2"
                                     }`}

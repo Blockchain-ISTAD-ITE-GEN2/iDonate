@@ -70,7 +70,7 @@ export function OrganizationBioForm() {
             </CardHeader>
 
             <CardContent className="flex w-fle gap-9 p-0 m-0">
-              <div lang="km" className="flex flex-col space-y-3">
+              <div className="flex flex-col space-y-3">
                 <CardDescription className="font-siemreap text-xl text-iDonate-navy-primary leading-8">
                   Elizabeth Joe
                   គឺជាអ្នកសកម្មក្នុងវិស័យឧស្សាហកម្មស្រ្តីដែលបង្កើតរបស់ជាច្រើនគាត់ជាអ្នកផ្តល់ជំនួយដល់ជំនួយដ៏ធំដល់អ្នកដទៃគាត់គឺជាមនុស្សម្នាក់

@@ -57,6 +57,7 @@ export default function CategoryOnPageComponent() {
             total_donor: 200,
             total_amount: 10000,
         },
+        
     ];
 
     return (
@@ -68,8 +69,8 @@ export default function CategoryOnPageComponent() {
             {/* Hero Section End */}
 
             {/* Start Card Categories */}
-            <section lang="km" className="mb-[24px] mx-[100px]">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-[16px] md:gap-[16px] lg:gap-[100px]">
+            <section className="mb-[24px] mx-16 md:mx-[100px]">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-[16px] md:gap-[20px] lg:gap-[100px]">
                     {categories.map((category: CategoryIcon, index: number) => (
                         <div
                             key={index}
@@ -88,9 +89,8 @@ export default function CategoryOnPageComponent() {
             {/* List Card Events */}
             {["Clean Water", "Education", "Healthy Food", "Medical Care"].map(
                 (categoryName, sectionIndex) => (
-                    <section key={sectionIndex} className="mt-[36px] mx-[100px]">
+                    <section key={sectionIndex} className="mt-[36px] mx-14 lg:mx-[100px]">
                         <h2
-                            lang={"eng"}
                             className="text-heading-two-eng text-iDonate-navy-primary md:flex md:items-center md:justify-center lg:flex lg:tems-center lg:justify-start"
                         >
                             {categoryName}
@@ -104,7 +104,7 @@ export default function CategoryOnPageComponent() {
                                 ))}
                             </div>
                             <div
-                                lang={"eng"}
+                                
                                 className="flex flex-wrap justify-end my-[24px]"
                             >
                                 <Button

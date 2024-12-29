@@ -3,18 +3,18 @@ import Image from "next/image";
 
 export default function OrganizationDetailHeroSection() {
   return (
-    <section className="mx-[106px] h-[600px]">
-      <div className="grid px-4 py-8 lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
+    <section className="lg:mx-[106px] h-[600px]">
+      <div className="grid md:px-4 py-8 lg:gap-8 xl:gap-0 xl:gap-16 2xl:gap-20 lg:grid-cols-12">
         {/* Left Content */}
-        <div className="lg:col-span-7 mt-0">
+        <div className="lg:col-span-7 mt-0 w-11/12 mx-auto lg:w-full">
           <h1
-            lang="km"
-            className="text-iDonate-navy-primary max-w-2xl text-[36px] tracking-tight leading-none md:text-[36px] xl:text-[36px] dark:text-white"
+           
+            className="text-iDonate-navy-primary max-w-2xl text-[30px] md:text-[36px] tracking-tight leading-none xl:text-[36px] dark:text-white"
           >
             ចូលរួមចំណែកដើម្បីអនាគតដ៏ល្អប្រសើរជាងនេះ
             <div className="flex justify-center mt-[18px]">
               <span
-                lang="km"
+               
                 className="text-iDonate-green-primary font-sine-bold"
               >
                 ជាមួយ iDonate
@@ -23,7 +23,7 @@ export default function OrganizationDetailHeroSection() {
           </h1>
 
           <p
-            lang="km"
+           
             className="text-iDonate-navy-primary leading-[32px] my-[48px] lg:mb-10 md:text-lg lg:text-xl dark:text-gray-400"
           >
             ស្វែងរកអង្គការដែលកំពុងបង្កើតការផ្លាស់ប្តូរ ជាមួយតាមរយៈ iDonate។
@@ -53,8 +53,8 @@ export default function OrganizationDetailHeroSection() {
             src="https://i.pinimg.com/736x/ae/76/12/ae76127d1444bcfce1640b0bb736f440.jpg"
             alt="Slide 1"
             className="rounded-[6px] object-cover"
-            width={520}
-            height={472}
+            width={1000}
+            height={1000}
           />
         </div>
       </div>

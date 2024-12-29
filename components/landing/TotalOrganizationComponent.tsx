@@ -45,17 +45,14 @@ const CounterAnimation = ({ target }: { target: number }) => {
 
 export default function TotalOrganizationComponent() {
   return (
-    <section className="relative overflow-hidden bg-gradient-to-br from-slate-100 to-slate-200 w-full mx-auto py-12 md:py-20 px-4 md:px-8 lg:px-[100px]">
+    <section className="relative overflow-hidden light:bg-gradient-to-br from-slate-100 to-slate-200 w-full mx-auto py-12 md:py-20 px-4 md:px-8 lg:px-[100px] dark:bg-iDonate-navy-primary">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
         className="w-full mx-auto"
       >
-        <h2
-          className="text-2xl sm:text-3xl md:text-4xl font-bold text-center dark:text-white text-iDonate-navy-primary mb-8 sm:mb-12 leading-tight"
-          lang="km"
-        >
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center dark:text-white text-iDonate-navy-primary mb-8 sm:mb-12 leading-tight " >
           យើងរួមគ្នា កសាងសហគមន៍ដ៏រឹងមាំ
         </h2>
         <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 lg:gap-10 items-center">
@@ -71,7 +68,7 @@ export default function TotalOrganizationComponent() {
                 initial={{ opacity: 0, scale: 0.5 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: index * 0.1 }}
-                lang="km"
+                
               >
                 <span className="text-3xl sm:text-4xl md:text-5xl mb-2 sm:mb-4">
                   <item.icon

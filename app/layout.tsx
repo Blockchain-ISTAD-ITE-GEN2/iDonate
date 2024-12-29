@@ -11,23 +11,6 @@ import { ThemeProviders } from "./providers";
 import { usePathname } from "next/navigation";
 import { Inter, Suwannaphum } from 'next/font/google'
 
-
-// const suwannaphum = localFont({
-//   src: "/fonts/Suwannaphum-Regular.ttf",
-//   variable: "--font-suwannaphum",
-//   display: "swap",
-//   preload: true,
-//   fallback: ["serif"],
-// });
-
-// const inter = localFont({
-//   src: "/fonts/Inter-VariableFont_opsz,wght.ttf",
-//   variable: "--font-inter",
-//   display: "swap",
-//   preload: true,
-//   fallback: ["serif"],
-// });
-
 const inter = Inter({
   weight: ["100", '300', '400', '700', '900'],
   subsets: ['latin'],

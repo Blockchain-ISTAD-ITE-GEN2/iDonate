@@ -126,7 +126,7 @@
 //     return (
 //         <>
 //          <section className="w-full text-center">
-//         <span className="text-2xl text-iDonate-navy-primary  mb-4" lang="km">មតិអ្នកបរិច្ចាគរបស់យើង</span>
+//         <span className="text-2xl text-iDonate-navy-primary  mb-4">មតិអ្នកបរិច្ចាគរបស់យើង</span>
 //       </section>
 //       <div className="px-0 max-w-7xl mx-auto">
 //         <div className="relative">
@@ -302,7 +302,7 @@ export default function TestimonialCarousel() {
       <section className="w-full text-center mb-8">
         <h2
           className="text-2xl md:text-3xl font-semibold text-iDonate-navy-primary"
-          lang="km"
+         
         >
           មតិអ្នកបរិច្ចាគរបស់យើង
         </h2>
@@ -360,7 +360,7 @@ export default function TestimonialCarousel() {
                                 </p>
                                 <p
                                   className="khmer-font text-sm md:text-base leading-relaxed text-iDonate-navy-primary"
-                                  lang="km"
+                                 
                                 >
                                   {testimonial.testimonial}
                                 </p>
@@ -441,7 +441,7 @@ export default function TestimonialCarousel() {
 //         animate={{ opacity: 1, y: 0 }}
 //         transition={{ duration: 0.5 }}
 //       >
-//         <span className="text-xl sm:text-2xl md:text-3xl text-iDonate-navy-primary" lang="km">
+//         <span className="text-xl sm:text-2xl md:text-3xl text-iDonate-navy-primary">
 //           មតិអ្នកបរិច្ចាគរបស់យើង
 //         </span>
 //       </motion.section>

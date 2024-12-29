@@ -2,7 +2,7 @@ import { OrganizationEventPage } from "@/components/organization/card/organizati
 
 export default function Contributor() {
   return (
-    <section lang="km" className="flex flex-col p-9 gap-6">
+    <section className="flex flex-col p-9 gap-6">
       <OrganizationEventPage />
     </section>
   );
