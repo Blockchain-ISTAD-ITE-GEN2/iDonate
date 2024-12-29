@@ -9,22 +9,35 @@ import SessionWrapper from "@/components/SessionWrapper";
 import FooterComponent from "@/components/footer/FooterComopent";
 import { ThemeProviders } from "./providers";
 import { usePathname } from "next/navigation";
+import { Inter, Suwannaphum } from 'next/font/google'
 
-const suwannaphum = localFont({
-  src: "/fonts/Suwannaphum-Regular.ttf",
-  variable: "--font-suwannaphum",
-  display: "swap",
-  preload: true,
-  fallback: ["serif"],
-});
 
-const inter = localFont({
-  src: "/fonts/Inter-VariableFont_opsz,wght.ttf",
+// const suwannaphum = localFont({
+//   src: "/fonts/Suwannaphum-Regular.ttf",
+//   variable: "--font-suwannaphum",
+//   display: "swap",
+//   preload: true,
+//   fallback: ["serif"],
+// });
+
+// const inter = localFont({
+//   src: "/fonts/Inter-VariableFont_opsz,wght.ttf",
+//   variable: "--font-inter",
+//   display: "swap",
+//   preload: true,
+//   fallback: ["serif"],
+// });
+
+const inter = Inter({
+  weight: ["100", '300', '400', '700', '900'],
+  subsets: ['latin'],
   variable: "--font-inter",
-  display: "swap",
-  preload: true,
-  fallback: ["serif"],
-});
+})
+const suwannaphum = Suwannaphum({
+  weight: [ "300", "400", "700", "900"],
+  subsets: ['khmer'],
+  variable: "--font-suwannaphum",
+})
 
 type RootLayoutProps = {
   children: ReactNode;
