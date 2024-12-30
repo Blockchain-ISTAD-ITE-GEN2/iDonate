@@ -7,7 +7,6 @@ import { SubNavbarMenuType } from "@/difinitions/types/components-type/SubNavbar
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { SidebarGroupLabel } from "@/components/ui/sidebar";
-import path from "path";
 
 export default function OrganizationSidebarComponent() {
   const [menuList] = useState<SubNavbarMenuType[]>(OrganizationSidebarMenuList);
@@ -38,8 +37,12 @@ export default function OrganizationSidebarComponent() {
   else
     return (
       <section className="flex flex-col h-full border-r-2 border-iDonate-navy-accent px-6 py-4 gap-y-3">
+        {/* Profile of Organization */}
+      
+
+        {/* Menu */}
         <SidebarGroupLabel className="text-sm text-iDonate-gray">
-          Organization
+          Oganization
         </SidebarGroupLabel>
         {menuList.map((item, index) => {
           const isActive = pathname === item.path;

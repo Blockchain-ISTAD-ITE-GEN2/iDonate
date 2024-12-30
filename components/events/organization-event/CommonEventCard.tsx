@@ -36,18 +36,35 @@ export function CommonEventCard({event, key}: { event: EventType, key?: number }
       </CardHeader>
 
       {/* Content */}
-      <CardContent className="px-4 flex flex-grow flex-col justify-between min-h-[220px] gap-6">
-        <div></div>
+      <CardContent  className="px-4 flex flex-col min-h-[220px] gap-4 py-4">
 
-        <div className="flex flex-col flex-1">
+        {/* date */}
+        <div className="flex justify-between">
+          <div className="flex flex-col">
+            <p className="text-iDonate-gray text-xs ">Order date</p>
+            <p className="text-iDonate-navy-secondary text-sm">
+              {event?.date || "12 Dec 2024"}
+            </p>
+          </div>
+
+          <div className="flex flex-col">
+            <p className="text-iDonate-gray text-xs ">End date</p>
+            <p className="text-iDonate-navy-secondary text-sm">
+              {event?.date || "12 Dec 2025"}
+            </p>
+          </div>
+        </div>
+
+        {/* Title and description */}
+        <div className=" flex flex-col flex-1">
           <h3
-            
-            className="font-extrabold text-medium-khmer line-clamp-1 text-left text-iDonate-navy-primary"
+            lang="km"
+            className="font-bold text-medium-khmer line-clamp-1 text-left text-iDonate-navy-primary"
           >
             {event?.title || "Untitled Event"}
           </h3>
           <p
-            
+            lang="km"
             className="font-thin text-iDonate-navy-secondary text-title-card line-clamp-2 text-start"
           >
             {event?.description || "No description available"}
@@ -55,7 +72,7 @@ export function CommonEventCard({event, key}: { event: EventType, key?: number }
         </div>
 
         {/* Donor and Amount Information */}
-        <div className="flex flex-col gap-1">
+        <div  className="flex flex-col gap-1">
           <div className="flex items-center gap-4">
             <Users className="fill-iDonate-navy-primary h-6 w-6" />
             <h3 className="text-description-khmer line-clamp-1 text-center text-iDonate-navy-primary">
@@ -69,7 +86,7 @@ export function CommonEventCard({event, key}: { event: EventType, key?: number }
             <CircleDollarSign className="fill-iDonate-navy-primary text-iDonate-white-space h-6 w-6" />
             <p className="text-medium-khmer line-clamp-2 text-center text-iDonate-navy-primary">
               {event?.total_amount
-                ? `$${event?.total_amount}`
+                ? `$ ${event?.total_amount}`
                 : "No amount collected"}
             </p>
           </div>

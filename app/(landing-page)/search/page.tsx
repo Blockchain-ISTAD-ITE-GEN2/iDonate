@@ -8,10 +8,10 @@ export default function Events() {
 
         className="w-full mx-auto px-10 md:mx-0 flex flex-col items-center justify-center gap-2"
       >
-        <h2 className="text-iDonate-navy-primary text-heading-one-khmer dark:text-iDonate-green-primary">
+        <h2 lang="km" className="text-iDonate-navy-primary text-heading-one-khmer dark:text-iDonate-green-primary">
           ស្វែករក កម្មវិធីបរិច្ចាគដែលអ្នកពេញចិត្ត
         </h2>
-        <h4 className="text-iDonate-navy-primary text-medium-khmer dark:text-white ">
+        <h4 lang="km" className="text-iDonate-navy-primary text-medium-khmer dark:text-white ">
           {" "}
           ស្វែករកកម្មវិធី រៃអង្គាសដោយ ឈ្មោះនៃអង្គភាព​ ប្រភេទ និង
           កាលបរិច្ឆេទនៃកម្មវិធី
