@@ -26,7 +26,7 @@ export function BarAndLineChart() {
   const averageDate: AverageType[] = averages;
 
   return (
-    <div className="md:w-full grid gap-4 lg:grid-cols-[1fr_480px] grid-cols-1">
+    <div className="container mx-auto px-4 md:w-full grid gap-4 lg:grid-cols-[1fr_480px] grid-cols-1">
       <div className="flex flex-col gap-4">
         {/* Cards for metrics */}
         <CardsMetric data={averageDate} />

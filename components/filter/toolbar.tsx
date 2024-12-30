@@ -91,7 +91,7 @@ export function Toolbar({
           placeholder={`Search by ${searchKey}`}
           value={searchValue}
           onChange={handleSearchChange}
-          className="h-10 w-[360px] lg:w-[450px]"
+          className="h-10 w-full md:w-[450px]"
         />
         {/* <div className="flex space-x-2 space-y-2 md:space-y-0"> */}
           {filtersFace?.map(({ key, title, options }) => (

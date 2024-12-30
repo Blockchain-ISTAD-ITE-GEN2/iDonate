@@ -12,12 +12,10 @@ export function ReacentTransacctions({ transactions }: RecentSalesProps) {
       {transactions.map((transaction, index) => (
         <div
           key={index}
-          className="flex w-full justify-between items-center border-b border-iDonate-navy-accent py-2 gap-2"
+          className="flex flex-wrap sm:flex-nowrap w-full justify-between items-center border-b border-iDonate-navy-accent py-2 gap-2"
         >
-          <div className="flex items-center gap-1" key={index}>
-            <Avatar className="h-16 w-16 flex items-center gap-1">
-              {/* <AvatarImage src={transaction.donor} alt={`${transaction.donor} Avatar`} /> */}
-
+          <div className="flex items-center gap-2 sm:gap-4">
+            <Avatar className="h-12 w-12 sm:h-16 sm:w-16 flex items-center">
               <AvatarFallback className="h-10 w-10 border border-iDonate-navy-primary">
                 {transaction.donor
                   .split(" ")
@@ -26,24 +24,24 @@ export function ReacentTransacctions({ transactions }: RecentSalesProps) {
               </AvatarFallback>
             </Avatar>
 
-            <div className="ml-4 space-y-1">
-              <p className="text-description-eng font-medium text-iDonate-navy-secondary">
+            <div className="space-y-1">
+              <p className="text-sm sm:text-base font-medium text-iDonate-navy-secondary">
                 {transaction.donor}
               </p>
-              <p className="text-sub-description-eng text-iDonate-gray">
+              <p className="text-xs sm:text-sm text-iDonate-gray">
                 {transaction.email}
               </p>
             </div>
           </div>
 
-          <span className="ml-auto text-iDonate-green-primary text-medium-eng text-start">
+          <span className="text-iDonate-green-primary text-sm sm:text-base font-medium ml-auto">
             ${transaction.amount}
           </span>
         </div>
       ))}
 
-      <Label className="flex items-center py-4 text-medium-eng text-iDonate-navy-secondary">
-        View all transaction
+      <Label className="flex items-center py-4 text-sm sm:text-base text-iDonate-navy-secondary">
+        View all transactions
       </Label>
     </div>
   );

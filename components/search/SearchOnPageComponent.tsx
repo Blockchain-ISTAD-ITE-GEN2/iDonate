@@ -7,8 +7,7 @@ import events from "@/data/events-data.json";
 
 export function SearchPage() {
     const typedEvents: EventType[] = events;
-    const [filteredEvents, setFilteredEvents] =
-        useState<EventType[]>(typedEvents);
+    const [filteredEvents, setFilteredEvents] = useState<EventType[]>(typedEvents);
 
     const filtersFace = [
         {
@@ -31,7 +30,6 @@ export function SearchPage() {
                 value: donor.toString(),
             })),
         },
-
         {
             key: "total_amount",
             title: "Amount Range",
@@ -49,22 +47,22 @@ export function SearchPage() {
     }, [typedEvents]);
 
     return (
-        <section className="flex flex-col gap-6 px-4 2xl:container 2xl:mx-auto">
-            <div className="px-6 md:px-10 lg:px-10 xl:px-0">
+        <section className="flex flex-col gap-6 container mx-auto">
+            <div className="container mx-auto px-4 md:px-6 lg:px-8 xl:px-10">
                 <Toolbar
                     events={typedEvents}
                     filtersFace={filtersFace}
                     searchKey={"title"}
                     onFilterChange={setFilteredEvents}
                 />
-
             </div>
-            <div className="w-full justify-center px-10 md:px-14 lg:px-10 xl:px-0 grid gap-6 grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
-                {filteredEvents.map((event, index) => (
-                    <CommonEventCard key={index} event={event} />
-                ))}
+            <div className="container mx-auto px-4 md:px-6 lg:px-8 xl:px-10">
+                <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                    {filteredEvents.map((event, index) => (
+                        <CommonEventCard key={index} event={event} />
+                    ))}
+                </div>
             </div>
-
 
         </section>
     );

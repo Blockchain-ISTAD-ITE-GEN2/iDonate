@@ -1,16 +1,15 @@
 "use client";
 
-import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React from "react";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import HeroSectionImageOne from "@/public/landing/RuralKidStudy.jpg";
 import HeroSectionImageTwo from "@/public/landing/RuralKidGroup.jpg";
-import { ArrowRight, ChevronDown } from 'lucide-react';
+import { ArrowRight } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 export default function HeroSectionComponent() {
-  const [isExpanded, setIsExpanded] = useState(false);
   const router = useRouter();
 
   const containerVariants = {
@@ -34,73 +33,82 @@ export default function HeroSectionComponent() {
   };
 
   return (
-    <section
-      className="w-full px-5 py-16 md:py-14 lg:px-[100px] mx-auto overflow-hidden bg-gradient-to-br from-slate-100 to-slate-200"
-     
-    >
+    <section className="w-full bg-gradient-to-br from-slate-100 to-slate-200">
       <motion.div
-        className="flex flex-wrap md:flex-nowrap items-start md:items-center justify-between"
+        className="container mx-auto px-4 sm:px-6 md:px-12 lg:px-20 xl:px-28 flex flex-wrap md:flex-nowrap items-start justify-between gap-8 sm:gap-10 py-9"
         variants={containerVariants}
         initial="hidden"
         animate="visible"
       >
-        <div className="w-full md:w-2/3  space-y-2 md:space-y-4 lg:space-y-0">
-          <motion.h1 
-            className="text-4xl sm:text-5xl md:text-6xl font-semibold text-iDonate-navy-primary "
+        {/* Left Content */}
+        <div className="w-full md:w-1/2 space-y-4 sm:space-y-6 xl:space-y-8">
+          <motion.h1
+            lang="km"
+            className="text-2xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-iDonate-navy-secondary leading-10"
             variants={itemVariants}
           >
-            ការបរិច្ចាគដោយមានទំនុកចិត្ត​ <span className=" lg:leading-relaxed">និងតម្លាភាព</span>
+            ការបរិច្ចាគដោយមានទំនុកចិត្ត និងតម្លាភាព
           </motion.h1>
-          <motion.h2 
-            className="text-2xl sm:text-3xl md:text-4xl font-medium text-iDonate-green-primary py-2 md:py-0"
+
+          <motion.h2
+            lang="km"
+            className="text-lg sm:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl font-semibold text-iDonate-green-primary"
             variants={itemVariants}
           >
-            មានប្រសិទ្ធភាព ជាមួយ <span className="font-inter">iDonate</span>
+            មានប្រសិទ្ធភាព ជាមួយ <span className="font-inter">iDONATE</span>
           </motion.h2>
 
-          <motion.p 
-            className="text-gray-600 text-lg sm:text-xl md:text-xl leading-relaxed lg:w-4/5 md:w-full md:py-0 lg:py-4"
+          <motion.p
+            lang="km"
+            className="text-iDonate-gray text-sm sm:text-base lg:text-lg xl:text-xl 2xl:text-2xl leading-relaxed"
             variants={itemVariants}
           >
-            iDonate បានប្រើប្រាស់បច្ចេកវិទ្យា Blockchain
-            ដើម្បីធ្វើឱ្យប្រព័ន្ធបរិច្ចាគមាន តម្លាភាព សុវត្ថិភាព
-            និងមានប្រសិទ្ធភាពខ្ពស់​
-            ដែលធ្វើឡើងដើម្បីធានាថាចំនួនទឹកប្រាក់ដែលបានបរិច្ចាគ
-            ត្រូវបានដល់ដៃជនរងគ្រោះយ៉ាងពិតប្រាកដ​ ដោយគ្មានការក្លែងបន្លំ
+            iDONATE បានប្រើប្រាស់បច្ចេកវិទ្យា Blockchain ដើម្បីធ្វើឱ្យប្រព័ន្ធបរិច្ចាគមានតម្លាភាព
+            សុវត្ថិភាព និងមានប្រសិទ្ធភាពខ្ពស់ ដើម្បីធានាថាចំនួនទឹកប្រាក់ដែលបានបរិច្ចាគ
+            ត្រូវបានដល់ដៃជនរងគ្រោះយ៉ាងពិតប្រាកដ។
           </motion.p>
-          <motion.div 
-            className="flex flex-wrap gap-6 py-4"
+
+          {/* Button */}
+          <motion.div
+            className="flex gap-4"
             variants={itemVariants}
           >
-            <Button className="bg-green-500 px-8 py-4 text-white text-lg hover:bg-green-600 transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg group" onClick={()=> router.push("/auth/login") }>
-              ចាប់ផ្ដើមបរិច្ចាគ 
+            <Button
+              lang="km"
+              className="bg-green-500 px-4 py-2 sm:px-6 sm:py-3 lg:px-8 lg:py-4 text-white text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl hover:bg-green-600 transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg group"
+              onClick={() => router.push("/auth/login")}
+            >
+              ចាប់ផ្ដើមបរិច្ចាគ
               <ArrowRight className="ml-2 inline-block transition-transform duration-300 group-hover:translate-x-1" />
             </Button>
           </motion.div>
+
         </div>
+
+        {/* Right Content */}
         <motion.div
-          className="relative w-full md:w-3/5 h-[450px] sm:h-[500px] md:h-[600px] flex items-center justify-center py-8 md:py-14"
+          className="relative w-full md:w-1/2 h-[250px] sm:h-[350px] md:h-auto lg:h-[400px] xl:h-[500px] 2xl:h-[600px] flex flex-col sm:flex-row gap-4 items-center justify-center"
           variants={itemVariants}
         >
           <motion.div
-            className="absolute top-10 left-0 z-10 w-[220px] sm:w-[280px] lg:w-[350px] h-[220px] sm:h-[280px] lg:h-[350px] rounded-full overflow-hidden shadow-xl"
-            // whileHover={{ scale: 1.05, rotate: -5 }}
-            // transition={{ duration: 0.3 }}
+            className="relative flex-1 md:absolute md:top-0 md:left-0 md:z-10 w-full md:w-[180px] lg:w-[240px] xl:w-[300px] 2xl:w-[360px] h-full md:h-[180px] lg:h-[240px] xl:h-[300px] 2xl:h-[360px] rounded-lg md:rounded-full overflow-hidden shadow-lg"
+            whileHover={{ scale: 1.02 }}
+            transition={{ duration: 0.3 }}
           >
             <Image
               src={HeroSectionImageOne}
               alt="Students greeting with traditional sampeah"
-              width={1000}
-              height={1000}
+              fill
               className="w-full h-full object-cover"
               priority
               quality={100}
             />
           </motion.div>
+          
           <motion.div
-            className="absolute top-20 left-16 sm:left-[50px] md:left-[100px] lg:left-[220px] w-[300px] sm:w-[350px] md:w-[450px] lg:w-[500px] h-[300px] sm:h-[350px] md:h-[450px] lg:h-[500px] rounded-full overflow-hidden shadow-xl"
-            // whileHover={{ scale: 1.05, rotate: 5 }}
-            // transition={{ duration: 0.3 }}
+            className="relative flex-1 md:absolute md:top-20 md:left-[40px] lg:left-[120px] xl:left-[150px] 2xl:left-[180px] w-full md:w-[260px] lg:w-[320px] xl:w-[400px] 2xl:w-[480px] h-full md:h-[260px] lg:h-[320px] xl:h-[400px] 2xl:h-[480px] rounded-lg  md:rounded-full overflow-hidden shadow-lg"
+            whileHover={{ scale: 1.02 }}
+            transition={{ duration: 0.1 }}
           >
             <Image
               src={HeroSectionImageTwo}
@@ -113,43 +121,8 @@ export default function HeroSectionComponent() {
             />
           </motion.div>
         </motion.div>
+        
       </motion.div>
-      
-      {/* <motion.div 
-        className="mt-16 md:mt-11 text-center"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1, duration: 0.5 }}
-      >
-        <Button
-          variant="ghost"
-          onClick={() => setIsExpanded(!isExpanded)}
-          className="text-iDonate-navy-primary hover:bg-transparent hover:text-iDonate-green-primary transition-colors duration-300 "
-        >
-          ស្វែងយល់បន្ថែម អំពី iDonate
-          <ChevronDown
-            className={`ml-2 transition-transform duration-300 ${isExpanded ? "rotate-180" : ""}`}
-          />
-        </Button>
-        <AnimatePresence>
-          {isExpanded && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3 }}
-              className="mt-4 text-gray-600 text-lg leading-relaxed max-w-3xl mx-auto"
-            >
-              iDonate
-              គឺជាកម្មវិធីបរិច្ចាគតាមប្រព័ន្ធអេឡិចត្រូនិចដែលប្រើប្រាស់បច្ចេកវិទ្យា
-              Blockchain ដើម្បីធានានូវតម្លាភាព និងសុវត្ថិភាពខ្ពស់។
-              យើងផ្តល់នូវវេទិកាងាយស្រួលប្រើប្រាស់សម្រាប់អ្នកបរិច្ចាគ
-              និងអង្គការសប្បុរសធម៌
-              ដោយធានាថាការបរិច្ចាគរបស់អ្នកទៅដល់អ្នកដែលត្រូវការវាពិតប្រាកដ។
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </motion.div> */}
     </section>
   );
 }

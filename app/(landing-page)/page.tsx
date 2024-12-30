@@ -13,36 +13,44 @@ export default function Homepage() {
   
   const typedCategory: CategoryType[] = categories;
   return (
-    <section className="flex flex-col items-center">
-      <section>
-      <HeroSectionComponent />
-      </section>
+    <section className="flex flex-col items-center gap-6">
 
-      <section className="w-full  px-4 py-12  space-y-4 text-center">
-        <h2 className="text-xl text-iDonate-green-primary">
-          តើអ្វីខ្លះដែលយើងត្រូវធ្វើ
-        </h2>
-        <h3 className="text-2xl text-iDonate-navy-primary">
-          ការបរិច្ចាគរបស់អ្នក ជាសេចក្តីអំណរបស់អ្នកដទៃ
-        </h3>
-        <div
-          
-          className="grid grid-cols-1 md:grid-cols-2  lg:grid-cols-4 gap-12 mt-8 lg:px-[100px]"
-        >
+      {/* Here section */}
+      <HeroSectionComponent />
+      
+
+      {/* category */}
+      <section className="w-full px-6 md:px-12 lg:px-24 space-y-6 text-center">
+        {/* Section Header */}
+        <div className="space-y-2">
+          <h2 lang="km" className="text-xl font-medium text-iDonate-green-primary">
+            តើអ្វីខ្លះដែលយើងត្រូវធ្វើ?
+          </h2>
+          <h3 lang="km" className="text-2xl font-medium text-iDonate-navy-primary">
+            ការបរិច្ចាគរបស់អ្នក ជាសេចក្តីអំណរបស់អ្នកដទៃ !
+          </h3>
+        </div>
+
+        {/* Category Cards Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
           <CategoryCardComponent categories={typedCategory} />
         </div>
       </section>
+
+      {/* Total Organization */}
       <TotalOrganizationComponent />
-      <section className="w-full md:py-12 ">
-        <div className="w-full mx-auto md:px-4 lg:px-[100px]">
+
+      {/* Bar and Line Chart */}
+      <section className="w-full">
           <BarAndLineChart />
-        </div>
       </section>
-      <section className="w-full py-12 lg:py-0">
-        <div className="mx-auto space-y-8">
+        
+      {/* Latest Donation */}
+      <section className="w-full">
+        <div className="space-y-2">
             {/*Test Github actions 3 */}
           <h3
-            
+            lang="km"
             className="text-2xl text-iDonate-navy-primary text-center"
           >
             កម្មវិធីបរិច្ចាគចុងក្រោយបំផុត
@@ -51,19 +59,19 @@ export default function Homepage() {
         </div>
       </section>
 
-      <section className="w-full py-12 lg:py-0 ">
+      <section className="w-full">
         <div className=" mx-auto px-4">
           <TestimonialCarousel />
         </div>
       </section>
 
-      <section className="w-full py-12 ">
+      <section className="w-full">
         <div className="mx-auto px-4 ">
           <BannerLandingCard />
         </div>
       </section>
 
-      <section className="w-full py-12 ">
+      <section className="w-full">
         <div className=" mx-auto space-y-4 text-center">
 
           <h2  className="text-xl text-iDonate-green-primary">

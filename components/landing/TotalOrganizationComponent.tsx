@@ -45,22 +45,20 @@ const CounterAnimation = ({ target }: { target: number }) => {
 
 export default function TotalOrganizationComponent() {
   return (
-    <section className="relative overflow-hidden light:bg-gradient-to-br from-slate-100 to-slate-200 w-full mx-auto py-12 md:py-20 px-4 md:px-8 lg:px-[100px] dark:bg-iDonate-navy-primary">
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        className="w-full mx-auto"
+      lang="km"
+        className="overflow-hidden h-auto py-9 bg-iDonate-light-gray w-full mx-auto md:py-20 px-4 md:px-8 lg:px-[100px] dark:bg-iDonate-navy-primary"
       >
-        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center dark:text-white text-iDonate-navy-primary mb-8 sm:mb-12 leading-tight " >
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-medium text-center dark:text-white text-iDonate-navy-primary mb-8 sm:mb-12 leading-tight " >
           យើងរួមគ្នា កសាងសហគមន៍ដ៏រឹងមាំ
         </h2>
+        
         <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 lg:gap-10 items-center">
           {dataofTotalOrganization.map((item, index) => (
             <motion.div
               key={index}
-              whileHover={{ scale: 1.05, rotate: 2 }}
-              whileTap={{ scale: 0.95 }}
+              // whileHover={{ scale: 1.05, rotate: 2 }}
+              // whileTap={{ scale: 0.95 }}
               className="w-full flex justify-center items-center text-center"
             >
               <motion.div
@@ -90,30 +88,5 @@ export default function TotalOrganizationComponent() {
           ))}
         </div>
       </motion.div>
-      <div className="absolute top-0 left-0 w-full h-full bg-iDonate-navy-primary opacity-10 z-0">
-        <svg
-          className="w-full h-full"
-          viewBox="0 0 100 100"
-          preserveAspectRatio="none"
-        >
-          <path d="M0,0 L100,0 L100,100 L0,100 Z" fill="url(#grid)" />
-        </svg>
-        <defs>
-          <pattern
-            id="grid"
-            width="10"
-            height="10"
-            patternUnits="userSpaceOnUse"
-          >
-            <path
-              d="M 10 0 L 0 0 0 10"
-              fill="none"
-              stroke="white"
-              strokeWidth="0.5"
-            />
-          </pattern>
-        </defs>
-      </div>
-    </section>
   );
 }

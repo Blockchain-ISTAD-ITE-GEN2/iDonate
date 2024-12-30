@@ -9,11 +9,11 @@ export default function Events() {
         className="w-full mx-auto px-10 md:mx-0 flex flex-col items-center justify-center gap-2"
       >
         <h2 lang="km" className="text-iDonate-navy-primary text-heading-one-khmer dark:text-iDonate-green-primary">
-          ស្វែករក កម្មវិធីបរិច្ចាគដែលអ្នកពេញចិត្ត
+          ស្វែងរក កម្មវិធីបរិច្ចាគដែលអ្នកពេញចិត្ត
         </h2>
         <h4 lang="km" className="text-iDonate-navy-primary text-medium-khmer dark:text-white ">
           {" "}
-          ស្វែករកកម្មវិធី រៃអង្គាសដោយ ឈ្មោះនៃអង្គភាព​ ប្រភេទ និង
+          ស្វែងរកកម្មវិធី រៃអង្គាសដោយ ឈ្មោះនៃអង្គភាព​ ប្រភេទ និង
           កាលបរិច្ឆេទនៃកម្មវិធី
         </h4>
       </div>
