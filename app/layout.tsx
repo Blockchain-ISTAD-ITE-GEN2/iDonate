@@ -9,22 +9,18 @@ import SessionWrapper from "@/components/session/SessionWrapper";
 import FooterComponent from "@/components/footer/FooterComopent";
 import { ThemeProviders } from "./providers";
 import { usePathname } from "next/navigation";
+import { Inter, Suwannaphum } from 'next/font/google'
 
-const suwannaphum = localFont({
-  src: "/fonts/Suwannaphum-Regular.ttf",
-  variable: "--font-suwannaphum",
-  display: "swap",
-  preload: true,
-  fallback: ["serif"],
-});
-
-const inter = localFont({
-  src: "/fonts/Inter-VariableFont_opsz,wght.ttf",
+const inter = Inter({
+  weight: ["100", '300', '400', '700', '900'],
+  subsets: ['latin'],
   variable: "--font-inter",
-  display: "swap",
-  preload: true,
-  fallback: ["serif"],
-});
+})
+const suwannaphum = Suwannaphum({
+  weight: [ "300", "400", "700", "900"],
+  subsets: ['khmer'],
+  variable: "--font-suwannaphum",
+})
 
 type RootLayoutProps = {
   children: ReactNode;
@@ -52,7 +48,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
                   {/* Sidebar */}
                   <aside className="flex-shrink-0 hidden md:block flex-grow">
                     <OrganizationSidebarComponent />
-                    {/* {children} */}
+                    {/*   {children} */}
                   </aside>
 
                   {/* Main Content */}

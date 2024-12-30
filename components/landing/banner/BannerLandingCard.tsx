@@ -29,12 +29,12 @@ export default function BannerLandingCard() {
 
       {/* Content */}
       <div className="relative z-20 text-center px-4 max-w-4xl mx-auto text-white">
-        <p className="text-xl sm:text-2xl mb-4 khmer-font" lang="km">
+        <p className="text-xl sm:text-2xl mb-4 khmer-font" >
           រួមចំណែកជាមួយដើម្បី សង្គមយើងប្រសើរឡើង
         </p>
         <h1
           className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 sm:mb-8 khmer-font leading-relaxed"
-          lang="km"
+          
         >
           ការបរិច្ចាគរបស់គឺន័យខ្លាំងណាស់សម្រាប់ពួកគាត់ <br />
           <span className="leading-loose">ចែករំលែកអ្វីអ្នកអាចចែកបាន</span>

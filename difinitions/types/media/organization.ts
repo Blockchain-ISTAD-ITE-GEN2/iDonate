@@ -3,6 +3,7 @@ export type OrganizationParam = {
   title: string;
   description: string;
   key?: number;
+  location: string
 };
 export type EventTypeParam = {
   image: string;

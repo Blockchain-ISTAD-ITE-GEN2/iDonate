@@ -101,7 +101,7 @@ export default function FooterComponent() {
             </Link>
             <p
               className="text-iDonate-navy-primary text-center md:text-left"
-              lang="km"
+             
             >
               ការបរិច្ចាគគឺជាសកម្មភាពនៃការផ្តល់ធនធាន ដូចជាប្រាក់ ទំនិញ ឬពេលវេលា
               ដើម្បីជួយអ្នកដ៏ទៃ ឬជួយដល់បុព្វហេតុមួយ ដោយមិនរំពឹងអ្វីមកវិញឡើយ

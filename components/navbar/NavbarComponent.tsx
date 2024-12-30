@@ -393,12 +393,12 @@ export default function NavbarComponent() {
       {/* Mobile Menu and Submenu */}
       {isMobileMenuOpen && (activeSubmenu ? <MobileSubmenu /> : <MobileMenu />)}
 
-      {/* Desktop Navigation Menu */}
-      <Menubar className="border-0 hidden lg:flex space-x-4 bg-transparent">
-        {/* Desktop menu code remains the same */}
-        {menuList.map((item, index) => {
-          const isActive = pathname === item.path;
-          const specialPaths = ["/how-it-works", "/search"];
+            {/* Desktop Navigation Menu */}
+            <Menubar className="border-0 hidden lg:flex space-x-4 bg-transparent dark:text-white">
+                {/* Desktop menu code remains the same */}
+                {menuList.map((item, index) => {
+                    const isActive = pathname === item.path;
+                    const specialPaths = ["/how-it-works", "/search"];
 
           return (
             <MenubarMenu key={index}>

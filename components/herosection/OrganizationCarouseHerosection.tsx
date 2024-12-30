@@ -19,13 +19,13 @@ export default function OrganizationCarouseHerosection() {
               {/* Left Content */}
               <div className="lg:col-span-7 mt-0">
                 <h1
-                  lang="km"
+                 
                   className="text-iDonate-navy-primary max-w-2xl text-[36px] tracking-tight leading-none md:text-[36px] xl:text-[36px] dark:text-white"
                 >
                   ចូលរួមចំណែកដើម្បីអនាគតដ៏ល្អប្រសើរជាងនេះ
                   <div className="flex justify-center mt-[18px]">
                     <span
-                      lang="km"
+                     
                       className="text-iDonate-green-primary font-sine-bold"
                     >
                       ជាមួយ iDonate
@@ -34,7 +34,7 @@ export default function OrganizationCarouseHerosection() {
                 </h1>
 
                 <p
-                  lang="km"
+                 
                   className="text-iDonate-navy-primary leading-[32px] my-[48px] lg:mb-10 md:text-lg lg:text-xl dark:text-gray-400"
                 >
                   ស្វែងរកអង្គការដែលកំពុងបង្កើតការផ្លាស់ប្តូរ ជាមួយតាមរយៈ
@@ -78,13 +78,13 @@ export default function OrganizationCarouseHerosection() {
               {/* Left Content */}
               <div className="lg:col-span-7 mt-0">
                 <h1
-                  lang="km"
+                 
                   className="text-iDonate-navy-primary max-w-2xl text-[36px] tracking-tight leading-none md:text-[36px] xl:text-[36px] dark:text-white"
                 >
                   ចូលរួមចំណែកដើម្បីអនាគតដ៏ល្អប្រសើរជាងនេះ
                   <div className="flex justify-center mt-[18px]">
                     <span
-                      lang="km"
+                     
                       className="text-iDonate-green-primary font-sine-bold"
                     >
                       ជាមួយ iDonate
@@ -93,7 +93,7 @@ export default function OrganizationCarouseHerosection() {
                 </h1>
 
                 <p
-                  lang="km"
+                 
                   className="text-iDonate-navy-primary leading-[32px] my-[48px] lg:mb-10 md:text-lg lg:text-xl dark:text-gray-400"
                 >
                   ស្វែងរកអង្គការដែលកំពុងបង្កើតការផ្លាស់ប្តូរ ជាមួយតាមរយៈ
@@ -137,13 +137,13 @@ export default function OrganizationCarouseHerosection() {
               {/* Left Content */}
               <div className="lg:col-span-7 mt-0">
                 <h1
-                  lang="km"
+                 
                   className="text-iDonate-navy-primary max-w-2xl text-[36px] tracking-tight leading-none md:text-[36px] xl:text-[36px] dark:text-white"
                 >
                   ចូលរួមចំណែកដើម្បីអនាគតដ៏ល្អប្រសើរជាងនេះ
                   <div className="flex justify-center mt-[18px]">
                     <span
-                      lang="km"
+                     
                       className="text-iDonate-green-primary font-sine-bold"
                     >
                       ជាមួយ iDonate
@@ -152,7 +152,7 @@ export default function OrganizationCarouseHerosection() {
                 </h1>
 
                 <p
-                  lang="km"
+                 
                   className="text-iDonate-navy-primary leading-[32px] my-[48px] lg:mb-10 md:text-lg lg:text-xl dark:text-gray-400"
                 >
                   ស្វែងរកអង្គការដែលកំពុងបង្កើតការផ្លាស់ប្តូរ ជាមួយតាមរយៈ

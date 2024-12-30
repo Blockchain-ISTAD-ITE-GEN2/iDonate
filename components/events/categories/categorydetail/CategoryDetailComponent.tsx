@@ -53,14 +53,14 @@ export default function CategoryDetailComponent() {
 
           <div>
             <h1
-              lang="km"
+              
               className="text-heading-two-khmer text-iDonate-navy-primary max-w-2xl tracking-tight leading-none my-[36px]"
             >
               ជួយកុមារសម្រេចអនាគតដ៏ភ្លឺស្វាង
             </h1>
 
             <p
-              lang="km"
+              
               className="text-iDonate-navy-primary text-description-khmer  leading-7  my-[36px] lg:mb-10 md:text-lg lg:text-xl dark:text-gray-400 line-champ-5 mb-[36px]"
             >
               ការបរិច្ចាគរបស់អ្នកគឺមិនមែនគ្រាន់តែជាការផ្តល់អាហារ
@@ -89,7 +89,7 @@ export default function CategoryDetailComponent() {
               </div>
             </section>
             {/* List Organization Cards End */}
-            <div lang={"eng"} className="flex flex-wrap justify-end my-[24px]">
+            <div className="flex flex-wrap justify-end my-[24px]">
               <Button className="w-[147px] h-[50px] rounded-[15px] text-medium-eng text-iDonate-navy-primary bg-iDonate-white-space border-2 border-iDonate-navy-primary hover:text-iDonate-green-secondary hover:bg-iDonate-navy-primary">
                 Show More
               </Button>
@@ -101,7 +101,7 @@ export default function CategoryDetailComponent() {
           <section>
             <div className="mb-[36px]">
               <h1
-                lang="km"
+                
                 className="text-iDonate-navy-primary max-w-2xl text-heading-two-khmer  tracking-tight leading-none md:text-[36px] xl:text-[36px] dark:text-white"
               >
                 អត្ថប្រយោជន៍

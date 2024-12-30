@@ -10,7 +10,7 @@ html {
 
 /* Apply default font families */
 body {
-  font-family: var(--font-inter); /* Default to Inter for English text */
+  font-family: var(--font-inter), var(--font-suwannaphum) !important; /* Default to Inter for English text */
 }
 
 /* Apply suwannphum font for Khmer text */

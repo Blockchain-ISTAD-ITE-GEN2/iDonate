@@ -6,6 +6,7 @@ import { DropDownButtonComponent } from "@/components/dropdown-button/DropDownBu
 import { useRouter } from "next/navigation";
 import { OrganizationParam } from "@/difinitions/types/media/organization";
 import { Button } from "@/components/ui/button";
+import OrganizationDetailHeroSection from "@/components/herosection/OrganizationDetailHeroSection";
 
 // const OrganizationCarouseHerosection = dynamic(() => import("@/components/herosection/OrganizationCarouseHerosection"), { ssr: false });
 
@@ -17,6 +18,7 @@ const organizationData = [
     title: "Cambodia Kantha Bopha Foundation",
     description:
       "មូលនិធិកម្ពុជា គន្ធបុប្ផា គឺជាស្ថាប័នដែលមានបំណង ផ្តល់សេវាសុខាភិបាលដោយឥតគិតថ្លៃដល់កុមារខ្សត់ខ្សោយនៅទូទាំងប្រទេសកម្ពុជា។ ដោយផ្តោតលើការថែទាំសុខភាពដែលមាន",
+    location: "St 123 Phom Penh"
   },
   {
     image:
@@ -24,6 +26,7 @@ const organizationData = [
     title: "Cambodia Kantha Bopha Foundation",
     description:
       "មូលនិធិកម្ពុជា គន្ធបុប្ផា គឺជាស្ថាប័នដែលមានបំណង ផ្តល់សេវាសុខាភិបាលដោយឥតគិតថ្លៃដល់កុមារខ្សត់ខ្សោយនៅទូទាំងប្រទេសកម្ពុជា។ ដោយផ្តោតលើការថែទាំសុខភាពដែលមាន",
+      location: "St 123 Phom Penh"
   },
   {
     image:
@@ -31,6 +34,7 @@ const organizationData = [
     title: "Cambodia Kantha Bopha Foundation",
     description:
       "មូលនិធិកម្ពុជា គន្ធបុប្ផា គឺជាស្ថាប័នដែលមានបំណង ផ្តល់សេវាសុខាភិបាលដោយឥតគិតថ្លៃដល់កុមារខ្សត់ខ្សោយនៅទូទាំងប្រទេសកម្ពុជា។ ដោយផ្តោតលើការថែទាំសុខភាពដែលមាន",
+      location: "St 123 Phom Penh"
   },
   {
     image:
@@ -38,6 +42,7 @@ const organizationData = [
     title: "Cambodia Kantha Bopha Foundation",
     description:
       "មូលនិធិកម្ពុជា គន្ធបុប្ផា គឺជាស្ថាប័នដែលមានបំណង ផ្តល់សេវាសុខាភិបាលដោយឥតគិតថ្លៃដល់កុមារខ្សត់ខ្សោយនៅទូទាំងប្រទេសកម្ពុជា។ ដោយផ្តោតលើការថែទាំសុខភាពដែលមាន",
+      location: "St 123 Phom Penh"
   },
   {
     image:
@@ -45,6 +50,7 @@ const organizationData = [
     title: "Cambodia Kantha Bopha Foundation",
     description:
       "មូលនិធិកម្ពុជា គន្ធបុប្ផា គឺជាស្ថាប័នដែលមានបំណង ផ្តល់សេវាសុខាភិបាលដោយឥតគិតថ្លៃដល់កុមារខ្សត់ខ្សោយនៅទូទាំងប្រទេសកម្ពុជា។ ដោយផ្តោតលើការថែទាំសុខភាពដែលមាន",
+      location: "St 123 Phom Penh"
   },
   {
     image:
@@ -52,6 +58,7 @@ const organizationData = [
     title: "Cambodia Kantha Bopha Foundation",
     description:
       "មូលនិធិកម្ពុជា គន្ធបុប្ផា គឺជាស្ថាប័នដែលមានបំណង ផ្តល់សេវាសុខាភិបាលដោយឥតគិតថ្លៃដល់កុមារខ្សត់ខ្សោយនៅទូទាំងប្រទេសកម្ពុជា។ ដោយផ្តោតលើការថែទាំសុខភាពដែលមាន",
+      location: "St 123 Phom Penh"
   },
   {
     image:
@@ -59,6 +66,7 @@ const organizationData = [
     title: "Cambodia Kantha Bopha Foundation",
     description:
       "មូលនិធិកម្ពុជា គន្ធបុប្ផា គឺជាស្ថាប័នដែលមានបំណង ផ្តល់សេវាសុខាភិបាលដោយឥតគិតថ្លៃដល់កុមារខ្សត់ខ្សោយនៅទូទាំងប្រទេសកម្ពុជា។ ដោយផ្តោតលើការថែទាំសុខភាពដែលមាន",
+      location: "St 123 Phom Penh"
   },
   {
     image:
@@ -66,6 +74,7 @@ const organizationData = [
     title: "Cambodia Kantha Bopha Foundation",
     description:
       "មូលនិធិកម្ពុជា គន្ធបុប្ផា គឺជាស្ថាប័នដែលមានបំណង ផ្តល់សេវាសុខាភិបាលដោយឥតគិតថ្លៃដល់កុមារខ្សត់ខ្សោយនៅទូទាំងប្រទេសកម្ពុជា។ ដោយផ្តោតលើការថែទាំសុខភាពដែលមាន",
+      location: "St 123 Phom Penh"
   },
 ];
 
@@ -84,7 +93,8 @@ export default function OrganizationOnPageComponent() {
       {/* Start Hero  Section */}
       <section>
         <div className="flex justify-center gap-4 mb-[24px]">
-          <OrganizationCarouseHerosection />
+          <OrganizationDetailHeroSection/>
+          {/* <OrganizationCarouseHerosection /> */}
           {/*<OrganizationHeroSection/>*/}
         </div>
       </section>
@@ -93,7 +103,7 @@ export default function OrganizationOnPageComponent() {
       {/*Start List Organization Section */}
       {/*static data */}
       <section>
-        <div lang={"km"} className="flex justify-center gap-4 mb-[24px] ">
+        <div className="flex justify-center gap-4 mb-[24px] ">
           <h2 className="text-2xl font-semibold text-iDonate-navy-primary">
             អង្កការភាពដែលបាន ចូលរួមជាមួយពួកយើង
           </h2>
@@ -112,13 +122,13 @@ export default function OrganizationOnPageComponent() {
                 image={org.image}
                 title={org.title}
                 description={org.description}
+                location={org.location}
               />
             </div>
           ))}
         </div>
 
         <div
-          lang={"eng"}
           className="flex flex-wrap justify-end my-[24px] mr-[106px]"
         >
           <Button className="w-[305px] h-[50px] rounded-[15px] text-medium-eng text-idonate-navy-primary bg-iDonate-white-space border-2 border-iDonate-navy-primary hover:text-iDonate-green-secondary hover:bg-iDonate-navy-primary">
