@@ -13,7 +13,7 @@ export default function Homepage() {
   
   const typedCategory: CategoryType[] = categories;
   return (
-    <section className="flex flex-col items-center gap-6">
+    <section className="flex flex-col items-center gap-9">
 
       {/* Here section */}
       <HeroSectionComponent />
@@ -59,29 +59,25 @@ export default function Homepage() {
         </div>
       </section>
 
+      {/* Testimonail */}
       <section className="w-full">
-        <div className=" mx-auto px-4">
           <TestimonialCarousel />
-        </div>
       </section>
 
+      {/* Banner Landing Card */}
       <section className="w-full">
-        <div className="mx-auto px-4 ">
           <BannerLandingCard />
-        </div>
       </section>
 
-      <section className="w-full">
-        <div className=" mx-auto space-y-4 text-center">
-
-          <h2  className="text-xl text-iDonate-green-primary">
+      {/* upcoming events */}
+      <section className="w-full flex flex-col items-center">
+          <h2 lang="km" className="text-medium-khmer text-iDonate-green-primary">
             តោះ ចាប់ផ្ដើមជួយពួកគាត់ទាំងអស់គ្នា!
           </h2>
-          <h3  className="text-2xl text-iDonate-navy-primary">
+          <h3 lang="km" className="text-heading-two-khmer text-iDonate-navy-primary">
             កម្មវិធីបរិច្ចាគ ដែលនិងកើតឡើងឆាប់នេះ!
           </h3>
           <UpcomingEvents />
-        </div>
       </section>
     </section>
   );
