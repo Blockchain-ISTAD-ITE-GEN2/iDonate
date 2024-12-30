@@ -5,7 +5,7 @@ import { ReactNode } from "react";
 import NavbarComponent from "@/components/navbar/NavbarComponent";
 import { ThemeProvider } from "next-themes";
 import OrganizationSidebarComponent from "@/components/organization/sidebar/OrganizationSidebarComponent";
-import SessionWrapper from "@/components/SessionWrapper";
+import SessionWrapper from "@/components/session/SessionWrapper";
 import FooterComponent from "@/components/footer/FooterComopent";
 import { ThemeProviders } from "./providers";
 import { usePathname } from "next/navigation";
