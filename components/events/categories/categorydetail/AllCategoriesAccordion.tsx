@@ -2,44 +2,31 @@
 
 import { Play } from "lucide-react"; // Importing Lucide icon
 import { Button } from "@/components/ui/button";
+import { CategoryType } from "@/difinitions/types/components-type/CategoryType";
+import categories from "@/data/category.json";
 
 export function AllCategoriesButton() {
+  const typedCategory: CategoryType[] = categories;
   return (
-    <div className="w-[412px] h-[401px] p-4 bg-white border rounded-[15px] shadow-sm">
-      <h2 className="text-center font-bold text-heading-two-eng mb-4">
-        All Categories
+    <div
+      lang="km"
+      className="w-auto flex flex-col gap-6 p-9 bg-transparent border rounded-lg shadow-custom self-start"
+    >
+      <h2 className="text-center font-bold text-title-eng text-iDonate-navy-secondary">
+        ប្រភេទទាំងអស់
       </h2>
-      <div className="flex item-center justify-center ">
-        <div className="flex flex-col">
+
+      <div className="flex flex-col items-start gap-4">
+        {typedCategory.map((item, index) => (
           <Button
+            key={index}
             variant="outline"
-            className="w-[320px] h-[50px] rounded-[15px] border-0.5 text-iDonate-navy-primary gap-2 justify-start item-center mb-[16px] hover:bg-iDonate-navy-accent"
+            className="w-full border-0 text-iDonate-navy-primary gap-2 justify-start items-center hover:bg-iDonate-navy-accent text-lg"
           >
             <Play className="w-10 h-10" />
-            <span>Kids Education</span>
+            {item.title}
           </Button>
-          <Button
-            variant="outline"
-            className="w-[320px] h-[50px] rounded-[15px] border-0.5 text-iDonate-navy-primary gap-2 justify-start item-center mb-[16px] hover:bg-iDonate-navy-accent"
-          >
-            <Play className="w-10 h-10" />
-            <span>Pure Water</span>
-          </Button>
-          <Button
-            variant="outline"
-            className="w-[320px] h-[50px] rounded-[15px] border-0.5 text-iDonate-navy-secondary gap-2 justify-start item-center mb-[16px] hover:bg-iDonate-navy-accent"
-          >
-            <Play className="w-10 h-10" />
-            <span>Healthy Food</span>
-          </Button>
-          <Button
-            variant="outline"
-            className="w-[320px] h-[50px] rounded-[15px] border-0.5 text-iDonate-navy-primary gap-2 justify-start item-center mb-[16px] hover:bg-iDonate-navy-accent"
-          >
-            <Play className="w-10 h-10" />
-            <span>Medical Care</span>
-          </Button>
-        </div>
+        ))}
       </div>
     </div>
   );

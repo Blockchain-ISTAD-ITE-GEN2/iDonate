@@ -4,16 +4,11 @@ import CategoryDetailComponent from "@/components/events/categories/categorydeta
 
 export default function Page() {
   return (
-    <>
+    <section className="flex flex-col gap-9 justify-center">
       {/*Start Hero Section*/}
-      <section>
-        <HeroSectionCategoryComponent />
-      </section>
+      <HeroSectionCategoryComponent />
 
-      {/*content */}
-      <section>
-        <CategoryDetailComponent />
-      </section>
-    </>
+      <CategoryDetailComponent />
+    </section>
   );
 }

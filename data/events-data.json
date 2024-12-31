@@ -7,6 +7,31 @@
     "total_amount": 1500
   },
   {
+    "image":
+      "https://media.istockphoto.com/id/547404780/photo/local-students-in-cambodia.jpg?s=612x612&w=0&k=20&c=e5bAh7pAa87T2eKj1XJ9PgaMztkImfSVS4UAwb8zF-o=",
+    "title": "កម្មវិធីជំនួយសិស្សនៅខេត្តកំពង់ធំ",
+    "description": "ជួយសិស្សដែលមានការខ្វះខាតសម្ភារសិក្សា និងអាហារូបករណ៍",
+    "total_donor": 120,
+    "total_amount": 5000
+  },
+  {
+    "image":
+      "https://www.unicef.org/cambodia/sites/unicef.org.cambodia/files/styles/hero_extended/public/EGR%20Grade%202_Ratanakiri_December2023_Cristyn%20Lloyd_26.jpg.webp?itok=X3j0lSpb",
+    "title": "បរិច្ចាគជំនួយសង្គ្រោះគ្រោះទឹកជំនន់",
+    "description": "ផ្ដល់ជំនួយចាំបាច់ដល់ជនរងគ្រោះទឹកជំនន់",
+    "total_donor": 85,
+    "total_amount": 3200
+  },
+  {
+    "image":
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-nhNl60H50EO2WVCeu_0m_FRHDAFBxoYoGg&s",
+    "title": "ការជួបប្រជុំសំខាន់ជាមួយអង្គការសប្បុរសធម៌",
+    "description":
+      "អង្គការសប្បុរសធម៌ជួបប្រជុំដើម្បីបង្កើតការផ្លាស់ប្តូរជាពិសេស",
+    "total_donor": 200,
+    "total_amount": 10000
+  },
+  {
     "image": "https://i.pinimg.com/236x/a9/9e/ff/a99eff25eb1ba71647fcd884c15c035a.jpg",
     "title": "ការសិក្សាដល់គ្រប់គ្នា",
     "description": "គាំទ្រការសិក្សាសម្រាប់កុមារក្រីក្រ។",
