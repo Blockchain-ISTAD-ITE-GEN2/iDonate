@@ -111,9 +111,7 @@ export default function TestimonialCarousel() {
   return (
     <div className="w-full container mx-auto px-4 ">
       <section className="w-full text-center">
-        <h2
-          className="text-2xl md:text-3xl font-semibold text-iDonate-navy-primary"
-        >
+        <h2 className="text-2xl md:text-3xl font-semibold text-iDonate-navy-primary">
           មតិអ្នកបរិច្ចាគរបស់យើង
         </h2>
       </section>
@@ -169,10 +167,7 @@ export default function TestimonialCarousel() {
                                 <p className="text-sm md:text-base text-muted-foreground mb-4 text-iDonate-navy-primary">
                                   {testimonial.role}
                                 </p>
-                                <p
-                                  className="khmer-font text-sm md:text-base leading-relaxed text-iDonate-navy-primary"
-                                 
-                                >
+                                <p className="khmer-font text-sm md:text-base leading-relaxed text-iDonate-navy-primary">
                                   {testimonial.testimonial}
                                 </p>
                               </div>
@@ -197,7 +192,7 @@ export default function TestimonialCarousel() {
           </div>
         </div>
       </div>
-      
+
       <div className="flex justify-center mt-4 sm:hidden">
         <Button
           variant="ghost"

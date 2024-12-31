@@ -56,49 +56,62 @@ export default function LatestDonationCard() {
     <div className="w-full bg-transparent flex flex-col gap-6">
       {/* Hero Section */}
       <Card className="p-0 m-0 h-auto border-none grid lg:grid-cols-2 ">
-          {/* Image Section */}
-          <div className="relative min-h-[500px]">
-            <Image
-              src={FamilyImage}
-              fill
-              alt="Community support image"
-              className="absolute inset-0 w-full h-full object-cover"
-            />
-          </div>
+        {/* Image Section */}
+        <div className="relative min-h-[500px]">
+          <Image
+            src={FamilyImage}
+            fill
+            alt="Community support image"
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+        </div>
 
-          {/* Content Section */}
-          <div className="p-9 bg-iDonate-navy-primary text-iDonate-white-space flex flex-grow flex-col gap-4">
-            <h2 lang="km" className="text-title-khmer md:text-heading-one-khmer font-semibold leading-relaxed">
-                កិច្ចប្រឹងប្រែងការពារសេរីភាព និងសិទ្ធិរបស់កុមារ
-            </h2>
+        {/* Content Section */}
+        <div className="p-9 bg-iDonate-navy-primary text-iDonate-white-space flex flex-grow flex-col gap-4">
+          <h2
+            lang="km"
+            className="text-title-khmer md:text-heading-one-khmer font-semibold leading-relaxed"
+          >
+            កិច្ចប្រឹងប្រែងការពារសេរីភាព និងសិទ្ធិរបស់កុមារ
+          </h2>
 
-            <p lang="km" className="flex-1 text-description-khmer md:text-medium-khmer leading-relaxed">
-              កុមារទាំងនេះត្រូវការជំនួយក្នុងការការពារសេរីភាពនិងសិទ្ធិរបស់កុមារ
-              និងជួយធ្វើឱ្យពួកគេរស់នៅក្នុងសង្គម។ វាជាការលំបាកណាស់ដែលប្រឈមសេរីភាពរបស់កុមារគ្រប់ៗគ្នា។
-            </p>
+          <p
+            lang="km"
+            className="flex-1 text-description-khmer md:text-medium-khmer leading-relaxed"
+          >
+            កុមារទាំងនេះត្រូវការជំនួយក្នុងការការពារសេរីភាពនិងសិទ្ធិរបស់កុមារ
+            និងជួយធ្វើឱ្យពួកគេរស់នៅក្នុងសង្គម។
+            វាជាការលំបាកណាស់ដែលប្រឈមសេរីភាពរបស់កុមារគ្រប់ៗគ្នា។
+          </p>
 
-            <div lang="km" className="p-4 bg-iDonate-navy-accent rounded-lg flex flex-col sm:flex-row items-center justify-between gap-4">
-              <div className="flex items-center gap-2">
-                {/* <Users className="h-4 w-4 text-iDonate-navy-primary" /> */}
-                <span className=" text-iDonate-navy-primary">
-                  អ្នកបរិច្ចាគ: 1.2 ពាន់នាក់
-                </span>
-              </div>
-
-              <div className="text-iDonate-navy-primary">
-                ​​ទឹកប្រាក់ទទួលបាន: $100
-              </div>
+          <div
+            lang="km"
+            className="p-4 bg-iDonate-navy-accent rounded-lg flex flex-col sm:flex-row items-center justify-between gap-4"
+          >
+            <div className="flex items-center gap-2">
+              {/* <Users className="h-4 w-4 text-iDonate-navy-primary" /> */}
+              <span className=" text-iDonate-navy-primary">
+                អ្នកបរិច្ចាគ: 1.2 ពាន់នាក់
+              </span>
             </div>
 
-            <Button className=" w-full bg-iDonate-green-secondary hover:bg-iDonate-green-primary text-iDonate-navy-primary font-semibold">
-              Donate Now
-            </Button>
+            <div className="text-iDonate-navy-primary">
+              ​​ទឹកប្រាក់ទទួលបាន: $100
+            </div>
           </div>
+
+          <Button className=" w-full bg-iDonate-green-secondary hover:bg-iDonate-green-primary text-iDonate-navy-primary font-semibold">
+            Donate Now
+          </Button>
+        </div>
       </Card>
 
       {/* Current Donations Section */}
       <div className="w-full flex flex-col gap-2">
-        <h2 lang="km" className="text-heading-two-khmer text-iDonate-navy-primary khmer-font text-center">
+        <h2
+          lang="km"
+          className="text-heading-two-khmer text-iDonate-navy-primary khmer-font text-center"
+        >
           បច្ចុប្បន្នភាពនៃការបរិច្ចាគ
         </h2>
 
@@ -150,11 +163,15 @@ export default function LatestDonationCard() {
           </div>
         ) : (
           <Card className="p-8 text-center w-full container mx-auto flex flex-col gap-4">
-            <h3 lang="km" className="text-medium-khmer font-medium  text-iDonate-navy-primary khmer-font">
+            <h3
+              lang="km"
+              className="text-medium-khmer font-medium  text-iDonate-navy-primary khmer-font"
+            >
               បច្ចុប្បន្នមិនមានព្រឹត្តិការណ៍បរិច្ចាគទេ
             </h3>
             <p lang="km" className="text-iDonate-gray khmer-font">
-              សូមត្រឡប់មកម្តងទៀតនៅពេលក្រោយ ដើម្បីពិនិត្យមើលឱកាសបរិច្ចាគថ្មីៗ។ អរគុណសម្រាប់ការគាំទ្ររបស់អ្នក!
+              សូមត្រឡប់មកម្តងទៀតនៅពេលក្រោយ ដើម្បីពិនិត្យមើលឱកាសបរិច្ចាគថ្មីៗ។
+              អរគុណសម្រាប់ការគាំទ្ររបស់អ្នក!
             </p>
           </Card>
         )}

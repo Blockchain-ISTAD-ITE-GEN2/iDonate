@@ -8,7 +8,7 @@ export function OrganizationCardComponent({
   image,
   title,
   description,
-  location
+  location,
 }: OrganizationParam) {
   return (
     <Card className="w-[385px] md:w-[600px] h-[182px] flex items-center rounded-[10px] mx-[22px]">
@@ -32,7 +32,13 @@ export function OrganizationCardComponent({
           <p className="mt-2 text-iDonate-navy-secondary line-clamp-3">
             {description}
           </p>
-          <p className="mt-2 text-gray-500 line-clamp-3 flex gap-2"> <span className="text-gray-800"><MapPinned /></span>{location}</p>
+          <p className="mt-2 text-gray-500 line-clamp-3 flex gap-2">
+            {" "}
+            <span className="text-gray-800">
+              <MapPinned />
+            </span>
+            {location}
+          </p>
         </div>
       </CardContent>
     </Card>

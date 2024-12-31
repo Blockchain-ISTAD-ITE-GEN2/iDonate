@@ -6,4 +6,5 @@ export type EventType = {
   total_donor: number;
   date?: string;
   key?: number;
+  category?: string;
 };

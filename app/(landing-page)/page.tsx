@@ -10,23 +10,26 @@ import BannerLandingCard from "@/components/landing/banner/BannerLandingCard";
 import UpcomingEvents from "@/components/landing/upcoming-event/UpComingEventComponent";
 
 export default function Homepage() {
-  
   const typedCategory: CategoryType[] = categories;
   return (
     <section className="flex flex-col items-center gap-9">
-
       {/* Here section */}
       <HeroSectionComponent />
-      
 
       {/* category */}
       <section className="w-full px-6 md:px-12 lg:px-24 space-y-6 text-center">
         {/* Section Header */}
         <div className="space-y-2">
-          <h2 lang="km" className="text-xl font-medium text-iDonate-green-primary">
+          <h2
+            lang="km"
+            className="text-xl font-medium text-iDonate-green-primary"
+          >
             តើអ្វីខ្លះដែលយើងត្រូវធ្វើ?
           </h2>
-          <h3 lang="km" className="text-2xl font-medium text-iDonate-navy-primary">
+          <h3
+            lang="km"
+            className="text-2xl font-medium text-iDonate-navy-primary"
+          >
             ការបរិច្ចាគរបស់អ្នក ជាសេចក្តីអំណរបស់អ្នកដទៃ !
           </h3>
         </div>
@@ -42,13 +45,13 @@ export default function Homepage() {
 
       {/* Bar and Line Chart */}
       <section className="w-full">
-          <BarAndLineChart />
+        <BarAndLineChart />
       </section>
-        
+
       {/* Latest Donation */}
       <section className="w-full">
         <div className="space-y-2">
-            {/*Test Github actions 3 */}
+          {/*Test Github actions 3 */}
           <h3
             lang="km"
             className="text-2xl text-iDonate-navy-primary text-center"
@@ -61,23 +64,26 @@ export default function Homepage() {
 
       {/* Testimonail */}
       <section className="w-full">
-          <TestimonialCarousel />
+        <TestimonialCarousel />
       </section>
 
       {/* Banner Landing Card */}
       <section className="w-full">
-          <BannerLandingCard />
+        <BannerLandingCard />
       </section>
 
       {/* upcoming events */}
       <section className="w-full flex flex-col items-center">
-          <h2 lang="km" className="text-medium-khmer text-iDonate-green-primary">
-            តោះ ចាប់ផ្ដើមជួយពួកគាត់ទាំងអស់គ្នា!
-          </h2>
-          <h3 lang="km" className="text-heading-two-khmer text-iDonate-navy-primary">
-            កម្មវិធីបរិច្ចាគ ដែលនិងកើតឡើងឆាប់នេះ!
-          </h3>
-          <UpcomingEvents />
+        <h2 lang="km" className="text-medium-khmer text-iDonate-green-primary">
+          តោះ ចាប់ផ្ដើមជួយពួកគាត់ទាំងអស់គ្នា!
+        </h2>
+        <h3
+          lang="km"
+          className="text-heading-two-khmer text-iDonate-navy-primary"
+        >
+          កម្មវិធីបរិច្ចាគ ដែលនិងកើតឡើងឆាប់នេះ!
+        </h3>
+        <UpcomingEvents />
       </section>
     </section>
   );

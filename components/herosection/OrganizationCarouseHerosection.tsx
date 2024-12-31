@@ -18,25 +18,16 @@ export default function OrganizationCarouseHerosection() {
             <div className="grid px-4 py-8 lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
               {/* Left Content */}
               <div className="lg:col-span-7 mt-0">
-                <h1
-                 
-                  className="text-iDonate-navy-primary max-w-2xl text-[36px] tracking-tight leading-none md:text-[36px] xl:text-[36px] dark:text-white"
-                >
+                <h1 className="text-iDonate-navy-primary max-w-2xl text-[36px] tracking-tight leading-none md:text-[36px] xl:text-[36px] dark:text-white">
                   ចូលរួមចំណែកដើម្បីអនាគតដ៏ល្អប្រសើរជាងនេះ
                   <div className="flex justify-center mt-[18px]">
-                    <span
-                     
-                      className="text-iDonate-green-primary font-sine-bold"
-                    >
+                    <span className="text-iDonate-green-primary font-sine-bold">
                       ជាមួយ iDonate
                     </span>
                   </div>
                 </h1>
 
-                <p
-                 
-                  className="text-iDonate-navy-primary leading-[32px] my-[48px] lg:mb-10 md:text-lg lg:text-xl dark:text-gray-400"
-                >
+                <p className="text-iDonate-navy-primary leading-[32px] my-[48px] lg:mb-10 md:text-lg lg:text-xl dark:text-gray-400">
                   ស្វែងរកអង្គការដែលកំពុងបង្កើតការផ្លាស់ប្តូរ ជាមួយតាមរយៈ
                   iDonate។
                   យើងភ្ជាប់អ្នកបរិច្ចាគដែលមានចិត្តសប្បុរសជាមួយអង្គការមិនរកប្រាក់ចំណេញដ៏ទុកចិត្ត
@@ -77,25 +68,16 @@ export default function OrganizationCarouseHerosection() {
             <div className="grid px-4 py-8 lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
               {/* Left Content */}
               <div className="lg:col-span-7 mt-0">
-                <h1
-                 
-                  className="text-iDonate-navy-primary max-w-2xl text-[36px] tracking-tight leading-none md:text-[36px] xl:text-[36px] dark:text-white"
-                >
+                <h1 className="text-iDonate-navy-primary max-w-2xl text-[36px] tracking-tight leading-none md:text-[36px] xl:text-[36px] dark:text-white">
                   ចូលរួមចំណែកដើម្បីអនាគតដ៏ល្អប្រសើរជាងនេះ
                   <div className="flex justify-center mt-[18px]">
-                    <span
-                     
-                      className="text-iDonate-green-primary font-sine-bold"
-                    >
+                    <span className="text-iDonate-green-primary font-sine-bold">
                       ជាមួយ iDonate
                     </span>
                   </div>
                 </h1>
 
-                <p
-                 
-                  className="text-iDonate-navy-primary leading-[32px] my-[48px] lg:mb-10 md:text-lg lg:text-xl dark:text-gray-400"
-                >
+                <p className="text-iDonate-navy-primary leading-[32px] my-[48px] lg:mb-10 md:text-lg lg:text-xl dark:text-gray-400">
                   ស្វែងរកអង្គការដែលកំពុងបង្កើតការផ្លាស់ប្តូរ ជាមួយតាមរយៈ
                   iDonate។
                   យើងភ្ជាប់អ្នកបរិច្ចាគដែលមានចិត្តសប្បុរសជាមួយអង្គការមិនរកប្រាក់ចំណេញដ៏ទុកចិត្ត
@@ -136,25 +118,16 @@ export default function OrganizationCarouseHerosection() {
             <div className="grid px-4 py-8 lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
               {/* Left Content */}
               <div className="lg:col-span-7 mt-0">
-                <h1
-                 
-                  className="text-iDonate-navy-primary max-w-2xl text-[36px] tracking-tight leading-none md:text-[36px] xl:text-[36px] dark:text-white"
-                >
+                <h1 className="text-iDonate-navy-primary max-w-2xl text-[36px] tracking-tight leading-none md:text-[36px] xl:text-[36px] dark:text-white">
                   ចូលរួមចំណែកដើម្បីអនាគតដ៏ល្អប្រសើរជាងនេះ
                   <div className="flex justify-center mt-[18px]">
-                    <span
-                     
-                      className="text-iDonate-green-primary font-sine-bold"
-                    >
+                    <span className="text-iDonate-green-primary font-sine-bold">
                       ជាមួយ iDonate
                     </span>
                   </div>
                 </h1>
 
-                <p
-                 
-                  className="text-iDonate-navy-primary leading-[32px] my-[48px] lg:mb-10 md:text-lg lg:text-xl dark:text-gray-400"
-                >
+                <p className="text-iDonate-navy-primary leading-[32px] my-[48px] lg:mb-10 md:text-lg lg:text-xl dark:text-gray-400">
                   ស្វែងរកអង្គការដែលកំពុងបង្កើតការផ្លាស់ប្តូរ ជាមួយតាមរយៈ
                   iDonate។
                   យើងភ្ជាប់អ្នកបរិច្ចាគដែលមានចិត្តសប្បុរសជាមួយអង្គការមិនរកប្រាក់ចំណេញដ៏ទុកចិត្ត

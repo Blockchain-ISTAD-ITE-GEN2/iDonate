@@ -6,10 +6,7 @@ import { Button } from "@/components/ui/button";
 export function AllCategoriesButton() {
   return (
     <div className="w-[412px] h-[401px] p-4 bg-white border rounded-[15px] shadow-sm">
-      <h2
-       
-        className="text-center font-bold text-heading-two-eng mb-4"
-      >
+      <h2 className="text-center font-bold text-heading-two-eng mb-4">
         All Categories
       </h2>
       <div className="flex item-center justify-center ">

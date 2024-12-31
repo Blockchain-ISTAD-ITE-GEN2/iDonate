@@ -7,17 +7,11 @@ export default function HeroSectionCategoryComponent() {
       <div className="grid px-4 py-8 lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
         {/* Left Content */}
         <div className="lg:col-span-7 mt-0 mr-[100px]">
-          <h1
-            
-            className="text-iDonate-navy-primary max-w-2xl text-[36px] tracking-tight leading-none md:text-[36px] xl:text-[36px] dark:text-white"
-          >
+          <h1 className="text-iDonate-navy-primary max-w-2xl text-[36px] tracking-tight leading-none md:text-[36px] xl:text-[36px] dark:text-white">
             ជួយកុមារសម្រេចអនាគតដ៏ភ្លឺស្វាង
           </h1>
 
-          <p
-            
-            className="text-iDonate-navy-primary font-description-khmer  leading-7  my-[36px] lg:mb-10 md:text-lg lg:text-xl dark:text-gray-400 line-champ-5 "
-          >
+          <p className="text-iDonate-navy-primary font-description-khmer  leading-7  my-[36px] lg:mb-10 md:text-lg lg:text-xl dark:text-gray-400 line-champ-5 ">
             ការអប់រំគឺជាវិធីដ៏ល្អបំផុតដើម្បីផ្លាស់ប្តូរចិត្តស្មារតី និង
             បង្កើតអនាគតដ៏ល្អសម្រាប់កុមារកម្ពុជា។
             បរិច្ចាគត្រឹមតែបន្តិចអាចជួយកុមារដែលខ្វះខាតទទួលបានឱកាសក្នុង​ការសិក្សា

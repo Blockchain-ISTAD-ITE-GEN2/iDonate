@@ -6,12 +6,12 @@ import ReaksaImage from "@/public/members/reaksa.jpg";
 import TeacherResmey from "@/public/members/teacher-reksmey.jpg";
 import TeacherKeo from "@/public/members/teacher-keo.jpeg";
 
-export const members = [   
-     { image: SokcheatImage, name: "Srorng Sokcheat", role: "TEAM LEADER" },
-    { image: ChiporImage, name: "Sreng Chipor", role: "BACKEND DEVELOPER"},
-    { image: PanhaImage, name: "Sanh Panha", role: "FRONTEND DEVELOPER" },
-    { image: KangImage, name: "Kay Kang", role: "Smart Contract Developer" },
-    { image: ReaksaImage, name: "Nouth ChanRaksa", role: "FRONTEND DEVELOPER" },
+export const members = [
+  { image: SokcheatImage, name: "Srorng Sokcheat", role: "TEAM LEADER" },
+  { image: ChiporImage, name: "Sreng Chipor", role: "BACKEND DEVELOPER" },
+  { image: PanhaImage, name: "Sanh Panha", role: "FRONTEND DEVELOPER" },
+  { image: KangImage, name: "Kay Kang", role: "Smart Contract Developer" },
+  { image: ReaksaImage, name: "Nouth ChanRaksa", role: "FRONTEND DEVELOPER" },
 ];
 
 export const mentors = [

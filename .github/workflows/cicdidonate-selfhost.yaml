@@ -1,6 +1,6 @@
 on:
   push:
-    branches: [ "development" ]
+    branches: ["development"]
 
 env:
   IMAGE_NAME: idonate-image

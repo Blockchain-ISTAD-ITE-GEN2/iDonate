@@ -379,7 +379,9 @@ export default function NavbarComponent() {
         onClick={() => router.push("/")}
       >
         <Image src={logo} width={80} height={80} alt="" />
-        <span className="text-lg lg:text-title-eng">iDonate</span>
+        <span className="text-lg lg:text-title-eng text-iDonate-navy-primary font-medium">
+          iDONATE
+        </span>
       </section>
 
       {/* Mobile Menu Button */}
@@ -393,12 +395,12 @@ export default function NavbarComponent() {
       {/* Mobile Menu and Submenu */}
       {isMobileMenuOpen && (activeSubmenu ? <MobileSubmenu /> : <MobileMenu />)}
 
-            {/* Desktop Navigation Menu */}
-            <Menubar className="border-0 hidden lg:flex space-x-4 bg-transparent dark:text-white">
-                {/* Desktop menu code remains the same */}
-                {menuList.map((item, index) => {
-                    const isActive = pathname === item.path;
-                    const specialPaths = ["/how-it-works", "/search"];
+      {/* Desktop Navigation Menu */}
+      <Menubar className="border-0 hidden lg:flex space-x-4 bg-transparent dark:text-white">
+        {/* Desktop menu code remains the same */}
+        {menuList.map((item, index) => {
+          const isActive = pathname === item.path;
+          const specialPaths = ["/how-it-works", "/search"];
 
           return (
             <MenubarMenu key={index}>

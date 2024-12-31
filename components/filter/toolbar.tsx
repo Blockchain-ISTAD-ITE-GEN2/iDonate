@@ -94,24 +94,23 @@ export function Toolbar({
           className="h-10 w-full md:w-[450px]"
         />
         {/* <div className="flex space-x-2 space-y-2 md:space-y-0"> */}
-          {filtersFace?.map(({ key, title, options }) => (
-            <FacetedFilter
-              key={key}
-              filters={[{ key, title, options }]}
-              onChange={(selected) => {
-                handleFilterChange(key, selected[key]);
-              }}
-            />
-          ))}
+        {filtersFace?.map(({ key, title, options }) => (
+          <FacetedFilter
+            key={key}
+            filters={[{ key, title, options }]}
+            onChange={(selected) => {
+              handleFilterChange(key, selected[key]);
+            }}
+          />
+        ))}
 
-          {filtersDateRange && filtersDateRange.length > 0 && (
-            <DateRangePicker
-              filters={filtersDateRange}
-              onChange={handleDateRangeChange} // Pass the selected ranges to handleDateRangeChange
-            />
-          )}
+        {filtersDateRange && filtersDateRange.length > 0 && (
+          <DateRangePicker
+            filters={filtersDateRange}
+            onChange={handleDateRangeChange} // Pass the selected ranges to handleDateRangeChange
+          />
+        )}
         {/* </div> */}
-
       </div>
     </div>
   );

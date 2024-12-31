@@ -9,18 +9,18 @@ import SessionWrapper from "@/components/session/SessionWrapper";
 import FooterComponent from "@/components/footer/FooterComopent";
 import { ThemeProviders } from "./providers";
 import { usePathname } from "next/navigation";
-import { Inter, Suwannaphum } from 'next/font/google'
+import { Inter, Suwannaphum } from "next/font/google";
 
 const inter = Inter({
-  weight: ["100", '300', '400', '700', '900'],
-  subsets: ['latin'],
+  weight: ["100", "300", "400", "700", "900"],
+  subsets: ["latin"],
   variable: "--font-inter",
-})
+});
 const suwannaphum = Suwannaphum({
-  weight: [ "300", "400", "700", "900"],
-  subsets: ['khmer'],
+  weight: ["300", "400", "700", "900"],
+  subsets: ["khmer"],
   variable: "--font-suwannaphum",
-})
+});
 
 type RootLayoutProps = {
   children: ReactNode;

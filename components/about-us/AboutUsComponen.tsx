@@ -91,7 +91,7 @@ export default function AboutUsComponent() {
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ duration: 0.8, delay: 0.8 }}
               >
-                <Button className="bg-iDonate-green-primary hover:bg-iDonate-green-secondary text-white text-sm sm:text-base" >
+                <Button className="bg-iDonate-green-primary hover:bg-iDonate-green-secondary text-white text-sm sm:text-base">
                   តោះចាប់ផ្តើម
                 </Button>
               </motion.div>
@@ -111,18 +111,21 @@ export default function AboutUsComponent() {
               {
                 icon: TrustContent,
                 title: "មាតិកាដែលមានទំនុកចិត្ត",
-                description: "ផ្តល់នូវទំនុកចិត្តតាមរយៈការចែកចាយបន្តទៅកាន់អ្នកចូលរួមគ្រប់គ្នានៅក្នុងមាតិកាយ៉ាងទូលំទូលាយ"
+                description:
+                  "ផ្តល់នូវទំនុកចិត្តតាមរយៈការចែកចាយបន្តទៅកាន់អ្នកចូលរួមគ្រប់គ្នានៅក្នុងមាតិកាយ៉ាងទូលំទូលាយ",
               },
               {
                 icon: GiveAndRecieve,
                 title: "ការផ្តល់ឲ្យនិងការទទួល",
-                description: "ការផ្លាស់ប្តូរការសកម្មភាព ការសំដែងសណ្តានចិត្ត ឬអារម្មណ៍រវាងមនុស្សគ្រប់ស្រទាប់ វណ្ណៈ។វាបង្ហាញពីភាពសមស្របរបស់ការផ្តល់ឲ្យនិងទទួលបានអ្វីមួយ"
+                description:
+                  "ការផ្លាស់ប្តូរការសកម្មភាព ការសំដែងសណ្តានចិត្ត ឬអារម្មណ៍រវាងមនុស្សគ្រប់ស្រទាប់ វណ្ណៈ។វាបង្ហាញពីភាពសមស្របរបស់ការផ្តល់ឲ្យនិងទទួលបានអ្វីមួយ",
               },
               {
                 icon: BlockchainTech,
                 title: "បច្ចេកវិទ្យាប្លុកឆេនដើម្បីគាំទ្រការបរិច្ចាគ",
-                description: "ប្រព័ន្ធបរិច្ចាគរបស់យើងប្រើប្រាស់បច្ចេកវិទ្យាប្លុកឆេនដើម្បីធ្វើឱ្យប្រព័ន្ធបរិច្ចាគមានតម្លាភាព សុវត្ថិភាព និងមានប្រសិទ្ធភាពខ្ពស់"
-              }
+                description:
+                  "ប្រព័ន្ធបរិច្ចាគរបស់យើងប្រើប្រាស់បច្ចេកវិទ្យាប្លុកឆេនដើម្បីធ្វើឱ្យប្រព័ន្ធបរិច្ចាគមានតម្លាភាព សុវត្ថិភាព និងមានប្រសិទ្ធភាពខ្ពស់",
+              },
             ].map((feature, index) => (
               <motion.div
                 key={index}

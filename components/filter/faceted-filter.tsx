@@ -51,7 +51,11 @@ export function FacetedFilter({ filters, onChange }: FacetedFilterType) {
         return (
           <Popover key={key}>
             <PopoverTrigger asChild>
-              <Button variant="outline" size="sm" className="h-10 border-dashed">
+              <Button
+                variant="outline"
+                size="sm"
+                className="h-10 border-dashed"
+              >
                 <PlusCircle className="mr-2 h-4 w-4" />
                 {title}
                 {selectedValues.size > 0 && (

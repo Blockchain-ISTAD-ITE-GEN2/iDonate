@@ -9,9 +9,8 @@ export default function Page() {
       <section>
         <HeroSectionCategoryComponent />
       </section>
-      {/*End Hero Section*/}
-      {/*content */}
 
+      {/*content */}
       <section>
         <CategoryDetailComponent />
       </section>

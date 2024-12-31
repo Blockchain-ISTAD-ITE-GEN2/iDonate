@@ -44,7 +44,8 @@ export default function HeroSectionComponent() {
         <div className="w-full md:w-1/2 space-y-4 sm:space-y-6 xl:space-y-8">
           <motion.h1
             lang="km"
-            className="text-2xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-iDonate-navy-secondary leading-10"
+            style={{ lineHeight: "1.3" }}
+            className="text-2xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-iDonate-navy-secondary"
             variants={itemVariants}
           >
             ការបរិច្ចាគដោយមានទំនុកចិត្ត និងតម្លាភាព
@@ -63,16 +64,14 @@ export default function HeroSectionComponent() {
             className="text-iDonate-gray text-sm sm:text-base lg:text-lg xl:text-xl 2xl:text-2xl leading-relaxed"
             variants={itemVariants}
           >
-            iDONATE បានប្រើប្រាស់បច្ចេកវិទ្យា Blockchain ដើម្បីធ្វើឱ្យប្រព័ន្ធបរិច្ចាគមានតម្លាភាព
-            សុវត្ថិភាព និងមានប្រសិទ្ធភាពខ្ពស់ ដើម្បីធានាថាចំនួនទឹកប្រាក់ដែលបានបរិច្ចាគ
+            iDONATE បានប្រើប្រាស់បច្ចេកវិទ្យា Blockchain
+            ដើម្បីធ្វើឱ្យប្រព័ន្ធបរិច្ចាគមានតម្លាភាព សុវត្ថិភាព
+            និងមានប្រសិទ្ធភាពខ្ពស់ ដើម្បីធានាថាចំនួនទឹកប្រាក់ដែលបានបរិច្ចាគ
             ត្រូវបានដល់ដៃជនរងគ្រោះយ៉ាងពិតប្រាកដ។
           </motion.p>
 
           {/* Button */}
-          <motion.div
-            className="flex gap-4"
-            variants={itemVariants}
-          >
+          <motion.div className="flex gap-4" variants={itemVariants}>
             <Button
               lang="km"
               className="bg-green-500 px-4 py-2 sm:px-6 sm:py-3 lg:px-8 lg:py-4 text-white text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl hover:bg-green-600 transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg group"
@@ -82,7 +81,6 @@ export default function HeroSectionComponent() {
               <ArrowRight className="ml-2 inline-block transition-transform duration-300 group-hover:translate-x-1" />
             </Button>
           </motion.div>
-
         </div>
 
         {/* Right Content */}
@@ -104,7 +102,7 @@ export default function HeroSectionComponent() {
               quality={100}
             />
           </motion.div>
-          
+
           <motion.div
             className="relative flex-1 md:absolute md:top-20 md:left-[40px] lg:left-[120px] xl:left-[150px] 2xl:left-[180px] w-full md:w-[260px] lg:w-[320px] xl:w-[400px] 2xl:w-[480px] h-full md:h-[260px] lg:h-[320px] xl:h-[400px] 2xl:h-[480px] rounded-lg  md:rounded-full overflow-hidden shadow-lg"
             whileHover={{ scale: 1.02 }}
@@ -121,7 +119,6 @@ export default function HeroSectionComponent() {
             />
           </motion.div>
         </motion.div>
-        
       </motion.div>
     </section>
   );

@@ -99,10 +99,7 @@ export default function FooterComponent() {
                 iDONATE
               </span>
             </Link>
-            <p
-              className="text-iDonate-navy-primary text-center md:text-left"
-             
-            >
+            <p className="text-iDonate-navy-primary text-center md:text-left">
               ការបរិច្ចាគគឺជាសកម្មភាពនៃការផ្តល់ធនធាន ដូចជាប្រាក់ ទំនិញ ឬពេលវេលា
               ដើម្បីជួយអ្នកដ៏ទៃ ឬជួយដល់បុព្វហេតុមួយ ដោយមិនរំពឹងអ្វីមកវិញឡើយ
             </p>

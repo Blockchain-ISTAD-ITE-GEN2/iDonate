@@ -75,7 +75,7 @@ export default function MissionVision() {
   const partners = [ISTAD, MPTC, CBRD, LEADER, ISTAD, MPTC, CBRD, LEADER];
 
   return (
-    <div className="w-full bg-white" >
+    <div className="w-full bg-white">
       {/* Hero Section */}
       <section className="relative h-[600px] sm:h-[400px] text-white ">
         <Image
@@ -93,10 +93,7 @@ export default function MissionVision() {
             className="max-w-2xl px-[70px]"
           >
             <h1 className="text-5xl font-bold mb-4">Give Hope, Save Lives</h1>
-            <p
-              className="text-xl mb-8 text-gray-200 font-siemreap leading-relaxed"
-              
-            >
+            <p className="text-xl mb-8 text-gray-200 font-siemreap leading-relaxed">
               នៅក្នុងពិភពលោកដែលពោរពេញដោយបញ្ហាប្រឈម
               ជំនួយរបស់អ្នកអាចជាសញ្ញានៃក្តីសង្ឃឹម
               ដែលនាំនរណាម្នាក់ទៅកាន់ថ្ងៃស្អែកកាន់តែប្រសើរ។
@@ -216,8 +213,12 @@ export default function MissionVision() {
                   className="text-center text-iDonate-navy-secondary"
                 >
                   <div className="text-6xl mb-4">{feature.icon}</div>
-                  <h3 className="font-semibold mb-2 font-siemreap text-iDonate-navy-secondary">{feature.title}</h3>
-                  <p className="text-sm  font-siemreap text-iDonate-navy-secondary">{feature.description}</p>
+                  <h3 className="font-semibold mb-2 font-siemreap text-iDonate-navy-secondary">
+                    {feature.title}
+                  </h3>
+                  <p className="text-sm  font-siemreap text-iDonate-navy-secondary">
+                    {feature.description}
+                  </p>
                 </motion.div>
               ))}
             </div>

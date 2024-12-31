@@ -18,7 +18,7 @@ const organizationData = [
     title: "Cambodia Kantha Bopha Foundation",
     description:
       "មូលនិធិកម្ពុជា គន្ធបុប្ផា គឺជាស្ថាប័នដែលមានបំណង ផ្តល់សេវាសុខាភិបាលដោយឥតគិតថ្លៃដល់កុមារខ្សត់ខ្សោយនៅទូទាំងប្រទេសកម្ពុជា។ ដោយផ្តោតលើការថែទាំសុខភាពដែលមាន",
-    location: "St 123 Phom Penh"
+    location: "St 123 Phom Penh",
   },
   {
     image:
@@ -26,7 +26,7 @@ const organizationData = [
     title: "Cambodia Kantha Bopha Foundation",
     description:
       "មូលនិធិកម្ពុជា គន្ធបុប្ផា គឺជាស្ថាប័នដែលមានបំណង ផ្តល់សេវាសុខាភិបាលដោយឥតគិតថ្លៃដល់កុមារខ្សត់ខ្សោយនៅទូទាំងប្រទេសកម្ពុជា។ ដោយផ្តោតលើការថែទាំសុខភាពដែលមាន",
-      location: "St 123 Phom Penh"
+    location: "St 123 Phom Penh",
   },
   {
     image:
@@ -34,7 +34,7 @@ const organizationData = [
     title: "Cambodia Kantha Bopha Foundation",
     description:
       "មូលនិធិកម្ពុជា គន្ធបុប្ផា គឺជាស្ថាប័នដែលមានបំណង ផ្តល់សេវាសុខាភិបាលដោយឥតគិតថ្លៃដល់កុមារខ្សត់ខ្សោយនៅទូទាំងប្រទេសកម្ពុជា។ ដោយផ្តោតលើការថែទាំសុខភាពដែលមាន",
-      location: "St 123 Phom Penh"
+    location: "St 123 Phom Penh",
   },
   {
     image:
@@ -42,7 +42,7 @@ const organizationData = [
     title: "Cambodia Kantha Bopha Foundation",
     description:
       "មូលនិធិកម្ពុជា គន្ធបុប្ផា គឺជាស្ថាប័នដែលមានបំណង ផ្តល់សេវាសុខាភិបាលដោយឥតគិតថ្លៃដល់កុមារខ្សត់ខ្សោយនៅទូទាំងប្រទេសកម្ពុជា។ ដោយផ្តោតលើការថែទាំសុខភាពដែលមាន",
-      location: "St 123 Phom Penh"
+    location: "St 123 Phom Penh",
   },
   {
     image:
@@ -50,7 +50,7 @@ const organizationData = [
     title: "Cambodia Kantha Bopha Foundation",
     description:
       "មូលនិធិកម្ពុជា គន្ធបុប្ផា គឺជាស្ថាប័នដែលមានបំណង ផ្តល់សេវាសុខាភិបាលដោយឥតគិតថ្លៃដល់កុមារខ្សត់ខ្សោយនៅទូទាំងប្រទេសកម្ពុជា។ ដោយផ្តោតលើការថែទាំសុខភាពដែលមាន",
-      location: "St 123 Phom Penh"
+    location: "St 123 Phom Penh",
   },
   {
     image:
@@ -58,7 +58,7 @@ const organizationData = [
     title: "Cambodia Kantha Bopha Foundation",
     description:
       "មូលនិធិកម្ពុជា គន្ធបុប្ផា គឺជាស្ថាប័នដែលមានបំណង ផ្តល់សេវាសុខាភិបាលដោយឥតគិតថ្លៃដល់កុមារខ្សត់ខ្សោយនៅទូទាំងប្រទេសកម្ពុជា។ ដោយផ្តោតលើការថែទាំសុខភាពដែលមាន",
-      location: "St 123 Phom Penh"
+    location: "St 123 Phom Penh",
   },
   {
     image:
@@ -66,7 +66,7 @@ const organizationData = [
     title: "Cambodia Kantha Bopha Foundation",
     description:
       "មូលនិធិកម្ពុជា គន្ធបុប្ផា គឺជាស្ថាប័នដែលមានបំណង ផ្តល់សេវាសុខាភិបាលដោយឥតគិតថ្លៃដល់កុមារខ្សត់ខ្សោយនៅទូទាំងប្រទេសកម្ពុជា។ ដោយផ្តោតលើការថែទាំសុខភាពដែលមាន",
-      location: "St 123 Phom Penh"
+    location: "St 123 Phom Penh",
   },
   {
     image:
@@ -74,7 +74,7 @@ const organizationData = [
     title: "Cambodia Kantha Bopha Foundation",
     description:
       "មូលនិធិកម្ពុជា គន្ធបុប្ផា គឺជាស្ថាប័នដែលមានបំណង ផ្តល់សេវាសុខាភិបាលដោយឥតគិតថ្លៃដល់កុមារខ្សត់ខ្សោយនៅទូទាំងប្រទេសកម្ពុជា។ ដោយផ្តោតលើការថែទាំសុខភាពដែលមាន",
-      location: "St 123 Phom Penh"
+    location: "St 123 Phom Penh",
   },
 ];
 
@@ -93,7 +93,7 @@ export default function OrganizationOnPageComponent() {
       {/* Start Hero  Section */}
       <section>
         <div className="flex justify-center gap-4 mb-[24px]">
-          <OrganizationDetailHeroSection/>
+          <OrganizationDetailHeroSection />
           {/* <OrganizationCarouseHerosection /> */}
           {/*<OrganizationHeroSection/>*/}
         </div>
@@ -128,9 +128,7 @@ export default function OrganizationOnPageComponent() {
           ))}
         </div>
 
-        <div
-          className="flex flex-wrap justify-end my-[24px] mr-[106px]"
-        >
+        <div className="flex flex-wrap justify-end my-[24px] mr-[106px]">
           <Button className="w-[305px] h-[50px] rounded-[15px] text-medium-eng text-idonate-navy-primary bg-iDonate-white-space border-2 border-iDonate-navy-primary hover:text-iDonate-green-secondary hover:bg-iDonate-navy-primary">
             Show More Organization
           </Button>

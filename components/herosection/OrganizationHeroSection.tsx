@@ -43,21 +43,15 @@ export default function OrganizationHeroSection() {
               <div className="grid px-4 py-8 lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
                 {/* Left Content */}
                 <div className="lg:col-span-7 mt-0">
-                  <h1
-                    
-                    className="text-iDonate-navy-primary max-w-2xl text-[36px] tracking-tight leading-none md:text-[36px] xl:text-[36px] dark:text-white"
-                  >
+                  <h1 className="text-iDonate-navy-primary max-w-2xl text-[36px] tracking-tight leading-none md:text-[36px] xl:text-[36px] dark:text-white">
                     {slide.title}
                     <div className="flex justify-center mt-[18px]">
-                      <span  className="text-iDonate-navy-primary">
+                      <span className="text-iDonate-navy-primary">
                         ជាមួយ iDonate
                       </span>
                     </div>
                   </h1>
-                  <p
-                    
-                    className="text-iDonate-navy-primary leading-loose max-w-2xl tracking-normal my-[36px] font-light lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400"
-                  >
+                  <p className="text-iDonate-navy-primary leading-loose max-w-2xl tracking-normal my-[36px] font-light lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400">
                     {slide.description}
                   </p>
 

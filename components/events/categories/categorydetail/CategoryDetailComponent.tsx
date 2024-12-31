@@ -52,17 +52,11 @@ export default function CategoryDetailComponent() {
           </div>
 
           <div>
-            <h1
-              
-              className="text-heading-two-khmer text-iDonate-navy-primary max-w-2xl tracking-tight leading-none my-[36px]"
-            >
+            <h1 className="text-heading-two-khmer text-iDonate-navy-primary max-w-2xl tracking-tight leading-none my-[36px]">
               ជួយកុមារសម្រេចអនាគតដ៏ភ្លឺស្វាង
             </h1>
 
-            <p
-              
-              className="text-iDonate-navy-primary text-description-khmer  leading-7  my-[36px] lg:mb-10 md:text-lg lg:text-xl dark:text-gray-400 line-champ-5 mb-[36px]"
-            >
+            <p className="text-iDonate-navy-primary text-description-khmer  leading-7  my-[36px] lg:mb-10 md:text-lg lg:text-xl dark:text-gray-400 line-champ-5 mb-[36px]">
               ការបរិច្ចាគរបស់អ្នកគឺមិនមែនគ្រាន់តែជាការផ្តល់អាហារ
               ឬសម្ភារៈសិក្សាប៉ុណ្ណោះទេ។ វាជាការផ្តល់ឱកាសក្នុងការរីកចម្រើន
               បង្កើតជីវិតថ្មី និងជួយកុមារជាច្រើនឆ្ពោះទៅរកភាពជោគជ័យ។
@@ -100,10 +94,7 @@ export default function CategoryDetailComponent() {
           {/*QA*/}
           <section>
             <div className="mb-[36px]">
-              <h1
-                
-                className="text-iDonate-navy-primary max-w-2xl text-heading-two-khmer  tracking-tight leading-none md:text-[36px] xl:text-[36px] dark:text-white"
-              >
+              <h1 className="text-iDonate-navy-primary max-w-2xl text-heading-two-khmer  tracking-tight leading-none md:text-[36px] xl:text-[36px] dark:text-white">
                 អត្ថប្រយោជន៍
               </h1>
             </div>
