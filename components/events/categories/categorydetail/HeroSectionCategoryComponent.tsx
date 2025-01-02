@@ -2,11 +2,10 @@
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { ArrowRight} from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 export default function HeroSectionCategoryComponent() {
-
   const router = useRouter();
 
   const containerVariants = {
@@ -32,13 +31,13 @@ export default function HeroSectionCategoryComponent() {
   return (
     <section className="w-full bg-gradient-to-br from-slate-100 to-slate-200">
       <motion.div
-         className="container mx-auto px-4 sm:px-6 md:px-12 lg:px-20 xl:px-28 flex flex-wrap md:flex-nowrap items-start justify-between gap-8 sm:gap-10 py-9"
-         variants={containerVariants}
-         initial="hidden"
-         animate="visible"
+        className="container mx-auto px-4 sm:px-6 md:px-12 lg:px-20 xl:px-28 flex flex-wrap md:flex-nowrap items-start justify-between gap-8 sm:gap-10 py-9"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
       >
         {/* Left Content */}
-        <motion.div 
+        <motion.div
           className="w-full space-y-4 sm:space-y-6 xl:space-y-8"
           variants={itemVariants}
         >
@@ -64,9 +63,7 @@ export default function HeroSectionCategoryComponent() {
           </motion.p>
 
           {/* Buttons */}
-          <motion.div 
-            className="flex gap-4" variants={itemVariants}
-          >
+          <motion.div className="flex gap-4" variants={itemVariants}>
             <Button
               lang="km"
               className="bg-green-500 px-4 py-2 sm:px-6 sm:py-3 lg:px-8 lg:py-4 text-white text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl hover:bg-green-600 transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg group"
@@ -86,11 +83,11 @@ export default function HeroSectionCategoryComponent() {
         </motion.div>
 
         {/* Right Content */}
-        <motion.div 
-         className="w-full h-[250px] sm:h-[250px] md:h-[300px] xl:h-[400px]  flex flex-col sm:flex-row gap-4 items-center justify-center "
-         variants={itemVariants}
+        <motion.div
+          className="w-full h-[250px] sm:h-[250px] md:h-[300px] xl:h-[400px]  flex flex-col sm:flex-row gap-4 items-center justify-center "
+          variants={itemVariants}
         >
-          <motion.div 
+          <motion.div
             className="relative flex items-center flex-1 w-full h-full  rounded-lg  overflow-hidden shadow-lg"
             whileHover={{ scale: 1.02 }}
             transition={{ duration: 0.3 }}
