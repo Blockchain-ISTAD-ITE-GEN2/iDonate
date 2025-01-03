@@ -7,6 +7,8 @@ import { useRouter } from "next/navigation";
 import { OrganizationParam } from "@/difinitions/types/media/organization";
 import { Button } from "@/components/ui/button";
 import OrganizationDetailHeroSection from "@/components/herosection/OrganizationDetailHeroSection";
+import { useEffect, useState } from "react";
+import { Toolbar } from "@/components/filter/toolbar";
 
 // const OrganizationCarouseHerosection = dynamic(() => import("@/components/herosection/OrganizationCarouseHerosection"), { ssr: false });
 
@@ -79,62 +81,63 @@ const organizationData = [
 ];
 
 export default function OrganizationOnPageComponent() {
-  // router to the detail
-  const router = useRouter();
+  const [filteredOrganizations, setFilteredOrganizations] =
+    useState(organizationData);
 
-  // handle card click
-  const handleCardClick = (id: number) => {
-    // router.push(`/organizations/${id}`);
-    router.push(`/organizations/${id}`);
-    console.log(id);
-  };
+  const filtersFace = [
+    {
+      key: "title",
+      title: "Organizations",
+      options: Array.from(
+        new Set(organizationData.map((organization) => organization.title)),
+      ).map((organization) => ({
+        label: organization,
+        value: organization,
+      })),
+    },
+  ];
+
+  useEffect(() => {
+    setFilteredOrganizations(organizationData); // Reset filtered events whenever `events` prop changes
+  }, [organizationData]);
+
   return (
-    <>
-      {/* Start Hero  Section */}
-      <section>
-        <div className="flex justify-center gap-4 mb-[24px]">
-          <OrganizationDetailHeroSection />
-          {/* <OrganizationCarouseHerosection /> */}
-          {/*<OrganizationHeroSection/>*/}
-        </div>
-      </section>
-      {/*End Hero Section */}
+    <section className="flex flex-col py-9 gap-9 items-center">
+      {/* Hero */}
+      <OrganizationDetailHeroSection />
 
-      {/*Start List Organization Section */}
-      {/*static data */}
-      <section>
-        <div className="flex justify-center gap-4 mb-[24px] ">
-          <h2 className="text-2xl font-semibold text-iDonate-navy-primary">
-            អង្កការភាពដែលបាន ចូលរួមជាមួយពួកយើង
-          </h2>
-        </div>
+      <div className="container mx-auto px-6 md:px-6 lg:px-8 xl:px-10 flex flex-col gap-6">
+        <h2 className="text-2xl font-semibold text-center text-iDonate-navy-primary">
+          អង្កការភាពដែលបាន ចូលរួមជាមួយពួកយើង
+        </h2>
 
-        <div className="mb-[24px] flex">
-          <SearchInput />
-          <DropDownButtonComponent />
-        </div>
-        <div></div>
+        <Toolbar
+          events={organizationData}
+          filtersFace={filtersFace}
+          searchKey={"title"}
+          onFilterChange={setFilteredOrganizations}
+        />
 
-        <div className="flex flex-wrap justify-center gap-4 mb-[24px]">
-          {organizationData.map((org: OrganizationParam, index: number) => (
-            <div key={index} onClick={() => handleCardClick(index)}>
+        <div className="grid gap-6 grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
+          {filteredOrganizations.map(
+            (org: OrganizationParam, index: number) => (
               <OrganizationCardComponent
+                key={index}
                 image={org.image}
                 title={org.title}
                 description={org.description}
                 location={org.location}
               />
-            </div>
-          ))}
+            ),
+          )}
         </div>
 
-        <div className="flex flex-wrap justify-end my-[24px] mr-[106px]">
-          <Button className="w-[305px] h-[50px] rounded-[15px] text-medium-eng text-idonate-navy-primary bg-iDonate-white-space border-2 border-iDonate-navy-primary hover:text-iDonate-green-secondary hover:bg-iDonate-navy-primary">
-            Show More Organization
+        <div className="flex justify-end">
+          <Button className="text-medium-eng text-iDonate-navy-primary bg-iDonate-white-space border-2 border-iDonate-navy-accent hover:bg-iDonate-navy-accent">
+            Show more
           </Button>
         </div>
-      </section>
-      {/*End List Organization  Section */}
-    </>
+      </div>
+    </section>
   );
 }
