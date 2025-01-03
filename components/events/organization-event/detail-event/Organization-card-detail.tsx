@@ -4,9 +4,10 @@ import { Toolbar } from "@/components/filter/toolbar";
 import { EventType } from "@/difinitions/dto/EventType";
 import { CommonEventCard } from "@/components/events/organization-event/CommonEventCard";
 import events from "@/data/events-data.json";
+import { Button } from "@/components/ui/button";
 
-export function SearchPage() {
-  const typedEvents: EventType[] = events;
+export function OrganizationDetail() {
+  const typedEvents: EventType[] = events.slice(0,8);
 
   const [filteredEvents, setFilteredEvents] =
     useState<EventType[]>(typedEvents);
@@ -58,13 +59,22 @@ export function SearchPage() {
           onFilterChange={setFilteredEvents}
         />
       </div>
-      <div className="container mx-auto px-4 md:px-6 lg:px-8 xl:px-10">
+
+      <div className="flex flex-col gap-6 container mx-auto px-4 md:px-6 lg:px-8 xl:px-10">
         <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {filteredEvents.map((event, index) => (
             <CommonEventCard key={index} event={event} />
           ))}
         </div>
+
+        <div className="flex justify-end">
+          <Button className="text-medium-eng text-iDonate-navy-primary bg-iDonate-white-space border-2 border-iDonate-navy-accent hover:bg-iDonate-navy-accent">
+            Show more
+          </Button>
+        </div>
       </div>
+
+     
     </section>
   );
 }
