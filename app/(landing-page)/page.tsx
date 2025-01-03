@@ -15,20 +15,19 @@ export default function Homepage() {
     <section className="flex flex-col items-center gap-9">
       {/* Here section */}
       <HeroSectionComponent />
-
       {/* category */}
       <section className="w-full px-6 md:px-12 lg:px-24 space-y-6 text-center">
         {/* Section Header */}
         <div className="space-y-2">
           <h2
             lang="km"
-            className="text-xl font-medium text-iDonate-green-primary"
+            className="text-xl font-medium text-iDonate-green-primary dark:text-iDonate-green-secondary "
           >
             តើអ្វីខ្លះដែលយើងត្រូវធ្វើ?
           </h2>
           <h3
             lang="km"
-            className="text-2xl font-medium text-iDonate-navy-primary"
+            className="text-2xl font-medium text-iDonate-navy-primary dark:text-iDonate-navy-accent"
           >
             ការបរិច្ចាគរបស់អ្នក ជាសេចក្តីអំណរបស់អ្នកដទៃ !
           </h3>
@@ -54,7 +53,7 @@ export default function Homepage() {
           {/*Test Github actions 3 */}
           <h3
             lang="km"
-            className="text-2xl text-iDonate-navy-primary text-center"
+            className="text-2xl text-iDonate-navy-primary text-center dark:text-iDonate-navy-accent"
           >
             កម្មវិធីបរិច្ចាគចុងក្រោយបំផុត
           </h3>
@@ -74,12 +73,12 @@ export default function Homepage() {
 
       {/* upcoming events */}
       <section className="w-full flex flex-col items-center">
-        <h2 lang="km" className="text-medium-khmer text-iDonate-green-primary">
+        <h2 lang="km" className="text-medium-khmer text-iDonate-green-primary dark:text-iDonate-green-secondary">
           តោះ ចាប់ផ្ដើមជួយពួកគាត់ទាំងអស់គ្នា!
         </h2>
         <h3
           lang="km"
-          className="text-heading-two-khmer text-iDonate-navy-primary"
+          className="text-heading-two-khmer text-iDonate-navy-primary dark:text-[#DCE3F0]"
         >
           កម្មវិធីបរិច្ចាគ ដែលនិងកើតឡើងឆាប់នេះ!
         </h3>

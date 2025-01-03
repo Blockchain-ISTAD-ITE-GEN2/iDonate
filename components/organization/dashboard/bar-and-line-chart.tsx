@@ -30,14 +30,12 @@ export function BarAndLineChart() {
       <div className="flex flex-col gap-4">
         {/* Cards for metrics */}
         <CardsMetric data={averageDate} />
-
-        <Card className="w-full bg-iDonate-light-gray rounded-lg border border-iDonate-navy-accent">
+        <Card className="w-full bg-iDonate-light-gray rounded-lg border border-iDonate-navy-accent dark:bg-iDonate-dark-mode dark:text-iDonate-navy-accent">
           <CardHeader>
-            <CardTitle className="text-medium-eng font-normal text-iDonate-navy-secondary">
+            <CardTitle className="text-medium-eng font-normal text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
               Comparison this week
             </CardTitle>
           </CardHeader>
-
           <CardContent className="pl-2">
             <Overview data={barchartdata} />
           </CardContent>
@@ -45,13 +43,13 @@ export function BarAndLineChart() {
       </div>
 
       {/* Recent Transactions Card */}
-      <Card className="md:w-full lg:w-[480px] bg-iDonate-light-gray rounded-lg border border-iDonate-navy-accent">
+      <Card className="md:w-full lg:w-[480px] bg-iDonate-light-gray rounded-lg border border-iDonate-navy-accent dark:bg-iDonate-dark-mode">
         <CardHeader>
-          <CardTitle className="text-medium-eng font-normal text-iDonate-navy-secondary">
+          <CardTitle className="text-medium-eng font-normal text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
             Recent Transactions
           </CardTitle>
 
-          <CardDescription className="text-sub-description-eng text-iDonate-navy-secondary">
+          <CardDescription className="text-sub-description-eng text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
             You received 10 donations this week..
           </CardDescription>
         </CardHeader>

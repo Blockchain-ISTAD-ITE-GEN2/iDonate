@@ -6,7 +6,7 @@ import AboutUsHeroSection from "@/public/about-us/AboutUsHeroSection.webp.webp";
 import { motion } from "framer-motion";
 import TrustContent from "@/public/images/trust-content.png";
 import GiveAndRecieve from "@/public/images/give-and-recieve.png";
-import BlockchainTech from "@/public/images/blockchain.png";
+import BlockchainTech from '@/public/images/blockchain.png';
 import TeamSection from "@/components/about-us/TeamSection";
 
 export default function AboutUsComponent() {

@@ -198,7 +198,7 @@ export default function NavbarComponent() {
       <div className="p-4 flex justify-between items-center border-b bg-white ">
         <button
           onClick={() => setActiveSubmenu(null)}
-          className="flex items-center space-x-2 text-iDonate-navy-primary"
+          className="flex items-center space-x-2 text-iDonate-navy-primary "
         >
           <ChevronLeft className="w-5 h-5" />
           <span>Back to Menu</span>
@@ -210,7 +210,7 @@ export default function NavbarComponent() {
           }}
           className="p-2 rounded-lg"
         >
-          <X className="w-6 h-6 text-iDonate-navy-primary" />
+          <X className="w-6 h-6 text-iDonate-navy-primary " />
         </button>
       </div>
       <div className="p-4 bg-white">
@@ -371,7 +371,7 @@ export default function NavbarComponent() {
   );
 
   return (
-    <nav className="w-full h-[72px] flex items-center justify-between shadow-sm z-10 top-0 px-4 md:px-8 lg:px-[100px] border border-none">
+    <nav className="w-full h-[72px] flex items-center justify-between shadow-sm z-10 top-0 px-4 md:px-8 lg:px-[100px] border border-none ">
       {/* Rest of the navbar code remains the same */}
       {/* Logo and Name */}
       <section
@@ -453,7 +453,7 @@ export default function NavbarComponent() {
         </DropdownMenu>
 
         {status === "authenticated" ? (
-          <div className="flex items-center space-x-4 text-iDonate-navy-secondary">
+          <div className="flex items-center space-x-4 text-iDonate-navy-secondary ">
             {session?.user?.image && (
               <DropdownMenu>
                 <DropdownMenuTrigger>
@@ -478,7 +478,7 @@ export default function NavbarComponent() {
         ) : (
           <div className="flex items-center space-x-4">
             <span
-              className="text-description-eng font-normal text-iDonate-navy-primary cursor-pointer"
+              className="text-description-eng font-normal text-iDonate-navy-primary cursor-pointer dark:text-iDonate-navy-accent"
               onClick={() => router.push("/auth/login")}
             >
               Sign In

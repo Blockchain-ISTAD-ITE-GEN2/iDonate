@@ -23,7 +23,7 @@ export default function CategoryCardComponent({
           lang="km"
           key={index}
           // className="lg:w-[300px] md:w-full h-[370px] flex flex-col items-center gap-6 px-10 py-12 rounded-[15px] shadow-light"
-          className="w-full bg-iDonate-light-gray flex flex-col items-center  p-10 rounded-[15px] shadow-light border-0 cursor-pointer gap-1"
+          className="w-full bg-iDonate-light-gray flex flex-col items-center  p-10 rounded-[15px] shadow-light border-0 cursor-pointer gap-1 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
           initial={{ opacity: 0, y: 50 }} // Start off with 0 opacity and slightly below
           animate={{ opacity: 1, y: 0 }} // Animate to full opacity and original position
           transition={{ duration: 0.2 }} // Delay each card's animation slightly
@@ -41,12 +41,12 @@ export default function CategoryCardComponent({
           </div>
 
           {item.title && (
-            <h3 className="text-title-khmer font-medium text-iDonate-navy-primary">
+            <h3 className="text-title-khmer font-medium text-iDonate-navy-primary dark:text-iDonate-navy-accent">
               {item.title}
             </h3>
           )}
           {item.description && (
-            <p className="text-description-khmer text-center text-iDonate-navy-secondary">
+            <p className="text-description-khmer text-center text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
               {item.description}
             </p>
           )}

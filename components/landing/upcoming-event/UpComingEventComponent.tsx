@@ -89,21 +89,21 @@ export default function UpcomingEvents() {
           </div>
 
           <CardContent lang="km" className="flex-grow p-6 space-y-4">
-            <CardTitle className="text-title-khmer font-semibold text-iDonate-navy-primary">
+            <CardTitle className="text-title-khmer font-semibold text-iDonate-navy-primary dark:text-iDonate-navy-accent">
               {events[0].title}
             </CardTitle>
 
-            <p className="line-clamp-2 sm:line-clamp-none text-description-khmer text-iDonate-navy-secondary">
+            <p className="line-clamp-2 sm:line-clamp-none text-description-khmer text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
               {events[0].description}
             </p>
 
             <div className="flex flex-wrap justify-between gap-4">
-              <div className="flex items-center justify-center gap-2 text-iDonate-navy-secondary">
+              <div className="flex items-center justify-center gap-2 text-iDonate-navy-secondary dark:text-iDonate-green-secondary">
                 <CalendarDays className="h-4 w-4 flex-shrink-0" />
                 <span>{events[0].date}</span>
               </div>
 
-              <div className="flex items-center justify-center  gap-2 text-iDonate-navy-primary">
+              <div className="flex items-center justify-center  gap-2 text-iDonate-navy-primary dark:text-iDonate-green-secondary">
                 <School className="h-4 w-4 flex-shrink-0" />
                 <span>{events[0].category}</span>
               </div>
@@ -129,21 +129,21 @@ export default function UpcomingEvents() {
               </div>
 
               <CardContent className="flex-grow p-4 space-y-2">
-                <CardTitle className="text-title-khmer font-semibold text-iDonate-navy-secondary">
+                <CardTitle className="text-title-khmer font-semibold text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
                   {event.title}
                 </CardTitle>
 
-                <p className="flex-1 text-description-khmer text-iDonate-navy-secondary line-clamp-2">
+                <p className="flex-1 text-description-khmer text-iDonate-navy-secondary line-clamp-2 dark:text-iDonate-navy-accent">
                   {event?.description}
                 </p>
 
                 <div className="flex flex-wrap justify-between gap-4">
-                  <div className="flex items-center gap-2 text-iDonate-navy-secondary">
+                  <div className="flex items-center gap-2 text-iDonate-navy-secondary dark:text-iDonate-green-secondary">
                     <CalendarDays className="h-3 w-3 flex-shrink-0" />
                     <span>{event.date}</span>
                   </div>
 
-                  <div className="flex items-center gap-2 text-iDonate-navy-secondary">
+                  <div className="flex items-center gap-2 text-iDonate-navy-secondary dark:text-iDonate-green-secondary">
                     <School className="h-3 w-3 flex-shrink-0" />
                     <span>{event.category}</span>
                   </div>

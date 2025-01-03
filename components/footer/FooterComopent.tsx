@@ -24,9 +24,9 @@ export default function FooterComponent() {
   }
 
   return (
-    <footer className="bg-iDonate-navy-secondary text-white">
+    <footer className="bg-iDonate-navy-secondary text-white dark:bg-[#18181B]">
       {/* Social Media Section */}
-      <div className="bg-[#1B2A4E] text-white py-6">
+      <div className="bg-[#1B2A4E] text-white py-6 dark:bg-[#18181B]">
         <div className="container mx-auto px-4 md:px-6 lg:px-[100px]">
           <div className="flex flex-col md:flex-row justify-between items-center gap-6">
             {/* Social Media Section */}
@@ -80,7 +80,7 @@ export default function FooterComponent() {
       </div>
 
       {/* Main Footer Content */}
-      <div className="container mx-auto px-4 md:px-6 lg:px-[100px] py-8 bg-white">
+      <div className="container mx-auto px-4 md:px-6 lg:px-[100px] py-8 bg-white dark:bg-iDonate-dark-mode">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Logo and Description */}
           <div className="space-y-4">
@@ -95,15 +95,15 @@ export default function FooterComponent() {
                 height={200}
                 className="w-20 md:w-24 h-20 md:h-24 mt-[-17px] ml-[-17px]"
               />
-              <span className="text-xl md:text-2xl font-bold text-iDonate-navy-primary">
+              <span className="text-xl md:text-2xl font-bold text-iDonate-navy-primary dark:text-iDonate-navy-accent">
                 iDONATE
               </span>
             </Link>
-            <p className="text-iDonate-navy-primary text-center md:text-left">
+            <p className="text-iDonate-navy-primary text-center md:text-left dark:text-iDonate-navy-accent">
               ការបរិច្ចាគគឺជាសកម្មភាពនៃការផ្តល់ធនធាន ដូចជាប្រាក់ ទំនិញ ឬពេលវេលា
               ដើម្បីជួយអ្នកដ៏ទៃ ឬជួយដល់បុព្វហេតុមួយ ដោយមិនរំពឹងអ្វីមកវិញឡើយ
             </p>
-            <div className="space-y-2 text-iDonate-navy-primary">
+            <div className="space-y-2 text-iDonate-navy-primary dark:text-iDonate-navy-accent">
               <h3 className="font-semibold text-lg text-center md:text-left">
                 Contact Information
               </h3>
@@ -126,7 +126,7 @@ export default function FooterComponent() {
 
           {/* Quick Links */}
           <div className="ml-0 md:ml-[72px] text-center md:text-left">
-            <h3 className="text-xl text-iDonate-navy-primary font-semibold mb-4">
+            <h3 className="text-xl text-iDonate-navy-primary font-semibold mb-4 dark:text-iDonate-navy-accent">
               Quick Link
             </h3>
             <ul className="space-y-2">
@@ -134,7 +134,7 @@ export default function FooterComponent() {
                 <li key={item}>
                   <Link
                     href="#"
-                    className="text-iDonate-navy-primary hover:text-iDonate-green-primary transition-colors"
+                    className="text-iDonate-navy-primary hover:text-iDonate-green-primary transition-colors dark:text-iDonate-navy-accent"
                   >
                     {item}
                   </Link>
@@ -145,7 +145,7 @@ export default function FooterComponent() {
 
           {/* Support */}
           <div className="text-center md:text-left">
-            <h3 className="text-xl text-iDonate-navy-primary font-semibold mb-4">
+            <h3 className="text-xl text-iDonate-navy-primary font-semibold mb-4 dark:text-iDonate-navy-accent">
               Support
             </h3>
             <ul className="space-y-2">
@@ -159,7 +159,7 @@ export default function FooterComponent() {
                 <li key={item}>
                   <Link
                     href="#"
-                    className="text-iDonate-navy-primary hover:text-iDonate-green-primary transition-colors"
+                    className="text-iDonate-navy-primary hover:text-iDonate-green-primary transition-colors dark:text-iDonate-navy-accent"
                   >
                     {item}
                   </Link>
@@ -171,7 +171,7 @@ export default function FooterComponent() {
           {/* Stay up to date */}
           <div className="space-y-6">
             <div>
-              <h3 className="text-xl font-semibold mb-4 text-iDonate-navy-primary text-center md:text-left">
+              <h3 className="text-xl font-semibold mb-4 text-iDonate-navy-primary text-center md:text-left dark:text-iDonate-navy-accent">
                 Stay Up To Date
               </h3>
               <div className="flex gap-2 max-w-sm mx-auto md:mx-0">
@@ -190,7 +190,7 @@ export default function FooterComponent() {
             </div>
 
             <div>
-              <h3 className="text-xl font-semibold mb-4 text-iDonate-navy-primary text-center md:text-left">
+              <h3 className="text-xl font-semibold mb-4 text-iDonate-navy-primary text-center md:text-left dark:text-iDonate-navy-accent">
                 Our Sponsor
               </h3>
               <div className="grid grid-cols-2 gap-4 max-w-sm mx-auto md:mx-0">
@@ -227,7 +227,7 @@ export default function FooterComponent() {
       {/* Copyright */}
       <div className="border-t border-gray-700">
         <div className="container mx-auto px-4 py-4">
-          <p className="text-center text-xs md:text-sm text-gray-400">
+          <p className="text-center text-xs md:text-sm text-gray-400 dark:text-iDonate-navy-accent">
             © 2024 Institute of Science and Technology Advanced Development |
             All Rights Reserved
           </p>

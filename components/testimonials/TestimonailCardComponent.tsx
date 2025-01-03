@@ -111,7 +111,7 @@ export default function TestimonialCarousel() {
   return (
     <div className="w-full container mx-auto px-4 ">
       <section className="w-full text-center">
-        <h2 className="text-2xl md:text-3xl font-semibold text-iDonate-navy-primary">
+        <h2 className="text-2xl md:text-3xl font-semibold text-iDonate-navy-primary dark:text-iDonate-navy-accent">
           មតិអ្នកបរិច្ចាគរបស់យើង
         </h2>
       </section>
@@ -161,13 +161,13 @@ export default function TestimonialCarousel() {
                                     {testimonial.name.charAt(0)}
                                   </AvatarFallback>
                                 </Avatar>
-                                <h3 className="text-lg md:text-xl font-semibold text-iDonate-navy-primary">
+                                <h3 className="text-lg md:text-xl font-semibold text-iDonate-navy-primary dark:text-iDonate-navy-accent">
                                   {testimonial.name}
                                 </h3>
-                                <p className="text-sm md:text-base text-muted-foreground mb-4 text-iDonate-navy-primary">
+                                <p className="text-sm md:text-base text-muted-foreground mb-4 text-iDonate-navy-primary dark:text-iDonate-green-secondary">
                                   {testimonial.role}
                                 </p>
-                                <p className="khmer-font text-sm md:text-base leading-relaxed text-iDonate-navy-primary">
+                                <p className="khmer-font text-sm md:text-base leading-relaxed text-iDonate-navy-primary dark:text-iDonate-navy-accent">
                                   {testimonial.testimonial}
                                 </p>
                               </div>
