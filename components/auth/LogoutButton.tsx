@@ -17,7 +17,7 @@ export function LogoutButton() {
     setIsLoading(true);
     try {
       await dispatch(logoutUser()).unwrap();
-      router.push("/auth/sign-in"); // Redirect to login page after logout
+      router.push("/auth/sign-in"); 
     } catch (error) {
       console.error("Logout failed:", error);
     } finally {

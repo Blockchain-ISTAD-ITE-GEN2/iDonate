@@ -1,16 +1,16 @@
-import { configureStore } from "@reduxjs/toolkit";
-import authReducer from "./slices/authSlice";
-import registerSlice from "@/redux/features/auth/registerSlice";
+import { configureStore } from '@reduxjs/toolkit'
+import { authApi } from './api/authApi'
+import signUpReducer from './slices/registerSlice'
 
-const makeStore = configureStore({
+export const store = configureStore({
   reducer: {
-    auth: authReducer,
-    register: registerSlice,
+    signUp: signUpReducer,
+    [authApi.reducerPath]: authApi.reducer,
   },
-});
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(authApi.middleware),
+})
 
-// Infer the type of RootState and AppDispatch
-export type RootState = ReturnType<typeof makeStore.getState>;
-export type AppDispatch = typeof makeStore.dispatch;
+export type RootState = ReturnType<typeof store.getState>
+export type AppDispatch = typeof store.dispatch
 
-export default makeStore;

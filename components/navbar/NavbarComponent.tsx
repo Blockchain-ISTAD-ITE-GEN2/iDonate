@@ -188,7 +188,9 @@ export default function NavbarComponent() {
   if (
     pathname === "/auth/login" ||
     pathname === "/auth/sign-up" ||
-    pathname === "/auth/verification"
+    pathname === "/auth/verification" ||
+    pathname === "/auth/forgot-password" ||
+    pathname === "/auth/reset-password"
   ) {
     return null;
   }
