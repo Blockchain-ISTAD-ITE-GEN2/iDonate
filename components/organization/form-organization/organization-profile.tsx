@@ -7,8 +7,8 @@ import { OrganizationPaymentForm } from "@/components/organization/form-organiza
 
 export function OrganizationProfileComponent() {
   return (
-    <section className="w-full flex flex-col gap-6 rounded-lg border-2 border-iDonate-navy-accent shadow-light">
-      <div className="w-full flex flex-col gap-6  border-b-2 border-iDonate-navy-accent">
+    <section className="w-full flex flex-col gap-6 rounded-lg border-2 border-iDonate-navy-accent shadow-light ">
+      <div className="w-full flex flex-col gap-6  border-b-2 border-iDonate-navy-accent ">
         <OrganizationMediaForm />
       </div>
 

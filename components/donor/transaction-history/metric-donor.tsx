@@ -33,12 +33,12 @@ const chartConfig = {
 
 export function DonorCardsMetric({ data }: TransactionProps) {
   return (
-    <Card className="w-full bg-iDonate-light-gray rounded-lg border border-iDonate-navy-accent">
+    <Card className="w-full bg-iDonate-light-gray rounded-lg border border-iDonate-navy-accent dark:bg-iDonate-dark-mode">
       <CardHeader>
-        <CardTitle className="text-medium-eng font-normal text-iDonate-navy-secondary">
+        <CardTitle className="text-medium-eng font-normal text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
           Overall Transaction
         </CardTitle>
-        <CardDescription className="text-sub-description-eng text-iDonate-navy-secondary">
+        <CardDescription className="text-sub-description-eng text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
           All transactions made by you.
         </CardDescription>
       </CardHeader>

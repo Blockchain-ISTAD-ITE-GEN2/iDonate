@@ -35,7 +35,7 @@ export default function CategoryOnPageComponent() {
           <section className="container mx-auto px-4 md:px-6 lg:px-8 xl:px-10 flex flex-col gap-6">
             <h2
               lang="km"
-              className="text-title-khmer text-iDonate-navy-primary md:flex md:items-center md:justify-center lg:flex lg:items-center lg:justify-start"
+              className="text-title-khmer text-iDonate-navy-primary md:flex md:items-center md:justify-center lg:flex lg:items-center lg:justify-start dark:text-iDonate-navy-accent"
             >
               {category.title}
             </h2>

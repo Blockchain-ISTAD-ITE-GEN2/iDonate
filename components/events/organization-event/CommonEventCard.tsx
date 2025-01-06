@@ -11,7 +11,7 @@ export function CommonEventCard({ event }: { event: EventType }) {
   return (
     <Card
       onClick={() => router.push(`/event-detail`)}
-      className="w-full rounded-[10px] bg-iDonate-light-gray border-0 cursor-pointer shadow-md transition-transform hover:scale-[1.02]"
+      className="w-full rounded-[10px] bg-iDonate-light-gray border-0 cursor-pointer shadow-md transition-transform hover:scale-[1.02] dark:bg-iDonate-dark-mode"
     >
       {/* Header with Image */}
       <CardHeader className="w-full h-[180px] p-0 rounded-t-[10px] overflow-hidden">
@@ -38,14 +38,14 @@ export function CommonEventCard({ event }: { event: EventType }) {
         {/* Dates */}
         <div className="flex justify-between text-sm">
           <div className="flex flex-col">
-            <p className="text-iDonate-gray">Order date</p>
-            <p className="text-iDonate-navy-secondary">
+            <p className="text-iDonate-gray dark:text-iDonate-navy-accent">Order date</p>
+            <p className="text-iDonate-navy-secondary dark:text-iDonate-green-secondary">
               {event?.date || "12 Dec 2024"}
             </p>
           </div>
           <div className="flex flex-col">
-            <p className="text-iDonate-gray">End date</p>
-            <p className="text-iDonate-navy-secondary">
+            <p className="text-iDonate-gray dark:text-iDonate-navy-accent">End date</p>
+            <p className="text-iDonate-navy-secondary dark:text-iDonate-green-secondary">
               {event?.date || "12 Dec 2025"}
             </p>
           </div>
@@ -55,13 +55,13 @@ export function CommonEventCard({ event }: { event: EventType }) {
         <div className="flex flex-col flex-1">
           <h3
             lang="km"
-            className="font-bold text-medium-khmer text-iDonate-navy-primary line-clamp-1"
+            className="font-bold text-medium-khmer text-iDonate-navy-primary line-clamp-1 dark:text-iDonate-navy-accent"
           >
             {event?.title || "Untitled Event"}
           </h3>
           <p
             lang="km"
-            className="font-light text-iDonate-navy-secondary line-clamp-2"
+            className="font-light text-iDonate-navy-secondary line-clamp-2 dark:text-iDonate-navy-accent"
           >
             {event?.description || "No description available"}
           </p>
@@ -70,8 +70,8 @@ export function CommonEventCard({ event }: { event: EventType }) {
         {/* Donor and Amount Information */}
         <div className="flex flex-col gap-2">
           <div className="flex items-center gap-2">
-            <Users className="h-5 w-5 text-iDonate-navy-primary" />
-            <h3 className="text-description-khmer text-iDonate-navy-primary line-clamp-1">
+            <Users className="h-5 w-5 text-iDonate-navy-primary dark:text-iDonate-navy-accent" />
+            <h3 className="text-description-khmer text-iDonate-navy-primary line-clamp-1 dark:text-iDonate-navy-accent">
               {event?.total_donor
                 ? `${event?.total_donor} នាក់បរិច្ចាគ`
                 : "No donors yet"}
@@ -79,8 +79,8 @@ export function CommonEventCard({ event }: { event: EventType }) {
           </div>
 
           <div className="flex items-center gap-2">
-            <CircleDollarSign className="h-5 w-5 text-iDonate-navy-primary" />
-            <p className="text-medium-khmer text-iDonate-navy-primary line-clamp-1">
+            <CircleDollarSign className="h-5 w-5 text-iDonate-navy-primary dark:text-iDonate-green-secondary" />
+            <p className="text-medium-khmer text-iDonate-navy-primary line-clamp-1 dark:text-iDonate-green-secondary">
               {event?.total_amount
                 ? `$ ${event?.total_amount}`
                 : "No amount collected"}

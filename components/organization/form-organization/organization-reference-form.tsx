@@ -106,12 +106,12 @@ export function OrganizationReferenceForm() {
           {!isEditing && (
             <Card className="flex flex-col gap-6 p-9 border-2 rounded-lg border-iDonate-navy-accent">
               <CardHeader className="flex flex-row justify-between p-0">
-                <CardTitle className="text-2xl font-medium text-iDonate-navy-secondary">
+                <CardTitle className="text-2xl font-medium text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
                   Reference Information
                 </CardTitle>
                 <Button
                   onClick={() => setIsEditing(true)}
-                  className="bg-iDonate-white-space border-2 text-iDonate-navy-primary hover:bg-iDonate-light-gray border-iDonate-navy-accent"
+                  className="bg-iDonate-white-space border-2 text-iDonate-navy-primary hover:bg-iDonate-light-gray border-iDonate-navy-accent dark:text-iDonate-navy-accent dark:bg-iDonate-dark-mode dark:hover:bg-black"
                 >
                   <SquarePen className="mr-2" />
                   Edit
@@ -126,9 +126,9 @@ export function OrganizationReferenceForm() {
 
           {/* Edit Mode */}
           {isEditing && (
-            <Card className="flex flex-col gap-6 p-9 bg-iDonate-light-gray rounded-lg border-2 border-iDonate-navy-accent">
+            <Card className="flex flex-col gap-6 p-9 bg-iDonate-light-gray rounded-lg border-2 border-iDonate-navy-accent dark:bg-iDonate-dark-mode">
               <CardHeader className="flex flex-row justify-between p-0">
-                <CardTitle className="text-2xl font-medium text-iDonate-navy-secondary">
+                <CardTitle className="text-2xl font-medium text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
                   Reference Information
                 </CardTitle>
 
@@ -139,7 +139,7 @@ export function OrganizationReferenceForm() {
                       trigger={
                         <Button
                           type="button"
-                          className="bg-iDonate-white-space border-2 hover:bg-red-50 border-iDonate-error text-iDonate-error"
+                          className="bg-iDonate-white-space border-2 hover:bg-red-50 border-iDonate-error text-iDonate-error  "
                         >
                           Cancel
                         </Button>
@@ -154,7 +154,7 @@ export function OrganizationReferenceForm() {
                     <Button
                       type="button"
                       onClick={handleCancel}
-                      className="bg-iDonate-white-space border-2 hover:bg-red-50 border-iDonate-error text-iDonate-error"
+                      className="bg-iDonate-white-space border-2 hover:bg-red-50 border-iDonate-error text-iDonate-error dark:bg-iDonate-dark-mode dark:hover:bg-black"
                     >
                       Cancel
                     </Button>
@@ -163,7 +163,7 @@ export function OrganizationReferenceForm() {
                   {/* Submit Button */}
                   <Button
                     type="submit"
-                    className="bg-iDonate-white-space border-2 hover:bg-iDonate-light-gray border-iDonate-navy-accent text-iDonate-navy-primary"
+                    className="bg-iDonate-white-space border-2 hover:bg-iDonate-light-gray border-iDonate-navy-accent text-iDonate-navy-primary dark:text-iDonate-navy-accent dark:bg-iDonate-dark-mode dark:hover:bg-black"
                   >
                     Submit
                   </Button>

@@ -75,7 +75,7 @@ const events: Event[] = [
 export default function UpcomingEvents() {
   return (
     <section className="w-full lg:w-full mx-auto md:px-4 px-4 lg:px-[100px] pb-9">
-      <div className="grid lg:grid-cols-2 gap-6">
+      <div className="grid lg:grid-cols-2 gap-6 bg-iDonate-dark-mode">
         {/* Featured Event */}
         <Card className="overflow-hidden transition-transform hover:scale-[1.02] cursor-pointer">
           <div className="flex-1 aspect-video relative">
@@ -116,7 +116,7 @@ export default function UpcomingEvents() {
           {events.slice(1).map((event) => (
             <Card
               key={event.id}
-              className="overflow-hidden transition-transform hover:scale-[1.02] cursor-pointer"
+              className="overflow-hidden transition-transform hover:scale-[1.02] cursor-pointer bg-iDonate-dark-mode"
             >
               <div className="aspect-video relative">
                 <Image

@@ -11,7 +11,7 @@ export default function Contributor() {
       <div className="hidden flex-col md:flex gap-9">
         <div className="flex-1 space-y-4 p-8">
           <div className="flex items-center justify-between space-y-2">
-            <h1 className="text-medium-eng tracking-tight text-iDonate-navy-primary">
+            <h1 className="text-medium-eng tracking-tight text-iDonate-navy-primary dark:text-iDonate-navy-accent">
               Welcome back!
             </h1>
 
@@ -23,10 +23,10 @@ export default function Contributor() {
                 </Avatar>
 
                 <div className="flex flex-col flex-1 text-left text-sm leading-tight">
-                  <span className="text-iDonate-navy-primary text-lg truncate font-semibold">
+                  <span className="text-iDonate-navy-primary text-lg truncate font-semibold dark:text-iDonate-navy-accent">
                     Cambodia Kantha Bopha Foundation
                   </span>
-                  <span className="truncate text-iDonate-gray text-sm">
+                  <span className="truncate text-iDonate-gray text-sm dark:text-iDonate-green-secondary">
                     info@beat-richner.ch
                   </span>
                 </div>

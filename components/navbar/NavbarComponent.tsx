@@ -76,7 +76,7 @@ export default function NavbarComponent() {
           alt=""
           className=" xl:w-full xl:h-full"
         />
-        <span className="text-medium-eng xl:text-title-eng text-iDonate-navy-primary font-medium">
+        <span className="text-medium-eng xl:text-title-eng text-iDonate-navy-primary font-medium dark:text-iDonate-navy-accent">
           iDONATE
         </span>
       </section>
@@ -113,7 +113,7 @@ export default function NavbarComponent() {
                 onClick={() => {
                   router.push("/auth/login");
                 }}
-                className="bg-transparent text-iDonate-navy-primary hover:bg-iDonate-light-gray font-medium"
+                className="bg-transparent text-iDonate-navy-primary hover:bg-iDonate-light-gray font-medium dark:text-iDonate-navy-accent"
               >
                 Sign in
               </Button>
@@ -124,7 +124,7 @@ export default function NavbarComponent() {
         <Button className="group bg-iDonate-white-space border-2 border-iDonate-navy-primary px-2 text-iDonate-navy-primary hover:bg-iDonate-navy-primary hover:text-white hover:border-iDonate-navy-primary rounded-[12px] ">
           <Heart
             style={{ width: "25px", height: "25px" }}
-            className="bg-iDonate-navy-primary rounded-full p-1 fill-white group-hover:fill-iDonate-navy-primary group-hover:text-iDonate-navy-primary group-hover:bg-iDonate-green-secondary"
+            className="bg-iDonate-navy-primary rounded-full p-1 fill-white group-hover:fill-iDonate-navy-primary group-hover:text-iDonate-navy-primary group-hover:bg-iDonate-green-secondary "
           />
           <span className="text-sub-description-eng xl:text-description-eng">
             Donate Now

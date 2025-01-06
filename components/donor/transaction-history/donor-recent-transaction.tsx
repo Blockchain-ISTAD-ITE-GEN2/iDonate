@@ -30,9 +30,9 @@ export function DonorReacentTransacctions({
             </Avatar>
 
             <div className="ml-4 space-y-1">
-              <p className="text-description-eng font-normal text-iDonate-navy-secondary">
+              <p className="text-description-eng font-normal text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
                 Donated to{" "}
-                <span className="font-medium text-iDonate-navy-primary">
+                <span className="font-medium text-iDonate-navy-primarydark:text-iDonate-navy-accent">
                   {transaction.event}
                 </span>
               </p>
@@ -43,13 +43,13 @@ export function DonorReacentTransacctions({
             </div>
           </div>
 
-          <span className="ml-auto text-iDonate-green-primary text-medium-eng text-start">
+          <span className="ml-auto text-iDonate-green-primary text-medium-eng text-start dark:text-iDonate-green-secondary">
             ${transaction.amount}
           </span>
         </div>
       ))}
 
-      <Label className="flex items-center py-4 text-medium-eng text-iDonate-navy-secondary">
+      <Label className="flex items-center py-4 text-medium-eng text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
         View all transaction
       </Label>
     </div>

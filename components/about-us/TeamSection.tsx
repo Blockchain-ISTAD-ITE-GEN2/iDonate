@@ -19,14 +19,14 @@ type TeamSectionProps = {
 function MemberCard({ member }: { member: TeamMember }) {
   return (
     <motion.div
-      className="flex flex-col items-center mb-8 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 px-4"
+      className="flex flex-col items-center mb-8 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 px-4 "
       initial={{ opacity: 0, y: 50 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
       whileHover={{ scale: 1.05 }}
     >
       <motion.div
-        className="overflow-hidden rounded-full w-32 h-32 sm:w-40 sm:h-40 mb-4 border-4 border-iDonate-green-accent"
+        className="overflow-hidden rounded-full w-32 h-32 sm:w-40 sm:h-40 mb-4 border-4 border-iDonate-green-accent dark:border-iDonate-green-primary "
         whileHover={{ scale: 1.1 }}
         transition={{ duration: 0.3 }}
       >
@@ -38,10 +38,10 @@ function MemberCard({ member }: { member: TeamMember }) {
           className="w-full h-full object-cover"
         />
       </motion.div>
-      <h3 className="font-bold text-lg sm:text-xl text-center mb-2 text-iDonate-navy-secondary">
+      <h3 className="font-bold text-lg sm:text-xl text-center mb-2 text-iDonate-navy-secondary dark:text-iDonate-green-secondary">
         {member.name}
       </h3>
-      <p className="text-xs sm:text-sm text-iDonate-green-primary bg-green-100 px-3 py-1 sm:px-4 sm:py-2 rounded-full mb-4 font-semibold uppercase">
+      <p className="text-xs sm:text-sm text-iDonate-green-primary bg-green-100 px-3 py-1 sm:px-4 sm:py-2 rounded-full mb-4 font-semibold uppercase dark:bg-iDonate-dark-mode border dark:border-iDonate-green-secondary dark:text-iDonate-navy-accent">
         {member.role}
       </p>
       <motion.div
@@ -62,7 +62,7 @@ function MemberCard({ member }: { member: TeamMember }) {
           <motion.a
             key={index}
             href="#"
-            className="text-iDonate-navy-primary hover:text-green-600 transition-colors duration-300 border border-iDonate-green-primary rounded-full p-1 sm:p-2"
+            className="text-iDonate-navy-primary hover:text-green-600 transition-colors duration-300 border border-iDonate-green-primary rounded-full p-1 sm:p-2 dark:text-iDonate-green-secondary"
             variants={{
               hidden: { scale: 0 },
               visible: { scale: 1 },
@@ -79,10 +79,10 @@ function MemberCard({ member }: { member: TeamMember }) {
 
 export default function TeamSection({ mentors, members }: TeamSectionProps) {
   return (
-    <section className="py-12 sm:py-16 bg-white">
+    <section className="py-12 sm:py-16 bg-white dark:bg-black">
       <div className="container mx-auto px-4">
         <motion.h2
-          className="text-3xl sm:text-4xl font-bold text-center mb-8 sm:mb-12 text-gray-800"
+          className="text-3xl sm:text-4xl font-bold text-center mb-8 sm:mb-12 text-iDonate-navy-primary dark:text-iDonate-navy-accent "
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
@@ -109,7 +109,7 @@ export default function TeamSection({ mentors, members }: TeamSectionProps) {
         </motion.div>
 
         <motion.h2
-          className="text-2xl sm:text-3xl font-bold text-center mt-16 sm:mt-24 mb-8 sm:mb-16 text-gray-800"
+          className="text-2xl sm:text-3xl font-bold text-center mt-16 sm:mt-24 mb-8 sm:mb-16  text-iDonate-navy-primary dark:text-iDonate-navy-accent"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.5 }}

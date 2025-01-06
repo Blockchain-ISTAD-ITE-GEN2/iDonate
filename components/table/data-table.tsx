@@ -78,7 +78,7 @@ export function DataTable<TData, TValue>({
       />
 
       <div className="rounded-md border border-iDonate-navy-accent">
-        <Table className="bg-iDonate-light-gray rounded-md">
+        <Table className="bg-iDonate-light-gray rounded-md dark:bg-black ">
           <TableHeader className="h-16 ">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
@@ -86,7 +86,7 @@ export function DataTable<TData, TValue>({
                   return (
                     <TableHead
                       key={header.id}
-                      className="px-9 text-iDonate-navy-primary text-lg"
+                      className="px-9 text-iDonate-navy-primary text-lg dark:text-iDonate-navy-accent"
                     >
                       {header.isPlaceholder
                         ? null
@@ -104,14 +104,14 @@ export function DataTable<TData, TValue>({
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
-                  className="hover:bg-iDonate-white-space"
+                  className="hover:bg-iDonate-white-space dark:hover:bg-iDonate-dark-mode"
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell
                       key={cell.id}
-                      className="px-9 h-16 text-iDonate-navy-secondary"
+                      className="px-9 h-16 text-iDonate-navy-secondary dark:text-iDonate-navy-accent"
                     >
                       {flexRender(
                         cell.column.columnDef.cell,

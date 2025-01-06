@@ -17,7 +17,7 @@ export function DropDownButtonComponent() {
   const [position, setPosition] = React.useState("bottom");
 
   return (
-    <div className="mx-8 md:ml-[15px] text-iDonate-navy-primary">
+    <div className="mx-8 md:ml-[15px] text-iDonate-navy-primary dark:text-iDonate-navy-accent">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="outline">Filters</Button>
