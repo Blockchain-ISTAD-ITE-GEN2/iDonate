@@ -16,13 +16,13 @@ export function DonorProfileComponent() {
   const [bioPercentage, setBioPercentage] = useState(0);
 
   return (
-    <section className="flex gap-9">
-      <div className="w-full flex flex-col gap-6 rounded-lg border-2 border-iDonate-navy-accent shadow-light">
+    <section className="flex gap-4 md:gap-6 xl:gap-9 flex-col lg:flex-row">
+      <div className="w-full order-last lg:order-first flex flex-col gap-6 rounded-lg border-2 border-iDonate-navy-accent shadow-light">
         <div className="w-full flex flex-col gap-6  border-b-2 border-iDonate-navy-accent">
           <DonorMediaForm onPercentageUpdate={setImagePercentage} />
         </div>
 
-        <div className="w-full flex flex-col gap-6 px-20 py-12">
+        <div className="w-full flex flex-col gap-6 px-4 sm:px-6 lg-px-9 xl:px-12 pb-9">
           <DonorInfoForm
             onFullnamePercentageUpdate={setFullNamePercentage}
             onEmailPercentageUpdate={setEmailPercentage}

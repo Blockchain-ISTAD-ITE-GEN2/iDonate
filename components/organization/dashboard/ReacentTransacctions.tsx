@@ -29,7 +29,7 @@ export function ReacentTransacctions({ transactions }: RecentSalesProps) {
                 {transaction.donor}
               </p>
               <p className="text-xs sm:text-sm text-iDonate-gray">
-                {transaction.email}
+                {transaction.timestamp}
               </p>
             </div>
           </div>

@@ -13,14 +13,15 @@ export function DonorReacentTransacctions({
   transactions,
 }: RecentTransactionProps) {
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center px-0 sm:px-2 lg:px-8">
       {transactions.map((transaction, index) => (
         <div
           key={index}
-          className="flex w-full justify-between items-center border-b border-iDonate-navy-accent py-2 gap-2"
+          className="flex w-full justify-between items-center border-b border-iDonate-navy-accent py-3 gap-4"
         >
-          <div className="flex items-center gap-1" key={index}>
-            <Avatar className="h-16 w-16 flex items-center justify-center border bg-iDonate-green-accent  ">
+          {/* Avatar and Details */}
+          <div className="flex items-center gap-3 w-full sm:w-auto">
+            <Avatar className="h-12 w-12 sm:h-16 sm:w-16 flex items-center justify-center border bg-iDonate-green-accent">
               <Image
                 width={40}
                 height={40}
@@ -28,29 +29,29 @@ export function DonorReacentTransacctions({
                 alt={`${transaction.donor} Avatar`}
               />
             </Avatar>
-
-            <div className="ml-4 space-y-1">
-              <p className="text-description-eng font-normal text-iDonate-navy-secondary">
+            <div className="space-y-1">
+              <p className="text-sm line-clamp-1 lg:text-description-eng  sm:line-clamp-none lg:line-clamp-1 font-normal text-iDonate-navy-secondary">
                 Donated to{" "}
                 <span className="font-medium text-iDonate-navy-primary">
                   {transaction.event}
                 </span>
               </p>
-              <p className="text-sub-description-eng text-iDonate-gray">
-                {/* {transaction.email} */}
+              <p className="text-xs line-clamp-1 sm:text-sub-description-eng sm:line-clamp-none lg:line-clamp-1 text-iDonate-gray">
                 Cambodia Kantha Bopha Foundation
               </p>
             </div>
           </div>
 
-          <span className="ml-auto text-iDonate-green-primary text-medium-eng text-start">
+          {/* Amount */}
+          <span className="ml-auto text-iDonate-green-primary text-sm sm:text-medium-eng text-right">
             ${transaction.amount}
           </span>
         </div>
       ))}
 
-      <Label className="flex items-center py-4 text-medium-eng text-iDonate-navy-secondary">
-        View all transaction
+      {/* View All Transactions */}
+      <Label className="flex items-center py-4 text-sm sm:text-medium-eng text-iDonate-navy-secondary cursor-pointer">
+        View all transactions
       </Label>
     </div>
   );

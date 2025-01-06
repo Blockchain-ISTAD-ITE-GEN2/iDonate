@@ -104,14 +104,14 @@ export function DonorProfilePercentage({
   }, [percentages]);
 
   return (
-    <Card className="h-[580px] flex flex-col rounded-lg border-2 border-iDonate-navy-accent shadow-light">
-      <CardHeader className="items-center pb-0">
-        <CardTitle className="w-full text-title-eng text-center leading-9 text-iDonate-navy-primary whitespace-nowrap">
+    <Card className="self-start w-full lg:w-auto flex flex-col rounded-lg border-2 border-iDonate-navy-accent shadow-light">
+      <CardHeader className="items-center pb-0 ">
+        <CardTitle className="w-full text-lg lg:text-2xl text-center leading-9 text-iDonate-navy-primary whitespace-nowrap">
           Profile Completion
         </CardTitle>
       </CardHeader>
 
-      <CardContent>
+      <CardContent className=" p-0 m-0">
         <ChartContainer
           config={chartConfig}
           className="mx-auto aspect-square max-h-[250px]"
@@ -166,9 +166,9 @@ export function DonorProfilePercentage({
             </Pie>
           </PieChart>
         </ChartContainer>
-      </CardContent>
+      </CardContent >
 
-      <CardContent className="flex flex-col gap-4">
+      <CardContent className="flex flex-col gap-2 md:gap-4 xl:gap-6">
         {chartData
           .filter((data) => data.category !== "Remaining") // Exclude "Remaining" from the list
           .map((data, index) => (
@@ -182,11 +182,11 @@ export function DonorProfilePercentage({
                 ) : (
                   <X className="text-medium-eng text-iDonate-error" />
                 )}
-                <span className="text-medium-eng text-iDonate-navy-primary text-left whitespace-nowrap">
+                <span className="text-sm sm:text-description-eng lg:text-medium-eng text-iDonate-navy-primary text-left whitespace-nowrap">
                   {data.category}
                 </span>
               </div>
-              <span className="text-medium-eng text-iDonate-green-primary text-left">
+              <span className="text-sm sm:text-description-eng lg:text-medium-eng  text-iDonate-green-primary text-left">
                 {data.completion > 0 ? `${data.completion}%` : ""}
               </span>
             </div>

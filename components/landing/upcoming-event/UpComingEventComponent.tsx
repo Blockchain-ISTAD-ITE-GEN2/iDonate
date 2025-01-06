@@ -74,7 +74,18 @@ const events: Event[] = [
 
 export default function UpcomingEvents() {
   return (
-    <section className="w-full lg:w-full mx-auto md:px-4 px-4 lg:px-[100px] pb-9">
+    <section className="w-full lg:w-full mx-auto md:px-4 px-4 lg:px-[100px] pb-9 space-y-4">
+
+        <h2 lang="km" className="text-medium-khmer text-center text-iDonate-green-primary">
+          តោះ ចាប់ផ្ដើមជួយពួកគាត់ទាំងអស់គ្នា!
+        </h2>
+        <h3
+          lang="km"
+          className="text-heading-two-khmer text-center text-iDonate-navy-primary leading-tight"
+        >
+          កម្មវិធីបរិច្ចាគ ដែលនិងកើតឡើងឆាប់នេះ!
+        </h3>
+
       <div className="grid lg:grid-cols-2 gap-6">
         {/* Featured Event */}
         <Card className="overflow-hidden transition-transform hover:scale-[1.02] cursor-pointer">

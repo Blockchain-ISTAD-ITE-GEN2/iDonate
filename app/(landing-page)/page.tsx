@@ -74,15 +74,7 @@ export default function Homepage() {
 
       {/* upcoming events */}
       <section className="w-full flex flex-col items-center">
-        <h2 lang="km" className="text-medium-khmer text-iDonate-green-primary">
-          តោះ ចាប់ផ្ដើមជួយពួកគាត់ទាំងអស់គ្នា!
-        </h2>
-        <h3
-          lang="km"
-          className="text-heading-two-khmer text-iDonate-navy-primary"
-        >
-          កម្មវិធីបរិច្ចាគ ដែលនិងកើតឡើងឆាប់នេះ!
-        </h3>
+       
         <UpcomingEvents />
       </section>
     </section>

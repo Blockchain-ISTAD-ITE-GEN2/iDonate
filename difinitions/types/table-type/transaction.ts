@@ -8,4 +8,5 @@ export type TransactionType = {
   description?: string;
   order_date?: string;
   end_date?: string;
+  timestamp?: string;
 };

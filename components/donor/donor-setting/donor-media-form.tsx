@@ -74,18 +74,19 @@ export function DonorMediaForm({
     <Form {...form}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Card
-          className={`flex flex-col border-0 shadow-none px-20 py-12 rounded-t-lg rounded-b-none items-start gap-6 ${
+          className={`flex flex-col border-0 shadow-none px-4 sm:px-10 md:px-16 lg:px-20 py-8 sm:py-10 md:py-12 rounded-t-lg rounded-b-none items-start gap-4 sm:gap-6 ${
             previewImage ? "bg-iDonate-light-gray" : ""
           }`}
         >
           {/* Card Header: Conditionally rendered when previewImage exists */}
           {previewImage && (
-            <CardHeader className="w-full flex flex-row items-center justify-between p-0 m-0">
-              <CardTitle className="text-2xl font-medium text-iDonate-navy-secondary">
+            <CardHeader className="w-full flex flex-col sm:flex-row items-start justify-between p-0 m-0">
+
+              <CardTitle className="text-lg lg:text-2xl font-medium text-iDonate-navy-secondary whitespace-nowrap">
                 Image Preview
               </CardTitle>
-
-              <div className="flex gap-3">
+  
+              <div className="flex w-full justify-end gap-3">
                 {/* Cancel Button */}
                 {formState.isDirty ? (
                   <AlertComfirmDialog
@@ -107,44 +108,42 @@ export function DonorMediaForm({
                   <Button
                     type="button"
                     onClick={handleCancel}
-                    className="bg-iDonate-white-space border-2 hover:bg-red-50 border-iDonate-error text-iDonate-error"
+                    className="bg-iDonate-white-space border-2  text-xs lg:text-sm hover:bg-red-50 border-iDonate-error text-iDonate-error"
                   >
                     Cancel
                   </Button>
                 )}
-
+  
                 {/* Submit Button */}
                 <Button
                   type="submit"
-                  className="bg-iDonate-white-space border-2 hover:bg-iDonate-light-gray border-iDonate-navy-accent text-iDonate-navy-primary"
+                  className="bg-iDonate-white-space border-2  text-xs lg:text-sm hover:bg-iDonate-light-gray border-iDonate-navy-accent text-iDonate-navy-primary"
                 >
                   Submit
                 </Button>
               </div>
             </CardHeader>
           )}
-
-          <div className="flex items-center gap-9">
+  
+          <div className="flex flex-col sm:flex-row items-start gap-6 md:gap-9">
             {/* Card Content for Image */}
-            <CardContent className="flex p-0 m-0">
+            <CardContent className="relative w-full sm:min-w-[300px] min-h-[300px] flex p-0 m-0">
               {previewImage ? (
                 <Image
                   src={previewImage}
                   alt="Preview"
-                  width={150}
-                  height={150}
+                  fill
                   className="rounded-md"
                 />
               ) : (
                 <Image
                   src={donor}
                   alt="Organization"
-                  width={150}
-                  height={150}
+                  fill
                 />
               )}
             </CardContent>
-
+  
             {/* Card Content for Upload Button */}
             <CardContent className="flex flex-col p-0 m-0 gap-4">
               <FormField
@@ -192,4 +191,5 @@ export function DonorMediaForm({
       </form>
     </Form>
   );
+  
 }

@@ -2,7 +2,7 @@ import { TabsDonorProfile } from "@/components/donor/donor-tab/donor-tabs-profil
 
 export default function ContributorDonor() {
   return (
-    <section className="flex flex-col p-9">
+    <section className="flex flex-col p-4 sm:p-6 lg:p-9 ">
       <TabsDonorProfile />
       {/* <DonorProfileComponent /> */}
     </section>

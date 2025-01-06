@@ -6,17 +6,17 @@ export function TabsDonorProfile() {
   return (
     <Tabs
       defaultValue="transaction-history"
-      className="w-full flex flex-col gap-6"
+      className="w-full flex flex-col gap-4 md:gap-6 xl:gap-9"
     >
-      <TabsList className="flex h-auto bg-transparent w-full border-2 border-iDonate-navy-accent py-6 gap-6 rounded-lg">
+      <TabsList className="flex flex-col px-6 sm:px-0 sm:flex-row h-auto bg-transparent w-full border-2 border-iDonate-navy-accent py-6 gap-4 md:gap-6 rounded-lg">
         <TabsTrigger
-          className="border-2 rounded-lg px-9 border-iDonate-navy-accent data-[state=active]:bg-iDonate-navy-accent data-[state=active]:text-iDonate-navy-secondary dat`a-[state=active]:shadow-none"
+          className="border-2 w-full sm:w-auto rounded-lg px-6 md:px-9 border-iDonate-navy-accent data-[state=active]:bg-iDonate-navy-accent data-[state=active]:text-iDonate-navy-secondary data-[state=active]:shadow-none"
           value="transaction-history"
         >
           Transaction History
         </TabsTrigger>
         <TabsTrigger
-          className="border-2 rounded-lg px-9 border-iDonate-navy-accent data-[state=active]:bg-iDonate-navy-accent data-[state=active]:text-iDonate-navy-secondary dat`a-[state=active]:shadow-none"
+          className="border-2 w-full sm:w-auto rounded-lg px-6 md:px-9 border-iDonate-navy-accent data-[state=active]:bg-iDonate-navy-accent data-[state=active]:text-iDonate-navy-secondary data-[state=active]:shadow-none"
           value="donor-setting"
         >
           Donor Setting

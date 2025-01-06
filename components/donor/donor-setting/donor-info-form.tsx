@@ -95,45 +95,48 @@ export function DonorInfoForm({
       <form onSubmit={handleSubmit(onSubmit)}>
         {/* View Mode */}
         {!isEditing && (
-          <Card className="flex flex-col rounded-lg border-2 border-iDonate-navy-accent gap-6 p-9">
+          <Card className="flex flex-col rounded-lg border-2 border-iDonate-navy-accent gap-2 lg:gap-6 p-4 md:p-6 lg:p-9">
+
             <CardHeader className="flex flex-row items-center justify-between p-0 m-0">
-              <CardTitle className="text-2xl font-medium text-iDonate-navy-secondary">
+
+              <CardTitle className="text-lg lg:text-2xl font-medium text-iDonate-navy-secondary">
                 Basic Information
               </CardTitle>
 
               <Button
                 onClick={() => setIsEditing(true)}
-                className="bg-iDonate-white-space border-2 hover:bg-iDonate-light-gray border-iDonate-navy-accent text-iDonate-navy-primary"
+                className="text-xs lg:text-sm bg-iDonate-white-space border-2 hover:bg-iDonate-light-gray border-iDonate-navy-accent text-iDonate-navy-primary"
               >
                 <SquarePen />
                 Edit
               </Button>
             </CardHeader>
 
-            <CardContent className="flex w-fle gap-9 p-0 m-0">
-              <div className="flex flex-col space-y-3">
-                <CardDescription className="text-lg text-iDonate-gray">
+            <CardContent className="flex flex-wrap gap-4 sm:gap-6 lg:gap-9 p-0 m-0">
+
+              <div className="flex flex-col md:space-y-1 ">
+                <CardDescription className="text-xs sm:text-sm lg:text-lg text-iDonate-gray">
                   Full Name
                 </CardDescription>
-                <CardDescription className="text-xl text-iDonate-navy-primary">
+                <CardDescription className="text-sm sm:text-description-eng lg:text-medium-eng text-iDonate-navy-primary">
                   Elizabeth Joe
                 </CardDescription>
               </div>
 
-              <div className="flex flex-col space-y-3">
-                <CardDescription className="text-lg text-iDonate-gray">
+              <div className="flex flex-col md:space-y-1">
+                <CardDescription className="text-xs sm:text-sm lg:text-lg text-iDonate-gray">
                   Email
                 </CardDescription>
-                <CardDescription className="text-xl text-iDonate-navy-primary">
+                <CardDescription className="text-sm sm:text-description-eng lg:text-medium-eng text-iDonate-navy-primary">
                   ElizabethJoe@gmail.com
                 </CardDescription>
               </div>
 
-              <div className="flex flex-col space-y-3">
-                <CardDescription className="text-lg text-iDonate-gray">
+              <div className="flex flex-col md:space-y-1">
+                <CardDescription className="text-xs sm:text-sm lg:text-lg text-iDonate-gray">
                   Contact
                 </CardDescription>
-                <CardDescription className="text-xl text-iDonate-navy-primary">
+                <CardDescription className="text-sm sm:text-description-eng lg:text-medium-eng text-iDonate-navy-primary">
                   +855 12345678
                 </CardDescription>
               </div>
@@ -143,13 +146,13 @@ export function DonorInfoForm({
 
         {/* Edit Mode */}
         {isEditing && (
-          <Card className="flex flex-col bg-iDonate-light-gray rounded-lg border-2 border-iDonate-navy-accent gap-6 p-9">
-            <CardHeader className="flex flex-row items-center justify-between p-0 m-0">
-              <CardTitle className="text-2xl font-medium text-iDonate-navy-secondary">
+          <Card className="flex flex-col bg-iDonate-light-gray rounded-lg border-2 border-iDonate-navy-accent gap-2 lg:gap-6 p-4 md:p-6 lg:p-9">
+            <CardHeader className="flex flex-col sm:flex-row items-start justify-between p-0 m-0">
+              <CardTitle className="text-lg lg:text-2xl font-medium text-iDonate-navy-secondary whitespace-nowrap">
                 Organization Information
               </CardTitle>
 
-              <div className="flex gap-3">
+              <div className="flex w-full justify-end gap-3">
                 {/* Cancel Button */}
                 {formState.isDirty ? (
                   <AlertComfirmDialog
@@ -171,7 +174,7 @@ export function DonorInfoForm({
                   <Button
                     type="button"
                     onClick={handleCancel}
-                    className="bg-iDonate-white-space border-2 hover:bg-red-50 border-iDonate-error text-iDonate-error"
+                    className="bg-iDonate-white-space border-2 text-xs lg:text-sm hover:bg-red-50 border-iDonate-error text-iDonate-error"
                   >
                     Cancel
                   </Button>
@@ -180,23 +183,23 @@ export function DonorInfoForm({
                 {/* Submit Button */}
                 <Button
                   type="submit"
-                  className="bg-iDonate-white-space border-2 hover:bg-iDonate-light-gray border-iDonate-navy-accent text-iDonate-navy-primary"
+                  className="bg-iDonate-white-space text-xs lg:text-sm border-2 hover:bg-iDonate-light-gray border-iDonate-navy-accent text-iDonate-navy-primary"
                 >
                   Submit
                 </Button>
               </div>
             </CardHeader>
 
-            <CardContent className="flex gap-9 p-0 m-0">
+            <CardContent className="flex flex-col md:flex-row gap-4 sm:gap-6 lg:gap-9 p-0 m-0">
               <FormField
                 control={control}
                 name="fullName"
                 render={({ field }) => (
                   <FormItem className="flex-1">
-                    <FormLabel className="text-sm text-iDonate-navy-secondary">
+                    <FormLabel className="text-xs sm:text-sm lg:text-lg text-iDonate-navy-secondary">
                       Full Name
                     </FormLabel>
-                    <FormControl>
+                    <FormControl className="text-sm lg:text-medium-eng">
                       <Input
                         placeholder="Elizabeth Joe"
                         className="w-full"
@@ -204,7 +207,7 @@ export function DonorInfoForm({
                       />
                     </FormControl>
                     <FormMessage />
-                    <FormDescription className="text-iDonate-gray text-sm">
+                    <FormDescription className="text-iDonate-gray text-xs sm:text-sm lg:text-lg">
                       This is your organization's full name.
                     </FormDescription>
                   </FormItem>
@@ -216,10 +219,10 @@ export function DonorInfoForm({
                 name="email"
                 render={({ field }) => (
                   <FormItem className="flex-1">
-                    <FormLabel className="text-sm text-iDonate-navy-secondary">
+                    <FormLabel className="text-xs sm:text-sm lg:text-lg text-iDonate-navy-secondary">
                       Email
                     </FormLabel>
-                    <FormControl>
+                    <FormControl className="text-sm lg:text-medium-eng">
                       <Input
                         placeholder="ElizabethJoe@gmail.com"
                         className="w-full"
@@ -227,7 +230,7 @@ export function DonorInfoForm({
                       />
                     </FormControl>
                     <FormMessage />
-                    <FormDescription className="text-iDonate-gray text-sm">
+                    <FormDescription className="text-iDonate-gray text-xs sm:text-sm lg:text-lg">
                       This is your organization's contact email.
                     </FormDescription>
                   </FormItem>
@@ -239,10 +242,10 @@ export function DonorInfoForm({
                 name="contact"
                 render={({ field }) => (
                   <FormItem className="flex-1">
-                    <FormLabel className="text-sm text-iDonate-navy-secondary">
+                    <FormLabel className="text-xs sm:text-sm lg:text-lg text-iDonate-navy-secondary">
                       Contact
                     </FormLabel>
-                    <FormControl>
+                    <FormControl className="text-sm lg:text-medium-eng">
                       <Input
                         placeholder="+855 12345678"
                         className="w-full"
@@ -250,7 +253,7 @@ export function DonorInfoForm({
                       />
                     </FormControl>
                     <FormMessage />
-                    <FormDescription className="text-iDonate-gray text-sm">
+                    <FormDescription className="text-iDonate-gray text-xs sm:text-sm lg:text-lg">
                       This is your organization's contact number.
                     </FormDescription>
                   </FormItem>
