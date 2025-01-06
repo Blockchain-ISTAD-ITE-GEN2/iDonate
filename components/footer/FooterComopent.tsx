@@ -24,7 +24,10 @@ export default function FooterComponent() {
   }
 
   return (
-    <footer className="bg-iDonate-navy-secondary text-white dark:bg-[#18181B]">
+    <footer className=" text-white ">
+
+
+
       {/* Social Media Section */}
       <div className="bg-[#1B2A4E] text-white py-6 dark:bg-[#18181B]">
         <div className="container mx-auto px-4 md:px-6 lg:px-[100px]">
@@ -80,8 +83,10 @@ export default function FooterComponent() {
       </div>
 
       {/* Main Footer Content */}
-      <div className="container mx-auto px-4 md:px-6 lg:px-[100px] py-8 bg-white dark:bg-iDonate-dark-mode">
+      <div className="mx-auto px-4 md:px-6 lg:px-[100px] py-8 bg-white dark:bg-iDonate-dark-mode ">
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+
           {/* Logo and Description */}
           <div className="space-y-4">
             <Link
@@ -221,18 +226,20 @@ export default function FooterComponent() {
               </div>
             </div>
           </div>
+
         </div>
       </div>
 
       {/* Copyright */}
-      <div className="border-t border-gray-700">
+      <div className="bg-iDonate-navy-secondary border-t border-gray-700 dark:bg-[#18181B]">
         <div className="container mx-auto px-4 py-4">
-          <p className="text-center text-xs md:text-sm text-gray-400 dark:text-iDonate-navy-accent">
+          <p className="text-center text-xs md:text-sm text-iDonate-navy-accent dark:text-iDonate-navy-accent">
             © 2024 Institute of Science and Technology Advanced Development |
             All Rights Reserved
           </p>
         </div>
       </div>
+
     </footer>
   );
 }
