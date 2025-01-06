@@ -67,7 +67,7 @@ export default function LatestDonationCard() {
         </div>
 
         {/* Content Section */}
-        <div className="p-9 bg-iDonate-navy-primary text-iDonate-white-space flex flex-grow flex-col gap-4">
+        <div className="p-9 bg-iDonate-navy-primary text-iDonate-white-space flex flex-grow flex-col gap-4 dark:bg-iDonate-dark-mode">
           <h2
             lang="km"
             className="text-title-khmer md:text-heading-one-khmer font-semibold leading-relaxed"
@@ -110,7 +110,7 @@ export default function LatestDonationCard() {
       <div className="w-full flex flex-col gap-2">
         <h2
           lang="km"
-          className="text-heading-two-khmer text-iDonate-navy-primary khmer-font text-center"
+          className="text-heading-two-khmer text-iDonate-navy-primary khmer-font text-center dark:text-iDonate-navy-accent"
         >
           បច្ចុប្បន្នភាពនៃការបរិច្ចាគ
         </h2>
@@ -165,11 +165,11 @@ export default function LatestDonationCard() {
           <Card className="p-8 text-center w-full container mx-auto flex flex-col gap-4">
             <h3
               lang="km"
-              className="text-medium-khmer font-medium  text-iDonate-navy-primary khmer-font"
+              className="text-medium-khmer font-medium  text-iDonate-navy-primary khmer-font dark:text-iDonate-green-secondary"
             >
               បច្ចុប្បន្នមិនមានព្រឹត្តិការណ៍បរិច្ចាគទេ
             </h3>
-            <p lang="km" className="text-iDonate-gray khmer-font">
+            <p lang="km" className="text-iDonate-gray khmer-font dark:text-iDonate-navy-accent">
               សូមត្រឡប់មកម្តងទៀតនៅពេលក្រោយ ដើម្បីពិនិត្យមើលឱកាសបរិច្ចាគថ្មីៗ។
               អរគុណសម្រាប់ការគាំទ្ររបស់អ្នក!
             </p>

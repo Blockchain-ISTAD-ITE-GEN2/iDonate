@@ -75,9 +75,9 @@ export default function MissionVision() {
   const partners = [ISTAD, MPTC, CBRD, LEADER, ISTAD, MPTC, CBRD, LEADER];
 
   return (
-    <div className="w-full bg-white">
+    <div className="w-full bg-white dark:bg-iDonate-dark-mode">
       {/* Hero Section */}
-      <section className="relative h-[600px] sm:h-[400px] text-white ">
+      <section className="relative h-[600px] sm:h-[400px] text-iDonate-navy-accent dark:bg ">
         <Image
           src={HeroSectionImage}
           alt="People helping people"
@@ -124,7 +124,7 @@ export default function MissionVision() {
             <motion.h2
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="text-2xl sm:text-3xl font-bold mb-12 text-center text-iDonate-navy-secondary"
+              className="text-2xl sm:text-3xl font-bold mb-12 text-center text-iDonate-navy-secondary  dark:text-iDonate-green-secondary"
             >
               បេសកកម្មនិងចក្ខុវិស័យ
             </motion.h2>
@@ -143,10 +143,10 @@ export default function MissionVision() {
                     <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
                   </svg>
                 </div>
-                <h3 className="text-lg md:text-2xl font-bold mb-2 text-iDonate-navy-secondary">
+                <h3 className="text-lg md:text-2xl font-bold mb-2 text-iDonate-navy-secondary dark:text-iDonate-green-secondary">
                   បេសកកម្ម
                 </h3>
-                <p className="text-iDonate-navy-secondary font-siemreap">
+                <p className="text-iDonate-navy-secondary font-siemreap dark:text-iDonate-navy-accent">
                   ដើម្បីផ្តល់ជំនួយដល់អ្នកដែលត្រូវការជំនួយក្នុងសហគមន៍របស់យើង
                   តាមរយៈការបរិច្ចាគដោយផ្ទាល់និងតម្លាភាព។
                 </p>
@@ -158,17 +158,17 @@ export default function MissionVision() {
               >
                 <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
                   <svg
-                    className="w-10 h-10 text-green-600"
+                    className="w-10 h-10 text-green-600 "
                     viewBox="0 0 24 24"
                     fill="currentColor"
                   >
                     <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z" />
                   </svg>
                 </div>
-                <h3 className="text-2xl font-bold mb-4 font-siemreap text-iDonate-navy-secondary">
+                <h3 className="text-2xl font-bold mb-4 font-siemreap text-iDonate-navy-secondary dark:text-iDonate-green-secondary">
                   ចក្ខុវិស័យ
                 </h3>
-                <p className="text-iDonate-navy-secondary font-siemreap">
+                <p className="text-iDonate-navy-secondary font-siemreap dark:text-iDonate-navy-accent">
                   បង្កើតសហគមន៍ដែលមានការយកចិត្តទុកដាក់និងការចែករំលែក
                   ដើម្បីលើកកម្ពស់គុណភាពជីវិតរបស់អ្នកដែលខ្វះខាត។
                 </p>
@@ -179,12 +179,12 @@ export default function MissionVision() {
       </section>
 
       {/* Video Section */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-20 bg-gray-50 dark:bg-black">
         <div className="container mx-auto px-4">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-3xl font-bold mb-12 text-center font-siemreap text-iDonate-navy-secondary"
+            className="text-3xl font-bold mb-12 text-center font-siemreap text-iDonate-navy-secondary dark:text-iDonate-green-secondary"
           >
             ក្តីប្តេជ្ញាចិត្តក្នុងការផ្តល់ប្រយោជន៍អ្នកដទៃ
           </motion.h2>
@@ -210,13 +210,13 @@ export default function MissionVision() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
-                  className="text-center text-iDonate-navy-secondary"
+                  className="text-center text-iDonate-navy-secondary dark:text-iDonate-navy-accent"
                 >
                   <div className="text-6xl mb-4">{feature.icon}</div>
-                  <h3 className="font-semibold mb-2 font-siemreap text-iDonate-navy-secondary">
+                  <h3 className="font-semibold mb-2 font-siemreap text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
                     {feature.title}
                   </h3>
-                  <p className="text-sm  font-siemreap text-iDonate-navy-secondary">
+                  <p className="text-sm  font-siemreap text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
                     {feature.description}
                   </p>
                 </motion.div>
@@ -232,7 +232,7 @@ export default function MissionVision() {
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-3xl font-bold mb-12 text-center font-siemreap text-iDonate-navy-secondary"
+            className="text-3xl font-bold mb-12 text-center font-siemreap text-iDonate-navy-secondary dark:text-iDonate-green-secondary"
           >
             សំណួរដែលសួរញឹកញាប់
           </motion.h2>
@@ -240,10 +240,10 @@ export default function MissionVision() {
             <Accordion type="single" collapsible>
               {faqs.map((faq, index) => (
                 <AccordionItem key={index} value={`item-${index}`}>
-                  <AccordionTrigger className="font-siemreap text-gray-800">
+                  <AccordionTrigger className="font-siemreap text-iDonate-navy-secondary dark:text-iDonate-navy-accent ">
                     {faq.question}
                   </AccordionTrigger>
-                  <AccordionContent className="font-siemreap text-iDonate-navy-secondary">
+                  <AccordionContent className="font-siemreap text-iDonate-navy-secondary dark:text-iDonate-navy-accent ">
                     {faq.answer}
                   </AccordionContent>
                 </AccordionItem>
@@ -254,12 +254,12 @@ export default function MissionVision() {
       </section>
 
       {/* Partners Section */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-white dark:bg-black">
         <div className="container mx-auto px-4">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-2xl font-bold mb-12 text-center font-siemreap text-iDonate-navy-secondary"
+            className="text-2xl font-bold mb-12 text-center font-siemreap text-iDonate-navy-secondary dark:text-iDonate-navy-accent"
           >
             ដៃគូសហការ
           </motion.h2>

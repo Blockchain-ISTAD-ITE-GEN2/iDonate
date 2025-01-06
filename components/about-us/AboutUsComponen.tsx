@@ -6,7 +6,7 @@ import AboutUsHeroSection from "@/public/about-us/AboutUsHeroSection.webp.webp";
 import { motion } from "framer-motion";
 import TrustContent from "@/public/images/trust-content.png";
 import GiveAndRecieve from "@/public/images/give-and-recieve.png";
-import BlockchainTech from "@/public/images/blockchain.png";
+import BlockchainTech from '@/public/images/blockchain.png';
 import TeamSection from "@/components/about-us/TeamSection";
 
 export default function AboutUsComponent() {
@@ -101,9 +101,9 @@ export default function AboutUsComponent() {
       </section>
 
       {/* Features Section */}
-      <section className="py-12 sm:py-16">
+      <section className="bg-iDonate-white-space py-12 sm:py-16 dark:bg-iDonate-dark-mode">
         <div className="container mx-auto px-4 sm:px-6 lg:px-[100px]">
-          <h2 className="text-xl sm:text-2xl font-bold text-center mb-8 sm:mb-12 text-iDonate-navy-secondary">
+          <h2 className="text-xl sm:text-2xl font-bold text-center mb-8 sm:mb-12 text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
             តើវាដំណើរការបានយ៉ាងដូចម្តេច?
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8">
@@ -148,10 +148,10 @@ export default function AboutUsComponent() {
                     className="mx-auto mb-4 sm:mb-6 w-16 h-16 sm:w-24 sm:h-24 md:w-32 md:h-32"
                   />
                 </motion.div>
-                <h3 className="text-lg sm:text-xl font-semibold mb-2 sm:mb-4 text-iDonate-navy-secondary">
+                <h3 className="text-lg sm:text-xl font-semibold mb-2 sm:mb-4 text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
                   {feature.title}
                 </h3>
-                <p className="text-iDonate-navy-secondary text-xs sm:text-sm leading-relaxed">
+                <p className="text-iDonate-navy-secondary text-xs sm:text-sm leading-relaxed dark:text-iDonate-navy-accent">
                   {feature.description}
                 </p>
               </motion.div>

@@ -12,6 +12,7 @@ const config: Config = {
     extend: {
       colors: {
         iDonate: {
+          "dark-mode": "#0F0F0F",
           "green-primary": "#55A44A",
           "green-secondary": "#74DF80",
           "green-accent": "#BAF4D0",

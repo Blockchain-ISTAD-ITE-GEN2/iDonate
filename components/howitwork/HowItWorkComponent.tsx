@@ -12,31 +12,31 @@ export default function HowItWorks() {
   return (
     <div className="w-full">
       {/* Hero Section */}
-      <section className="relative min-h-[400px] md:min-h-[600px] bg-gradient-to-br from-gray-50 to-gray-100 px-4 md:px-[100px]">
-        <div className="absolute inset-0 bg-grid-gray-200 opacity-30" />
-        <div className="container mx-auto py-10 md:py-20 relative">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+      <section className="relative min-h-[400px] md:min-h-[600px] bg-gradient-to-br from-gray-50 to-gray-100 px-4 md:px-[100px] dark:from-gray-800  dark:to-white-900">
+        <div className="absolute inset-0 bg-grid-gray-200 opacity-30 " />
+        <div className="container mx-auto py-10 md:py-20 relative ">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center ">
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5 }}
               className="text-center md:text-left"
             >
-              <h1 className="text-3xl md:text-4xl font-bold mb-4 text-iDonate-navy-secondary">
+              <h1 className="text-3xl md:text-4xl font-bold mb-4 text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
                 Sharing is caring
               </h1>
-              <h2 className="text-2xl md:text-3xl mb-4 text-green-600 font-siemreap ">
+              <h2 className="text-2xl md:text-3xl mb-4 text-green-600 font-siemreap dark:text-iDonate-green-secondary ">
                 ការជួយគ្នាទៅវិញទៅមក
               </h2>
-              <h3 className="text-xl md:text-2xl mb-6 font-siemreap text-iDonate-navy-secondary">
+              <h3 className="text-xl md:text-2xl mb-6 font-siemreap text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
                 និងការចែករំលែកទ្រព្យសម្បត្តិ
               </h3>
-              <p className="text-iDonate-navy-secondary mb-8 font-siemreap leading-loose text-sm md:text-base bg">
+              <p className="text-iDonate-navy-secondary mb-8 font-siemreap leading-loose text-sm md:text-base dark:text-iDonate-navy-accent">
                 ដើម្បីជួយដល់អ្នកដែលខ្វះខាតក្នុងសង្គមយើង។
                 ការជួយគ្នាទៅវិញទៅមកគឺជាការបង្ហាញពីក្តីស្រលាញ់។
                 បរិច្ចាគទ្រព្យសម្បត្តិដើម្បីជួយដល់អ្នកដទៃគឺជាទង្វើដ៏ល្អ។
               </p>
-              <Button className="bg-[#1B2A4E] hover:bg-[#2a3e6d] w-full md:w-auto">
+              <Button className="bg-iDonate-navy-secondary text-iDonate-navy-accent hover:bg-iDonate-navy-primary w-full md:w-auto">
                 View Cause
               </Button>
             </motion.div>
@@ -58,7 +58,7 @@ export default function HowItWorks() {
       </section>
 
       {/* Steps Section */}
-      <section className="py-10 md:py-20 bg-white">
+      <section className="py-10 md:py-20 bg-iDonate-navy-accent dark:bg-iDonate-dark-mode">
         <div className="container mx-auto px-4 md:px-[100px]">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
@@ -97,10 +97,10 @@ export default function HowItWorks() {
                     {step.number}
                   </div>
                   <div>
-                    <h3 className="font-semibold mb-2 font-siemreap text-sm md:text-base text-iDonate-navy-secondary">
+                    <h3 className="font-semibold mb-2 font-siemreap text-sm md:text-base  dark:text-iDonate-navy-accent">
                       {step.title}
                     </h3>
-                    <p className="text-iDonate-navy-secondary font-siemreap text-sm md:text-base">
+                    <p className="text-iDonate-navy-secondary font-siemreap text-sm md:text-base dark:text-iDonate-navy-accent">
                       {step.description}
                     </p>
                   </div>
@@ -127,7 +127,7 @@ export default function HowItWorks() {
 
       {/* Community Section */}
       <section
-        className="relative py-10 md:py-20 bg-cover bg-center"
+        className="relative py-10 md:py-20 bg-cover bg-center dark:bg-iDonate-dark-mode"
         style={{ backgroundImage: `url(${ProcessIllustration.src})` }}
       >
         <div className="absolute inset-0 bg-black bg-opacity-50" />
@@ -159,13 +159,13 @@ export default function HowItWorks() {
       </section>
 
       {/* Process Section */}
-      <section className="py-10 md:py-20 bg-white">
+      <section className="py-10 md:py-20 bg-white dark:bg-iDonate-dark-mode">
         <div className="container mx-auto px-4">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-xl md:text-2xl font-bold mb-8 md:mb-12 font-siemreap text-center text-iDonate-navy-secondary"
-          >
+            className="text-xl md:text-2xl font-bold mb-8 md:mb-12 font-siemreap text-center text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
+
             ដំណើរការរបស់សប្បុរសជន
           </motion.h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
@@ -210,14 +210,14 @@ export default function HowItWorks() {
                   transition={{ delay: index * 0.2 }}
                   className="flex gap-4"
                 >
-                  <div className="flex-shrink-0 w-8 h-8 bg-green-100 rounded-full flex items-center justify-center text-green-600 font-bold">
+                  <div className="flex-shrink-0 w-8 h-8 bg-green-100 rounded-full flex items-center justify-center text-iDonate-green-primary font-bold">
                     {step.number}
                   </div>
                   <div>
-                    <h3 className="font-semibold mb-2 font-siemreap text-sm md:text-base text-iDonate-navy-secondary">
+                    <h3 className="font-semibold mb-2 font-siemreap text-sm md:text-base text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
                       {step.title}
                     </h3>
-                    <p className="text-iDonate-navy-secondary font-siemreap text-sm md:text-base">
+                    <p className="text-iDonate-navy-secondary font-siemreap text-sm md:text-base dark:text-iDonate-navy-accent">
                       {step.description}
                     </p>
                   </div>
@@ -234,7 +234,7 @@ export default function HowItWorks() {
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-iDonate-navy-secondary text-xl md:text-2xl font-bold mb-8 md:mb-12 font-siemreap text-center"
+            className="text-iDonate-navy-secondary text-xl md:text-2xl font-bold mb-8 md:mb-12 font-siemreap text-center dark:text-iDonate-navy-accent"
           >
             រយៈពេលនិងដំណើរការនៃមូលនិធិនៅ iDonate
           </motion.h2>
@@ -263,15 +263,15 @@ export default function HowItWorks() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.2 }}
-                className="p-4 md:p-6 bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow"
+                className="p-4 md:p-6 bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow dark:bg-iDonate-dark-mode border dark:border-iDonate-navy-accent"
               >
                 <div className="text-3xl md:text-4xl mb-3 md:mb-4 text-center">
                   {feature.icon}
                 </div>
-                <h3 className="text-sm md:text-base font-semibold mb-3 md:mb-4 font-siemreap text-iDonate-navy-secondary">
+                <h3 className="text-sm md:text-base font-semibold mb-3 md:mb-4 font-siemreap text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
                   {feature.title}
                 </h3>
-                <p className="text-sm md:text-base text-iDonate-navy-secondary font-siemreap">
+                <p className="text-sm md:text-base text-iDonate-navy-secondary font-siemreap dark:text-iDonate-navy-accent">
                   {feature.description}
                 </p>
               </motion.div>

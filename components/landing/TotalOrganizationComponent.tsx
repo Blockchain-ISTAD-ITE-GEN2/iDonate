@@ -47,7 +47,7 @@ export default function TotalOrganizationComponent() {
   return (
     <motion.div
       lang="km"
-      className="overflow-hidden h-auto py-9 bg-iDonate-light-gray w-full mx-auto md:py-20 px-4 md:px-8 lg:px-[100px] dark:bg-iDonate-navy-primary"
+      className="overflow-hidden h-auto py-9 bg-iDonate-light-gray w-full mx-auto md:py-20 px-4 md:px-8 lg:px-[100px] dark:bg-iDonate-dark-mode"
     >
       <h2 className="text-2xl sm:text-3xl md:text-4xl font-medium text-center dark:text-white text-iDonate-navy-primary mb-8 sm:mb-12 leading-tight ">
         យើងរួមគ្នា កសាងសហគមន៍ដ៏រឹងមាំ
@@ -59,27 +59,27 @@ export default function TotalOrganizationComponent() {
             key={index}
             // whileHover={{ scale: 1.05, rotate: 2 }}
             // whileTap={{ scale: 0.95 }}
-            className="w-full flex justify-center items-center text-center"
+            className="w-full flex justify-center items-center text-center "
           >
             <motion.div
-              className="flex flex-col items-center bg-white rounded-lg shadow-light p-4 sm:p-6 transition-all duration-300 w-full opacity-90"
+              className="flex flex-col items-center bg-white rounded-lg shadow-light p-4 sm:p-6 transition-all duration-300 w-full opacity-90 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
               initial={{ opacity: 0, scale: 0.5 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: index * 0.1 }}
             >
               <span className="text-3xl sm:text-4xl md:text-5xl mb-2 sm:mb-4">
                 <item.icon
-                  className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 mb-2 sm:mb-4 text-iDonate-green-primary"
+                  className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 mb-2 sm:mb-4 text-iDonate-green-primary dark:text-iDonate-green-secondary"
                   style={{ strokeWidth: 2 }}
                 />
               </span>
-              <span className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-iDonate-green-primary">
+              <span className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-iDonate-green-primary dark:text-iDonate-green-secondary">
                 <CounterAnimation target={item.amount} />
               </span>
               <div className="mt-1 sm:mt-2 dark:text-white text-iDonate-navy-primary text-xs sm:text-sm">
                 <span>{item.desc}</span>
               </div>
-              <div className="mt-1 text-iDonate-navy-primary font-medium text-sm sm:text-base">
+              <div className="mt-1 text-iDonate-navy-primary font-medium text-sm sm:text-base dark:text-iDonate-navy-accent">
                 <span>{item.title}</span>
               </div>
             </motion.div>

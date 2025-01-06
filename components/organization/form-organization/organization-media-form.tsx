@@ -60,13 +60,13 @@ export function OrganizationMediaForm() {
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <Card
           className={`flex flex-col border-0 shadow-none px-20 py-12 rounded-none items-start gap-6 ${
-            previewImage ? "bg-iDonate-light-gray" : ""
+            previewImage ? "bg-iDonate-light-gray dark:bg-iDonate-dark-mode" : ""
           }`}
         >
           {/* Card Header: Conditionally rendered when previewImage exists */}
           {previewImage && (
             <CardHeader className="w-full flex flex-row items-center justify-between p-0 m-0">
-              <CardTitle className="text-2xl font-medium text-iDonate-navy-secondary">
+              <CardTitle className="text-2xl font-medium text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
                 Image Preview
               </CardTitle>
 

@@ -30,7 +30,7 @@ export default function OrganizationDetailHeroSection() {
   };
 
   return (
-    <section className="w-full bg-gradient-to-br from-slate-100 to-slate-200">
+    <section className="w-full bg-gradient-to-br from-slate-100 to-slate-200 dark:from-gray-800  dark:to-white-900">
       <motion.div
         className="container mx-auto px-4 sm:px-6 md:px-12 lg:px-20 xl:px-28 flex flex-wrap md:flex-nowrap items-start justify-between gap-8 sm:gap-10 py-9"
         variants={containerVariants}
@@ -42,18 +42,18 @@ export default function OrganizationDetailHeroSection() {
           <motion.h1
             lang="km"
             style={{ lineHeight: "1.3" }}
-            className="text-2xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-iDonate-navy-secondary lg:leading-normal"
+            className="text-2xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-iDonate-navy-secondary lg:leading-normal dark:text-iDonate-navy-accent"
             variants={itemVariants}
           >
             ចូលរួមចំណែកដើម្បីអនាគតដ៏ល្អប្រសើរជាងនេះ ជាមួយ{" "}
-            <span className="font-inter text-iDonate-green-primary">
+            <span className="font-inter text-iDonate-green-primary dark:text-iDonate-green-secondary">
               iDONATE
             </span>
           </motion.h1>
 
           <motion.p
             lang="km"
-            className="text-iDonate-gray text-sm sm:text-base lg:text-lg xl:text-xl 2xl:text-2xl leading-relaxed"
+            className="text-iDonate-gray text-sm sm:text-base lg:text-lg xl:text-xl 2xl:text-2xl leading-relaxed dark:text-iDonate-navy-accent"
             variants={itemVariants}
           >
             ស្វែងរកអង្គការដែលកំពុងបង្កើតការផ្លាស់ប្តូរ ជាមួយតាមរយៈ iDonate។

@@ -63,13 +63,13 @@ export function OrganizationPaymentForm() {
         {!isEditing && (
           <Card className="flex flex-col rounded-lg border-2 border-iDonate-navy-accent gap-6 p-9">
             <CardHeader className="flex flex-row items-center justify-between p-0 m-0">
-              <CardTitle className="text-2xl font-medium text-iDonate-navy-secondary">
+              <CardTitle className="text-2xl font-medium text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
                 Payment Method
               </CardTitle>
 
               <Button
                 onClick={() => setIsEditing(true)}
-                className="bg-iDonate-white-space border-2 hover:bg-iDonate-light-gray border-iDonate-navy-accent text-iDonate-navy-primary"
+                className="bg-iDonate-white-space border-2 hover:bg-iDonate-light-gray border-iDonate-navy-accent text-iDonate-navy-primary dark:text-iDonate-navy-accent dark:bg-iDonate-dark-mode"
               >
                 <SquarePen />
                 Edit
@@ -88,9 +88,9 @@ export function OrganizationPaymentForm() {
         )}
 
         {isEditing && (
-          <Card className="flex flex-col bg-iDonate-light-gray rounded-lg border-2 border-iDonate-navy-accent gap-6 p-9">
+          <Card className="flex flex-col bg-iDonate-light-gray rounded-lg border-2 border-iDonate-navy-accent gap-6 p-9  dark:bg-iDonate-dark-mode">
             <CardHeader className="flex flex-row items-center justify-between p-0 m-0">
-              <CardTitle className="text-2xl font-medium text-iDonate-navy-secondary">
+              <CardTitle className="text-2xl font-medium text-iDonate-navy-secondary dark:text-iDonate-navy-accent ">
                 Payment Method
               </CardTitle>
 
@@ -116,7 +116,7 @@ export function OrganizationPaymentForm() {
                   <Button
                     type="button"
                     onClick={handleCancel}
-                    className="bg-iDonate-white-space border-2 hover:bg-red-50 border-iDonate-error text-iDonate-error"
+                    className="bg-iDonate-white-space border-2 hover:bg-red-50 border-iDonate-error text-iDonate-error dark:bg-iDonate-dark-mode dark:hover:bg-black"
                   >
                     Cancel
                   </Button>
@@ -125,7 +125,7 @@ export function OrganizationPaymentForm() {
                 {/* Submit Button */}
                 <Button
                   type="submit"
-                  className="bg-iDonate-white-space border-2 hover:bg-iDonate-light-gray border-iDonate-navy-accent text-iDonate-navy-primary"
+                  className="bg-iDonate-white-space border-2 hover:bg-iDonate-light-gray border-iDonate-navy-accent text-iDonate-navy-primary dark:text-iDonate-navy-accent dark:bg-iDonate-dark-mode dark:hover:bg-black"
                 >
                   Submit
                 </Button>
@@ -172,7 +172,7 @@ export function OrganizationPaymentForm() {
                           />
                           <Button
                             type="button"
-                            className="bg-iDonate-white-space border-2 hover:bg-iDonate-light-gray border-iDonate-navy-accent text-iDonate-navy-primary"
+                            className="bg-iDonate-white-space border-2 hover:bg-iDonate-light-gray border-iDonate-navy-accent text-iDonate-navy-primary dark:text-iDonate-navy-accent dark:bg-iDonate-dark-mode dark:hover:bg-black"
                             onClick={() => {
                               document.getElementById("file-input")?.click();
                             }}
