@@ -1,75 +1,92 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { signIn } from "next-auth/react";
+import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
+import { z } from 'zod'
 
-interface RegisterState {
-  loading: boolean;
-  error: string | null;
-  currentStep: number;
-  success: boolean;
+// Reuse the validation schemas from the component
+const step1Schema = z.object({
+  email: z.string().email(),
+  password: z.string(),
+  rememberMe: z.boolean(),
+})
+
+const step2Schema = z.object({
+  username: z.string(),
+  firstName: z.string(),
+  lastName: z.string(),
+  gender: z.enum(['Male', 'Female']),
+  dateOfBirth: z.date(),
+  phoneNumber: z.string(),
+})
+
+const formSchema = step1Schema.merge(step2Schema)
+
+type FormState = z.infer<typeof formSchema>
+
+interface SignUpState extends FormState {
+  status: 'idle' | 'loading' | 'succeeded' | 'failed'
+  error: string | null
 }
 
-const initialState: RegisterState = {
-  loading: false,
+const initialState: SignUpState = {
+  email: '',
+  password: '',
+  rememberMe: false,
+  username: '',
+  firstName: '',
+  lastName: '',
+  gender: 'Male',
+  dateOfBirth: new Date(),
+  phoneNumber: '',
+  status: 'idle',
   error: null,
-  currentStep: 1,
-  success: false,
-};
+}
 
 export const registerUser = createAsyncThunk(
-  "register/registerUser",
-  async (userData: any, { rejectWithValue }) => {
+  'signUp/registerUser',
+  async (userData: FormState, { rejectWithValue }) => {
     try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/register`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(userData),
+      const response = await fetch('http://localhost:8080/api/v1/users/user-registration', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
         },
-      );
+        body: JSON.stringify(userData),
+      })
 
       if (!response.ok) {
-        const error = await response.json();
-        return rejectWithValue(error.message);
+        throw new Error('Registration failed')
       }
 
-      const data = await response.json();
-      return data;
+      return await response.json()
     } catch (error) {
-      return rejectWithValue("Registration failed. Please try again.");
+      return rejectWithValue((error as Error).message)
     }
-  },
-);
+  }
+)
 
-const registerSlice = createSlice({
-  name: "register",
+const signUpSlice = createSlice({
+  name: 'signUp',
   initialState,
   reducers: {
-    setStep: (state, action) => {
-      state.currentStep = action.payload;
+    updateField: (state, action: PayloadAction<Partial<FormState>>) => {
+      return { ...state, ...action.payload }
     },
-    resetRegister: (state) => {
-      return initialState;
-    },
+    resetForm: () => initialState,
   },
   extraReducers: (builder) => {
     builder
       .addCase(registerUser.pending, (state) => {
-        state.loading = true;
-        state.error = null;
+        state.status = 'loading'
       })
       .addCase(registerUser.fulfilled, (state) => {
-        state.loading = false;
-        state.success = true;
+        state.status = 'succeeded'
       })
       .addCase(registerUser.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload as string;
-      });
+        state.status = 'failed'
+        state.error = action.payload as string
+      })
   },
-});
+})
 
-export const { setStep, resetRegister } = registerSlice.actions;
-export default registerSlice.reducer;
+export const { updateField, resetForm } = signUpSlice.actions
+export default signUpSlice.reducer
+

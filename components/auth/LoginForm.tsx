@@ -17,17 +17,19 @@ import BackgroundImage from "@/public/images/donation-login.jpg";
 import GoogleIcon from "@/public/images/google.png";
 import FacebookIcon from "@/public/images/facebook.png";
 import SampleLogo from "@/public/images/iDonateLogoSample.png";
+import { DotLottieReact } from '@lottiefiles/dotlottie-react';
+import AnimationText from "./AnimationText";
 
 const loginSchema = z.object({
   email: z
     .string()
-    .email("Invalid email address")
+    .email("អ៉ីមែលមិនត្រឹមត្រូវ")
     .nonempty("Email is required")
     .trim()
     .toLowerCase()
     .regex(
       /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-      "Invalid email format",
+      "អ៉ីមែលមិនត្រឹមត្រូវ",
     ),
 
   password: z
@@ -71,19 +73,21 @@ export default function LoginForm() {
         redirect: false,
         rememberMe: values.rememberMe,
       });
+      // log result for debugging
+      console.log("result", result);
 
       if (result?.error) {
         setError("email", {
           type: "manual",
-          message: "Invalid email or password",
+          message: "អ៉ីមែលមិនត្រឹមត្រូវ",
         });
         setError("password", {
           type: "manual",
-          message: "Invalid email or password",
+          message: "ពាក្យសម្ងាត់មិនត្រឹមត្រូវ",
         });
-        toast.error("Invalid email or password");
+        toast.error("អ៉ីមែលឬពាក្យសម្ងាត់មិនត្រឹមត្រូវ");
       } else {
-        toast.success("Login successful!");
+        toast.success("ចូលប្រើគណនីទទួលបានជោគជ័យ!");
       }
     } catch (error) {
       console.error("Login error:", error);
@@ -91,10 +95,46 @@ export default function LoginForm() {
     }
   };
 
+  const onSubmitForm = async (values: LoginFormValues) => {
+    try {
+      const result = await signIn("credentials", {
+        email: values.email,
+        password: values.password,
+        redirect: false,
+        rememberMe: values.rememberMe,
+      });
+      // log result for debugging
+      console.log("result", result);
+
+      if (result?.error) {
+        setError("email", {
+          type: "manual",
+          message: "អ៉ីមែលមិនត្រឹមត្រូវ",
+        });
+        setError("password", {
+          type: "manual",
+          message: "ពាក្យសម្ងាត់មិនត្រឹមត្រូវ",
+        });
+        toast.error("អ៉ីមែលឬពាក្យសម្ងាត់មិនត្រឹមត្រូវ");
+      } else {
+        toast.success("ចូលប្រើគណនីទទួលបានជោគជ័យ!");
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+      toast.error("An unexpected error occurred. Please try again later.");
+    }
+  };
+
+
+
   if (status === "loading") {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        <DotLottieReact
+      src="path/to/animation.lottie"
+      loop
+      autoplay
+    />
       </div>
     );
   }
@@ -117,11 +157,11 @@ export default function LoginForm() {
         transition={{ duration: 0.5 }}
         className="relative z-20 w-full max-w-md mx-auto px-4 sm:px-6"
       >
-        <Card className="backdrop-blur-md w-full sm:w-[470px] bg-white/70 p-6 sm:p-10 shadow-2xl border-none rounded-2xl">
+        <Card className="backdrop-blur-md w-full sm:w-[470px] bg-white/70 p-6  shadow-2xl border-none rounded-2xl">
           <motion.div
             whileHover={{ scale: 1.05, rotate: 5 }}
             whileTap={{ scale: 0.95, rotate: -5 }}
-            className="flex justify-center mb-6 sm:mb-8"
+            className="flex justify-center mb-6 xl:mb-4 md:mb-0 "
           >
             <Image
               src={SampleLogo}
@@ -133,15 +173,16 @@ export default function LoginForm() {
             />
           </motion.div>
 
-          <h1 className="text-2xl sm:text-3xl font-bold text-center mb-6 sm:mb-8 text-iDonate-navy-primary">
-            Welcome to{" "}
+          {/* <h1 className="text-2xl sm:text-3xl font-bold text-center mb-6 sm:mb-8 text-iDonate-navy-primary">
+            សូមស្វាគមន៍មកកាន់{" "}
             <span className="text-iDonate-green-primary/100 inline-block transform hover:scale-110 transition-transform duration-200">
               iDonate
             </span>
-          </h1>
+          </h1> */}
+          <AnimationText />
 
           <form
-            onSubmit={handleSubmit(onSubmit)}
+            onSubmit={handleSubmit(onSubmit )}
             className="space-y-4 sm:space-y-6"
           >
             <div>
@@ -151,7 +192,7 @@ export default function LoginForm() {
               >
                 <Mail className="w-4 h-4 text-iDonate-navy-primary" />
                 <span>
-                  Email <span className="text-red-500">*</span>
+                  អ៉ីមែល <span className="text-red-500">*</span>
                 </span>
               </label>
               <Input
@@ -179,7 +220,7 @@ export default function LoginForm() {
               >
                 <Lock className="w-4 h-4 text-iDonate-navy-primary" />
                 <span>
-                  Password <span className="text-red-500">*</span>
+                  បញ្ចូលពាក្យសម្ងាត់ <span className="text-red-500">*</span>
                 </span>
               </label>
               <Input
@@ -194,7 +235,7 @@ export default function LoginForm() {
                 onClick={() => setShowPassword(!showPassword)}
                 className="absolute right-3 top-8 text-gray-400 hover:text-gray-600 focus:outline-none items-center"
               >
-                {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                {showPassword ? <Eye size={18} className="mt-1" /> : <EyeOff size={18} className="mt-1" />}
               </button>
               {errors.password && (
                 <motion.p
@@ -207,20 +248,20 @@ export default function LoginForm() {
               )}
             </div>
 
-            <div className="grid grid-cols-2 gap-16 md:gap-36 sm:items-center sm:justify-between text-sm mt-4">
+            <div className="flex gap-16 sm:items-center sm:justify-between text-sm mt-4 md:justify-between">
               <label className="flex items-center space-x-2 cursor-pointer mb-2 sm:mb-0">
                 <input
                   type="checkbox"
                   {...register("rememberMe")}
                   className="rounded border-gray-300 text-iDonate-navy-primary focus:ring-iDonate-navy-primary"
                 />
-                <span className="text-gray-600">Remember me</span>
+                <span className="text-gray-600">រក្សាទុកព័ត៌មានរបស់អ្នក</span>
               </label>
               <Link
                 href="/auth/forgot-password"
-                className="text-iDonate-navy-primary hover:text-iDonate-navy-primary/80 font-medium transition-colors duration-200"
+                className="text-iDonate-navy-primary hover:text-iDonate-navy-primary/80 font-medium transition-colors duration-200 items-end"
               >
-                Forgot Password?
+                ភ្លេចពាក្យសម្ងាត់ឬ?
               </Link>
             </div>
 
@@ -231,13 +272,18 @@ export default function LoginForm() {
             >
               <Button
                 type="submit"
-                className="w-full h-10 sm:h-11 bg-iDonate-navy-primary hover:bg-iDonate-navy-primary/90 text-white font-medium text-lg rounded-md transition-all duration-200 shadow-md hover:shadow-lg"
+                className="w-full h-10 sm:h-11 bg-iDonate-navy-primary hover:bg-iDonate-navy-primary/90 text-white font-medium rounded-md transition-all duration-200 shadow-md hover:shadow-lg"
                 disabled={isSubmitting}
+                
               >
                 {isSubmitting ? (
-                  <Loader2 className="h-5 w-5 animate-spin" />
+                    <DotLottieReact
+                    src="path/to/animation.lottie"
+                    loop
+                    autoplay
+                  />
                 ) : (
-                  "Sign In"
+                  "ចូលប្រើ"
                 )}
               </Button>
             </motion.div>
@@ -246,44 +292,47 @@ export default function LoginForm() {
           <div className="flex items-center my-4 mb-0">
             <span className="flex-grow border-t border-gray-400"></span>
             <span className="mx-4 text-sm text-gray-500 font-medium">
-              or continue with
+              បន្តជាមួយគណនី
             </span>
             <span className="flex-grow border-t border-gray-400"></span>
           </div>
 
-          <div className="flex items-center justify-center mt-4 space-x-[-20px]">
+          <div className="flex items-center justify-center mt-4 space-x-[-20px]  md:mt-[-1px]">
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Button
                 variant="outline"
                 className="w-20 h-20 rounded-full bg-transparent border-none hover:bg-transparent transition-colors duration-200"
                 onClick={() => signIn("google", { callbackUrl: "/" })}
               >
-                <Image src={GoogleIcon} alt="Google" width={60} height={60} />
+                <Image src={GoogleIcon} alt="Google" width={60} height={60} unoptimized className="w-[40px] h-[40px]" />
               </Button>
             </motion.div>
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Button
                 variant="outline"
-                className="w-20 h-20 rounded-full bg-transparent border-none hover:bg-transparent transition-colors duration-200"
+                className="w-20 h-20 rounded-full bg-transparent border-none hover:bg-transparent transition-colors duration-200 "
                 onClick={() => signIn("facebook", { callbackUrl: "/" })}
               >
                 <Image
                   src={FacebookIcon}
                   alt="Facebook"
-                  width={60}
-                  height={60}
+                  width={500}
+                  height={500}
+                  className="w-[40px] h-[40px]"
+                  unoptimized
+                 
                 />
               </Button>
             </motion.div>
           </div>
 
-          <p className="mt-4 text-center text-sm text-gray-600">
-            Don't have an account?{" "}
+          <p className="mt-4 md:mt-0 text-center text-sm text-gray-600">
+            មិនទាន់មានគណនីមែនទេ?{" "}
             <Link
               href="/auth/sign-up"
               className="text-iDonate-navy-primary hover:text-iDonate-navy-primary/80 font-medium transition-colors duration-200 hover:underline"
             >
-              Sign up now
+             បង្កើតគណនីថ្មី
             </Link>
           </p>
         </Card>

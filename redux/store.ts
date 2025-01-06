@@ -1,12 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
-import authSlice from "@/redux/features/auth/authSlice";
+// import authSlice from "@/redux/features/auth/authSlice";
 import { idonateApi } from "@/redux/api";
 
 // Create Store
 export const makeStore = () => {
   return configureStore({
     reducer: {
-      auth: authSlice,
       [idonateApi.reducerPath]: idonateApi.reducer,
     },
     middleware: (getDefaultMiddleware) =>
