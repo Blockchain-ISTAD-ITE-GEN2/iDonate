@@ -29,7 +29,7 @@ export default function ThemeSwitch() {
       <Sun
         onClick={() => setTheme("light")}
         size="36"
-        className="bg-iDonate-green-accent hover:bg-iDonate-green-secondary rounded-full border-0 p-2"
+        className="bg-transparent border rounded-full p-2 dark:hover:bg-iDonate-dark-mode"
       />
     );
   }

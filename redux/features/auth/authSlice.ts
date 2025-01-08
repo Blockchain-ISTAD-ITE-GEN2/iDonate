@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "@/redux/store";
 import axios from "axios";
 
-interface AuthState {
+type AuthState = {
   token: string | null;
   verifyToken: string | null;
   resendToken: string | null;

@@ -64,7 +64,7 @@ export default function NavbarComponent() {
   }
 
   return (
-    <nav className="w-full h-[72px] flex items-center justify-between shadow-sm z-10 top-0 px-4 xl:px-0  2xl:px-[80px] border border-none">
+    <nav className="w-full h-[72px] flex items-center justify-between shadow-sm z-10 top-0 px-4 xl:px-10  2xl:px-[80px] dark:border-b">
       <section
         className="flex items-center cursor-pointer"
         onClick={() => router.push("/")}
@@ -83,7 +83,7 @@ export default function NavbarComponent() {
 
       {/* Mobile Menu Button */}
       <Button
-        className="lg:hidden bg-iDonate-white-space text-iDonate-gray hover:bg-iDonate-light-gray hover:text-iDonate-navy-primary rounded-[12px]"
+        className="lg:hidden bg-transparent text-iDonate-gray hover:bg-iDonate-light-gray hover:text-iDonate-navy-primary rounded-[12px] dark:text-iDonate-white-space dark:hover:bg-iDonate-dark-mode"
         onClick={() => setIsMobileMenuOpen(true)}
       >
         <Menu className="w-10 h-10" />
@@ -113,7 +113,7 @@ export default function NavbarComponent() {
                 onClick={() => {
                   router.push("/auth/login");
                 }}
-                className="bg-transparent text-iDonate-navy-primary hover:bg-iDonate-light-gray font-medium dark:text-iDonate-navy-accent"
+                className="bg-transparent text-iDonate-navy-primary hover:bg-iDonate-light-gray font-medium dark:text-iDonate-navy-accent dark:hover:bg-iDonate-dark-mode"
               >
                 Sign in
               </Button>
@@ -121,10 +121,10 @@ export default function NavbarComponent() {
           </div>
         </div>
 
-        <Button className="group bg-iDonate-white-space border-2 border-iDonate-navy-primary px-2 text-iDonate-navy-primary hover:bg-iDonate-navy-primary hover:text-white hover:border-iDonate-navy-primary rounded-[12px] ">
+        <Button className="group bg-iDonate-white-space border-2 border-iDonate-navy-primary px-2 text-iDonate-navy-primary hover:bg-iDonate-navy-primary hover:text-white hover:border-iDonate-navy-primary rounded-[12px] dark:text-iDonate-navy-accent dark:bg-iDonate-dark-mode dark:border-transparent">
           <Heart
             style={{ width: "25px", height: "25px" }}
-            className="bg-iDonate-navy-primary rounded-full p-1 fill-white group-hover:fill-iDonate-navy-primary group-hover:text-iDonate-navy-primary group-hover:bg-iDonate-green-secondary "
+            className="bg-iDonate-navy-primary rounded-full p-1 fill-white group-hover:fill-iDonate-navy-primary group-hover:text-iDonate-navy-primary group-hover:bg-iDonate-green-secondary dark:bg-iDonate-green-secondary  dark:text-iDonate-navy-primary dark:fill-iDonate-navy-primary"
           />
           <span className="text-sub-description-eng xl:text-description-eng">
             Donate Now

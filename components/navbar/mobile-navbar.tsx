@@ -56,7 +56,7 @@ export function MobileMenu({
   };
 
   const navActiveClass = (isActive: boolean) =>
-    `text-md xl:text-description-eng font-normal ${
+    `text-md xl:text-description-eng font-normal dark:text-iDonate-navy-accent ${
       isActive ? "text-iDonate-green-primary" : "text-iDonate-navy-primary"
     }`;
 
@@ -64,16 +64,16 @@ export function MobileMenu({
 
   return (
     <nav className="w-full h-20 self-start lg:hidden flex items-center justify-between shadow-sm z-10">
-      <div className="fixed inset-0 bg-white z-50 lg:hidden">
+      <div className="fixed inset-0 bg-transparent z-50 lg:hidden dark:border-b">
         {/* Header */}
 
-        <div className="w-full h-[72px] flex items-center justify-between shadow-sm px-4">
+        <div className="w-full h-[72px] flex items-center justify-between shadow-sm px-4 dark:border-b">
           <section
             className="flex items-center cursor-pointer"
             onClick={() => router.push("/")}
           >
             <Image src={logo} width={80} height={80} alt="Logo" />
-            <span className="text-lg font-medium text-iDonate-navy-primary">
+            <span className="text-lg font-medium text-iDonate-navy-primary dark:text-iDonate-navy-accent">
               iDONATE
             </span>
           </section>
@@ -95,7 +95,7 @@ export function MobileMenu({
                     router.push("/auth/login");
                     onClose();
                   }}
-                  className="hidden sm:flex bg-transparent text-iDonate-navy-primary hover:bg-iDonate-light-gray font-medium"
+                  className="hidden sm:flex bg-transparent text-iDonate-navy-primary hover:bg-iDonate-light-gray font-medium dark:text-iDonate-navy-accent dark:hover:bg-iDonate-dark-mode "
                 >
                   Sign In
                 </Button>
@@ -104,7 +104,7 @@ export function MobileMenu({
 
             <Button
               onClick={onClose}
-              className="bg-iDonate-white-space text-iDonate-gray hover:bg-iDonate-light-gray hover:text-iDonate-navy-primary rounded-lg"
+              className="bg-transparent text-iDonate-gray hover:bg-iDonate-light-gray hover:text-iDonate-navy-primary rounded-lg dark:text-iDonate-white-space dark:hover:bg-iDonate-dark-mode"
             >
               <X className="w-6 h-6" />
             </Button>
@@ -112,7 +112,7 @@ export function MobileMenu({
         </div>
 
         {/* Menu */}
-        <div className="flex flex-col p-4 gap-4 bg-iDonate-light-gray shadow-light">
+        <div className="flex flex-col p-4 gap-4 bg-iDonate-light-gray dark:bg-iDonate-bg-dark-mode shadow-light dark:border-b">
           <div className="flex flex-col gap-2">
             {menuList.map((item, index) => {
               const hasSubmenu = ["Events", "Contributors", "About"].includes(
@@ -126,13 +126,13 @@ export function MobileMenu({
                     <Link
                       href={item.path}
                       onClick={onClose}
-                      className="flex items-center justify-between w-full h-12 px-4 hover:bg-iDonate-white-space rounded-lg"
+                      className="flex items-center justify-between w-full h-12 px-4 hover:bg-iDonate-white-space rounded-lg dark:hover:bg-iDonate-dark-mode "
                     >
                       <span className={navActiveClass(pathname === item.path)}>
                         {item.title}
                       </span>
                       {item.path === "/search" && (
-                        <Search className="w-5 h-5 text-iDonate-navy-primary" />
+                        <Search className="w-5 h-5 text-iDonate-navy-primary dark:text-iDonate-navy-accent" />
                       )}
                     </Link>
                   </div>
@@ -144,12 +144,12 @@ export function MobileMenu({
                   {hasSubmenu ? (
                     <Button
                       onClick={() => handleSubmenuClick(item.title)}
-                      className="flex items-center justify-between w-full h-12 px-4 bg-transparent hover:bg-iDonate-white-space"
+                      className="flex items-center justify-between w-full h-12 px-4 bg-transparent hover:bg-iDonate-white-space dark:hover:bg-iDonate-dark-mode"
                     >
                       <span className={navActiveClass(pathname === item.path)}>
                         {item.title}
                       </span>
-                      <ChevronRight className="w-5 h-5 text-iDonate-navy-primary" />
+                      <ChevronRight className="w-5 h-5 text-iDonate-navy-primary  dark:text-iDonate-navy-accent" />
                     </Button>
                   ) : (
                     <Link
@@ -182,13 +182,13 @@ export function MobileMenu({
                 router.push("/auth/login");
                 onClose();
               }}
-              className="sm:hidden flex-1 items-center justify-center space-x-2 bg-iDonate-white-space border-2 border-iDonate-navy-primary text-iDonate-navy-primary hover:bg-iDonate-navy-primary hover:text-white rounded-lg"
+              className="sm:hidden flex-1 items-center justify-center space-x-2 bg-iDonate-white-space border-2 border-iDonate-navy-primary text-iDonate-navy-primary hover:bg-iDonate-navy-primary hover:text-white rounded-lg group px-2  hover:border-iDonate-navy-primary dark:text-iDonate-navy-accent dark:bg-iDonate-dark-mode dark:border-transparent"
             >
               Sign In
             </Button>
 
-            <Button className="flex-1 items-center justify-center space-x-2 bg-iDonate-white-space border-2 border-iDonate-navy-primary text-iDonate-navy-primary hover:bg-iDonate-navy-primary hover:text-white rounded-lg">
-              <Heart className="w-5 h-5" />
+            <Button className="flex-1 items-center justify-center space-x-2 bg-iDonate-white-space border-2 border-iDonate-navy-primary text-iDonate-navy-primary hover:bg-iDonate-navy-primary hover:text-white rounded-lg dark:text-iDonate-navy-accent dark:bg-iDonate-dark-mode dark:border-transparent">
+              <Heart className="w-5 h-5 dark:fill-iDonate-green-primary dark:text-iDonate-green-primary" />
               <span>Donate Now</span>
             </Button>
           </div>

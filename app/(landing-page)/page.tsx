@@ -3,11 +3,11 @@ import CategoryCardComponent from "@/components/events/categories/CategoryCardCo
 import { CategoryType } from "@/difinitions/types/components-type/CategoryType";
 import HeroSectionComponent from "@/components/herosection/HeroSectionComponent";
 import TotalOrganizationComponent from "@/components/landing/TotalOrganizationComponent";
-import { BarAndLineChart } from "@/components/organization/dashboard/bar-and-line-chart";
 import LatestDonationCard from "@/components/landing/latest-donation-event/LatestDonationCard";
 import TestimonialCarousel from "@/components/testimonials/TestimonailCardComponent";
 import BannerLandingCard from "@/components/landing/banner/BannerLandingCard";
 import UpcomingEvents from "@/components/landing/upcoming-event/UpComingEventComponent";
+import { BarAndLineChartLanding } from "@/components/landing/transaction/bar-and-line-chart-landing";
 
 export default function Homepage() {
   const typedCategory: CategoryType[] = categories;
@@ -44,7 +44,7 @@ export default function Homepage() {
 
       {/* Bar and Line Chart */}
       <section className="w-full">
-        <BarAndLineChart />
+        <BarAndLineChartLanding />
       </section>
 
       {/* Latest Donation */}
