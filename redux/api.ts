@@ -49,7 +49,7 @@ const baseQueryWithReAuth = async (args: any, api: any, extraOptions: any) => {
 };
 
 export const idonateApi = createApi({
-  tagTypes: ["project", "favourite", "userProfile", "media"],
+  tagTypes: ["project", "favourite", "userProfile", "media", "category"],
   reducerPath: "idonateApi",
   baseQuery: baseQueryWithReAuth,
   endpoints: () => ({}),
