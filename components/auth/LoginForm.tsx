@@ -1,7 +1,7 @@
 "use client";
 
-import { signIn, useSession } from "next-auth/react";
-import { useForm } from "react-hook-form";
+import { signIn } from "next-auth/react";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
@@ -17,21 +17,18 @@ import BackgroundImage from "@/public/images/donation-login.jpg";
 import GoogleIcon from "@/public/images/google.png";
 import FacebookIcon from "@/public/images/facebook.png";
 import SampleLogo from "@/public/images/iDonateLogoSample.png";
-import { DotLottieReact } from '@lottiefiles/dotlottie-react';
-import AnimationText from "./AnimationText";
+import AnimationText from "@/components/auth/AnimationText";
+import { useDispatch } from "react-redux";
+import { setAccessToken } from "@/redux/features/auth/authSlice";
+import { useRouter } from "next/navigation";
 
+
+// Zod schema for form validation
 const loginSchema = z.object({
   email: z
     .string()
-    .email("អ៉ីមែលមិនត្រឹមត្រូវ")
-    .nonempty("Email is required")
-    .trim()
-    .toLowerCase()
-    .regex(
-      /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-      "អ៉ីមែលមិនត្រឹមត្រូវ",
-    ),
-
+    .email("Invalid email address")
+    .nonempty("Email is required"),
   password: z
     .string()
     .min(6, "Password must be at least 6 characters")
@@ -41,103 +38,64 @@ const loginSchema = z.object({
       "Password must include at least one uppercase letter, one lowercase letter, one number, and one special character",
     )
     .nonempty("Password is required"),
-
-  rememberMe: z.boolean().default(false),
 });
 
 type LoginFormValues = z.infer<typeof loginSchema>;
 
 export default function LoginForm() {
-  const { data: session, status } = useSession();
+  const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
-    setError,
+    formState: { errors },
   } = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
-    defaultValues: {
-      email: "",
-      password: "",
-      rememberMe: false,
-    },
+    defaultValues: { email: "", password: "" },
   });
 
-  const onSubmit = async (values: LoginFormValues) => {
-    try {
-      const result = await signIn("credentials", {
-        email: values.email,
-        password: values.password,
-        redirect: false,
-        rememberMe: values.rememberMe,
-      });
-      // log result for debugging
-      console.log("result", result);
+  const onSubmit: SubmitHandler<LoginFormValues> = async (data) => {
+    setLoading(true);
 
-      if (result?.error) {
-        setError("email", {
-          type: "manual",
-          message: "អ៉ីមែលមិនត្រឹមត្រូវ",
-        });
-        setError("password", {
-          type: "manual",
-          message: "ពាក្យសម្ងាត់មិនត្រឹមត្រូវ",
-        });
-        toast.error("អ៉ីមែលឬពាក្យសម្ងាត់មិនត្រឹមត្រូវ");
-      } else {
-        toast.success("ចូលប្រើគណនីទទួលបានជោគជ័យ!");
+    try {
+      // Make a POST request to the login API
+      const response = await fetch(`${process.env.NEXT_PUBLIC_IDONATE_API_URL}/api/v1/auth/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+        credentials: "include", // Include cookies in the request
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Login failed");
       }
+
+      const result = await response.json();
+      console.log("Login Response:", result);
+
+      // Set access token in Redux
+      dispatch(setAccessToken(result.accessToken));
+
+      // Set a cookie from the frontend (if needed)
+      document.cookie = `idonate-refreshToken=${result.refreshToken};path=/;max-age=3600;`; // Expires in 1 hour
+      console.log("Cookie set successfully");
+
+      // Redirect to the home page
+      console.log('Before redirection');
+      router.push('/');
+      console.log('After redirection');
+      toast.success("Logged in successfully!");
     } catch (error) {
       console.error("Login error:", error);
-      toast.error("An unexpected error occurred. Please try again later.");
+      toast.error(error instanceof Error ? error.message : "Login failed");
+    } finally {
+      setLoading(false);
     }
   };
-
-  const onSubmitForm = async (values: LoginFormValues) => {
-    try {
-      const result = await signIn("credentials", {
-        email: values.email,
-        password: values.password,
-        redirect: false,
-        rememberMe: values.rememberMe,
-      });
-      // log result for debugging
-      console.log("result", result);
-
-      if (result?.error) {
-        setError("email", {
-          type: "manual",
-          message: "អ៉ីមែលមិនត្រឹមត្រូវ",
-        });
-        setError("password", {
-          type: "manual",
-          message: "ពាក្យសម្ងាត់មិនត្រឹមត្រូវ",
-        });
-        toast.error("អ៉ីមែលឬពាក្យសម្ងាត់មិនត្រឹមត្រូវ");
-      } else {
-        toast.success("ចូលប្រើគណនីទទួលបានជោគជ័យ!");
-      }
-    } catch (error) {
-      console.error("Login error:", error);
-      toast.error("An unexpected error occurred. Please try again later.");
-    }
-  };
-
-
-
-  if (status === "loading") {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <DotLottieReact
-      src="path/to/animation.lottie"
-      loop
-      autoplay
-    />
-      </div>
-    );
-  }
 
   return (
     <div className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
@@ -157,11 +115,11 @@ export default function LoginForm() {
         transition={{ duration: 0.5 }}
         className="relative z-20 w-full max-w-md mx-auto px-4 sm:px-6"
       >
-        <Card className="backdrop-blur-md w-full sm:w-[470px] bg-white/70 p-6  shadow-2xl border-none rounded-2xl">
+        <Card className="backdrop-blur-md w-full sm:w-[470px] bg-white/70 p-6 shadow-2xl border-none rounded-2xl">
           <motion.div
             whileHover={{ scale: 1.05, rotate: 5 }}
             whileTap={{ scale: 0.95, rotate: -5 }}
-            className="flex justify-center mb-6 xl:mb-4 md:mb-0 "
+            className="flex justify-center mb-6 xl:mb-4 md:mb-0"
           >
             <Image
               src={SampleLogo}
@@ -172,19 +130,9 @@ export default function LoginForm() {
               priority
             />
           </motion.div>
-
-          {/* <h1 className="text-2xl sm:text-3xl font-bold text-center mb-6 sm:mb-8 text-iDonate-navy-primary">
-            សូមស្វាគមន៍មកកាន់{" "}
-            <span className="text-iDonate-green-primary/100 inline-block transform hover:scale-110 transition-transform duration-200">
-              iDonate
-            </span>
-          </h1> */}
           <AnimationText />
 
-          <form
-            onSubmit={handleSubmit(onSubmit )}
-            className="space-y-4 sm:space-y-6"
-          >
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 sm:space-y-6">
             <div>
               <label
                 htmlFor="email"
@@ -252,7 +200,6 @@ export default function LoginForm() {
               <label className="flex items-center space-x-2 cursor-pointer mb-2 sm:mb-0">
                 <input
                   type="checkbox"
-                  {...register("rememberMe")}
                   className="rounded border-gray-300 text-iDonate-navy-primary focus:ring-iDonate-navy-primary"
                 />
                 <span className="text-gray-600">រក្សាទុកព័ត៌មានរបស់អ្នក</span>
@@ -272,16 +219,12 @@ export default function LoginForm() {
             >
               <Button
                 type="submit"
+                // onClick={()=>router.push("/")}
                 className="w-full h-10 sm:h-11 bg-iDonate-navy-primary hover:bg-iDonate-navy-primary/90 text-white font-medium rounded-md transition-all duration-200 shadow-md hover:shadow-lg"
-                disabled={isSubmitting}
-                
+                disabled={loading}
               >
-                {isSubmitting ? (
-                    <DotLottieReact
-                    src="path/to/animation.lottie"
-                    loop
-                    autoplay
-                  />
+                {loading ? (
+                  <Loader2 className="h-4 w-4 animate-spin" />
                 ) : (
                   "ចូលប្រើ"
                 )}
@@ -297,7 +240,7 @@ export default function LoginForm() {
             <span className="flex-grow border-t border-gray-400"></span>
           </div>
 
-          <div className="flex items-center justify-center mt-4 space-x-[-20px]  md:mt-[-1px]">
+          <div className="flex items-center justify-center mt-4 space-x-[-20px] md:mt-[-1px]">
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Button
                 variant="outline"
@@ -310,7 +253,7 @@ export default function LoginForm() {
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Button
                 variant="outline"
-                className="w-20 h-20 rounded-full bg-transparent border-none hover:bg-transparent transition-colors duration-200 "
+                className="w-20 h-20 rounded-full bg-transparent border-none hover:bg-transparent transition-colors duration-200"
                 onClick={() => signIn("facebook", { callbackUrl: "/" })}
               >
                 <Image
@@ -320,7 +263,6 @@ export default function LoginForm() {
                   height={500}
                   className="w-[40px] h-[40px]"
                   unoptimized
-                 
                 />
               </Button>
             </motion.div>
@@ -332,7 +274,7 @@ export default function LoginForm() {
               href="/auth/sign-up"
               className="text-iDonate-navy-primary hover:text-iDonate-navy-primary/80 font-medium transition-colors duration-200 hover:underline"
             >
-             បង្កើតគណនីថ្មី
+              បង្កើតគណនីថ្មី
             </Link>
           </p>
         </Card>

@@ -11,34 +11,38 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { useDispatch, useSelector } from "react-redux";
+import { setCode, setTimer, setLoading, setError, resetCode } from "@/redux/features/verification/verificationSlice";
+import { RootState } from "@/redux/store";
+import { useRouter } from "next/navigation"; // Import useRouter
 
 export default function VerificationForm() {
-  const [code, setCode] = useState(["", "", "", "", "", ""]);
-  const [timer, setTimer] = useState(30);
+  const dispatch = useDispatch();
+  const { code, timer, isLoading, error } = useSelector(
+    (state: RootState) => state.verification,
+  );
   const inputs = useRef<(HTMLInputElement | null)[]>([]);
+  const router = useRouter(); // Initialize useRouter
 
   useEffect(() => {
     if (timer > 0) {
-      const interval = setInterval(() => setTimer(timer - 1), 1000);
+      const interval = setInterval(() => dispatch(setTimer(timer - 1)), 1000);
       return () => clearInterval(interval);
     }
-  }, [timer]);
+  }, [timer, dispatch]);
 
   const handlePaste = (e: React.ClipboardEvent) => {
     e.preventDefault();
     const pastedData = e.clipboardData.getData("text").slice(0, 6);
     const newCode = [...code];
 
-    // Fill in the code array with pasted digits
     for (let i = 0; i < pastedData.length; i++) {
       if (/^\d$/.test(pastedData[i])) {
         newCode[i] = pastedData[i];
+        dispatch(setCode({ index: i, value: pastedData[i] }));
       }
     }
 
-    setCode(newCode);
-
-    // Focus the next empty input or the last input if all filled
     const nextEmptyIndex = newCode.findIndex((digit) => !digit);
     const focusIndex = nextEmptyIndex === -1 ? 5 : nextEmptyIndex;
     inputs.current[focusIndex]?.focus();
@@ -47,11 +51,8 @@ export default function VerificationForm() {
   const handleInput = (index: number, value: string) => {
     if (value.length > 1) return;
 
-    const newCode = [...code];
-    newCode[index] = value;
-    setCode(newCode);
+    dispatch(setCode({ index, value }));
 
-    // Auto-focus next input
     if (value && index < 5) {
       inputs.current[index + 1]?.focus();
     }
@@ -63,6 +64,35 @@ export default function VerificationForm() {
   ) => {
     if (e.key === "Backspace" && !code[index] && index > 0) {
       inputs.current[index - 1]?.focus();
+    }
+  };
+
+  const handleVerify = async () => {
+    const verificationCode = code.join("");
+    dispatch(setLoading(true));
+    dispatch(setError(null));
+
+    try {
+      // Simulate an API call
+      const response = await fetch(
+        `http://localhost:8080/api/v1/users/verify-email?token=${verificationCode}`,
+        {
+          method: "POST",
+        },
+      );
+      if (!response.ok) {
+        throw new Error("Verification failed");
+      }
+
+      // Show success message
+      alert("Email verified successfully!");
+
+      // Redirect to the login page
+      router.push("/auth/login"); // Update the path to your login page
+    } catch (error) {
+      dispatch(setError("Failed to verify email. Please try again."));
+    } finally {
+      dispatch(setLoading(false));
     }
   };
 
@@ -98,7 +128,12 @@ export default function VerificationForm() {
             />
           ))}
         </div>
-        <Button className="w-full" size="lg">
+        <Button
+          className="w-full"
+          size="lg"
+          onClick={handleVerify}
+          disabled={isLoading}
+        >
           Verify
           <ArrowRight className="ml-2 h-4 w-4" />
         </Button>
@@ -106,13 +141,12 @@ export default function VerificationForm() {
           variant="ghost"
           className="w-full"
           disabled={timer > 0}
-          onClick={() => setTimer(30)}
+          onClick={() => dispatch(setTimer(30))}
         >
           {timer > 0 ? `Resend code in ${timer}s` : "Resend code"}
         </Button>
+        {error && <p className="text-red-500 text-center">{error}</p>}
       </CardContent>
     </Card>
   );
 }
-
-

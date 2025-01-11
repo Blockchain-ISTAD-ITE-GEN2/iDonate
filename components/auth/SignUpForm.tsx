@@ -8,11 +8,8 @@ import FacebookIcon from "@/public/images/facebook.png";
 import Image from "next/image";
 import Link from "next/link";
 import { UseDispatch } from "react-redux";
-import { useRegisterMutation } from "@/store/api/authApi";
 
 import {
-  // Alert,
-  // AlertDescription,
   Card,
   CardHeader,
   CardTitle,
@@ -31,12 +28,14 @@ import { Calendar } from "../ui/calendar";
 import { format } from "util";
 import { DayPicker } from "react-day-picker";
 import { DatePicker } from "./DayPicker";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
-// import { watch } from 'fs';
-
-const SignUpFormComponent = () => {
+const SignUpForm = () => {
   const [step, setStep] = useState(1);
   const [showPassword, setShowPassword] = useState(false);
+  const router = useRouter();
+
   interface FormData {
     email: string;
     password: string;
@@ -58,6 +57,7 @@ const SignUpFormComponent = () => {
     dateOfBirth: undefined,
     phoneNumber: "",
   });
+
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -78,12 +78,70 @@ const SignUpFormComponent = () => {
       ...prev,
       [name]: value,
     }));
-    // Clear error when user starts typing
     if (errors[name]) {
       setErrors((prev) => ({
         ...prev,
         [name]: "",
       }));
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (step === 1) {
+      if (validateStep1()) {
+        setStep(2);
+      }
+      return;
+    }
+
+    if (!validateStep2()) {
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      const formatDate = (date: Date | undefined) => {
+        if (!date) return '';
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const year = date.getFullYear();
+        return `${day}-${month}-${year}`;
+      };
+
+      const requestBody = {
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        gender: formData.gender,
+        phoneNumber: formData.phoneNumber,
+        email: formData.email,
+        username: formData.username,
+        password: formData.password,
+        dateOfBirth: formatDate(formData.dateOfBirth),
+      };
+
+      const response = await fetch(`${process.env.NEXT_PUBLIC_IDONATE_API_URL}/api/v1/users/user-registration`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestBody),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Registration failed');
+      }
+
+      toast.success('ការចុះឈ្មោះបានជោគជ័យ!');
+      router.push('/auth/verification');
+    } catch (error) {
+      console.error('Registration error:', error);
+      toast.error(error instanceof Error ? error.message : 'ការចុះឈ្មោះបរាជ័យ');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -125,33 +183,6 @@ const SignUpFormComponent = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = async (e: any) => {
-    e.preventDefault();
-
-    if (step === 1) {
-      if (validateStep1()) {
-        setStep(2);
-      }
-    } else {
-      if (validateStep2()) {
-        setIsSubmitting(true);
-        try {
-          // Simulating API call
-          await new Promise((resolve) => setTimeout(resolve, 1000));
-          console.log("Form submitted:", formData);
-          // useRegisterMutation(formData); // Pass formData as an argument
-          // Here you would typically make your API call
-          alert("Registration successful!");
-        } catch (error) {
-          console.error("Registration error:", error);
-          alert("Registration failed. Please try again.");
-        } finally {
-          setIsSubmitting(false);
-        }
-      }
-    }
-  };
-
   const StepIndicator = () => (
     <div className="flex justify-between items-center mb-6">
       <div className="text-sm text-gray-500">ជំហានទី {step} នៃ​ 2</div>
@@ -170,21 +201,21 @@ const SignUpFormComponent = () => {
     </div>
   );
 
-  const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined)
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
 
   const handleDateChange = (date: Date | undefined) => {
-    setSelectedDate(date)
+    setSelectedDate(date);
     setFormData((prev) => ({
       ...prev,
       dateOfBirth: date,
-    }))
-    // Clear error when user starts typing
+    }));
     if (errors.dateOfBirth) {
       setErrors((prev) => ({
         ...prev,
         dateOfBirth: "",
-      }))
+      }));
     }
+  };
 
   return (
     <div className="w-full max-w-2xl mx-auto p-6">
@@ -344,7 +375,6 @@ const SignUpFormComponent = () => {
                       onDateChange={handleDateChange}
                       error={errors.dateOfBirth}
                     />
-
                   </div>
 
                   <div>
@@ -444,7 +474,7 @@ const SignUpFormComponent = () => {
         </Card>
       </div>
     </div>
-  );}
+  );
 };
 
-export default SignUpFormComponent;
+export default SignUpForm;

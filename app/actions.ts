@@ -16,13 +16,7 @@ export async function resetPassword(newPassword: string) {
 
 
 export async function requestPasswordReset(email: string) {
-  // Here you would typically:
-  // 1. Check if the user exists
-  // 2. Generate a password reset token
-  // 3. Save the token in the database with an expiration
-  // 4. Send an email with the reset link
-
-  // For this example, we'll just simulate sending an email
+  await 
   await sendPasswordResetEmail(email)
 }
 

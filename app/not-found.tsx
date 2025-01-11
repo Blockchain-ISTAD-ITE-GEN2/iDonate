@@ -32,15 +32,7 @@ const NotFound = () => {
             Go back home
           </Link>
 
-          <Link
-            href="#"
-            className="inline-flex items-center justify-center rounded-lg bg-transparent px-6 py-3 text-sm font-semibold text-iDonate-navy-secondary shadow-light  border border-iDonate-navy-accent transition hover:bg-iDonate-navy-accent hover:text-iDonate-navy-primary"
-          >
-            Contact Support
-            <span aria-hidden="true" className="text-lg ">
-              &rarr;
-            </span>
-          </Link>
+          
         </div>
       </div>
     </main>

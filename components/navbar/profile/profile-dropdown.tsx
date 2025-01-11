@@ -9,21 +9,31 @@ import {
 import { Heart, LogOut, Search, User } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router"; // Import useRouter for redirection
 
 export const ProfileDropdown = ({
   session,
   signOut,
+  accessToken, // Add accessToken as a prop
 }: {
   session: any;
   signOut: any;
+  accessToken?: string | any; // Make accessToken optional
 }) => {
+  const router = useRouter(); // Initialize the router
+
+  const handleSignOut = () => {
+    signOut(); // Call the signOut function
+    router.push("/auth/login"); // Redirect to login page after sign-out
+  };
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
         {session?.user?.image ? (
           <Image
             src={session.user.image}
-            alt={`${session.user.name ?? "User"}'s avatar`}
+            alt={`${session.user.name ?? "user"}'s avatar`}
             width={40}
             height={40}
             className="rounded-full border-2 border-iDonate-navy-primary"
@@ -113,7 +123,7 @@ export const ProfileDropdown = ({
 
         {/* Sign Out */}
         <DropdownMenuItem
-          onClick={() => signOut()}
+          onClick={handleSignOut} // Use handleSignOut instead of signOut directly
           className="text-red-600 hover:text-red-700 hover:bg-red-50"
         >
           <LogOut className="mr-2 h-4 w-4" />

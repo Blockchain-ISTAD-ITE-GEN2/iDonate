@@ -10,8 +10,9 @@ import FooterComponent from "@/components/footer/FooterComopent";
 import { ThemeProviders } from "./providers";
 import { usePathname } from "next/navigation";
 import { Inter, Suwannaphum } from "next/font/google";
-import { Providers } from "./auth/providers";
 import Loader from "./loading";
+import StoreProvider from "./StoreProvider";
+import Loading from "@/components/loading/LoadingComponent";
 
 const inter = Inter({
   weight: ["100", "300", "400", "700", "900"],
@@ -40,13 +41,13 @@ export default function RootLayout({ children }: RootLayoutProps) {
       <body className="flex flex-col h-full bg-background text-foreground ">
         <SessionWrapper>
           <ThemeProviders>
-            <Providers>
+            <StoreProvider>
             <div className="flex flex-col h-full w-full">
               <header className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
                 <NavbarComponent />
               </header>
 
-              <Suspense fallback={<Loader />}>
+              <Suspense fallback={<Loading />}>
                 {showSidebar ? (
                   <div className="w-full h-full flex flex-grow">
                     {/* Sidebar */}
@@ -73,7 +74,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
                 </footer>
               )}
             </div>
-            </Providers>
+            </StoreProvider>
           </ThemeProviders>
         </SessionWrapper>
       </body>

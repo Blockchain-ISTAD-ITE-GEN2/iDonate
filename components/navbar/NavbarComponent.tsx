@@ -16,6 +16,8 @@ import { Button } from "../ui/button";
 import ThemeSwitch from "../theme/ThemeSwitches";
 import { ProfileDropdown } from "./profile/profile-dropdown";
 import { signOut, useSession } from "next-auth/react";
+import { useAppDispatch,useAppSelector } from "@/redux/hook";
+import { selectToken } from "@/redux/features/auth/authSlice";
 
 export default function NavbarComponent() {
   const [menuList] = useState<NavMenuType[]>(NavMenulist);
@@ -26,7 +28,8 @@ export default function NavbarComponent() {
 
   const router = useRouter();
   const { data: session, status } = useSession();
-
+  // const dispatch = useAppDispatch();
+  const accessTokenValue = useAppSelector(selectToken);
   if (
     pathname === "/auth/login" ||
     pathname === "/auth/sign-up" ||
@@ -109,7 +112,7 @@ export default function NavbarComponent() {
 
           <div className="flex items-center">
             {status === "authenticated" ? (
-              <ProfileDropdown session={session} signOut={signOut} />
+              <ProfileDropdown session={session} signOut={signOut} accessToken={accessTokenValue} />
             ) : (
               <Button
                 onClick={() => {

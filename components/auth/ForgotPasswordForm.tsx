@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { use, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Mail } from 'lucide-react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -9,31 +9,56 @@ import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { requestPasswordReset } from '@/app/actions'
+import { useAppDispatch } from '@/redux/hook'
+
 
 export default function ForgotPasswordForm() {
   const [email, setEmail] = useState('')
   const [error, setError] = useState('')
   const [success, setSuccess] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-  const router = useRouter()
+  const router = useRouter();
+  const dispatch = useAppDispatch();
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsLoading(true)
-    setError('')
-    setSuccess(false)
+  // const handleSubmit = async (e: React.FormEvent) => {
+  //   e.preventDefault()
+  //   setIsLoading(true)
+  //   setError('')
+  //   setSuccess(false)
+  //   console.log("Email request of forgot password: ",email)
+
+  //   try {
+  //     await requestPasswordReset(email)
+  //     setSuccess(true)
+  //     setEmail('')
+  //   } catch (err) {
+  //     setError('An error occurred. Please try again.')
+  //   } finally {
+  //     setIsLoading(false)
+  //   }
+  // }
+
+  const handleSubmit = async () => {
+  
 
     try {
-      await requestPasswordReset(email)
-      setSuccess(true)
-      setEmail('')
-    } catch (err) {
-      setError('An error occurred. Please try again.')
-    } finally {
-      setIsLoading(false)
-    }
-  }
+      // Simulate an API call
+      const response = await fetch(
+        `http://localhost:8080/api/v1/users/forget-password`,
+        {
+          method: "POST",
+          body: email
+        },
+      );
+    
+      // Redirect to the login page
+      router.push("/auth/reset-password"); // Update the path to your login page
+    } catch (error) {
+   
+    } 
+  };
 
+  
   return (
     <Card className="w-full">
       <CardHeader className="space-y-3">
@@ -82,7 +107,7 @@ export default function ForgotPasswordForm() {
           </Button>
         </form>
         <div className="mt-4 text-center ">
-          <Button variant="link" className='text-iDonate-green-primary hover:underline ' onClick={() => router.push('/auth/login')}>
+          <Button variant="link" className='text-iDonate-green-primary hover:underline ' onClick={() => router.push('/auth/reset-password')}>
             ត្រឡប់ទៅកាន់ការចូលប្រើគណនី
           </Button>
         </div>

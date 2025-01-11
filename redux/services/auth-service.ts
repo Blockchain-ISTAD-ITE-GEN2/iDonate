@@ -2,7 +2,7 @@ import { mockUsers } from "@/data/data";
 import { User } from "@/difinitions/types/media/user";
 
 export const authService = {
-  login: async (email: string, password: string): Promise<User | null> => {
+  login: async (email: string, password: string ): Promise<User | null> => {
     // Simulate API delay
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
