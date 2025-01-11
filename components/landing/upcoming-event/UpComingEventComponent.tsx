@@ -86,9 +86,9 @@ export default function UpcomingEvents() {
           កម្មវិធីបរិច្ចាគ ដែលនិងកើតឡើងឆាប់នេះ!
         </h3>
 
-        <div className="grid lg:grid-cols-2 gap-6 bg-iDonate-white-space dark:bg-iDonate-dark-mode">
+        <div className="grid lg:grid-cols-2 gap-6 bg-transparent ">
           {/* Featured Event */}
-          <Card className="overflow-hidden transition-transform hover:scale-[1.02] cursor-pointer">
+          <Card className="overflow-hidden transition-transform hover:scale-[1.01] cursor-pointer">
             <div className="flex-1 aspect-video relative">
               <Image
                   src={events[0].image}
