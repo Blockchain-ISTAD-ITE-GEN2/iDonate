@@ -8,7 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { CalendarDays, School } from "lucide-react";
+import {CalendarDays, School} from "lucide-react";
 import RuralStudent1 from "@/public/landing/CambodianRuralStudent.jpg";
 import RuralStudent2 from "@/public/landing/Student.jpg";
 import RuralStudent3 from "@/public/landing/Student_1.jpg";
@@ -29,7 +29,7 @@ const events: Event[] = [
     id: 1,
     title: "ការផ្តល់ជំនួយទៅឲ្យក្រុមគ្រួសាររបស់សុខ",
     description:
-      "ទឹកទន្លេមេគង្គហក់ឡើងលឿនគួរជាទីកត់សម្គាល់ដោយសារតែភ្លៀងធ្លាក់ជាបន្តបន្ទាប់ស្របពេលមានព្យុះផង បង្កឲ្យផ្ទះ សាលារៀន មន្ទីរពេទ្យ និងវត្តអារាមនៅតាមបណ្តាខេត្តមួយចំនួននៅតាមដងទន្លេត្រូវបានជន់លិច និង​មានប្រជាជនមួយចំនួនត្រូវបានជម្លៀសទៅកាន់ទីទួលសុវត្ថិភាព។​​ ក្នុងនោះក៏មានក្រុមគ្រួសាររបស់សុខត្រូវបានចួបប្រទះទៅនឹងគ្រោះថ្នាក់ខ្យល់ព្យុះដែលបណ្តាល់ឲ្យផ្ទះរបស់ពួគគេត្រូវបានខ្ទិចខ្ទីខូចខាតច្រើនសឹងតែទាំងស្រុង។​ គ្រោះថ្នាក់នេះមិនបណ្តាលឲ្យមានជនរងគ្រោះរហូតដល់បាត់បង់ជីវិតនោះទេ ប៉ុន្តែគ្រាន់តែធ្វើឲ្យខូចខាងសម្ភារប្រើប្រាស់នានាតែប៉ុណ្ណោះ",
+        "ទឹកទន្លេមេគង្គហក់ឡើងលឿនគួរជាទីកត់សម្គាល់ដោយសារតែភ្លៀងធ្លាក់ជាបន្តបន្ទាប់ស្របពេលមានព្យុះផង បង្កឲ្យផ្ទះ សាលារៀន មន្ទីរពេទ្យ និងវត្តអារាមនៅតាមបណ្តាខេត្តមួយចំនួននៅតាមដងទន្លេត្រូវបានជន់លិច និង​មានប្រជាជនមួយចំនួនត្រូវបានជម្លៀសទៅកាន់ទីទួលសុវត្ថិភាព។​​ ក្នុងនោះក៏មានក្រុមគ្រួសាររបស់សុខត្រូវបានចួបប្រទះទៅនឹងគ្រោះថ្នាក់ខ្យល់ព្យុះដែលបណ្តាល់ឲ្យផ្ទះរបស់ពួគគេត្រូវបានខ្ទិចខ្ទីខូចខាតច្រើនសឹងតែទាំងស្រុង។​ គ្រោះថ្នាក់នេះមិនបណ្តាលឲ្យមានជនរងគ្រោះរហូតដល់បាត់បង់ជីវិតនោះទេ ប៉ុន្តែគ្រាន់តែធ្វើឲ្យខូចខាងសម្ភារប្រើប្រាស់នានាតែប៉ុណ្ណោះ",
     date: "25, May 2025",
     category: "Kid Education",
     image: PoorFamily.src,
@@ -38,7 +38,7 @@ const events: Event[] = [
     id: 2,
     title: "រូបថតពាក់ព័ន្ធ ",
     description:
-      "ទឹកទន្លេមេគង្គហក់ឡើងលឿនគួរជាទីកត់សម្គាល់ដោយសារតែភ្លៀងធ្លាក់ជាបន្តបន្ទាប់ស្របពេលមានព្យុះផង បង្កឲ្យផ្ទះ សាលារៀន មន្ទីរពេទ្យ និងវត្តអារាមនៅតាមបណ្តាខេត្តមួយចំនួននៅតាមដងទន្លេត្រូវបានជន់លិច និង​មានប្រជាជនមួយចំនួនត្រូវបានជម្លៀសទៅកាន់ទីទួលសុវត្ថិភាព។​​ ក្នុងនោះក៏មានក្រុមគ្រួសាររបស់សុខត្រូវបានចួបប្រទះទៅនឹងគ្រោជន់ថ",
+        "ទឹកទន្លេមេគង្គហក់ឡើងលឿនគួរជាទីកត់សម្គាល់ដោយសារតែភ្លៀងធ្លាក់ជាបន្តបន្ទាប់ស្របពេលមានព្យុះផង បង្កឲ្យផ្ទះ សាលារៀន មន្ទីរពេទ្យ និងវត្តអារាមនៅតាមបណ្តាខេត្តមួយចំនួននៅតាមដងទន្លេត្រូវបានជន់លិច និង​មានប្រជាជនមួយចំនួនត្រូវបានជម្លៀសទៅកាន់ទីទួលសុវត្ថិភាព។​​ ក្នុងនោះក៏មានក្រុមគ្រួសាររបស់សុខត្រូវបានចួបប្រទះទៅនឹងគ្រោជន់ថ",
     date: "25, May 2025",
     category: "Kid Education",
     image: RuralStudent1.src,
@@ -47,7 +47,7 @@ const events: Event[] = [
     id: 3,
     title: "រូបថតពាក់ព័ន្ធ ",
     description:
-      "ទឹកទន្លេមេគង្គហក់ឡើងលឿនគួរជាទីកត់សម្គាល់ដោយសារតែភ្លៀងធ្លាក់ជាបន្តបន្ទាប់ស្របពេលមានព្យុះផង បង្កឲ្យផ្ទះ សាលារៀន មន្ទីរពេទ្យ និងវត្តអារាមនៅតាមបណ្តាខេត្តមួយចំនួននៅតាមដងទន្លេត្រូវបានជន់លិច និង​មានប្រជាជនមួយចំនួនត្រូវបានជម្លៀសទៅកាន់ទីទួលសុវត្ថិភាព។​​ ក្នុងនោះក៏មានក្រុមគ្រួសាររបស់សុខត្រូវបានចួបប្រទះទៅនឹងគ្រោជន់ថ",
+        "ទឹកទន្លេមេគង្គហក់ឡើងលឿនគួរជាទីកត់សម្គាល់ដោយសារតែភ្លៀងធ្លាក់ជាបន្តបន្ទាប់ស្របពេលមានព្យុះផង បង្កឲ្យផ្ទះ សាលារៀន មន្ទីរពេទ្យ និងវត្តអារាមនៅតាមបណ្តាខេត្តមួយចំនួននៅតាមដងទន្លេត្រូវបានជន់លិច និង​មានប្រជាជនមួយចំនួនត្រូវបានជម្លៀសទៅកាន់ទីទួលសុវត្ថិភាព។​​ ក្នុងនោះក៏មានក្រុមគ្រួសាររបស់សុខត្រូវបានចួបប្រទះទៅនឹងគ្រោជន់ថ",
     date: "25, May 2025",
     category: "Kid Education",
     image: RuralStudent2.src,
@@ -57,7 +57,7 @@ const events: Event[] = [
     title: "រូបថតពាក់ព័ន្ធ ",
     date: "25, May 2025",
     description:
-      "ទឹកទន្លេមេគង្គហក់ឡើងលឿនគួរជាទីកត់សម្គាល់ដោយសារតែភ្លៀងធ្លាក់ជាបន្តបន្ទាប់ស្របពេលមានព្យុះផង បង្កឲ្យផ្ទះ សាលារៀន មន្ទីរពេទ្យ និងវត្តអារាមនៅតាមបណ្តាខេត្តមួយចំនួននៅតាមដងទន្លេត្រូវបានជន់លិច និង​មាន",
+        "ទឹកទន្លេមេគង្គហក់ឡើងលឿនគួរជាទីកត់សម្គាល់ដោយសារតែភ្លៀងធ្លាក់ជាបន្តបន្ទាប់ស្របពេលមានព្យុះផង បង្កឲ្យផ្ទះ សាលារៀន មន្ទីរពេទ្យ និងវត្តអារាមនៅតាមបណ្តាខេត្តមួយចំនួននៅតាមដងទន្លេត្រូវបានជន់លិច និង​មាន",
     category: "Kid Education",
     image: RuralStudent3.src,
   },
@@ -65,7 +65,7 @@ const events: Event[] = [
     id: 5,
     title: "រូបថតពាក់ព័ន្ធ ",
     description:
-      "ទឹកទន្លេមេគង្គហក់ឡើងលឿនគួរជាទីកត់សម្គាល់ដោយសារតែភ្លៀងធ្លាក់ជាបន្តបន្ទាប់ស្របពេលមានព្យុះផង បង្កឲ្យផ្ទះ សាលារៀន មន្ទីរពេទ្យ និងវត្តអារាមនៅតាមបណ្តាខេត្តមួយចំនួននៅតាមដងទន្លេត្រូវបានជន់លិច និង​មានប្រជាជនមួយចំនួនត្រូវបានជម្លៀសទៅកាន់ទីទួលសុវត្ថិភាព។​​ ក្នុងនោះក៏មានក្រុមគ្រួសាររបស់សុខត្រូវបានចួបប្រទះទៅនឹងគ្រោជន់",
+        "ទឹកទន្លេមេគង្គហក់ឡើងលឿនគួរជាទីកត់សម្គាល់ដោយសារតែភ្លៀងធ្លាក់ជាបន្តបន្ទាប់ស្របពេលមានព្យុះផង បង្កឲ្យផ្ទះ សាលារៀន មន្ទីរពេទ្យ និងវត្តអារាមនៅតាមបណ្តាខេត្តមួយចំនួននៅតាមដងទន្លេត្រូវបានជន់លិច និង​មានប្រជាជនមួយចំនួនត្រូវបានជម្លៀសទៅកាន់ទីទួលសុវត្ថិភាព។​​ ក្នុងនោះក៏មានក្រុមគ្រួសាររបស់សុខត្រូវបានចួបប្រទះទៅនឹងគ្រោជន់",
     date: "25, May 2025",
     category: "Kid Education",
     image: RuralStudent4.src,
@@ -74,85 +74,102 @@ const events: Event[] = [
 
 export default function UpcomingEvents() {
   return (
-    <section className="w-full lg:w-full mx-auto md:px-4 px-4 lg:px-[100px] pb-9">
-      <div className="grid lg:grid-cols-2 gap-6 bg-iDonate-white-space dark:bg-iDonate-dark-mode">
-        {/* Featured Event */}
-        <Card className="overflow-hidden transition-transform hover:scale-[1.02] cursor-pointer">
-          <div className="flex-1 aspect-video relative">
-            <Image
-              src={events[0].image}
-              alt={events[0].title}
-              fill
-              className="object-cover w-full h-full"
-              // sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            />
-          </div>
+      <section className="w-full lg:w-full mx-auto md:px-4 px-4 lg:px-[100px] pb-9 space-y-4">
 
-          <CardContent lang="km" className="flex-grow p-6 space-y-4">
-            <CardTitle className="text-title-khmer font-semibold text-iDonate-navy-primary dark:text-iDonate-navy-accent">
-              {events[0].title}
-            </CardTitle>
+        <h2 lang="km" className="text-medium-khmer text-center text-iDonate-green-primary dark:text-iDonate-green-secondary" >
+          តោះ ចាប់ផ្ដើមជួយពួកគាត់ទាំងអស់គ្នា!
+        </h2>
+        <h3
+            lang="km"
+            className="text-heading-two-khmer text-center text-iDonate-navy-primary leading-tight dark:text-[#DCE3F0]"
+        >
+          កម្មវិធីបរិច្ចាគ ដែលនិងកើតឡើងឆាប់នេះ!
+        </h3>
 
-            <p className="line-clamp-2 sm:line-clamp-none text-description-khmer text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
-              {events[0].description}
-            </p>
-
-            <div className="flex flex-wrap justify-between gap-4">
-              <div className="flex items-center justify-center gap-2 text-iDonate-navy-secondary dark:text-iDonate-green-secondary">
-                <CalendarDays className="h-4 w-4 flex-shrink-0" />
-                <span>{events[0].date}</span>
-              </div>
-
-              <div className="flex items-center justify-center  gap-2 text-iDonate-navy-primary dark:text-iDonate-green-secondary">
-                <School className="h-4 w-4 flex-shrink-0" />
-                <span>{events[0].category}</span>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Grid of Smaller Events */}
-        <div className="grid sm:grid-cols-2 gap-4">
-          {events.slice(1).map((event) => (
-            <Card
-              key={event.id}
-              className="overflow-hidden transition-transform hover:scale-[1.02] cursor-pointer dark:text-iDonate-navy-accentbg-iDonate-dark-mode"
-            >
-              <div className="aspect-video relative">
-                <Image
-                  src={event.image}
-                  alt={event.title}
+        <div className="grid lg:grid-cols-2 gap-6 bg-transparent ">
+          {/* Featured Event */}
+          <Card className="overflow-hidden transition-transform hover:scale-[1.01] cursor-pointer">
+            <div className="flex-1 aspect-video relative">
+              <Image
+                  src={events[0].image}
+                  alt={events[0].title}
                   fill
-                  className="object-cover"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-                />
-              </div>
+                  className="object-cover w-full h-full"
+                  // sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              />
+            </div>
 
-              <CardContent className="flex-grow p-4 space-y-2">
-                <CardTitle className="text-title-khmer font-semibold text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
-                  {event.title}
-                </CardTitle>
+            <CardContent lang="km" className="flex-grow p-6 space-y-4">
+              <CardTitle
+                  className="text-title-khmer font-semibold text-iDonate-navy-primary dark:text-iDonate-navy-accent">
+                {events[0].title}
+              </CardTitle>
 
-                <p className="flex-1 text-description-khmer text-iDonate-navy-secondary line-clamp-2 dark:text-iDonate-navy-accent">
-                  {event?.description}
-                </p>
+              <p className="line-clamp-2 sm:line-clamp-none text-description-khmer text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
+                {events[0].description}
+              </p>
 
-                <div className="flex flex-wrap justify-between gap-4">
-                  <div className="flex items-center gap-2 text-iDonate-navy-secondary dark:text-iDonate-green-secondary">
-                    <CalendarDays className="h-3 w-3 flex-shrink-0" />
-                    <span>{event.date}</span>
-                  </div>
-
-                  <div className="flex items-center gap-2 text-iDonate-navy-secondary dark:text-iDonate-green-secondary">
-                    <School className="h-3 w-3 flex-shrink-0" />
-                    <span>{event.category}</span>
-                  </div>
+              <div className="flex flex-wrap justify-between gap-4">
+                <div
+                    className="flex items-center justify-center gap-2 text-iDonate-navy-secondary dark:text-iDonate-green-secondary">
+                  <CalendarDays className="h-4 w-4 flex-shrink-0"/>
+                  <span>{events[0].date}</span>
                 </div>
-              </CardContent>
-            </Card>
-          ))}
+
+                <div
+                    className="flex items-center justify-center  gap-2 text-iDonate-navy-primary dark:text-iDonate-green-secondary">
+                  <School className="h-4 w-4 flex-shrink-0"/>
+                  <span>{events[0].category}</span>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Grid of Smaller Events */}
+          <div className="grid sm:grid-cols-2 gap-4">
+            {events.slice(1).map((event) => (
+                <Card
+                    key={event.id}
+                    className="overflow-hidden transition-transform hover:scale-[1.02] cursor-pointer dark:text-iDonate-navy-accentbg-iDonate-dark-mode"
+                >
+                  <div className="aspect-video relative">
+                    <Image
+                        src={event.image}
+                        alt={event.title}
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+                    />
+                  </div>
+
+                  <CardContent className="flex-grow p-4 space-y-2">
+                    <CardTitle
+                        className="text-title-khmer font-semibold text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
+                      {event.title}
+                    </CardTitle>
+
+                    <p className="flex-1 text-description-khmer text-iDonate-navy-secondary line-clamp-2 dark:text-iDonate-navy-accent">
+                      {event?.description}
+                    </p>
+
+                    <div className="flex flex-wrap justify-between gap-4">
+                      <div
+                          className="flex items-center gap-2 text-iDonate-navy-secondary dark:text-iDonate-green-secondary">
+                        <CalendarDays className="h-3 w-3 flex-shrink-0"/>
+                        <span>{event.date}</span>
+                      </div>
+
+                      <div
+                          className="flex items-center gap-2 text-iDonate-navy-secondary dark:text-iDonate-green-secondary">
+                        <School className="h-3 w-3 flex-shrink-0"/>
+                        <span>{event.category}</span>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+            ))}
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
   );
 }

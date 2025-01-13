@@ -12,9 +12,9 @@ import { TransactionType } from "@/difinitions/types/table-type/transaction";
 import barchart from "@/data/barchart.json";
 import averages from "@/data/average-data.json";
 import transactions from "@/data/transactions.json";
-import { ReacentTransacctions } from "@/components/organization/dashboard/ReacentTransacctions";
+import { ReacentTransacctionsLanding } from "@/components/landing/transaction/reacent-transactions-landing";
 
-export function BarAndLineChart() {
+export function BarAndLineChartLanding() {
   const barchartdata: BarchartType[] = Object.entries(barchart).map(
     ([name, values]) => ({
       name,
@@ -26,7 +26,7 @@ export function BarAndLineChart() {
   const averageDate: AverageType[] = averages;
 
   return (
-    <div className=" md:w-full grid gap-4 xl:grid-cols-[1fr_480px] grid-cols-1">
+    <div className="container mx-auto px-4 md:w-full grid gap-4 lg:grid-cols-[1fr_480px] grid-cols-1">
       <div className="flex flex-col gap-4">
         {/* Cards for metrics */}
         <CardsMetric data={averageDate} />
@@ -43,7 +43,7 @@ export function BarAndLineChart() {
       </div>
 
       {/* Recent Transactions Card */}
-      <Card className="md:w-full xl:w-[480px] bg-iDonate-light-gray rounded-lg border border-iDonate-navy-accent dark:bg-iDonate-dark-mode">
+      <Card className="md:w-full lg:w-[480px] bg-iDonate-light-gray rounded-lg border border-iDonate-navy-accent dark:bg-iDonate-dark-mode">
         <CardHeader>
           <CardTitle className="text-medium-eng font-normal text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
             Recent Transactions
@@ -55,7 +55,7 @@ export function BarAndLineChart() {
         </CardHeader>
 
         <CardContent>
-          <ReacentTransacctions transactions={recentTransactions} />
+          <ReacentTransacctionsLanding transactions={recentTransactions} />
         </CardContent>
       </Card>
     </div>

@@ -12,7 +12,8 @@ const config: Config = {
     extend: {
       colors: {
         iDonate: {
-          "dark-mode": "#0F0F0F",
+          "dark-mode": "#26272B",
+          "bg-dark-mode": "#0F0F0F",
           "green-primary": "#55A44A",
           "green-secondary": "#74DF80",
           "green-accent": "#BAF4D0",
@@ -21,9 +22,9 @@ const config: Config = {
           "navy-accent": "#DCE3F0",
           "white-space": "#FFFFFF",
           "white-space-hovering": "#F5F5F5",
-          gray: "#808080",
+          "gray": "#808080",
           "light-gray": "#F6F6F6",
-          error: "#FF0000",
+          "error": "#FF0000",
         },
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",

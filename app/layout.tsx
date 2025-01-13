@@ -31,7 +31,7 @@ type RootLayoutProps = {
 };
 
 export default function RootLayout({ children }: RootLayoutProps) {
-    const pathname = typeof window !== "undefined" ? usePathname() : "";
+    const pathname = usePathname();
     const showSidebar = pathname.startsWith("/organization-dashboard/");
 
     return (

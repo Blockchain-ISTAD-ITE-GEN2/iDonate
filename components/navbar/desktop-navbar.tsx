@@ -27,7 +27,7 @@ export default function DesktopNavbar({
   const pathname = usePathname();
 
   const navActiveClass = (isActive: boolean) =>
-    `text-md xl:text-description-eng font-normal ${
+    `text-md xl:text-description-eng font-normal dark:text-iDonate-navy-accent ${
       isActive ? "text-iDonate-green-primary" : "text-iDonate-navy-primary"
     }`;
 
@@ -50,7 +50,7 @@ export default function DesktopNavbar({
           <MenubarMenu key={index}>
             {specialPaths.includes(item.path) ? (
               <Link href={item.path} passHref>
-                <div className="h-10 flex items-center space-x-1 py-1 px-3 rounded-lg hover:bg-iDonate-light-gray">
+                <div className="h-10 flex items-center space-x-1 py-1 px-3 rounded-lg hover:bg-iDonate-light-gray dark:hover:bg-iDonate-dark-mode">
                   {item.path === "/search" && (
                     <Search
                       className={`w-5 h-5 mx-1 ${navActiveClass(isActive)}`}
@@ -61,11 +61,11 @@ export default function DesktopNavbar({
               </Link>
             ) : (
               <section>
-                <MenubarTrigger className="flex items-center px-3 py-1 rounded-lg  hover:bg-iDonate-light-gray bg-transparent">
+                <MenubarTrigger className="flex items-center px-3 py-1 rounded-lg  hover:bg-iDonate-light-gray bg-transparent dark:hover:bg-iDonate-dark-mode">
                   <span className={navActiveClass(isActive)}>{item.title}</span>
                 </MenubarTrigger>
 
-                <MenubarContent className="p-4 bg-iDonate-white-space rounded-lg shadow-lg">
+                <MenubarContent className="p-4 bg-iDonate-white-space rounded-lg shadow-lg dark:bg-iDonate-bg-dark-mode">
                   {item.title === "Events" && (
                     <SubNavbarComponent menuList={eventMenulist} />
                   )}

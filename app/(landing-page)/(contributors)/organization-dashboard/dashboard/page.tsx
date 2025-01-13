@@ -51,9 +51,8 @@ export default function Contributor() {
 
           <BannerComponent />
 
-          <div className="flex">
-            <BarAndLineChart />
-          </div>
+          <BarAndLineChart />
+          
         </div>
       </div>
     </section>

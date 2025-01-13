@@ -2,8 +2,8 @@ import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "@/redux/store";
 import axios from "axios";
 
-interface AuthState {
-  token: string | null | undefined;
+type AuthState = {
+  token: string | null;
   verifyToken: string | null;
   resendToken: string | null;
   forgetToken: string | null;
@@ -28,7 +28,6 @@ const initialState: AuthState = {
   error: null,
 };
 
-// Async Thunks
 export const loginWithGoogle = createAsyncThunk(
     "auth/loginWithGoogle",
     async (token: string, { rejectWithValue }) => {
@@ -131,7 +130,6 @@ export const {
   setResendToken,
   setForgotToken,
   setEmail,
-  setUserUuid,
   setUser,
   setLoading,
   setError,

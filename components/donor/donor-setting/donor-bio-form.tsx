@@ -70,24 +70,26 @@ export function DonorBioForm({
       <form onSubmit={handleSubmit(onSubmit)}>
         {/* View Mode */}
         {!isEditing && (
-          <Card className="flex flex-col rounded-lg border-2 border-iDonate-navy-accent gap-6 p-9">
+           <Card className="flex flex-col rounded-lg border-2 border-iDonate-navy-accent gap-2 lg:gap-6 p-4 md:p-6 lg:p-9">
+
             <CardHeader className="flex flex-row items-center justify-between p-0 m-0">
-              <CardTitle className="text-2xl font-medium text-iDonate-navy-secondary">
+
+              <CardTitle className="text-lg lg:text-2xl font-medium text-iDonate-navy-secondary">
                 Bio
               </CardTitle>
 
               <Button
                 onClick={() => setIsEditing(true)}
-                className="bg-iDonate-white-space border-2 hover:bg-iDonate-light-gray border-iDonate-navy-accent text-iDonate-navy-primary"
+                className="bg-iDonate-white-space border-2 text-xs lg:text-sm hover:bg-iDonate-light-gray border-iDonate-navy-accent text-iDonate-navy-primary"
               >
                 <SquarePen />
                 Edit
               </Button>
             </CardHeader>
 
-            <CardContent className="flex w-fle gap-9 p-0 m-0">
-              <div className="flex flex-col space-y-3">
-                <CardDescription className="font-siemreap text-xl text-iDonate-navy-primary leading-8">
+            <CardContent className="flex flex-wrap gap-4 sm:gap-6 lg:gap-9 p-0 m-0">
+              <div className="flex flex-col md:space-y-1 ">
+                <CardDescription lang="km" className="text-sm sm:text-description-eng lg:text-medium-eng text-iDonate-navy-primary">
                   Elizabeth Joe
                   គឺជាអ្នកសកម្មក្នុងវិស័យឧស្សាហកម្មស្រ្តីដែលបង្កើតរបស់ជាច្រើនគាត់ជាអ្នកផ្តល់ជំនួយដល់ជំនួយដ៏ធំដល់អ្នកដទៃគាត់គឺជាមនុស្សម្នាក់
                   ដែលស្រឡាញវិជ្ជាសាស្រ្ត ពិភពលោក ផងដែរ🌍។គាត់គឺជាស្ថាបត្យករ
@@ -111,13 +113,14 @@ export function DonorBioForm({
 
         {/* Edit Mode */}
         {isEditing && (
-          <Card className="flex flex-col bg-iDonate-light-gray rounded-lg border-2 border-iDonate-navy-accent gap-6 p-9">
-            <CardHeader className="flex flex-row items-center justify-between p-0 m-0">
-              <CardTitle className="text-2xl font-medium text-iDonate-navy-secondary">
+          <Card className="flex flex-col bg-iDonate-light-gray rounded-lg border-2 border-iDonate-navy-accent gap-2 lg:gap-6 p-4 md:p-6 lg:p-9">
+            <CardHeader className="flex flex-col sm:flex-row items-start justify-between p-0 m-0">
+
+              <CardTitle className="text-lg lg:text-2xl font-medium text-iDonate-navy-secondary">
                 Bio
               </CardTitle>
 
-              <div className="flex gap-3">
+              <div className="flex w-full justify-end gap-3">
                 {/* Cancel Button */}
                 {formState.isDirty ? (
                   <AlertComfirmDialog
@@ -139,7 +142,7 @@ export function DonorBioForm({
                   <Button
                     type="button"
                     onClick={handleCancel}
-                    className="bg-iDonate-white-space border-2 hover:bg-red-50 border-iDonate-error text-iDonate-error"
+                    className="bg-iDonate-white-space border-2 text-xs lg:text-sm hover:bg-red-50 border-iDonate-error text-iDonate-error"
                   >
                     Cancel
                   </Button>
@@ -148,20 +151,20 @@ export function DonorBioForm({
                 {/* Submit Button */}
                 <Button
                   type="submit"
-                  className="bg-iDonate-white-space border-2 hover:bg-iDonate-light-gray border-iDonate-navy-accent text-iDonate-navy-primary"
+                  className="bg-iDonate-white-space border-2 text-xs lg:text-sm hover:bg-iDonate-light-gray border-iDonate-navy-accent text-iDonate-navy-primary"
                 >
                   Submit
                 </Button>
               </div>
             </CardHeader>
 
-            <CardContent className="flex gap-9 p-0 m-0">
+            <CardContent className="flex flex-col md:flex-row gap-4 sm:gap-6 lg:gap-9 p-0 m-0">
               <FormField
                 control={control}
                 name="bio"
                 render={({ field }) => (
                   <FormItem className="w-full h-full">
-                    <FormControl className="w-full h-full">
+                    <FormControl className="text-sm lg:text-medium-eng">
                       <Textarea
                         className="h-auto overflow-auto scrollbar-hide"
                         placeholder="Elizabeth Joe"
@@ -169,7 +172,7 @@ export function DonorBioForm({
                       />
                     </FormControl>
                     <FormMessage />
-                    <FormDescription className="text-iDonate-gray text-sm">
+                    <FormDescription className="text-iDonate-gray text-xs sm:text-sm lg:text-lg">
                       This is your organization's address.
                     </FormDescription>
                   </FormItem>
