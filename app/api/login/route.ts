@@ -8,12 +8,9 @@ export async function POST(req: NextRequest) {
 	const body = await req.json();
 	const { email, password } = body;
 
-    console.log("Email: ", email);
-    console.log("Password: ", password);
-
 	// Make a POST request to the Our API
 	const response = await fetch(
-		`${process.env.IDONATE_BASE_API}/api/v1/auth/login/`,
+		`${process.env.NEXT_PUBLIC_IDONATE_API_URL}/api/v1/auth/login/`,
 		{
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
@@ -40,9 +37,11 @@ export async function POST(req: NextRequest) {
      const accessToken = data?.accessToken || null;
      const refreshToken = data?.refreshToken || null;
 
+    //  console.log("AcessToken: ", accessToken);
+
      // Serialize the refresh token and set it as a cookie with
     // (httpOnly, secure, path, and sameSite options) in the response headers to the client-side
-    const cookieName = process.env.COOKIE_REFRESH_TOKEN_NAME || "idonate-refreshToken";
+    const cookieName = process.env.COOKIE_REFRESH_TOKEN_NAME || "idonate-refresh-token";
     const serialized = serialize(cookieName, refreshToken, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",

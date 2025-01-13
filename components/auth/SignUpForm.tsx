@@ -136,7 +136,7 @@ const SignUpForm = () => {
       }
 
       toast.success('ការចុះឈ្មោះបានជោគជ័យ!');
-      router.push('/auth/verification');
+      router.push('/verification');
     } catch (error) {
       console.error('Registration error:', error);
       toast.error(error instanceof Error ? error.message : 'ការចុះឈ្មោះបរាជ័យ');
@@ -401,7 +401,7 @@ const SignUpForm = () => {
                 <span className="mx-4 text-sm text-gray-500 font-medium ">
                   តើអ្នកមានគណនីរួចហើយមែនទេ?{" "}
                   <Link
-                    href="/auth/login"
+                    href="/login"
                     className="text-iDonate-green-primary font-medium hover:underline"
                   >
                     ចុចទីនេះ

@@ -1,8 +1,6 @@
 import { configureStore, UnknownAction } from '@reduxjs/toolkit'
 import { idonateApi } from './api'
 import authSlice from './features/auth/authSlice'
-import verificationSlice from './features/verification/verificationSlice'
-import forgotPasswordSlice from './features/forgot-password/forgotPasswordSlice'
 
 // create store
 export const makeStore = () => {
@@ -11,8 +9,6 @@ export const makeStore = () => {
       // Add the generated reducer as a specific top-level slice
       [idonateApi.reducerPath]: idonateApi.reducer,
         auth: authSlice,
-        verification: verificationSlice,
-        forgotPassword: forgotPasswordSlice,
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(idonateApi.middleware),
   })

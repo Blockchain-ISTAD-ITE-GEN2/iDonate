@@ -1,23 +1,16 @@
-import { SignupValues } from "@/lib/definition";
+import { ForgetPasswordValues, SignupValues } from "@/lib/definition";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 export async function POST(req: NextRequest) {
     const body = await req.json();
     const {
-       firstName,
-       lastName,
-       gender,
-       phoneNumber,
-       email,
-       username,
-       password,
-       dateOfBirth
+        email,
+    }: ForgetPasswordValues = body;
 
-    }: SignupValues = body;
-
+    // console.log("email from forgot password", body)
     const response = await fetch(
-        `${process.env.IDONATE_BASE_URL}/api/v1/users/user-registration`,
+        `${process.env.IDONATE_BASE_URL}/api/v1/users/forgot-password`,
         {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -37,16 +30,15 @@ export async function POST(req: NextRequest) {
     } else {
 
         const data = await response.json();
-        const verifyToken = data?.token || null;
-        const userInfo = data?.user?.uuid;
-
-        console.log(userInfo);
+        const restToken = data?.resetPasswordToken || null;
+        const email = body.email
+        console.log(email, ":email")
 
         return NextResponse.json(
             {
                 message: "Signup successful",
-                token: verifyToken,
-                userInfo: userInfo
+                token: restToken,
+                setEmail: email
             },
             {
                 status: response.status,

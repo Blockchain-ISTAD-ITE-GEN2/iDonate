@@ -1,15 +1,15 @@
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
-// Create a POST request handler for Logout
 export async function POST() {
-    // Get the refresh token from the client-side cookies
-    const cookieName = process.env.COOKIE_REFRESH_TOKEN_NAME || "idonate-refreshToken";
-    const cookieStore = cookies();
-    const credential = cookieStore.get(cookieName);
 
-     // If the refresh token is not found, return an error message to the client-side
-     if (!credential) {
+    const cookieRefreshTokenName = process.env.COOKIE_REFRESH_TOKEN_NAME || "idonate-refresh-token";
+    const cookieAccessTokenName = "access";
+    const cookieAuthName = process.env.COOKIE_AUTH_TOKEN_NAME || "authjs.session-token";
+    const cookieStore = cookies();
+    const credential = cookieStore.get(cookieRefreshTokenName);
+
+    if (!credential) {
         return NextResponse.json(
             {
                 message: "Token not found",
@@ -20,12 +20,14 @@ export async function POST() {
         );
     }
 
-    // get the refresh token value
     const refreshToken = credential.value;
+    console.log("data",refreshToken)
 
-    //If refresh token exist, delete the refresh token from the client-side cookies
+
     if(refreshToken){
-        cookieStore.delete(cookieName)
+        cookieStore.delete(cookieRefreshTokenName)
+        cookieStore.delete(cookieAuthName)
+        cookieStore.delete(cookieAccessTokenName)
 
         return NextResponse.json(
             {
@@ -37,8 +39,7 @@ export async function POST() {
         );
     }
 
-     // If the refresh token is not found, return an error message to the client-side
-     return NextResponse.json(
+    return NextResponse.json(
         {
             message: "Failed to logout",
         },

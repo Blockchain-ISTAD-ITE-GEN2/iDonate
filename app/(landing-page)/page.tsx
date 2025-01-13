@@ -9,7 +9,7 @@ import BannerLandingCard from "@/components/landing/banner/BannerLandingCard";
 import UpcomingEvents from "@/components/landing/upcoming-event/UpComingEventComponent";
 import { BarAndLineChartLanding } from "@/components/landing/transaction/bar-and-line-chart-landing";
 
-export default function Homepage() {
+export default function Home() {
   const typedCategory: CategoryType[] = categories;
   return (
     <section className="flex flex-col items-center gap-9">
@@ -79,3 +79,5 @@ export default function Homepage() {
     </section>
   );
 }
+
+

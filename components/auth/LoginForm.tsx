@@ -19,7 +19,7 @@ import FacebookIcon from "@/public/images/facebook.png";
 import SampleLogo from "@/public/images/iDonateLogoSample.png";
 import AnimationText from "@/components/auth/AnimationText";
 import { useDispatch } from "react-redux";
-import { setAccessToken } from "@/redux/features/auth/authSlice";
+import { setToken } from "@/redux/features/auth/authSlice";
 import { useRouter } from "next/navigation";
 
 
@@ -66,7 +66,7 @@ export default function LoginForm() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
-        credentials: "include", // Include cookies in the request
+        credentials: "include",
       });
 
       if (!response.ok) {
@@ -77,17 +77,17 @@ export default function LoginForm() {
       const result = await response.json();
       console.log("Login Response:", result);
 
-      // Set access token in Redux
-      dispatch(setAccessToken(result.accessToken));
 
       // Set a cookie from the frontend (if needed)
-      document.cookie = `idonate-refreshToken=${result.refreshToken};path=/;max-age=3600;`; // Expires in 1 hour
+      document.cookie = `idonate-refresh-token=${result.refreshToken};path=/;max-age=3600;`; // Expires in 1 hour
       console.log("Cookie set successfully");
-
-      // Redirect to the home page
-      console.log('Before redirection');
-      router.push('/');
-      console.log('After redirection');
+        // Set access token in Redux
+      dispatch(setToken(result.accessToken));
+      // router.push("/");
+      console.log("Redirecting to home page...");
+      toast.success("Redirecting to home page...");
+      router.refresh();
+      router.push("/");
       toast.success("Logged in successfully!");
     } catch (error) {
       console.error("Login error:", error);
@@ -205,7 +205,7 @@ export default function LoginForm() {
                 <span className="text-gray-600">រក្សាទុកព័ត៌មានរបស់អ្នក</span>
               </label>
               <Link
-                href="/auth/forgot-password"
+                href="/forgot-password"
                 className="text-iDonate-navy-primary hover:text-iDonate-navy-primary/80 font-medium transition-colors duration-200 items-end"
               >
                 ភ្លេចពាក្យសម្ងាត់ឬ?
@@ -271,7 +271,7 @@ export default function LoginForm() {
           <p className="mt-4 md:mt-0 text-center text-sm text-gray-600">
             មិនទាន់មានគណនីមែនទេ?{" "}
             <Link
-              href="/auth/sign-up"
+              href="/sign-up"
               className="text-iDonate-navy-primary hover:text-iDonate-navy-primary/80 font-medium transition-colors duration-200 hover:underline"
             >
               បង្កើតគណនីថ្មី
@@ -283,3 +283,458 @@ export default function LoginForm() {
     </div>
   );
 }
+
+// "use client";
+
+// import React, { useEffect, useState, useMemo } from "react";
+// import { Formik, Form, Field, ErrorMessage } from "formik";
+// import * as yup from "yup";
+// import { LoginValues } from "@/lib/definition";
+// // import { Button } from "flowbite-react";
+// import { Button } from "../ui/button";
+// import Image from "next/image";
+// import Link from "next/link";
+// // import { FcGoogle } from "react-icons/fc";
+// // import { FaGithub } from "react-icons/fa";
+// // import { HiMail, HiLockClosed, HiOutlineX } from "react-icons/hi";
+// import { ToastContainer, ToastOptions, toast } from "react-toastify";
+// import "react-toastify/dist/ReactToastify.css";
+// import { useRouter } from "next/navigation";
+// import { signIn, signOut } from "next-auth/react";
+// import {
+//     authDescStyle,
+//     labelStyle,
+//     fieldStyle,
+//     errorMsgStyle,
+//     formHeaderStyle,
+//     formTitleStyle,
+//     formInputControl,
+//     formbuttonStyle,
+//     formImageStyle,
+//     formXButtonStyle,
+//     formTextInImage,
+//     formTextInImageTitle,
+//     formTextInImageDesc,
+//     formTextSpan,
+//     activeLinkStyle,
+// } from "@/components/auth/AuthStyle";
+// // import { HiOutlineEye, HiOutlineEyeOff } from "react-icons/hi";
+// import { setToken } from "@/redux/features/auth/authSlice";
+// import { useAppDispatch } from "@/redux/hooks";
+// import { useSession } from "next-auth/react";
+
+// function LoginFormComponent() {
+//     // States
+//     const [viewPassword, setViewPassword] = useState(false);
+//     const [loading, setLoading] = useState(false);
+//     const [executed, setExecuted] = useState(false);
+
+//     // Session from next auth.
+//     const { data: session } = useSession();
+
+//     // Custom hook for dispatching next auth.
+//     const dispatch = useAppDispatch();
+//     const router = useRouter();
+
+//     // Handle view password.
+//     function handleViewPassword() {
+//         setViewPassword(!viewPassword);
+//     }
+
+//     // Initial values for formik.
+//     const initialValues: LoginValues = {
+//         email: "",
+//         password: "",
+//     };
+
+//     // Validation schema for formik.
+//     const validationSchema = yup.object({
+//         email: yup.string().required("* email is required").email(),
+//         password: yup.string().required("* Password is required"),
+//     });
+
+//     // Memoize the toast configuration
+//     const toastConfig: ToastOptions = useMemo(() => ({
+//         position: "top-right",
+//         autoClose: 3000,
+//         hideProgressBar: true,
+//         closeOnClick: true,
+//         pauseOnHover: false
+//     }), []);
+
+//     // Handle login with email and password.
+//     const handleLoginWithApi = async (values: LoginValues) => {
+//         // Set loading to true
+//         setLoading(true);
+//         toast.info("Login Processing!", toastConfig);
+
+//         try {
+//             const res = await fetch(`http://localhost:8080/api/v1/auth/login`, {
+//                 method: "POST",
+//                 headers: {
+//                     "Content-Type": "application/json",
+//                 },
+//                 body: JSON.stringify(values),
+//             })
+
+//             if (res.ok) {
+//                 toast.success("Login Successfully! ", toastConfig)
+//                 const data = await res.json();
+//                 if (data?.accessToken) {
+//                     console.log("ACCESS TOKEN : ", data.accessToken)
+//                     dispatch(setToken(data.accessToken))
+//                     router.refresh()
+//                     router.push("/about-us")
+//                     console.log("data", data)
+//                 }
+//             } else {
+//                 // meaning the credential can be incorrect ! 
+//                 switch (res.status) {
+//                     case 401:
+//                         toast.error("Incorrect Password!", toastConfig);
+//                         break;
+//                     case 404:
+//                         toast.error("User has been not found!", toastConfig);
+//                         break;
+//                     case 403:
+//                         toast.info("Your account has been block!", toastConfig);
+//                         break;
+//                     default:
+//                         toast.error("Something went wrong!", toastConfig);
+//                         break;
+//                 }
+//             }
+//         } catch (error) {
+//             console.log("There is an error when login : ", error)
+//             toast.error("An unexpected error occurred.", toastConfig)
+
+//         } finally {
+//             setLoading(false)
+//         }
+//     };
+
+//     // Provider
+//     const [provider, setProvider] = useState<string>('');
+
+//     const handleProvider = (provider: string) => {
+//         localStorage.setItem('provider', provider);
+//     }
+
+//     const handleClearProvider = () => {
+//         localStorage.removeItem('provider');
+//     }
+
+//     useEffect(() => {
+//         const provider = localStorage.getItem('provider');
+//         if (provider) {
+//             setProvider(provider)
+//         }
+//     }, []);
+
+//     // Handle login with next auth.
+//     useEffect(() => {
+
+//         if (!session || executed) return;
+
+//         const handleLoginWithNextAuth = async (
+//             email: string,
+//             firstName: string,
+//             lastName: string,
+//             username: string,
+//             password: string,
+//             confirmedPassword: string,
+//             provider: string
+//         ) => {
+
+//             setLoading(true);
+//             toast.info("Login Processing!", toastConfig);
+
+//             try {
+//                 const loginResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/login`, {
+//                     method: 'POST',
+//                     headers: { 'Content-Type': 'application/json' },
+//                     body: JSON.stringify({ email, password }),
+//                 });
+
+//                 switch (loginResponse.status) {
+//                     case 200:
+//                         toast.success('Login Successfully!', toastConfig);
+//                         await loginResponse.json();
+//                         router.push('/dashboard');
+//                         break;
+//                     case 401:
+//                         toast.error('Incorrect Password!', {
+//                             ...toastConfig,
+//                             onClose: () => {
+//                                 handleClearProvider
+//                                 signOut()
+//                             },
+//                         });
+//                         break;
+//                     case 403:
+//                         toast.info('Your account has been blocked!', {
+//                             ...toastConfig,
+//                             onClose: () => {
+//                                 handleClearProvider
+//                                 signOut()
+//                             },
+//                         });
+//                         break;
+//                     case 404:
+//                         // Handle signup
+//                         const signupResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/signup`, {
+//                             method: 'POST',
+//                             headers: { 'Content-Type': 'application/json' },
+//                             body: JSON.stringify({ email, firstName, lastName, username, password, confirmedPassword }),
+//                         });
+
+//                         if (signupResponse.ok) {
+//                             const loginSocialResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/login-social`, {
+//                                 method: 'POST',
+//                                 headers: { 'Content-Type': 'application/json' },
+//                                 body: JSON.stringify({ email, provider }),
+//                             });
+
+//                             if (loginSocialResponse.ok) {
+//                                 const reLoginResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/login`, {
+//                                     method: 'POST',
+//                                     headers: { 'Content-Type': 'application/json' },
+//                                     body: JSON.stringify({ email, password }),
+//                                 });
+
+//                                 if (reLoginResponse.ok) {
+//                                     toast.success('Login Successfully!', toastConfig);
+//                                     await reLoginResponse.json();
+//                                     router.push('/dashboard');
+//                                 }
+//                             }
+//                         }
+//                         await signupResponse.json();
+//                         break;
+//                     case 409:
+//                         toast.error('Email already exists!', {
+//                             ...toastConfig,
+//                             onClose: () => {
+//                                 handleClearProvider
+//                                 signOut()
+//                             },
+//                         });
+//                         break;
+//                     default:
+//                         break;
+//                 }
+//             } catch (err) {
+//                 console.error("-> Error:", err);
+//             } finally {
+//                 setLoading(false);
+//             }
+//         };
+
+//         if (session) {
+//             const email = session.user?.email ?? '';
+//             const nameParts = session.user?.name?.split(' ') ?? [];
+//             const firstName = nameParts[0] ?? '';
+//             const lastName = nameParts[1] ?? '';
+//             const username = session.user?.name ?? '';
+//             const password = `Idata@${process.env.NEXTAUTH_SECRET}2`;
+//             const confirmedPassword = password;
+
+//             console.log(password);
+
+//             setExecuted(true);
+
+//             console.log("-> Provider:", provider);
+
+//             handleLoginWithNextAuth(
+//                 email,
+//                 firstName,
+//                 lastName,
+//                 username,
+//                 password,
+//                 confirmedPassword,
+//                 provider
+//             );
+//         }
+//     }, [session, executed, router, provider, toastConfig]);
+
+
+//     return (
+//         <main
+//             id="login-form"
+//             className={`px-4 py-4 md:px-[7.5rem] content-start md:content-center h-screen`}
+//         >
+//             <ToastContainer />
+//             <div
+//                 className={`grid grid-cols-1 lg:grid-cols-2 md:gap-x-5 lg:gap-x-[8.125rem] w-full h-auto`}
+//             >
+//                 <div
+//                     id={`formControlLogin`}
+//                     className={`h-full order-last lg:order-none flex flex-col justify-center items-center w-full gap-y-4 md:gap-y-[10px]`}
+//                 >
+//                     <Formik
+//                         initialValues={initialValues}
+//                         onSubmit={(values, actions) => {
+//                             handleLoginWithApi(values);
+//                             actions.resetForm();
+//                         }}
+//                         validationSchema={validationSchema}
+//                     >
+//                         <Form className={`w-full flex flex-col justify-center`}>
+//                             <div id={`formTitleAndDesc`} className={formHeaderStyle}>
+//                                 <h1 className={formTitleStyle}>Login</h1>
+//                                 <div>
+//                                     <h5 className={authDescStyle}>
+//                                         If you don’t have an account register. You can
+//                                         <span
+//                                             className={`cursor-pointer font-medium text-blue-600 dark:text-blue-500 hover:underline ms-[5px]`}
+//                                             onClick={() => router.push(`/signup`)}
+//                                         >
+//                                             register
+//                                         </span>
+//                                     </h5>
+//                                 </div>
+//                             </div>
+//                             <div id={`formControl`} className={`flex flex-col gap-y-5`}>
+//                                 <div className={`flex flex-col`}>
+//                                     <div className={formInputControl}>
+//                                         <label htmlFor={`email`} className={labelStyle}>
+//                                             {/* <HiMail /> */}
+//                                             Email
+//                                             <span className={`text-red-500`}>*</span>
+//                                         </label>
+//                                         <Field
+//                                             name={`email`}
+//                                             placeholder={`example@email.com`}
+//                                             className={fieldStyle}
+//                                             type={`email`}
+//                                         />
+//                                     </div>
+//                                     <ErrorMessage
+//                                         name={`email`}
+//                                         render={(msg) => (
+//                                             <span className={errorMsgStyle}>{msg}</span>
+//                                         )}
+//                                     />
+//                                 </div>
+//                                 <div className={`flex flex-col`}>
+//                                     <div className={`${formInputControl} relative`}>
+//                                         <label htmlFor={`password`} className={labelStyle}>
+//                                             {/* <HiLockClosed /> */}
+//                                             Password
+//                                             <span className={`text-red-500`}>*</span>
+//                                         </label>
+//                                         <Field
+//                                             name={`password`}
+//                                             placeholder={`########`}
+//                                             className={fieldStyle}
+//                                             type={viewPassword ? "text" : "password"}
+//                                         />
+//                                         <div
+//                                             onClick={() => handleViewPassword()}
+//                                             className="absolute cursor-pointer top-[45px] right-[20px]"
+//                                         >
+//                                             {/* {viewPassword ? <HiOutlineEyeOff /> : <HiOutlineEye />} */}
+//                                         </div>
+//                                     </div>
+//                                     <ErrorMessage
+//                                         name={`password`}
+//                                         render={(msg) => (
+//                                             <span className={errorMsgStyle}>{msg}</span>
+//                                         )}
+//                                     />
+//                                 </div>
+//                                 <div className={`flex flex-row justify-between`}>
+//                                     <div
+//                                         className={`flex gap-x-[10px] justify-center items-center`}
+//                                     >
+//                                         <Field
+//                                             name={`rememberMe`}
+//                                             type={`checkbox`}
+//                                             className={`rounded-md`}
+//                                         />
+//                                         <span className={`text-primaryColor`}>Remember me</span>
+//                                     </div>
+//                                     <Link href={`/forgot-password`} className={activeLinkStyle}>
+//                                         Forgot Password ?
+//                                     </Link>
+//                                 </div>
+//                                 <Button
+//                                     type={`submit`}
+//                                     className={formbuttonStyle}
+//                                     color={`blue`}
+//                                     disabled={loading}
+//                                 >
+//                                     {loading
+//                                         ?
+//                                         "Loading..."
+//                                         :
+//                                         "Login"}
+//                                 </Button>
+//                             </div>
+//                         </Form>
+//                     </Formik>
+//                     <div
+//                         className={`flex flex-col gap-y-2.5 justify-center items-center`}
+//                     >
+//                         <span className={`text-[16px]`}>or continue with</span>
+//                         <div className={`flex gap-x-[20px] items-center`}>
+//                             <span
+//                                 className={`cursor-pointer`}
+//                                 onClick={(e) => {
+//                                     e.preventDefault()
+//                                     setLoading(true);
+//                                     handleProvider("google")
+//                                     signIn("google")
+//                                 }}
+//                             >
+//                                 {/* <FcGoogle size={40} /> */}
+//                             </span>
+//                             <span
+//                                 className={`cursor-pointer`}
+//                                 onClick={(e) => {
+//                                     e.preventDefault()
+//                                     setLoading(true);
+//                                     handleProvider("github")
+//                                     signIn("github")
+//                                 }}
+//                             >
+//                                 {/* <FaGithub size={36} /> */}
+//                             </span>
+//                         </div>
+//                     </div>
+//                 </div>
+//                 <div id={`formImage`} className={formImageStyle}>
+//                     <div className={`text-white flex justify-end items-start`}>
+//                         <Link href={`/`}>
+//                             {/* <HiOutlineX className={formXButtonStyle} /> */}
+//                         </Link>
+//                     </div>
+//                     <div className={`flex justify-center lg:order-none order-last`}>
+//                         <Image
+//                             src={`/chiso/logos/IDATA_LOGO.png`}
+//                             alt={`Logo`}
+//                             className={`hidden lg:block`}
+//                             width={300}
+//                             height={300}
+//                         />
+//                         <Image
+//                             src={`/chiso/logos/IDATA_LOGO.png`}
+//                             alt={`Logo`}
+//                             className={`block lg:hidden`}
+//                             width={100}
+//                             height={100}
+//                         />
+//                     </div>
+//                     <div className={formTextInImage}>
+//                         <div className={formTextInImageTitle}>Login to iDATA</div>
+//                         <div className={formTextInImageDesc}>
+//                             <span className={formTextSpan}>Nice to see you again!</span>
+//                         </div>
+//                     </div>
+//                 </div>
+//             </div>
+//         </main>
+//     );
+// }
+
+// export default LoginFormComponent;

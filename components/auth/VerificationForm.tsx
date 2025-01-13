@@ -11,25 +11,34 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { useDispatch, useSelector } from "react-redux";
-import { setCode, setTimer, setLoading, setError, resetCode } from "@/redux/features/verification/verificationSlice";
-import { RootState } from "@/redux/store";
-import { useRouter } from "next/navigation"; // Import useRouter
+import { useAppSelector, useAppDispatch } from "@/redux/hooks";
+import { selectUser, selectVerifyToken } from '@/redux/features/auth/authSlice';
+import { useGetUserByUuidQuery } from '@/redux/services/user-profile';
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export default function VerificationForm() {
-  const dispatch = useDispatch();
-  const { code, timer, isLoading, error } = useSelector(
-    (state: RootState) => state.verification,
-  );
+  const verifyToken = useAppSelector(selectVerifyToken);
+  const user = useAppSelector(selectUser);
+  const dispatch = useAppDispatch(); // Use the dispatch hook
+  const router = useRouter();
+
+  const { data: session, status } = useSession();
+  const { data } = useGetUserByUuidQuery(user, { pollingInterval: 1000 });
+
+  const [code, setCode] = useState<string[]>(Array(6).fill("")); // Initialize verification code state
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null); // Manage error state
+  const [timer, setTimer] = useState<number>(30); // Initialize timer state
+
   const inputs = useRef<(HTMLInputElement | null)[]>([]);
-  const router = useRouter(); // Initialize useRouter
 
   useEffect(() => {
     if (timer > 0) {
-      const interval = setInterval(() => dispatch(setTimer(timer - 1)), 1000);
+      const interval = setInterval(() => setTimer((prev) => prev - 1), 1000);
       return () => clearInterval(interval);
     }
-  }, [timer, dispatch]);
+  }, [timer]);
 
   const handlePaste = (e: React.ClipboardEvent) => {
     e.preventDefault();
@@ -39,19 +48,21 @@ export default function VerificationForm() {
     for (let i = 0; i < pastedData.length; i++) {
       if (/^\d$/.test(pastedData[i])) {
         newCode[i] = pastedData[i];
-        dispatch(setCode({ index: i, value: pastedData[i] }));
       }
     }
 
+    setCode(newCode);
     const nextEmptyIndex = newCode.findIndex((digit) => !digit);
     const focusIndex = nextEmptyIndex === -1 ? 5 : nextEmptyIndex;
     inputs.current[focusIndex]?.focus();
   };
 
   const handleInput = (index: number, value: string) => {
-    if (value.length > 1) return;
+    if (value.length > 1 || !/^\d$/.test(value)) return;
 
-    dispatch(setCode({ index, value }));
+    const newCode = [...code];
+    newCode[index] = value;
+    setCode(newCode);
 
     if (value && index < 5) {
       inputs.current[index + 1]?.focus();
@@ -60,7 +71,7 @@ export default function VerificationForm() {
 
   const handleKeyDown = (
     index: number,
-    e: React.KeyboardEvent<HTMLInputElement>,
+    e: React.KeyboardEvent<HTMLInputElement>
   ) => {
     if (e.key === "Backspace" && !code[index] && index > 0) {
       inputs.current[index - 1]?.focus();
@@ -69,30 +80,27 @@ export default function VerificationForm() {
 
   const handleVerify = async () => {
     const verificationCode = code.join("");
-    dispatch(setLoading(true));
-    dispatch(setError(null));
+    setIsLoading(true);
+    setError(null);
 
     try {
-      // Simulate an API call
       const response = await fetch(
         `http://localhost:8080/api/v1/users/verify-email?token=${verificationCode}`,
         {
           method: "POST",
-        },
+        }
       );
+
       if (!response.ok) {
         throw new Error("Verification failed");
       }
 
-      // Show success message
       alert("Email verified successfully!");
-
-      // Redirect to the login page
-      router.push("/auth/login"); // Update the path to your login page
+      router.push("/auth/login");
     } catch (error) {
-      dispatch(setError("Failed to verify email. Please try again."));
+      setError("Failed to verify email. Please try again.");
     } finally {
-      dispatch(setLoading(false));
+      setIsLoading(false);
     }
   };
 
@@ -103,8 +111,7 @@ export default function VerificationForm() {
           2-Step Verification
         </CardTitle>
         <CardDescription className="text-center">
-          We sent a verification code to your device. Enter or paste the code to
-          continue.
+          We sent a verification code to your device. Enter or paste the code to continue.
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -141,7 +148,7 @@ export default function VerificationForm() {
           variant="ghost"
           className="w-full"
           disabled={timer > 0}
-          onClick={() => dispatch(setTimer(30))}
+          onClick={() => setTimer(30)}
         >
           {timer > 0 ? `Resend code in ${timer}s` : "Resend code"}
         </Button>
