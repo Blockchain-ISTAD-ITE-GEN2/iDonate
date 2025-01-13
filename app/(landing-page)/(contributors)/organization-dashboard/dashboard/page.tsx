@@ -5,6 +5,8 @@ import { BarAndLineChart } from "@/components/organization/dashboard/bar-and-lin
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import organization from "@/public/images/Cambodia-Kantha-Bopha-Foundation.jpeg";
 
+
+
 export default function Contributor() {
   return (
     <section className="flex flex-col h-full">

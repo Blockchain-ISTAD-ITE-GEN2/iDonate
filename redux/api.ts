@@ -4,6 +4,25 @@ import { RootState } from "@/redux/store";
 import { setToken } from "@/redux/features/auth/authSlice";
 import { headers } from "next/headers";
 
+
+import axios from 'axios';
+
+const api = axios.create({
+  baseURL: `${process.env.NEXT_PUBLIC_IDONATE_API_URL}`, // Use environment variables
+  timeout: 10000,
+});
+
+api.interceptors.response.use(
+    (response) => response,
+    (error) => {
+      return Promise.reject({
+        status: error.response?.status || 500,
+        message: error.response?.data?.message || 'An error occurred.',
+      });
+    }
+);
+
+
 const baseQuery = fetchBaseQuery({
   baseUrl: `${process.env.NEXT_PUBLIC_IDONATE_API_URL}`,
   prepareHeaders: (headers, { getState }) => {
@@ -54,3 +73,5 @@ export const idonateApi = createApi({
   baseQuery: baseQueryWithReAuth,
   endpoints: () => ({}),
 });
+
+export { api };

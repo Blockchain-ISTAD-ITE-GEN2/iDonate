@@ -66,17 +66,17 @@ export default function NavbarComponent() {
   return (
     <nav className="w-full h-[72px] flex items-center justify-between shadow-sm z-10 top-0 px-4 xl:px-0  2xl:px-[80px] border border-none">
       <section
-        className="flex items-center cursor-pointer"
+        className="flex items-center cursor-pointer px-2"
         onClick={() => router.push("/")}
       >
         <Image
           src={logo}
-          width={80}
-          height={80}
+          width={70}
+          height={70}
           alt=""
           className=" xl:w-full xl:h-full"
         />
-        <span className="text-medium-eng xl:text-title-eng text-iDonate-navy-primary font-medium dark:text-iDonate-navy-accent">
+        <span className="text-medium-eng xl:text-title-eng text-iDonate-navy-primary font-medium dark:text-iDonate-navy-accent  ">
           iDONATE
         </span>
       </section>
@@ -131,6 +131,7 @@ export default function NavbarComponent() {
           </span>
         </Button>
       </section>
+
     </nav>
   );
 }

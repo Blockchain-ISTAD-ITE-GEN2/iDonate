@@ -11,3 +11,10 @@ export interface User {
   createdAt: Date;
   updatedAt: Date;
 }
+
+export interface ErrorPayload {
+  error: {
+    status: number;
+    message: string;
+  };
+}

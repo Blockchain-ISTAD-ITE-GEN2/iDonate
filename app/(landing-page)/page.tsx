@@ -9,6 +9,52 @@ import TestimonialCarousel from "@/components/testimonials/TestimonailCardCompon
 import BannerLandingCard from "@/components/landing/banner/BannerLandingCard";
 import UpcomingEvents from "@/components/landing/upcoming-event/UpComingEventComponent";
 
+
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+    title: 'iDonate - Empowering Transparent Donations',
+    description: 'iDonate is a trusted platform connecting donors with verified organizations to ensure transparency and credibility in donations.',
+    keywords: ['iDonate', 'Donation Platform', 'Transparent Donations', 'Charity', 'Nonprofit'],
+    openGraph: {
+        title: 'iDonate - Empowering Transparent Donations',
+        description: 'Join iDonate to make impactful and transparent donations. Explore verified organizations and trusted causes.',
+        url: 'https://yourwebsite.com',
+        images: [
+            {
+                url: 'https://yourwebsite.com/static/home-banner.jpg',
+                width: 1200,
+                height: 630,
+                alt: 'iDonate Home Banner',
+            },
+        ],
+        type: 'website',
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'iDonate - Empowering Transparent Donations',
+        description: 'Make donations you can trust with iDonate. Explore verified organizations and causes.',
+        images: ['https://yourwebsite.com/static/home-banner.jpg'],
+    },
+    icons: {
+        icon: '/favicon.ico',
+        apple: '/apple-touch-icon.png',
+    },
+    robots: {
+        index: true,
+        follow: true,
+    },
+    alternates: {
+        canonical: 'https://yourwebsite.com',
+        languages: {
+            en: 'https://yourwebsite.com',
+            km: 'https://yourwebsite.com/kh',
+        },
+    },
+};
+
+
+
 export default function Homepage() {
   const typedCategory: CategoryType[] = categories;
   return (

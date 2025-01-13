@@ -14,7 +14,7 @@ export default function CategoryOnPageComponent() {
   const typedEvents: EventType[] = events.slice(0, 4);
 
   return (
-    <section className="flex flex-col gap-9 ">
+    <section className="flex flex-col gap-9 mb-5 ">
       {/* Hero Section Start */}
       <OrganizationDetailHeroSection />
 
@@ -55,8 +55,8 @@ export default function CategoryOnPageComponent() {
               ))}
             </div>
 
-            <div className="flex justify-end">
-              <Button className="text-medium-eng text-iDonate-navy-primary bg-iDonate-white-space border-2 border-iDonate-navy-accent hover:bg-iDonate-navy-accent">
+            <div className="flex justify-end ">
+              <Button className="text-medium-eng text-iDonate-navy-primary bg-iDonate-white-space border-2 border-iDonate-navy-accent hover:bg-iDonate-navy-accent dark:bg-iDonate-dark-mode dark:text-iDonate-navy-accent dark:hover:text-iDonate-navy-secondary dark:hover:border-iDonate-navy-secondary">
                 Show more
               </Button>
             </div>

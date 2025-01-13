@@ -11,6 +11,7 @@ import MPTCLogo from "@/public/sponser/MPTC-Logo.png";
 import ISTADLogo from "@/public/sponser/ISTAD-Logo.png";
 import { motion } from "framer-motion";
 import { usePathname } from "next/navigation";
+import logo from "@/public/logo/logodesign no background.png";
 
 export default function FooterComponent() {
   const pathname = usePathname();
@@ -94,13 +95,15 @@ export default function FooterComponent() {
               className="flex items-center gap-0 justify-center md:justify-start"
             >
               <Image
-                src={iDonateSampleLogo}
+                src={logo}
                 alt="iDONATE Logo"
                 width={200}
                 height={200}
-                className="w-20 md:w-24 h-20 md:h-24 mt-[-17px] ml-[-17px]"
+                //   width={80}
+                // height={80}
+                className="w-20 md:w-24 h-20 md:h-24 mt-[-17px] ml-[-17px]  object-cover"
               />
-              <span className="text-xl md:text-2xl font-bold text-iDonate-navy-primary dark:text-iDonate-navy-accent">
+              <span className="text-xl md:text-2xl font-bold text-iDonate-navy-primary dark:text-iDonate-navy-accent ml-2">
                 iDONATE
               </span>
             </Link>
@@ -177,7 +180,7 @@ export default function FooterComponent() {
           <div className="space-y-6">
             <div>
               <h3 className="text-xl font-semibold mb-4 text-iDonate-navy-primary text-center md:text-left dark:text-iDonate-navy-accent">
-                Stay Up To Date
+                Stay Up-To-Date
               </h3>
               <div className="flex gap-2 max-w-sm mx-auto md:mx-0">
                 <Input
@@ -234,7 +237,7 @@ export default function FooterComponent() {
       <div className="bg-iDonate-navy-secondary border-t border-gray-700 dark:bg-[#18181B]">
         <div className="container mx-auto px-4 py-4">
           <p className="text-center text-xs md:text-sm text-iDonate-navy-accent dark:text-iDonate-navy-accent">
-            © 2024 Institute of Science and Technology Advanced Development |
+            © 2025 Institute of Science and Technology Advanced Development |
             All Rights Reserved
           </p>
         </div>
