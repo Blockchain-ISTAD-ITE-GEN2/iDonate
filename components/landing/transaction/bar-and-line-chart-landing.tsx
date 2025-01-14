@@ -22,8 +22,16 @@ export function BarAndLineChartLanding() {
     }),
   );
 
-  const recentTransactions: TransactionType[] = transactions.slice(0, 9);
-  const averageDate: AverageType[] = averages;
+  const recentTransactions: TransactionType[] = transactions.slice(0, 9).map(transaction => ({
+    ...transaction,
+    name: "",
+    avatar: ""
+  }));
+  const averageDate: AverageType[] = averages.map((item) => ({
+    ...item,
+    revenue_growth: 0,
+    total_revenue: 0,
+  }));
 
   return (
     <div className="container mx-auto px-4 md:w-full grid gap-4 lg:grid-cols-[1fr_480px] grid-cols-1">

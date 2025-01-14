@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import Loader from "./loading";
+import Loader from "./(landing-page)/loading";
 
 interface DelayedContentProps {
   children: React.ReactNode;

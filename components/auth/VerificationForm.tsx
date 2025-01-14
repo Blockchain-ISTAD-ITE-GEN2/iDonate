@@ -11,15 +11,31 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { useAppSelector, useAppDispatch } from "@/redux/hooks";
+import { selectUser, selectVerifyToken } from '@/redux/features/auth/authSlice';
+import { useGetUserByUuidQuery } from '@/redux/services/user-profile';
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export default function VerificationForm() {
-  const [code, setCode] = useState(["", "", "", "", "", ""]);
-  const [timer, setTimer] = useState(30);
+  const verifyToken = useAppSelector(selectVerifyToken);
+  const user = useAppSelector(selectUser);
+  const dispatch = useAppDispatch(); // Use the dispatch hook
+  const router = useRouter();
+
+  const { data: session, status } = useSession();
+  const { data } = useGetUserByUuidQuery(user, { pollingInterval: 1000 });
+
+  const [code, setCode] = useState<string[]>(Array(6).fill("")); // Initialize verification code state
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null); // Manage error state
+  const [timer, setTimer] = useState<number>(30); // Initialize timer state
+
   const inputs = useRef<(HTMLInputElement | null)[]>([]);
 
   useEffect(() => {
     if (timer > 0) {
-      const interval = setInterval(() => setTimer(timer - 1), 1000);
+      const interval = setInterval(() => setTimer((prev) => prev - 1), 1000);
       return () => clearInterval(interval);
     }
   }, [timer]);
@@ -29,7 +45,6 @@ export default function VerificationForm() {
     const pastedData = e.clipboardData.getData("text").slice(0, 6);
     const newCode = [...code];
 
-    // Fill in the code array with pasted digits
     for (let i = 0; i < pastedData.length; i++) {
       if (/^\d$/.test(pastedData[i])) {
         newCode[i] = pastedData[i];
@@ -37,21 +52,18 @@ export default function VerificationForm() {
     }
 
     setCode(newCode);
-
-    // Focus the next empty input or the last input if all filled
     const nextEmptyIndex = newCode.findIndex((digit) => !digit);
     const focusIndex = nextEmptyIndex === -1 ? 5 : nextEmptyIndex;
     inputs.current[focusIndex]?.focus();
   };
 
   const handleInput = (index: number, value: string) => {
-    if (value.length > 1) return;
+    if (value.length > 1 || !/^\d$/.test(value)) return;
 
     const newCode = [...code];
     newCode[index] = value;
     setCode(newCode);
 
-    // Auto-focus next input
     if (value && index < 5) {
       inputs.current[index + 1]?.focus();
     }
@@ -59,10 +71,36 @@ export default function VerificationForm() {
 
   const handleKeyDown = (
     index: number,
-    e: React.KeyboardEvent<HTMLInputElement>,
+    e: React.KeyboardEvent<HTMLInputElement>
   ) => {
     if (e.key === "Backspace" && !code[index] && index > 0) {
       inputs.current[index - 1]?.focus();
+    }
+  };
+
+  const handleVerify = async () => {
+    const verificationCode = code.join("");
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const response = await fetch(
+        `http://localhost:8080/api/v1/users/verify-email?token=${verificationCode}`,
+        {
+          method: "POST",
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Verification failed");
+      }
+
+      alert("Email verified successfully!");
+      router.push("/auth/login");
+    } catch (error) {
+      setError("Failed to verify email. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -73,8 +111,7 @@ export default function VerificationForm() {
           2-Step Verification
         </CardTitle>
         <CardDescription className="text-center">
-          We sent a verification code to your device. Enter or paste the code to
-          continue.
+          We sent a verification code to your device. Enter or paste the code to continue.
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -98,7 +135,12 @@ export default function VerificationForm() {
             />
           ))}
         </div>
-        <Button className="w-full" size="lg">
+        <Button
+          className="w-full"
+          size="lg"
+          onClick={handleVerify}
+          disabled={isLoading}
+        >
           Verify
           <ArrowRight className="ml-2 h-4 w-4" />
         </Button>
@@ -110,6 +152,7 @@ export default function VerificationForm() {
         >
           {timer > 0 ? `Resend code in ${timer}s` : "Resend code"}
         </Button>
+        {error && <p className="text-red-500 text-center">{error}</p>}
       </CardContent>
     </Card>
   );

@@ -125,6 +125,7 @@ export default function Homepage() {
 
       {/* upcoming events */}
       <section className="w-full flex flex-col items-center">
+
         <UpcomingEvents />
       </section>
     </section>

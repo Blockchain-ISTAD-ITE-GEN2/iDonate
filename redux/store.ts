@@ -3,12 +3,13 @@ import authSlice from "@/redux/features/auth/authSlice";
 import { idonateApi } from "@/redux/api";
 import errorMiddleware from "@/redux/middleware/errorMiddleware";
 
-// Create Store
+// create store
 export const makeStore = () => {
   return configureStore({
     reducer: {
-      auth: authSlice,
-      [idonateApi.reducerPath]: idonateApi.reducer, // Register RTK Query reducer
+      // Add the generated reducer as a specific top-level slice
+      [idonateApi.reducerPath]: idonateApi.reducer,
+        auth: authSlice,
     },
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware()
@@ -19,6 +20,7 @@ export const makeStore = () => {
 
 // Infer the type of makeStore
 export type AppStore = ReturnType<typeof makeStore>;
+
 // Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<AppStore["getState"]>;
 export type AppDispatch = AppStore["dispatch"];

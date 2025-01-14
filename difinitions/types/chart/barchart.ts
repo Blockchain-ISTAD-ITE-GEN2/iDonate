@@ -5,6 +5,8 @@ export type BarchartType = {
 };
 
 export type AverageType = {
+  revenue_growth: ReactNode;
+  total_revenue: ReactNode;
   amount: number;
   date: string;
 };
