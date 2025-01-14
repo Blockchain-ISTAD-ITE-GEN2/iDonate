@@ -1,4 +1,4 @@
-import StoreProvider from "../(landing-page)/StoreProvider"
+import StoreProvider from "../StoreProvider"
 import '../globals.css'
 export const metadata = {
   title: 'Next.js',

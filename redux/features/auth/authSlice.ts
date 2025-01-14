@@ -31,7 +31,8 @@ const authSlice = createSlice({
         },
         setUser: (state, action: PayloadAction<string>) => {
             state.userUuid = action.payload;
-        }
+        },
+        
     },
 });
 

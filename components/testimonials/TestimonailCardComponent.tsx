@@ -109,7 +109,7 @@ export default function TestimonialCarousel() {
                       )
                       .map((testimonial) => (
                         <div
-                          
+                          key={testimonial.id}
                           className={`w-full ${itemsPerPage === 1 ? "" : itemsPerPage === 2 ? "md:w-full" : "md:w-1/2 lg:w-1/3"} lg:p-8 md:p-8`}
                         >
                           <Card className="h-full">

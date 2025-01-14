@@ -1,7 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authSlice from "@/redux/features/auth/authSlice";
 import { idonateApi } from "@/redux/api";
-import errorMiddleware from "@/redux/middleware/errorMiddleware";
 
 // create store
 export const makeStore = () => {
@@ -14,7 +13,6 @@ export const makeStore = () => {
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware()
         .concat(idonateApi.middleware) // Add RTK Query middleware
-        .concat(errorMiddleware), // Add custom middleware
   });
 };
 

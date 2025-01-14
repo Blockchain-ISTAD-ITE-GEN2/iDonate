@@ -20,9 +20,9 @@ export const ProfileDropdown = ({
   signOut,
   token
 }: {
-  session: any;
-  signOut: any;
-  token: string | any;
+  session?: any;
+  signOut?: any;
+  token?: string | any;
 }) => {
   const router = useRouter(); 
 

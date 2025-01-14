@@ -1,7 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import type { RootState } from '@/redux/store';
 import { idonateApi } from '@/redux/api';
-import { set } from 'date-fns';
 
 type testimoial ={
         id:string;

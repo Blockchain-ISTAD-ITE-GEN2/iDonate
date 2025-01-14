@@ -9,7 +9,7 @@ export function middleware(request: NextRequest) {
 
     const cookies = request.cookies;
     // let session = cookies.get("authjs.session-token")
-    const refreshToken = cookies.get("idonate-refresh-token" || "refresh") // later on we should use the ENV value for this
+    const refreshToken = cookies.get("idonate-refresh-token") // later on we should use the ENV value for this
 
     // console.log("Cookies: ", cookies)
     // console.log("Refresh Token: ",refreshToken)

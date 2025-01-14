@@ -1,4 +1,3 @@
-import { AppDispatch } from "./../store/store";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { RootState } from "@/redux/store";
 import { setToken } from "@/redux/features/auth/authSlice";

@@ -1,10 +1,10 @@
-import VerificationCode from "@/components/auth/VerificationForm";
-import React from "react";
+import VerificationForm from "@/components/auth/VerificationForm";
 
-export default function page() {
+
+export default function Verification() {
   return (
     <div>
-      <VerificationCode />
+      <VerificationForm />
     </div>
   );
 }

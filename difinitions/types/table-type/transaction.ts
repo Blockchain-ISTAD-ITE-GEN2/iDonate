@@ -1,6 +1,4 @@
 export type TransactionType = {
-  name: any;
-  avatar: string | undefined;
   date: string;
   donor: string;
   email: string;
