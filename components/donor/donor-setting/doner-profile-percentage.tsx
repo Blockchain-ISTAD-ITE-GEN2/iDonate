@@ -166,7 +166,7 @@ export function DonorProfilePercentage({
             </Pie>
           </PieChart>
         </ChartContainer>
-      </CardContent >
+      </CardContent>
 
       <CardContent className="flex flex-col gap-2 md:gap-4 xl:gap-6">
         {chartData

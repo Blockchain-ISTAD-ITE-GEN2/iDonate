@@ -107,7 +107,11 @@ export const transactionColumns: ColumnDef<TransactionType>[] = [
         currency: "USD",
       }).format(amount);
 
-      return <div className="text-iDonate-green-primary dark:text-iDonate-green-secondary">{formatted}</div>;
+      return (
+        <div className="text-iDonate-green-primary dark:text-iDonate-green-secondary">
+          {formatted}
+        </div>
+      );
     },
     // cell: ({ row }) => <div>{row.getValue("email")}</div>,
     enableSorting: true,

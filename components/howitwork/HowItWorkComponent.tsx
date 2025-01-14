@@ -7,13 +7,11 @@ import ProcessIllustration from "@/public/howitwork/Rectangle10206.png";
 import HowItWork1 from "@/components/jsonComponent/HowItWork1.json";
 import HowItWork2 from "@/components/jsonComponent/HowItWork2.json";
 // import Lottie from "lottie-react";
-import { useEffect } from 'react';
+import { useEffect } from "react";
 import dynamic from "next/dynamic";
 
 // Dynamically import Lottie with SSR disabled
 const Lottie = dynamic(() => import("lottie-react"), { ssr: false });
-
-
 
 export default function HowItWorks() {
   useEffect(() => {
@@ -127,10 +125,8 @@ export default function HowItWorks() {
               className="order-first md:order-last"
             >
               <div className="w-auto h-auto sm:w-[350px] sm:h-[350px]">
-                <Lottie
-                    animationData={HowItWork1}/>
+                <Lottie animationData={HowItWork1} />
               </div>
-
             </motion.div>
           </div>
         </div>
@@ -175,8 +171,8 @@ export default function HowItWorks() {
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-xl md:text-2xl font-bold mb-8 md:mb-12 font-siemreap text-center text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
-
+            className="text-xl md:text-2xl font-bold mb-8 md:mb-12 font-siemreap text-center text-iDonate-navy-secondary dark:text-iDonate-navy-accent"
+          >
             ដំណើរការរបស់សប្បុរសជន
           </motion.h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
@@ -186,12 +182,8 @@ export default function HowItWorks() {
               className="order-last md:order-first"
             >
               <div className="w-full h-auto sm:w-[350px] sm:h-[350px] items-end justify-end">
-                <Lottie
-
-                    animationData={HowItWork2}/>
+                <Lottie animationData={HowItWork2} />
               </div>
-
-
             </motion.div>
             <div className="space-y-6 md:space-y-8">
               {[

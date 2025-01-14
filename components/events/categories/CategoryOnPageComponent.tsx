@@ -8,9 +8,13 @@ import CategoryCardComponent from "./CategoryCardComponent";
 import { EventType } from "@/difinitions/dto/EventType";
 import { CommonEventCard } from "@/components/events/organization-event/CommonEventCard";
 import events from "@/data/events-data.json";
+import { useGetCategoriesQuery } from "@/redux/services/category-service";
 
 export default function CategoryOnPageComponent() {
-  const typedCategory: CategoryType[] = categories;
+ 
+  const category = useGetCategoriesQuery({});
+
+  const typeCategories: CategoryType[] = category?.currentData || [];
   const typedEvents: EventType[] = events.slice(0, 4);
 
   return (
@@ -21,12 +25,12 @@ export default function CategoryOnPageComponent() {
       {/* Start Card Categories */}
       <div className="w-full px-6 md:px-12 lg:px-24 space-y-6 text-center">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-          <CategoryCardComponent categories={typedCategory} />
+          <CategoryCardComponent  />
         </div>
       </div>
 
       {/* List Card Events */}
-      {typedCategory.map((category, categoryIndex) => (
+      {typeCategories.map((category, categoryIndex) => (
         <section
           key={categoryIndex}
           className="flex flex-col gap-6 container mx-auto"
@@ -37,7 +41,7 @@ export default function CategoryOnPageComponent() {
               lang="km"
               className="text-title-khmer text-iDonate-navy-primary md:flex md:items-center md:justify-center lg:flex lg:items-center lg:justify-start dark:text-iDonate-navy-accent"
             >
-              {category.title}
+              {category.name}
             </h2>
 
             <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">

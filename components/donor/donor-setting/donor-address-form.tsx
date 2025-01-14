@@ -86,7 +86,6 @@ export function DonorAddressForm({
         {!isEditing && (
           <Card className="flex flex-col rounded-lg border-2 border-iDonate-navy-accent gap-2 lg:gap-6 p-4 md:p-6 lg:p-9">
             <CardHeader className="flex flex-row items-center justify-between p-0 m-0">
-
               <CardTitle className="text-lg lg:text-2xl font-medium text-iDonate-navy-secondary">
                 Location
               </CardTitle>
@@ -112,7 +111,7 @@ export function DonorAddressForm({
           <Card className="flex flex-col bg-iDonate-light-gray rounded-lg border-2 border-iDonate-navy-accent gap-2 lg:gap-6 p-4 md:p-6 lg:p-9">
             <CardHeader className="flex flex-col sm:flex-row items-start justify-between p-0 m-0">
               <CardTitle className="text-lg lg:text-2xl font-medium text-iDonate-navy-secondary whitespace-nowrap">
-              Location
+                Location
               </CardTitle>
               <div className="flex w-full justify-end gap-3">
                 {formState.isDirty ? (
@@ -149,7 +148,7 @@ export function DonorAddressForm({
               </div>
             </CardHeader>
 
-            <CardContent  className="flex flex-col md:flex-row gap-4 sm:gap-6 lg:gap-9 p-0 m-0">
+            <CardContent className="flex flex-col md:flex-row gap-4 sm:gap-6 lg:gap-9 p-0 m-0">
               <FormField
                 control={control}
                 name="address"

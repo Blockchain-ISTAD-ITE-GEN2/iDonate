@@ -9,54 +9,60 @@ import BannerLandingCard from "@/components/landing/banner/BannerLandingCard";
 import UpcomingEvents from "@/components/landing/upcoming-event/UpComingEventComponent";
 import { BarAndLineChartLanding } from "@/components/landing/transaction/bar-and-line-chart-landing";
 
-
-import { Metadata } from 'next';
+import { Metadata } from "next";
 
 export const metadata: Metadata = {
-    title: 'iDonate - Empowering Transparent Donations',
-    description: 'iDonate is a trusted platform connecting donors with verified organizations to ensure transparency and credibility in donations.',
-    keywords: ['iDonate', 'Donation Platform', 'Transparent Donations', 'Charity', 'Nonprofit'],
-    openGraph: {
-        title: 'iDonate - Empowering Transparent Donations',
-        description: 'Join iDonate to make impactful and transparent donations. Explore verified organizations and trusted causes.',
-        url: 'https://yourwebsite.com',
-        images: [
-            {
-                url: 'https://yourwebsite.com/static/home-banner.jpg',
-                width: 1200,
-                height: 630,
-                alt: 'iDonate Home Banner',
-            },
-        ],
-        type: 'website',
+  title: "iDonate - Empowering Transparent Donations",
+  description:
+    "iDonate is a trusted platform connecting donors with verified organizations to ensure transparency and credibility in donations.",
+  keywords: [
+    "iDonate",
+    "Donation Platform",
+    "Transparent Donations",
+    "Charity",
+    "Nonprofit",
+  ],
+  openGraph: {
+    title: "iDonate - Empowering Transparent Donations",
+    description:
+      "Join iDonate to make impactful and transparent donations. Explore verified organizations and trusted causes.",
+    url: "https://yourwebsite.com",
+    images: [
+      {
+        url: "https://yourwebsite.com/static/home-banner.jpg",
+        width: 1200,
+        height: 630,
+        alt: "iDonate Home Banner",
+      },
+    ],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "iDonate - Empowering Transparent Donations",
+    description:
+      "Make donations you can trust with iDonate. Explore verified organizations and causes.",
+    images: ["https://yourwebsite.com/static/home-banner.jpg"],
+  },
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  alternates: {
+    canonical: "https://yourwebsite.com",
+    languages: {
+      en: "https://yourwebsite.com",
+      km: "https://yourwebsite.com/kh",
     },
-    twitter: {
-        card: 'summary_large_image',
-        title: 'iDonate - Empowering Transparent Donations',
-        description: 'Make donations you can trust with iDonate. Explore verified organizations and causes.',
-        images: ['https://yourwebsite.com/static/home-banner.jpg'],
-    },
-    icons: {
-        icon: '/favicon.ico',
-        apple: '/apple-touch-icon.png',
-    },
-    robots: {
-        index: true,
-        follow: true,
-    },
-    alternates: {
-        canonical: 'https://yourwebsite.com',
-        languages: {
-            en: 'https://yourwebsite.com',
-            km: 'https://yourwebsite.com/kh',
-        },
-    },
+  },
 };
 
-
-
 export default function Homepage() {
-  const typedCategory: CategoryType[] = categories;
+  // const typedCategory: CategoryType[] = categories;
   return (
     <section className="flex flex-col items-center gap-9">
       {/* Here section */}
@@ -81,7 +87,7 @@ export default function Homepage() {
 
         {/* Category Cards Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6 lg:gap-9">
-          <CategoryCardComponent categories={typedCategory} />
+          <CategoryCardComponent />
         </div>
       </section>
 
@@ -119,7 +125,6 @@ export default function Homepage() {
 
       {/* upcoming events */}
       <section className="w-full flex flex-col items-center">
-
         <UpcomingEvents />
       </section>
     </section>

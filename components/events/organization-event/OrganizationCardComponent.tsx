@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { Card, CardContent } from "@/components/ui/card";
 import Image from "next/image";
@@ -12,14 +12,15 @@ export function OrganizationCardComponent({
   description,
   location,
 }: OrganizationParam) {
-
-
-  const router = useRouter()
+  const router = useRouter();
 
   return (
-    <Card 
-    onClick={()=>{router.push('/organizations/0')}}
-    className="w-full rounded-[10px] bg-iDonate-light-gray border-0 cursor-pointer shadow-md transition-transform hover:scale-[1.02] dark:bg-iDonate-dark-mode">
+    <Card
+      onClick={() => {
+        router.push("/organizations/0");
+      }}
+      className="w-full rounded-[10px] bg-iDonate-light-gray border-0 cursor-pointer shadow-md transition-transform hover:scale-[1.02] dark:bg-iDonate-dark-mode"
+    >
       <CardContent className="flex flex-col sm:flex-row items-center justify-center p-4 gap-4">
         {/* Logo */}
         <div className="relative aspect-square min-w-[160px] h-full flex-shrink-0 rounded-lg">

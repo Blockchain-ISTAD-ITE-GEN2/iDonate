@@ -8,10 +8,12 @@ export const makeStore = () => {
   return configureStore({
     reducer: {
       auth: authSlice,
-      [idonateApi.reducerPath]: idonateApi.reducer,
+      [idonateApi.reducerPath]: idonateApi.reducer, // Register RTK Query reducer
     },
     middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware().concat(errorMiddleware), // Attach middleware
+      getDefaultMiddleware()
+        .concat(idonateApi.middleware) // Add RTK Query middleware
+        .concat(errorMiddleware), // Add custom middleware
   });
 };
 
@@ -20,5 +22,3 @@ export type AppStore = ReturnType<typeof makeStore>;
 // Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<AppStore["getState"]>;
 export type AppDispatch = AppStore["dispatch"];
-
-

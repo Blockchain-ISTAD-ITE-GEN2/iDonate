@@ -1,29 +1,26 @@
 import { mockUsers } from "@/data/data";
 import { User } from "@/difinitions/types/media/user";
-import {AppDispatch} from "@/store/store";
-import {setLoading} from "@/redux/features/auth/authSlice";
-import {setUser} from "@/store/slices/authSlice";
-import {api} from "@/redux/api"
+import { AppDispatch } from "@/store/store";
+import { setLoading } from "@/redux/features/auth/authSlice";
+import { setUser } from "@/store/slices/authSlice";
+import { api } from "@/redux/api";
 
+export const loginUser =
+  (email: string, password: string) => async (dispatch: AppDispatch) => {
+    dispatch(setLoading(true));
 
-
-
-
-export const loginUser = (email: string, password: string) => async (dispatch: AppDispatch) => {
-  dispatch(setLoading(true));
-
-  try {
-    const response = await api.post('/auth/login', { email, password });
-    dispatch(setUser(response.data));
-  } catch (error: any) {
-    dispatch({
-      type: 'auth/loginFailure',
-      payload: { error }, // Pass error to middleware
-    });
-  } finally {
-    dispatch(setLoading(false));
-  }
-};
+    try {
+      const response = await api.post("/auth/login", { email, password });
+      dispatch(setUser(response.data));
+    } catch (error: any) {
+      dispatch({
+        type: "auth/loginFailure",
+        payload: { error }, // Pass error to middleware
+      });
+    } finally {
+      dispatch(setLoading(false));
+    }
+  };
 
 export const authService = {
   login: async (email: string, password: string): Promise<User | null> => {

@@ -131,7 +131,6 @@ export default function NavbarComponent() {
           </span>
         </Button>
       </section>
-
     </nav>
   );
 }

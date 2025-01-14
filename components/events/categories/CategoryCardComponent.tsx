@@ -3,21 +3,20 @@ import { CategoryType } from "@/difinitions/types/components-type/CategoryType";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
+import { useGetCategoriesQuery } from "@/redux/services/category-service";
 
-type CategoryCardProps = {
-  categories: CategoryType[];
-  onClick?: () => void;
-};
-
-export default function CategoryCardComponent({
-  categories,
-  onClick,
-}: CategoryCardProps) {
+export default function CategoryCardComponent() {
   const router = useRouter();
+
+  const category = useGetCategoriesQuery({});
+
+  const typeCategories: CategoryType[] = category?.currentData || [];
+
+  console.log("typeCategory", typeCategories);
 
   return (
     <>
-      {categories.map((item, index) => (
+      {typeCategories.map((item, index) => (
         <motion.div
           onClick={() => router.push(`/categories/0`)}
           lang="km"
@@ -34,16 +33,19 @@ export default function CategoryCardComponent({
               <Image
                 width={60}
                 height={60}
-                src={item.media}
-                alt={item.title || "Media"}
+                src={
+                  item.media ||
+                  "https://charius-next.netlify.app/_next/static/media/1.f81fd7b6.svg"
+                }
+                alt={item.name || "Media"}
                 className="w-10 h-10 sm:w-[60px] sm:h-[60px]"
               />
             )}
           </div>
 
-          {item.title && (
+          {item.name && (
             <h3 className="text-medium-khmer md:text-title-khmer font-medium text-iDonate-navy-primary dark:text-iDonate-navy-accent">
-              {item.title}
+              {item.name}
             </h3>
           )}
 

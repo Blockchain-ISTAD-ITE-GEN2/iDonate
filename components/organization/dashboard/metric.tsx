@@ -61,7 +61,6 @@ export function CardsMetric({ data }: AverageProps) {
               axisLine={false}
               tickMargin={8}
               tickFormatter={(value) => value}
-
             />
             <YAxis
               dataKey="amount"
@@ -69,7 +68,6 @@ export function CardsMetric({ data }: AverageProps) {
               axisLine={false}
               tickMargin={30}
               tickFormatter={(value) => value}
-
             />
             <Area
               type="monotone"
@@ -81,7 +79,6 @@ export function CardsMetric({ data }: AverageProps) {
             <ChartTooltip
               cursor={false}
               content={<ChartTooltipContent indicator="dot" />}
-
             />
           </AreaChart>
         </ChartContainer>

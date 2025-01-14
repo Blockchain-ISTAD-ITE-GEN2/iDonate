@@ -81,11 +81,10 @@ export function DonorMediaForm({
           {/* Card Header: Conditionally rendered when previewImage exists */}
           {previewImage && (
             <CardHeader className="w-full flex flex-col sm:flex-row items-start justify-between p-0 m-0">
-
               <CardTitle className="text-lg lg:text-2xl font-medium text-iDonate-navy-secondary whitespace-nowrap">
                 Image Preview
               </CardTitle>
-  
+
               <div className="flex w-full justify-end gap-3">
                 {/* Cancel Button */}
                 {formState.isDirty ? (
@@ -113,7 +112,7 @@ export function DonorMediaForm({
                     Cancel
                   </Button>
                 )}
-  
+
                 {/* Submit Button */}
                 <Button
                   type="submit"
@@ -124,7 +123,7 @@ export function DonorMediaForm({
               </div>
             </CardHeader>
           )}
-  
+
           <div className="flex flex-col sm:flex-row items-start gap-6 md:gap-9">
             {/* Card Content for Image */}
             <CardContent className="relative w-full sm:min-w-[300px] min-h-[300px] flex p-0 m-0">
@@ -136,14 +135,10 @@ export function DonorMediaForm({
                   className="rounded-md"
                 />
               ) : (
-                <Image
-                  src={donor}
-                  alt="Organization"
-                  fill
-                />
+                <Image src={donor} alt="Organization" fill />
               )}
             </CardContent>
-  
+
             {/* Card Content for Upload Button */}
             <CardContent className="flex flex-col p-0 m-0 gap-4">
               <FormField
@@ -191,5 +186,4 @@ export function DonorMediaForm({
       </form>
     </Form>
   );
-  
 }

@@ -13,7 +13,7 @@ type AuthState = {
   isAuthenticated: boolean;
   loading: boolean;
   error: string | null;
-}
+};
 
 const initialState: AuthState = {
   token: null,
@@ -29,27 +29,27 @@ const initialState: AuthState = {
 };
 
 export const loginWithGoogle = createAsyncThunk(
-    "auth/loginWithGoogle",
-    async (token: string, { rejectWithValue }) => {
-      try {
-        const response = await axios.post("/api/auth/google", { token });
-        return response.data;
-      } catch (error) {
-        return rejectWithValue("Failed to login with Google");
-      }
-    },
+  "auth/loginWithGoogle",
+  async (token: string, { rejectWithValue }) => {
+    try {
+      const response = await axios.post("/api/auth/google", { token });
+      return response.data;
+    } catch (error) {
+      return rejectWithValue("Failed to login with Google");
+    }
+  },
 );
 
 export const loginWithFacebook = createAsyncThunk(
-    "auth/loginWithFacebook",
-    async (token: string, { rejectWithValue }) => {
-      try {
-        const response = await axios.post("/api/auth/facebook", { token });
-        return response.data;
-      } catch (error) {
-        return rejectWithValue("Failed to login with Facebook");
-      }
-    },
+  "auth/loginWithFacebook",
+  async (token: string, { rejectWithValue }) => {
+    try {
+      const response = await axios.post("/api/auth/facebook", { token });
+      return response.data;
+    } catch (error) {
+      return rejectWithValue("Failed to login with Facebook");
+    }
+  },
 );
 
 const authSlice = createSlice({
@@ -85,8 +85,11 @@ const authSlice = createSlice({
     setLoading: (state, action: PayloadAction<boolean>) => {
       state.loading = action.payload;
     },
-    setError: (state, action: PayloadAction<{ status: number; message?: string } | null>) => {
-      state.error = action.payload?.message ?? null;  // Use nullish coalescing to avoid undefined
+    setError: (
+      state,
+      action: PayloadAction<{ status: number; message?: string } | null>,
+    ) => {
+      state.error = action.payload?.message ?? null; // Use nullish coalescing to avoid undefined
     },
     clearError: (state) => {
       state.error = null;
@@ -94,35 +97,34 @@ const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-        .addCase(loginWithGoogle.pending, (state) => {
-          state.loading = true;
-          state.error = null;
-        })
-        .addCase(loginWithGoogle.fulfilled, (state, action) => {
-          state.loading = false;
-          state.isAuthenticated = true;
-          state.user = action.payload;
-        })
-        .addCase(loginWithGoogle.rejected, (state, action) => {
-          state.loading = false;
-          state.error = action.payload as string;
-        })
-        .addCase(loginWithFacebook.pending, (state) => {
-          state.loading = true;
-          state.error = null;
-        })
-        .addCase(loginWithFacebook.fulfilled, (state, action) => {
-          state.loading = false;
-          state.isAuthenticated = true;
-          state.user = action.payload;
-        })
-        .addCase(loginWithFacebook.rejected, (state, action) => {
-          state.loading = false;
-          state.error = action.payload as string;
-        });
+      .addCase(loginWithGoogle.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(loginWithGoogle.fulfilled, (state, action) => {
+        state.loading = false;
+        state.isAuthenticated = true;
+        state.user = action.payload;
+      })
+      .addCase(loginWithGoogle.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(loginWithFacebook.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(loginWithFacebook.fulfilled, (state, action) => {
+        state.loading = false;
+        state.isAuthenticated = true;
+        state.user = action.payload;
+      })
+      .addCase(loginWithFacebook.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      });
   },
 });
-
 
 export const {
   logout,
@@ -133,7 +135,7 @@ export const {
   setUser,
   setLoading,
   setError,
-  clearError
+  clearError,
 } = authSlice.actions;
 
 export default authSlice.reducer;
@@ -144,9 +146,9 @@ export const selectVerifyToken = (state: RootState) => state.auth.verifyToken;
 export const selectResendToken = (state: RootState) => state.auth.resendToken;
 export const selectForgetToken = (state: RootState) => state.auth.forgetToken;
 export const selectEmail = (state: RootState) => state.auth.email;
-export const selectUser = (state: RootState) => state.auth.user;  // Now selecting the full user object
+export const selectUser = (state: RootState) => state.auth.user; // Now selecting the full user object
 export const selectUserUuid = (state: RootState) => state.auth.userUuid;
-export const selectIsAuthenticated = (state: RootState) => state.auth.isAuthenticated;
+export const selectIsAuthenticated = (state: RootState) =>
+  state.auth.isAuthenticated;
 export const selectLoading = (state: RootState) => state.auth.loading;
 export const selectError = (state: RootState) => state.auth.error;
-

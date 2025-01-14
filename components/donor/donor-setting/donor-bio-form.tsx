@@ -70,10 +70,8 @@ export function DonorBioForm({
       <form onSubmit={handleSubmit(onSubmit)}>
         {/* View Mode */}
         {!isEditing && (
-           <Card className="flex flex-col rounded-lg border-2 border-iDonate-navy-accent gap-2 lg:gap-6 p-4 md:p-6 lg:p-9">
-
+          <Card className="flex flex-col rounded-lg border-2 border-iDonate-navy-accent gap-2 lg:gap-6 p-4 md:p-6 lg:p-9">
             <CardHeader className="flex flex-row items-center justify-between p-0 m-0">
-
               <CardTitle className="text-lg lg:text-2xl font-medium text-iDonate-navy-secondary">
                 Bio
               </CardTitle>
@@ -89,7 +87,10 @@ export function DonorBioForm({
 
             <CardContent className="flex flex-wrap gap-4 sm:gap-6 lg:gap-9 p-0 m-0">
               <div className="flex flex-col md:space-y-1 ">
-                <CardDescription lang="km" className="text-sm sm:text-description-eng lg:text-medium-eng text-iDonate-navy-primary">
+                <CardDescription
+                  lang="km"
+                  className="text-sm sm:text-description-eng lg:text-medium-eng text-iDonate-navy-primary"
+                >
                   Elizabeth Joe
                   គឺជាអ្នកសកម្មក្នុងវិស័យឧស្សាហកម្មស្រ្តីដែលបង្កើតរបស់ជាច្រើនគាត់ជាអ្នកផ្តល់ជំនួយដល់ជំនួយដ៏ធំដល់អ្នកដទៃគាត់គឺជាមនុស្សម្នាក់
                   ដែលស្រឡាញវិជ្ជាសាស្រ្ត ពិភពលោក ផងដែរ🌍។គាត់គឺជាស្ថាបត្យករ
@@ -115,7 +116,6 @@ export function DonorBioForm({
         {isEditing && (
           <Card className="flex flex-col bg-iDonate-light-gray rounded-lg border-2 border-iDonate-navy-accent gap-2 lg:gap-6 p-4 md:p-6 lg:p-9">
             <CardHeader className="flex flex-col sm:flex-row items-start justify-between p-0 m-0">
-
               <CardTitle className="text-lg lg:text-2xl font-medium text-iDonate-navy-secondary">
                 Bio
               </CardTitle>

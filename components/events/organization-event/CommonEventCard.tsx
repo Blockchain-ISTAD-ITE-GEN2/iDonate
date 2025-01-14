@@ -5,12 +5,11 @@ import { CircleDollarSign, Users } from "lucide-react";
 import { EventType } from "@/difinitions/dto/EventType";
 import { useRouter } from "next/navigation";
 import React from "react";
-import {FaRegCalendarAlt} from "react-icons/fa";
-import {HiCalendarDateRange} from "react-icons/hi2";
+import { FaRegCalendarAlt } from "react-icons/fa";
+import { HiCalendarDateRange } from "react-icons/hi2";
 
 export function CommonEventCard({ event }: { event: EventType }) {
   const router = useRouter();
-
 
   return (
     <Card
@@ -42,14 +41,14 @@ export function CommonEventCard({ event }: { event: EventType }) {
         {/* Dates */}
         <div className="flex justify-between text-sm">
           <div className="flex flex-col">
-
             <div className="flex items-center">
-                <span className="text-iDonate-navy-secondary dark:text-iDonate-navy-accent mr-1">
-                  <FaRegCalendarAlt/>
-                </span>
-              <p className="text-iDonate-navy-secondary dark:text-iDonate-navy-accent">Order date</p>
+              <span className="text-iDonate-navy-secondary dark:text-iDonate-navy-accent mr-1">
+                <FaRegCalendarAlt />
+              </span>
+              <p className="text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
+                Order date
+              </p>
             </div>
-
 
             <p className="text-iDonate-green-primary dark:text-iDonate-green-secondary">
               {event?.date || "12 Dec 2024"}
@@ -57,12 +56,13 @@ export function CommonEventCard({ event }: { event: EventType }) {
           </div>
           <div className="flex flex-col">
             <div className="flex items-center">
-                <span className="text-iDonate-navy-secondary dark:text-iDonate-navy-accent mr-1">
-                  <HiCalendarDateRange/>
-                </span>
-              <p className="text-iDonate-navy-secondary dark:text-iDonate-navy-accent">Order date</p>
+              <span className="text-iDonate-navy-secondary dark:text-iDonate-navy-accent mr-1">
+                <HiCalendarDateRange />
+              </span>
+              <p className="text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
+                Order date
+              </p>
             </div>
-
 
             <p className="text-iDonate-green-primary dark:text-iDonate-green-secondary">
               {event?.date || "12 Dec 2025"}
@@ -73,8 +73,8 @@ export function CommonEventCard({ event }: { event: EventType }) {
         {/* Title and Description */}
         <div className="flex flex-col flex-1 ">
           <h3
-              lang="km"
-              className="font-bold text-medium-khmer text-iDonate-navy-primary line-clamp-1 dark:text-iDonate-navy-accent "
+            lang="km"
+            className="font-bold text-medium-khmer text-iDonate-navy-primary line-clamp-1 dark:text-iDonate-navy-accent "
           >
             {event?.title || "Untitled Event"}
           </h3>

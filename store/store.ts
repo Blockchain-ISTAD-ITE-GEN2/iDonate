@@ -3,14 +3,13 @@ import authReducer from "./slices/authSlice";
 import registerSlice from "@/redux/features/auth/registerSlice";
 import errorMiddleware from "@/redux/middleware/errorMiddleware";
 
-
 const makeStore = configureStore({
   reducer: {
     auth: authReducer,
     register: registerSlice,
   },
   middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware().concat(errorMiddleware), // Attach middleware
+    getDefaultMiddleware().concat(errorMiddleware), // Attach middleware
 });
 
 // Infer the type of RootState and AppDispatch

@@ -18,13 +18,16 @@ import { AlertComfirmDialog } from "@/components/Alert/Alert-Dialog";
 import Image from "next/image";
 import { CategoryType } from "@/difinitions/types/components-type/CategoryType";
 import categories from "@/data/category.json";
+import { useGetCategoriesQuery } from "@/redux/services/category-service";
 
 export function EventCategoryFormEdition({
   onPercentageUpdate,
 }: {
   onPercentageUpdate: (percentage: number) => void;
 }) {
-  const typedCategory: CategoryType[] = categories;
+  const categories = useGetCategoriesQuery({});
+
+  const typeCategories: CategoryType[] = categories?.currentData || [];
 
   const [isEditing, setIsEditing] = useState(false);
 
@@ -160,7 +163,7 @@ export function EventCategoryFormEdition({
             </CardHeader>
 
             <div className="flex items-center gap-9">
-              {typedCategory.map((item, index) => (
+              {typeCategories.map((item, index) => (
                 <CardContent
                   key={index}
                   className="border-2 flex flex-col items-center justify-center border-iDonate-navy-accent w-[200px] h-[200px] gap-4 p-0 m-0 rounded-lg"
@@ -178,7 +181,7 @@ export function EventCategoryFormEdition({
                   </div>
 
                   <CardDescription className="text-iDonate-navy-secondary text-xl">
-                    {item.title || ""}{" "}
+                    {item.name || ""}{" "}
                     {/* Assuming 'item.name' holds the category name */}
                   </CardDescription>
                 </CardContent>

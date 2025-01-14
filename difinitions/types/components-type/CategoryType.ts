@@ -1,6 +1,6 @@
 export type CategoryType = {
   media: string;
-  title: string;
+  name: string;
   description: string;
   benefits: string;
 };
