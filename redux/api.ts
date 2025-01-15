@@ -6,6 +6,7 @@ const baseQuery = fetchBaseQuery({
     baseUrl: `${process.env.NEXT_PUBLIC_IDONATE_API_URL}`,
     prepareHeaders: (headers, { getState }) => {
         const token = (getState() as RootState).auth.token;
+        console.log(token)
         if (token) {
             headers.set("authorization", `Bearer ${token}`);
         }
@@ -45,7 +46,7 @@ const baseQueryWithReAuth = async (args: any, api: any, extraOptions: any) => {
 };
 
 export const idonateApi = createApi({
-    tagTypes : ["userProfile",     "media",
+    tagTypes : ["userProfile","media",
         "category",
         "event",
         "organization",

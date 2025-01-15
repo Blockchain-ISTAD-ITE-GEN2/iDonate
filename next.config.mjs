@@ -93,7 +93,7 @@ const nextConfig = {
           },
           {
             key: 'Access-Control-Allow-Origin',
-            value: 'http://34.142.164.66:9999',
+            value: 'https://idonateapi.kangtido.life',
           },
           {
             key: 'Access-Control-Allow-Methods',
@@ -112,7 +112,7 @@ const nextConfig = {
     return [
       {
         source: '/api/v1/:path*',
-        destination: 'http://34.142.164.66:9999/api/v1/:path*',
+        destination: 'https://idonateapi.kangtido.life/api/v1/:path*',
       },
     ];
   },
@@ -122,7 +122,7 @@ const nextConfig = {
         source: '/api/:path*',
         headers: [
           { key: 'Access-Control-Allow-Credentials', value: 'true' },
-          { key: 'Access-Control-Allow-Origin', value: 'http://localhost:8080' },
+          { key: 'Access-Control-Allow-Origin', value: 'https://idonateapi.kangtido.life' },
           { key: 'Access-Control-Allow-Methods', value: 'GET,POST,PUT,DELETE,OPTIONS' },
           { key: 'Access-Control-Allow-Headers', value: 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, Authorization' },
         ],
