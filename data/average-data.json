@@ -1,30 +1,30 @@
 [
-    {
-      "average": 400,
-      "today": 240
-    },
-    {
-      "average": 300,
-      "today": 139
-    },
-    {
-      "average": 200,
-      "today": 980
-    },
-    {
-      "average": 278,
-      "today": 390
-    },
-    {
-      "average": 189,
-      "today": 480
-    },
-    {
-      "average": 239,
-      "today": 380
-    },
-    {
-      "average": 349,
-      "today": 430
-    }
+  {
+    "amount": 50,
+    "date": "2024-12-01"
+  },
+  {
+    "amount": 300,
+    "date": "2024-12-02"
+  },
+  {
+    "amount": 200,
+    "date": "2024-12-03"
+  },
+  {
+    "amount": 278,
+    "date": "2024-12-04"
+  },
+  {
+    "amount": 189,
+    "date": "2024-12-05"
+  },
+  {
+    "amount": 239,
+    "date": "2024-12-06"
+  },
+  {
+    "amount": 349,
+    "date": "2024-12-07"
+  }
 ]

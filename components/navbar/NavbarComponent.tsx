@@ -1,179 +1,270 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { NavMenulist } from "@/components/navbar/NavbarMenu";
-import Link from "next/link";
-import {  Heart, Search } from "lucide-react";
-import { Moon, Sun } from "lucide-react";
-import { Button } from "../ui/button";
-import Image from "next/image";
+import { Menu } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
-import { Menubar, MenubarContent, MenubarMenu, MenubarTrigger } from "../ui/menubar";
+import { Heart, LogOut, Search, User } from "lucide-react";
+import Link from "next/link";
 import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel, DropdownMenuSeparator,
-    DropdownMenuTrigger
-} from "../ui/dropdown-menu";
-import { useTheme } from "next-themes";
-import SubNavbarComponent from "./sub-navbar/SubNavbartComponent";
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { EventMenulist } from "./sub-navbar/EventMenu";
 import { AboutMenulist } from "./sub-navbar/AboutMenu";
 import { ContributorMenulist } from "./sub-navbar/ContributorMenu";
 import { NavMenuType } from "@/difinitions/types/components-type/NavMenuType";
-import {signOut, useSession} from "next-auth/react";
-import { PathnameContext } from "next/dist/shared/lib/hooks-client-context.shared-runtime";
+import { MobileSubmenu } from "./sub-navbar/mobile-sub-nav";
+import { MobileMenu } from "./mobile-navbar";
+import DesktopNavbar from "./desktop-navbar";
+import Image from "next/image";
+import logo from "@/public/logo/logodesign no background.png";
+import { Button } from "../ui/button";
+import ThemeSwitch from "../theme/ThemeSwitches";
+// import { ProfileDropdown } from "./profile/profile-dropdown";
+import { signOut, useSession } from "next-auth/react";
+import { useAppSelector } from "@/redux/hooks";
+import { selectToken } from "@/redux/features/auth/authSlice";
+import AvartarPlaceHolder from '@/public/images/user-idonate.png'
+import { useGetUserProfileQuery } from "@/redux/services/user-profile";
+
 
 export default function NavbarComponent() {
-    const [menuList] = useState<NavMenuType[]>(NavMenulist);
-    const pathname = usePathname();
-    const router = useRouter();
-    const { setTheme } = useTheme()
+  const [menuList] = useState<NavMenuType[]>(NavMenulist);
+  const pathname = usePathname();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [activeSubmenu, setActiveSubmenu] = useState<string | null>(null);
+  const [submenuItems, setSubmenuItems] = useState<NavMenuType[]>([]);
 
-  const navActiveClass = (isActive: boolean) =>
-    `text-description-eng font-normal ${
-      isActive ? "text-iDonate-green-primary" : "text-iDonate-navy-primary"
-    }`;
-    const { data: session,status } = useSession();
+  const router = useRouter();
+  const { data: session, status } = useSession();
+  const accessTokenValue = useAppSelector(selectToken);
+  // const {data:userProfile} = useGetUserProfileQuery({});
+  // console.log("acessToken value : ",accessTokenValue);
+  //the result:acessToken value :  (state)=>state.auth.token
+  const { data: userProfile, error, isLoading } = useGetUserProfileQuery({});
+  //  console.log("The value of Token: ",userProfile.email);
 
-    useEffect(() => {
-      console.log("Session:", session);
-      console.log("Status:", status);
-    }, [session, status]);
+  const handleSignOut = () => {
+    signOut(); 
+    router.push("/");
+  }
 
-  if (pathname === "/auth/login" ||
-    pathname === "/auth/sign-up" ||
-    pathname === "/auth/verification"){
-      return null;
-    }
-   
-  else
+  
+  useEffect(() => {},[accessTokenValue,session])
+  // console.log("User Profile: ",userProfile);
 
+  if (
+    pathname === "/login" ||
+    pathname === "/sign-up" ||
+    pathname === "/verification" ||
+    pathname === "/forgot-password" ||
+    pathname === "/reset-password"
+  ) {
+    return null;
+  }
 
-    return (
-        <nav className="w-full h-[72px] flex items-center justify-between shadow-sm z-10  top-0 px-[100px]">
-            {/* Logo and Name */}
-            <section
-                className="flex items-center space-x-2 cursor-pointer"
-                onClick={() => router.push("/")}
-            >
-                 <div className="w-10 h-10 bg-iDonate-green-primary rounded-full"></div>
-                <span className="text-title-eng">iDonate</span>
-            </section>
-
-        {/* Navigation Menu */}
-        <Menubar className="border-0 flex space-x-4 bg-transparent">
-          {menuList.map((item, index) => {
-            const isActive = pathname === item.path;
-            const specialPaths = ["/how-it-works", "/search"];
-
-            return (
-              <MenubarMenu key={index}>
-                {specialPaths.includes(item.path) ? (
-                  <Link href={item.path} passHref>
-                    <div className="flex items-center space-x-1 py-1 px-3 rounded-lg hover:bg-iDonate-light-gray">
-                      {item.path === "/search" && (
-                        <Search
-                          className={`w-5 h-5 mx-1 ${navActiveClass(isActive)}`}
-                        />
-                      )}
-                      <span className={navActiveClass(isActive)}>
-                        {item.title}
-                      </span>
-                    </div>
-                  </Link>
-                ) : (
-                  <section>
-                    <MenubarTrigger className="flex items-center px-3 py-1 rounded-lg hover:bg-iDonate-light-gray bg-transparent">
-                      <span className={navActiveClass(isActive)}>
-                        {item.title}
-                      </span>
-                    </MenubarTrigger>
-
-                                <MenubarContent className="p-4 bg-iDonate-white-space rounded-lg shadow-lg ">
-                                    {item.title === "Events" && (
-                                            <SubNavbarComponent menuList={EventMenulist} />
-                                    )}
-                                    {item.title === "Contributors" && (
-                                            <SubNavbarComponent menuList={ContributorMenulist} />
-                                    )}
-                                    {item.title === "About" && (
-                                            <SubNavbarComponent menuList={ AboutMenulist} />
-                                    )}
-                                </MenubarContent>
-                            </section>
-                        )}
-
-                        </MenubarMenu>
-                    );
-                })}
-            </Menubar>
-
-            {/* Sign In & Donate */}
-            <section className="flex items-center space-x-4">
-                <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <Button
-                            variant="outline"
-                            size="icon"
-                            className="bg-iDonate-green-accent hover:bg-iDonate-green-secondary rounded-full border-0 p-2"
-                        >
-                            <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0 " />
-                            <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-                        </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                        <DropdownMenuItem onClick={() => setTheme("light")}>
-                        Light
-                        </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => setTheme("dark")}>
-                        Dark
-                        </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => setTheme("system")}>
-                        System
-                        </DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
-
-                {status === "authenticated" ? (
-                    <div className="flex items-center space-x-4 text-iDonate-navy-secondary">
-                        {session?.user?.image && (
-                            <DropdownMenu>
-                                <DropdownMenuTrigger>
-                                    <Image
-                                        src={session?.user.image}
-                                        alt={`${session?.user.name ?? "User"}'s avatar`}
-                                        width={40}
-                                        height={40}
-                                        className="rounded-full border-2 border-iDonate-navy-primary"
-                                    />
-                                </DropdownMenuTrigger>
-                                <DropdownMenuContent>
-                                    <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                                    <DropdownMenuSeparator />
-                                    <DropdownMenuItem onClick={() => signOut()}>
-                                        Sign Out
-                                    </DropdownMenuItem>
-                                </DropdownMenuContent>
-                            </DropdownMenu>
-                        )}
-                    </div>
-                ) : (
-                    <div className="flex items-center space-x-4">
-            <span
-                className="text-description-eng font-normal text-iDonate-navy-primary cursor-pointer"
-                onClick={() => router.push("/auth/login")}
-            >
-              Sign In
-            </span>
-                    </div>
-                )}
-
-                <Button className="group  bg-iDonate-white-space border-2 border-iDonate-navy-primary px-4 text-iDonate-navy-primary hover:bg-iDonate-navy-primary hover:text-white hover:border-iDonate-navy-primary rounded-[12px] h-[50px]">
-                    <Heart style={{ width: '30px', height: '30px' }} className="bg-iDonate-navy-primary rounded-full p-1 fill-white group-hover:fill-iDonate-navy-primary group-hover:text-iDonate-navy-primary group-hover:bg-iDonate-green-secondary "/>
-                    <span className="text-xl ">Donate Now</span>
-                </Button>
-            </section>
-        </nav>
+  if (isMobileMenuOpen) {
+    return activeSubmenu ? (
+      <MobileSubmenu
+        activeSubmenu={activeSubmenu}
+        submenuItems={submenuItems}
+        isMobileMenuOpen={isMobileMenuOpen}
+        onClose={() => {
+          setActiveSubmenu(null);
+          setIsMobileMenuOpen(false);
+        }}
+        onBack={() => setActiveSubmenu(null)}
+      />
+    ) : (
+      <MobileMenu
+        // activeSubmenu={activeSubmenu}
+        setActiveSubmenu={setActiveSubmenu}
+        setSubmenuItems={setSubmenuItems}
+        // submenuItems={submenuItems}
+        isOpen={isMobileMenuOpen}
+        onClose={() => setIsMobileMenuOpen(false)}
+        menuItems={menuList}
+        eventMenulist={EventMenulist}
+        contributorMenulist={ContributorMenulist}
+        aboutMenulist={AboutMenulist}
+      />
     );
+  }
+
+  return (
+    <nav className="w-full h-[72px] flex items-center justify-between shadow-sm z-10 top-0 px-4 xl:px-10  2xl:px-[80px] dark:border-b">
+      <section
+        className="flex items-center cursor-pointer px-2"
+        onClick={() => router.push("/")}
+      >
+        <Image
+          src={logo}
+          width={70}
+          height={70}
+          alt=""
+          className=" xl:w-full xl:h-full"
+        />
+        <span className="text-medium-eng xl:text-title-eng text-iDonate-navy-primary font-medium dark:text-iDonate-navy-accent  ">
+          iDONATE
+        </span>
+      </section>
+
+      {/* Mobile Menu Button */}
+      <Button
+        className="lg:hidden bg-transparent text-iDonate-gray hover:bg-iDonate-light-gray hover:text-iDonate-navy-primary rounded-[12px] dark:text-iDonate-white-space dark:hover:bg-iDonate-dark-mode"
+        onClick={() => setIsMobileMenuOpen(true)}
+      >
+        <Menu className="w-10 h-10" />
+      </Button>
+
+      <DesktopNavbar
+        menuItems={menuList}
+        eventMenulist={EventMenulist}
+        contributorMenulist={ContributorMenulist}
+        aboutMenulist={AboutMenulist}
+      />
+
+      {/* Desktop Sign In & Donate */}
+      <section className="hidden lg:flex items-center space-x-2">
+        <div className="flex items-center space-x-2">
+          <div className="py-2">
+            <div>
+              <ThemeSwitch />
+            </div>
+          </div>
+
+          <div className="flex items-center">
+            {session || accessTokenValue ? (
+                <DropdownMenu>
+                <DropdownMenuTrigger>
+                  {session?.user?.image ? (
+                    <Image
+                      src={session.user.image || AvartarPlaceHolder ||userProfile?.avatar}
+                      alt={`${session.user.name ?? "user"}'s avatar`}
+                      width={40}
+                      height={40}
+                      className="rounded-full border-2 border-iDonate-navy-primary"
+                    />
+                  ) : (
+                    <div className="w-10 h-10 rounded-full bg-iDonate-navy-primary flex items-center justify-center">
+                      <User className="text-white" size={20} />
+                    </div>
+                  )}
+                </DropdownMenuTrigger>
+          
+                <DropdownMenuContent className="w-72 p-2">
+                  {/* User Info */}
+                  <div className="p-3">
+                    <div className="flex items-center space-x-3">   
+                      {session?.user?.image ? (
+                        <Image
+                          src={session.user.image || AvartarPlaceHolder || userProfile?.avatar  } 
+                          alt={`${session.user.name ?? "User"}'s avatar`}
+                          width={40}
+                          height={40}
+                          className="rounded-full border-2 border-iDonate-navy-primary"
+                        />
+                      ) : (
+                        <div className="w-10 h-10 rounded-full bg-iDonate-navy-primary flex items-center justify-center">
+                          <User className="text-white" size={20} />
+                        </div>
+                      )}
+                      <div className="text-sm">
+                        <div className="font-medium text-gray-900">
+                          {session?.user?.name || userProfile?.username ||"Guest User"}
+                        </div>
+                        <div className="text-gray-500">
+                          {session?.user?.email ||userProfile?.email || "No Email"}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+          
+                  <DropdownMenuSeparator />
+          
+                  {/* Menu Items */}
+                  <DropdownMenuItem asChild>
+                    <Link
+                      href="/profile"
+                      className="flex items-center space-x-2 cursor-pointer"
+                    >
+                      <User className="text-iDonate-navy-primary" size={20} />
+                      <span>Profile Settings</span>
+                    </Link>
+                  </DropdownMenuItem>
+          
+                  <DropdownMenuItem asChild>
+                    <Link
+                      href="/donations"
+                      className="flex items-center space-x-2 cursor-pointer"
+                    >
+                      <Heart className="text-iDonate-navy-primary" size={20} />
+                      <span>My Donations</span>
+                    </Link>
+                  </DropdownMenuItem>
+          
+                  <DropdownMenuItem asChild>
+                    <Link
+                      href="/search"
+                      className="flex items-center space-x-2 cursor-pointer"
+                    >
+                      <Search className="text-iDonate-navy-primary" size={20} />
+                      <span>Search</span>
+                    </Link>
+                  </DropdownMenuItem>
+          
+                  <DropdownMenuSeparator />
+          
+                  {/* Donate Button */}
+                  <div className="p-2">
+                    <Button className="w-full group bg-iDonate-white-space border-2 border-iDonate-navy-primary px-2 text-iDonate-navy-primary hover:bg-iDonate-navy-primary hover:text-white hover:border-iDonate-navy-primary rounded-[12px]">
+                      <Heart
+                        style={{ width: "25px", height: "25px" }}
+                        className="bg-iDonate-navy-primary rounded-full p-1 fill-white group-hover:fill-iDonate-navy-primary group-hover:text-iDonate-navy-primary group-hover:bg-iDonate-green-secondary"
+                      />
+                      <span className="text-lg">Donate Now</span>
+                    </Button>
+                  </div>
+          
+                  <DropdownMenuSeparator />
+          
+                  {/* Sign Out */}
+                  <DropdownMenuItem
+                    onClick={handleSignOut} // Use handleSignOut instead of signOut directly
+                    className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                  >
+                    <LogOut className="mr-2 h-4 w-4" />
+                    <span>Sign Out</span>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <Button
+                onClick={() => {
+                  router.push("/login");
+                }}
+                className="bg-transparent text-iDonate-navy-primary hover:bg-iDonate-light-gray font-medium dark:text-iDonate-navy-accent dark:hover:bg-iDonate-dark-mode"
+              >
+                Sign in
+              </Button>
+            )}
+          </div>
+        </div>
+
+        <Button className="group bg-iDonate-white-space border-2 border-iDonate-navy-primary px-2 text-iDonate-navy-primary hover:bg-iDonate-navy-primary hover:text-white hover:border-iDonate-navy-primary rounded-[12px] dark:text-iDonate-navy-accent dark:bg-iDonate-dark-mode dark:border-transparent">
+          <Heart
+            style={{ width: "25px", height: "25px" }}
+            className="bg-iDonate-navy-primary rounded-full p-1 fill-white group-hover:fill-iDonate-navy-primary group-hover:text-iDonate-navy-primary group-hover:bg-iDonate-green-secondary dark:bg-iDonate-green-secondary  dark:text-iDonate-navy-primary dark:fill-iDonate-navy-primary"
+          />
+          <span className="text-sub-description-eng xl:text-description-eng">
+            Donate Now
+          </span>
+        </Button>
+      </section>
+    </nav>
+  );
 }
+

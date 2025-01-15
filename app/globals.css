@@ -1,21 +1,23 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
 
 /* Define default fonts using font variables */
 html {
-  --font-siemreap: 'Siemreap', serif;
-  --font-inter: 'Inter', serif; 
+  --font-suwannaphum: "Suwannaphum", serif;
+  --font-inter: "Inter", serif;
 }
 
 /* Apply default font families */
 body {
-  font-family: var(--font-inter); /* Default to Inter for English text */
+  font-family: var(--font-inter), var(--font-suwannaphum) !important; /* Default to Inter for English text */
 }
 
-/* Apply Siemreap font for Khmer text */
+/* Apply suwannphum font for Khmer text */
 :lang(km) {
-  font-family: var(--font-siemreap); /* Automatically applies to Khmer content */
+  font-family: var(
+    --font-suwannaphum
+  ); /* Automatically applies to Khmer content */
 }
 
 @layer utilities {
@@ -98,9 +100,10 @@ body {
 
 @layer base {
   * {
-    @apply border-border;
+    border: var(--border);
   }
   body {
-    @apply bg-background text-foreground;
+    background-color: var(--background);
+    color: var(--foreground);
   }
 }

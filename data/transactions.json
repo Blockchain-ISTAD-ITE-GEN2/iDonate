@@ -1,6 +1,7 @@
 [
   {
     "date": "2024-12-01",
+    "timestamp": "Dec 01 2024",
     "donor": "John Doe",
     "email": "johndoe@example.com",
     "event": "Charity Run",
@@ -8,6 +9,7 @@
   },
   {
     "date": "2024-12-02",
+    "timestamp": "Dec 02 2024",
     "donor": "Jane Smith",
     "email": "janesmith@example.com",
     "event": "Food Drive",
@@ -15,6 +17,7 @@
   },
   {
     "date": "2024-12-03",
+    "timestamp": "Dec 03 2024",
     "donor": "Michael Brown",
     "email": "michaelbrown@example.com",
     "event": "Disaster Relief",
@@ -22,6 +25,7 @@
   },
   {
     "date": "2024-12-04",
+    "timestamp": "Dec 04 2024",
     "donor": "Emily Davis",
     "email": "emilydavis@example.com",
     "event": "School Fundraiser",
@@ -29,6 +33,7 @@
   },
   {
     "date": "2024-12-05",
+    "timestamp": "Dec 05 2024",
     "donor": "Chris Johnson",
     "email": "chrisjohnson@example.com",
     "event": "Tree Planting",
@@ -36,6 +41,7 @@
   },
   {
     "date": "2024-12-06",
+    "timestamp": "Dec 06 2024",
     "donor": "Patricia Lee",
     "email": "patricialee@example.com",
     "event": "Animal Shelter",
@@ -43,6 +49,7 @@
   },
   {
     "date": "2024-12-07",
+    "timestamp": "Dec 07 2024",
     "donor": "Robert Garcia",
     "email": "robertgarcia@example.com",
     "event": "Health Camp",
@@ -50,6 +57,7 @@
   },
   {
     "date": "2024-12-08",
+    "timestamp": "Dec 08 2024",
     "donor": "Linda Martinez",
     "email": "lindamartinez@example.com",
     "event": "Education Drive",
@@ -57,6 +65,7 @@
   },
   {
     "date": "2024-12-09",
+    "timestamp": "Dec 09 2024",
     "donor": "Thomas Wilson",
     "email": "thomaswilson@example.com",
     "event": "Community Clean-Up",
@@ -64,79 +73,10 @@
   },
   {
     "date": "2024-12-10",
+    "timestamp": "Dec 10 2024",
     "donor": "Barbara Anderson",
     "email": "barbaraanderson@example.com",
     "event": "Orphanage Support",
     "amount": 300.0
-  },
-  {
-    "date": "2024-12-11",
-    "donor": "Steven White",
-    "email": "stevenwhite@example.com",
-    "event": "Youth Camp",
-    "amount": 90.0
-  },
-  {
-    "date": "2024-12-12",
-    "donor": "Sarah Harris",
-    "email": "sarahharris@example.com",
-    "event": "Medical Aid",
-    "amount": 400.0
-  },
-  {
-    "date": "2024-12-13",
-    "donor": "Daniel Clark",
-    "email": "danielclark@example.com",
-    "event": "Arts Program",
-    "amount": 110.0
-  },
-  {
-    "date": "2024-12-14",
-    "donor": "Nancy Lewis",
-    "email": "nancylewis@example.com",
-    "event": "Scholarship Fund",
-    "amount": 500.0
-  },
-  {
-    "date": "2024-12-15",
-    "donor": "Mark Allen",
-    "email": "markallen@example.com",
-    "event": "Homeless Support",
-    "amount": 220.0
-  },
-  {
-    "date": "2024-12-16",
-    "donor": "Betty Young",
-    "email": "bettyyoung@example.com",
-    "event": "Cultural Festival",
-    "amount": 130.0
-  },
-  {
-    "date": "2024-12-17",
-    "donor": "Paul King",
-    "email": "paulking@example.com",
-    "event": "Elderly Care",
-    "amount": 70.0
-  },
-  {
-    "date": "2024-12-18",
-    "donor": "Lisa Wright",
-    "email": "lisawright@example.com",
-    "event": "Blood Donation",
-    "amount": 40.0
-  },
-  {
-    "date": "2024-12-19",
-    "donor": "James Scott",
-    "email": "jamesscott@example.com",
-    "event": "Flood Relief",
-    "amount": 600.0
-  },
-  {
-    "date": "2024-12-20",
-    "donor": "Susan Adams",
-    "email": "susanadams@example.com",
-    "event": "Water Project",
-    "amount": 350.0
   }
 ]

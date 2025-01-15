@@ -1,21 +1,17 @@
-"use client"
+"use client";
+
 import localFont from "next/font/local";
 import "./globals.css";
-import { ReactNode } from "react";
+import { ReactNode, Suspense } from "react";
 import NavbarComponent from "@/components/navbar/NavbarComponent";
-import { ThemeProvider } from "next-themes";
-import { usePathname } from "next/navigation";
 import OrganizationSidebarComponent from "@/components/organization/sidebar/OrganizationSidebarComponent";
-import SessionWrapper from "@/components/SessionWrapper";
-import FooterComponent from "@/components/footer/FooterComopent"
-
-const siemreap = localFont({
-  src: "/fonts/Siemreap-Regular.ttf",
-  variable: "--font-siemreap",
-  display: "swap",
-  preload: true,
-  fallback: ["serif"],
-});
+import SessionWrapper from "@/components/session/SessionWrapper";
+import FooterComponent from "@/components/footer/FooterComopent";
+import { ThemeProviders } from "./providers";
+import { usePathname } from "next/navigation";
+import Loader from "./loading";
+import CheckConnection from "@/components/checkConnection/CheckConnection";
+import StoreProvider from "./StoreProvider";
 
 const inter = localFont({
   src: "/fonts/Inter-VariableFont_opsz,wght.ttf",
@@ -25,62 +21,64 @@ const inter = localFont({
   fallback: ["serif"],
 });
 
+const suwannaphum = localFont({
+  src: "/fonts/Suwannaphum-Regular.ttf",
+  display: "swap",
+   preload: true,
+  variable: "--font-suwannaphum",
+});
+
 type RootLayoutProps = {
-  children: ReactNode;
+    children: ReactNode;
 };
 
 export default function RootLayout({ children }: RootLayoutProps) {
-  const pathname = usePathname();
-  const showSidebar = pathname.startsWith("/organization-dashboard/");
+    const pathname = usePathname();
+    const showSidebar = pathname.startsWith("/organization-dashboard/");
 
-  return (
-    <html lang="en" className={`min-h-screen w-full overflow-auto scrollbar-hide ${siemreap.variable} ${inter.variable}`}>
-      <body className="flex flex-col h-full bg-background text-foreground">
+    return (
+        <html
+            lang="en"
+            className={`min-h-screen w-full overflow-auto scrollbar-hide ${suwannaphum.variable} ${inter.variable}`}
+        >
+        <body className="flex flex-col h-full bg-background text-foreground">
+        <StoreProvider>
+        <CheckConnection>
+            <SessionWrapper>
+                <ThemeProviders>
+                    <div className="flex flex-col h-full w-full">
+                        <header className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+                            <NavbarComponent />
+                        </header>
 
-        <SessionWrapper>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <div className="flex flex-col h-full w-full">
-              <header className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-                <NavbarComponent />
-              </header>
+                        <Suspense fallback={<Loader />}>
+                            {showSidebar ? (
+                                <div className="w-full h-full flex flex-grow">
+                                    <aside className="flex-shrink-0 hidden md:block flex-grow">
+                                        <OrganizationSidebarComponent />
+                                    </aside>
+                                    <main className="w-full flex-grow overflow-auto scrollbar-hide">
+                                        {children}
+                                    </main>
+                                </div>
+                            ) : (
+                                <div className="w-full flex-grow overflow-y-auto">
+                                    <main>{children}</main>
+                                </div>
+                            )}
+                        </Suspense>
 
-              {showSidebar ? (
-                <div className="w-full h-full flex flex-grow overflow-y-auto">
-                  {/* Sidebar */}
-                  <aside className="flex-shrink-0 hidden md:block h-auto flex-grow">
-                    <OrganizationSidebarComponent />
-                  </aside>
-
-                  {/* Main Content */}
-                  <main className="w-full flex-grow">
-                    {children}
-                  </main>
-                </div>
-              ) : (
-                <div className="flex-grow overflow-y-auto">
-                  <main>
-                    {children}
-                  </main>
-                </div>
-              )}
-
-
-             {!showSidebar && (
-              <footer className="bg-iDonate-white-space">
-                <FooterComponent />
-              </footer>
-              )}
-            </div>
-
-          </ThemeProvider>
-        </SessionWrapper>
-      </body>
-    </html>
-  );
+                        {!showSidebar && (
+                            <footer className="bg-iDonate-white-space">
+                                <FooterComponent />
+                            </footer>
+                        )}
+                    </div>
+                </ThemeProviders>
+            </SessionWrapper>
+        </CheckConnection>
+        </StoreProvider>
+        </body>
+        </html>
+    );
 }
-

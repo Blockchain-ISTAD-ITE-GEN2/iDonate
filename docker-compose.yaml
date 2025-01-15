@@ -1,0 +1,19 @@
+services:
+  reactjs-srv:
+    image: imagename
+    container_name: idonate-container
+    ports:
+      - "3000:3000"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.idonate.rule=Host(`idonate.kangtido.life`)"
+      - "traefik.http.routers.idonate.entrypoints=websecure"
+      - "traefik.http.routers.idonate.tls=true"
+      - "traefik.http.routers.idonate.tls.certresolver=letsencrypt"
+      - "traefik.http.services.idonate.loadbalancer.server.port=3000"
+    networks:
+      - proxy
+
+networks:
+  proxy:
+    external: true

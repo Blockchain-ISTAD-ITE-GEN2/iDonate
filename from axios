@@ -1,0 +1,727 @@
+[33mcommit f0bec4ad4cad31474541188988511faed9a52aa5[m[33m ([m[1;36mHEAD[m[33m, [m[1;31morigin/development[m[33m)[m
+Author: Dark Fighter <sanhpanha3003@gmail.com>
+Date:   Wed Jan 8 10:17:48 2025 +0700
+
+    Dark mode on navbar
+
+[33mcommit 7b097ff2d708d42f8b3b631fb12f043ce5260223[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Dark Fighter <sanhpanha3003@gmail.com>
+Date:   Mon Jan 6 15:27:38 2025 +0700
+
+    Merge from B Reaksa
+
+[33mcommit fa7dd102613d9decad2869a055fb7ab7a97f18b0[m
+Merge: 6bec3c5 463ca3d
+Author: Dark Fighter <sanhpanha3003@gmail.com>
+Date:   Mon Jan 6 15:25:14 2025 +0700
+
+    Merge from B Reaksa
+
+[33mcommit 463ca3d3e23bb3cbb67b382280ae7f670ecc6613[m
+Author: NuthChanReaksa <nuthchanreaksa@gmail.com>
+Date:   Mon Jan 6 15:06:06 2025 +0700
+
+    update darkmode for most pages
+
+[33mcommit 6bec3c54dd4a57395d17fff33e4c7515eb08c2b1[m
+Author: Dark Fighter <sanhpanha3003@gmail.com>
+Date:   Mon Jan 6 15:05:07 2025 +0700
+
+    Add responsive on DOnor page
+
+[33mcommit b4ce867f54c70117385138c0bfd0c048f8afc6de[m
+Author: NuthChanReaksa <nuthchanreaksa@gmail.com>
+Date:   Mon Jan 6 11:23:19 2025 +0700
+
+    update darkmode for most pages
+
+[33mcommit 3ebe8e93bd9bbc5b8681f4311f1a9d17ba4126a8[m
+Merge: 3bfc567 cb8f958
+Author: NuthChanReaksa <nuthchanreaksa@gmail.com>
+Date:   Fri Jan 3 16:07:23 2025 +0700
+
+    update darkmode and merge from panha
+
+[33mcommit 3bfc56780a12ec68884a12ec2b50f789ebeb5b82[m
+Author: NuthChanReaksa <nuthchanreaksa@gmail.com>
+Date:   Fri Jan 3 16:04:26 2025 +0700
+
+    update darkmode
+
+[33mcommit cb8f9583f2782a1990b6c729f0715cb88780cdfe[m
+Author: Dark Fighter <sanhpanha3003@gmail.com>
+Date:   Fri Jan 3 15:51:04 2025 +0700
+
+    Fix some style and responsive on event organization and its detail page
+
+[33mcommit 45714717467c5c3938b8d553c19a19d62d4f69c7[m
+Author: Dark Fighter <sanhpanha3003@gmail.com>
+Date:   Thu Jan 2 15:15:00 2025 +0700
+
+    Fix some style and responsive on navbar
+
+[33mcommit 7375194a05ff9a1c411c934ad79b79825ef53406[m
+Author: Dark Fighter <sanhpanha3003@gmail.com>
+Date:   Tue Dec 31 15:58:08 2024 +0700
+
+    Fix some style and responsive on event category detail page
+
+[33mcommit b4afee307a2f24ea8fc9cde37c87dd293e6d83c3[m
+Author: Dark Fighter <sanhpanha3003@gmail.com>
+Date:   Tue Dec 31 11:20:15 2024 +0700
+
+    Fix some style and responsive on event category page
+
+[33mcommit 831c4f87a93e49e5f39034290f2e9e268f324118[m
+Author: Dark Fighter <sanhpanha3003@gmail.com>
+Date:   Mon Dec 30 18:36:22 2024 +0700
+
+    Fix some style and responsive on landing page
+
+[33mcommit 25d10589290e4528b43cc904730837261f651d44[m
+Author: Dark Fighter <sanhpanha3003@gmail.com>
+Date:   Mon Dec 30 16:35:21 2024 +0700
+
+    Fix some style and responsive on landing page and search page as well
+
+[33mcommit 80322cb34a356f874b106c2af97331217ff5ff33[m
+Author: Dark Fighter <sanhpanha3003@gmail.com>
+Date:   Mon Dec 30 11:03:51 2024 +0700
+
+    Add date to common card
+
+[33mcommit 0144ac19031be086978a2b873da34cb49da5a879[m
+Merge: 93e4998 1c18fd5
+Author: Dark Fighter <sanhpanha3003@gmail.com>
+Date:   Mon Dec 30 08:48:32 2024 +0700
+
+    Merge remote-tracking branch 'origin/development' into development
+
+[33mcommit 93e4998c9ba113c484bdca6e22bf1c7de6623099[m
+Author: Dark Fighter <sanhpanha3003@gmail.com>
+Date:   Mon Dec 30 08:30:47 2024 +0700
+
+    Change icon
+
+[33mcommit 1c18fd5e7e4bc3c4ade2f74d24989a85d29d88c0[m
+Merge: 700e6c9 5acdea9
+Author: Sokcheatsrorng <srorng.sokcheat.1221.@rupp.edu.kh>
+Date:   Mon Dec 30 03:04:32 2024 +0700
+
+    FACTOR: The style
+
+[33mcommit 700e6c9c357f056d419c9ff5c5feef2b163d37d7[m
+Author: Sokcheatsrorng <srorng.sokcheat.1221.@rupp.edu.kh>
+Date:   Mon Dec 30 00:15:41 2024 +0700
+
+    fix font
+
+[33mcommit 5a6ad8560053c904a09ac0273d2b7afa1a2d6136[m
+Author: kevin-kang-tido <kaykang84@gmail.com>
+Date:   Sat Dec 28 17:43:39 2024 +0700
+
+    fix domain name
+
+[33mcommit 00233ecc18b6d92e44dac077e997c115e805e9fd[m
+Author: kevin-kang-tido <kaykang84@gmail.com>
+Date:   Sat Dec 28 17:23:55 2024 +0700
+
+    edit message
+
+[33mcommit b083b405e4f521a0428bc0accf5324901707663a[m
+Author: kevin-kang-tido <kaykang84@gmail.com>
+Date:   Sat Dec 28 17:18:09 2024 +0700
+
+    edit messsaeg
+
+[33mcommit 7cfceff3362bf43b19413ca214008e9c80097c81[m
+Author: kevin-kang-tido <kaykang84@gmail.com>
+Date:   Fri Dec 27 11:14:24 2024 +0700
+
+    Fix Github actions 4
+
+[33mcommit 7347301f98b3de624f365ee19a97f42f9d600229[m
+Author: kevin-kang-tido <kaykang84@gmail.com>
+Date:   Fri Dec 27 08:40:19 2024 +0700
+
+    Fix Github actions 3
+
+[33mcommit 3cbd0b6c8863331fe734e89c3c565040ac51f749[m
+Author: kevin-kang-tido <kaykang84@gmail.com>
+Date:   Fri Dec 27 08:36:12 2024 +0700
+
+    Fix Github actions 2
+
+[33mcommit a16080703d978c4db0bc5280b0c9d4ac54abf165[m
+Author: kevin-kang-tido <kaykang84@gmail.com>
+Date:   Fri Dec 27 08:29:24 2024 +0700
+
+    Fix Github actions 1
+
+[33mcommit 663998a0a0f75778ca86c80a43bef015dba50fe5[m
+Author: kevin-kang-tido <kaykang84@gmail.com>
+Date:   Fri Dec 27 04:05:32 2024 +0700
+
+    Fix Github actions 13
+
+[33mcommit 5e1e0c01bee7ab335bbf36cb97782d9d2e9a2d85[m
+Author: kevin-kang-tido <kaykang84@gmail.com>
+Date:   Fri Dec 27 03:56:05 2024 +0700
+
+    Fix Github actions 12
+
+[33mcommit 896a8857600070f748ace6aa0cca6621d3fecc9c[m
+Author: kevin-kang-tido <kaykang84@gmail.com>
+Date:   Fri Dec 27 03:38:34 2024 +0700
+
+    Fix Github actions 11
+
+[33mcommit e65d20804d6a9479d9591556bdf3c88db5e3e5aa[m
+Author: kevin-kang-tido <kaykang84@gmail.com>
+Date:   Fri Dec 27 03:29:27 2024 +0700
+
+    Fix Github actions 10
+
+[33mcommit 1ea84d016f24fbf9e76675315dc3e060789acaa9[m
+Author: kevin-kang-tido <kaykang84@gmail.com>
+Date:   Fri Dec 27 03:16:38 2024 +0700
+
+    Fix Github actions 9
+
+[33mcommit 9954f77d8ab3ac400c4a08226aff4a309bc2bb83[m
+Author: Dark Fighter <sanhpanha3003@gmail.com>
+Date:   Thu Dec 26 14:54:53 2024 +0700
+
+    Change icon
+
+[33mcommit 256977cc7bf52e8d3855978b3d1c75e05906ae2c[m
+Author: Dark Fighter <sanhpanha3003@gmail.com>
+Date:   Thu Dec 26 14:35:57 2024 +0700
+
+    Merge from kang
+
+[33mcommit 48b0d305ad42acecc45acb0d24224877fb17323e[m
+Author: Dark Fighter <sanhpanha3003@gmail.com>
+Date:   Thu Dec 26 14:11:34 2024 +0700
+
+    Done page event creation  with progess
+
+[33mcommit b0bf03afd23665e5b4e95092c3b5067745d7606d[m
+Author: Dark Fighter <sanhpanha3003@gmail.com>
+Date:   Thu Dec 26 11:55:38 2024 +0700
+
+    Done page event creation  with progess
+
+[33mcommit c3d17dc1f83b122e99756ab99c88def383f7f65b[m
+Author: Dark Fighter <sanhpanha3003@gmail.com>
+Date:   Thu Dec 26 11:20:00 2024 +0700
+
+    Done page event edition with progess
+
+[33mcommit 2bc043887ac911543ea9266786ef124736088ba7[m
+Author: Dark Fighter <sanhpanha3003@gmail.com>
+Date:   Wed Dec 25 16:34:27 2024 +0700
+
+    Done page event edition
+
+[33mcommit 3b408de9990ef4c8fa123ed4238f09f0dd6a8087[m
+Author: kevin-kang-tido <kaykang84@gmail.com>
+Date:   Thu Dec 26 13:57:51 2024 +0700
+
+     Get ready with githup actions
+
+[33mcommit 24528b0674b16730b66f99ed7a49a6ee7d434cdf[m
+Author: kevin-kang-tido <kaykang84@gmail.com>
+Date:   Thu Dec 26 13:51:35 2024 +0700
+
+    working Github Actions 7
+
+[33mcommit d0229e5ad2dbd1fb8f9f4b768c3d794da5d86e75[m
+Author: kevin-kang-tido <kaykang84@gmail.com>
+Date:   Thu Dec 26 13:44:15 2024 +0700
+
+    working Github Actions 6
+
+[33mcommit 069a0998dcdd1ad5a0492cc8f4b8bfb967745866[m
+Author: kevin-kang-tido <kaykang84@gmail.com>
+Date:   Thu Dec 26 11:40:51 2024 +0700
+
+    working Github Actions 5
+
+[33mcommit d46713f7f9e322f8470d1a84179cc57181a40e96[m
+Author: kevin-kang-tido <kaykang84@gmail.com>
+Date:   Thu Dec 26 11:33:12 2024 +0700
+
+    working Github Actions 4
+
+[33mcommit bfe9011428f4625b86892a5bc65c1251907a418b[m
+Author: kevin-kang-tido <kaykang84@gmail.com>
+Date:   Thu Dec 26 11:19:20 2024 +0700
+
+    working Github Actions 3
+
+[33mcommit 37add4bc1f65f860f13114d93b43204cbc1c9562[m
+Author: kevin-kang-tido <kaykang84@gmail.com>
+Date:   Thu Dec 26 11:04:22 2024 +0700
+
+    working Github Actions 2
+
+[33mcommit 63ce621cb8e2e09de4846ff9d8dde1b0b1326462[m
+Author: kevin-kang-tido <kaykang84@gmail.com>
+Date:   Thu Dec 26 10:52:28 2024 +0700
+
+    working Github Actions
+
+[33mcommit 2f2eebaacc5644fe343b849915d35cca712f618c[m
+Author: kevin-kang-tido <kaykang84@gmail.com>
+Date:   Thu Dec 26 10:16:21 2024 +0700
+
+    WORKING: fix calendar run build error already to working Github Actions
+
+[33mcommit cf4ca555c9fc3ca8742f3c163c0895e3ec663702[m
+Author: kevin-kang-tido <kaykang84@gmail.com>
+Date:   Thu Dec 26 09:20:06 2024 +0700
+
+    WORKING: test run build on server
+
+[33mcommit 19e9864e477c10ac91299e1b6083263560ea08bf[m
+Author: kevin-kang-tido <kaykang84@gmail.com>
+Date:   Thu Dec 26 09:12:28 2024 +0700
+
+    WORKING: fix run build error get already to working acttions
+
+[33mcommit 3f897d5d28579b734142ed4bc3aee2721164e4d0[m
+Author: kevin-kang-tido <kaykang84@gmail.com>
+Date:   Thu Dec 26 00:26:57 2024 +0700
+
+    pull from branch kang
+
+[33mcommit e8509eeddcb7e5aefb25cbac959a0e377f1a2ed3[m
+Author: kevin-kang-tido <kaykang84@gmail.com>
+Date:   Thu Dec 26 00:25:47 2024 +0700
+
+    save change before revert
+
+[33mcommit 5acdea9c7cb878535f65a94c759fee3f145f6dd6[m
+Author: Sokcheatsrorng <sokcheatsrorng@gmail.com>
+Date:   Wed Dec 25 11:20:46 2024 +0700
+
+    FACTOR: Pull From Development
+
+[33mcommit 1e40da144089a1b38acf13ffab2e72c1dab51318[m
+Merge: 3f3f44e c367b7b
+Author: Sokcheatsrorng <sokcheatsrorng@gmail.com>
+Date:   Wed Dec 25 11:13:30 2024 +0700
+
+    Merge branch 'development' of https://github.com/Blockchain-ISTAD-ITE-GEN2/iDonate into auth_dev
+
+[33mcommit c367b7be43e81359730cf71665e2ab80378be0bf[m
+Author: Dark Fighter <sanhpanha3003@gmail.com>
+Date:   Wed Dec 25 10:57:08 2024 +0700
+
+    Modify donor transaction history
+
+[33mcommit b3efd47411659b8d70de4d81a9289f11386bc6af[m
+Author: Dark Fighter <sanhpanha3003@gmail.com>
+Date:   Wed Dec 25 09:46:44 2024 +0700
+
+    Modify path exportation
+
+[33mcommit bf75a30b1caab30af5e2364091395b782e4a48e0[m
+Author: Dark Fighter <sanhpanha3003@gmail.com>
+Date:   Tue Dec 24 15:32:35 2024 +0700
+
+    Done page event detail
+
+[33mcommit dba71c75292f115ebdfe6c1e6d22375048a89b1e[m
+Author: Dark Fighter <sanhpanha3003@gmail.com>
+Date:   Tue Dec 24 09:45:16 2024 +0700
+
+    Modify some types and interface
+
+[33mcommit 3f3f44e91f7dbccd3f2d82af117ab378fb9d9b6d[m
+Author: Sokcheatsrorng <sokcheatsrorng@gmail.com>
+Date:   Mon Dec 23 12:16:58 2024 +0700
+
+    FACTOR: Update and Redesign Style and Add Image
+
+[33mcommit ef2781844a383185b5fcc7ccc15db36afa924b0a[m
+Author: Dark Fighter <sanhpanha3003@gmail.com>
+Date:   Mon Dec 23 10:50:56 2024 +0700
+
+    Fix some display on common card and its usage
+
+[33mcommit d8b64d225ad754e7acd61d7df7081063d43261b6[m
+Author: Dark Fighter <sanhpanha3003@gmail.com>
+Date:   Sun Dec 22 23:50:44 2024 +0700
+
+    Event detail
+
+[33mcommit 0b2f03cde1dead91706b867444892a0a14a169c7[m
+Merge: d2d3c1d febb322
+Author: Dark Fighter <sanhpanha3003@gmail.com>
+Date:   Sun Dec 22 22:54:34 2024 +0700
+
+    Merge branch 'main' of https://github.com/Blockchain-ISTAD-ITE-GEN2/iDonate
+
+[33mcommit d2d3c1d626be7c5d1d7d1e07bb6a1c40fc3d27f0[m
+Author: Dark Fighter <sanhpanha3003@gmail.com>
+Date:   Sun Dec 22 22:51:52 2024 +0700
+
+    Donor Transaction History
+
+[33mcommit cc68ef7c0bb0deb95af7dfe0d60aaaf8daac7972[m
+Author: Dark Fighter <sanhpanha3003@gmail.com>
+Date:   Sun Dec 22 21:30:54 2024 +0700
+
+    Add tab and env
+
+[33mcommit febb322604c727a5e081c8eb26993357a30381cc[m
+Author: Sokcheat Srorng <101699837+Sokcheatsrorng@users.noreply.github.com>
+Date:   Sun Dec 22 19:11:01 2024 +0700
+
+    Update README.md
+
+[33mcommit 18588f904a89ac9012950f2cb9427f9c490c7693[m[33m ([m[1;32mmain[m[33m)[m
+Author: Sokcheat Srorng <101699837+Sokcheatsrorng@users.noreply.github.com>
+Date:   Sun Dec 22 18:57:07 2024 +0700
+
+    Update README.md
+
+[33mcommit 04e03a2af3e6dc2dd179c3dfb3cb10e7a33474cf[m
+Author: Sokcheat Srorng <101699837+Sokcheatsrorng@users.noreply.github.com>
+Date:   Sun Dec 22 18:56:27 2024 +0700
+
+    Update README.md
+
+[33mcommit 741a98cf8d1c56688183b39284a4e8758c9d8d11[m
+Author: Sokcheat Srorng <101699837+Sokcheatsrorng@users.noreply.github.com>
+Date:   Sun Dec 22 18:55:47 2024 +0700
+
+    Update README.md
+
+[33mcommit b6da390ad3318a008769d71e6a401857fc94a7a5[m
+Author: Sokcheat Srorng <101699837+Sokcheatsrorng@users.noreply.github.com>
+Date:   Sun Dec 22 18:54:17 2024 +0700
+
+    Update README.md
+
+[33mcommit 4b86fcb7dd3eb68e970b71cbbff9ca971b240ff0[m
+Author: Sokcheatsrorng <sokcheatsrorng@gmail.com>
+Date:   Sun Dec 22 18:38:02 2024 +0700
+
+    FACTOR: Done Redesign Homepage Version1
+
+[33mcommit 1e8638aad461034aa9887e483aaf8acb8d535f8a[m
+Author: Dark Fighter <sanhpanha3003@gmail.com>
+Date:   Sun Dec 22 11:19:58 2024 +0700
+
+    Change directory
+
+[33mcommit cc7858ba73ca7c3cb1d693e1387d4d7158be59c8[m
+Author: Dark Fighter <sanhpanha3003@gmail.com>
+Date:   Sat Dec 21 12:12:22 2024 +0700
+
+    Build after merge
+
+[33mcommit cf2e39b8739a4c2fac368dac8c1c8dbab69b7cc5[m
+Merge: b435075 0665cb4
+Author: Dark Fighter <sanhpanha3003@gmail.com>
+Date:   Sat Dec 21 12:08:34 2024 +0700
+
+    Merge from socheat
+
+[33mcommit b435075a41eeca9eb242bfd1c679750458e4ce0c[m
+Merge: 32652bf d5d4918
+Author: Dark Fighter <sanhpanha3003@gmail.com>
+Date:   Sat Dec 21 12:04:26 2024 +0700
+
+    Merge from kang
+
+[33mcommit 32652bf001558246d1c6ef9d545cd176a2a339db[m
+Merge: d226f6b c66c13f
+Author: Dark Fighter <sanhpanha3003@gmail.com>
+Date:   Sat Dec 21 12:00:16 2024 +0700
+
+    Merge from kang
+
+[33mcommit d226f6bbf999eae1e187ae64b505d815b15d2ce7[m
+Author: Dark Fighter <sanhpanha3003@gmail.com>
+Date:   Sat Dec 21 11:51:42 2024 +0700
+
+    Donor Profile
+
+[33mcommit 0665cb49a2408f6f309d69f48dd79b36d25e9a99[m
+Author: Sokcheatsrorng <sokcheatsrorng@gmail.com>
+Date:   Sat Dec 21 01:00:30 2024 +0700
+
+    Done Homepage
+
+[33mcommit d5d4918c8cb18a54f212e2e6cf6fec3be82ba729[m[33m ([m[1;31morigin/mockup[m[33m)[m
+Author: kevin-kang-tido <kaykang84@gmail.com>
+Date:   Sat Dec 21 00:50:23 2024 +0700
+
+    change branch deploy
+
+[33mcommit 279e96cfebd02453e9624cbb885c4a4d6cad4e5f[m
+Author: kevin-kang-tido <kaykang84@gmail.com>
+Date:   Fri Dec 20 17:37:13 2024 +0700
+
+    Github actions 8
+
+[33mcommit 03368d76b77b7c1e3c934e6562a956e12bf20789[m
+Author: kevin-kang-tido <kaykang84@gmail.com>
+Date:   Fri Dec 20 17:24:08 2024 +0700
+
+    Github actions 7
+
+[33mcommit d06791fc685ac6d99e8e536962eb4a60e17fdbd9[m
+Author: kevin-kang-tido <kaykang84@gmail.com>
+Date:   Fri Dec 20 17:19:26 2024 +0700
+
+    Github actions 6
+
+[33mcommit 3ddbcd0fdc8184eb5ac37f60777a84e97ccb7573[m
+Author: kevin-kang-tido <kaykang84@gmail.com>
+Date:   Fri Dec 20 17:08:10 2024 +0700
+
+    Github actions 6
+
+[33mcommit 8cd807cca1fe2e3bb9fecc9f7206656a7d0cfb65[m
+Author: kevin-kang-tido <kaykang84@gmail.com>
+Date:   Fri Dec 20 16:33:20 2024 +0700
+
+    Github actions 5
+
+[33mcommit 8e33b9d354f984f88b77f55fada238a7eee9a2eb[m
+Author: kevin-kang-tido <kaykang84@gmail.com>
+Date:   Fri Dec 20 16:31:47 2024 +0700
+
+    Github actions 4
+
+[33mcommit 20ae63ca962fba439a173328faa9f75dacdfe0f5[m
+Author: kevin-kang-tido <kaykang84@gmail.com>
+Date:   Fri Dec 20 16:21:25 2024 +0700
+
+    Github actions
+
+[33mcommit c66c13fc1b63999ee424370cca72d58cb3de7499[m
+Author: kevin-kang-tido <kaykang84@gmail.com>
+Date:   Fri Dec 20 15:30:53 2024 +0700
+
+    change node version
+
+[33mcommit b90a2b8ff5cb43fe79b8125534014564be9c01cc[m
+Author: kevin-kang-tido <kaykang84@gmail.com>
+Date:   Fri Dec 20 15:24:33 2024 +0700
+
+    Test with Git actions
+
+[33mcommit 1fcaba162a63f15f25cb4c5595587d34a5d92264[m
+Author: kevin-kang-tido <kaykang84@gmail.com>
+Date:   Fri Dec 20 15:17:48 2024 +0700
+
+    test git actions
+
+[33mcommit d6360a246491ea44434a1ca56fdba5f37d7ed818[m
+Author: kevin-kang-tido <kaykang84@gmail.com>
+Date:   Fri Dec 20 15:03:02 2024 +0700
+
+    change git env
+
+[33mcommit e281a1a352e33a481c64a4e6a959c9b50e958b07[m
+Author: kevin-kang-tido <kaykang84@gmail.com>
+Date:   Fri Dec 20 14:11:18 2024 +0700
+
+    change branch deploy
+
+[33mcommit b3fd6569fbce2edb8e86eaa29e40328ae60bcb62[m
+Author: kevin-kang-tido <kaykang84@gmail.com>
+Date:   Fri Dec 20 14:10:35 2024 +0700
+
+    Fix and run build
+
+[33mcommit 33a70595495133ee5cd0e51fc96ec7f7a7d96b22[m
+Author: Dark Fighter <sanhpanha3003@gmail.com>
+Date:   Fri Dec 20 13:48:30 2024 +0700
+
+    Donor Profile
+
+[33mcommit 456480526d570d41d895b3e75304902c1b6acf47[m
+Merge: 57516a3 87967aa
+Author: kevin-kang-tido <kaykang84@gmail.com>
+Date:   Fri Dec 20 13:34:02 2024 +0700
+
+    Merge from kang
+
+[33mcommit 87967aacc84cfc4b3cb99264681bb2b3b708147c[m
+Author: kevin-kang-tido <kaykang84@gmail.com>
+Date:   Fri Dec 20 13:27:28 2024 +0700
+
+    Working with git actions
+
+[33mcommit 92b2d198f73731150a116ef96d5e007dbd706f31[m
+Author: kevin-kang-tido <kaykang84@gmail.com>
+Date:   Thu Dec 19 15:03:49 2024 +0700
+
+    Working with Organiation page and Categories page
+
+[33mcommit fafc09b6a45063375e19928b004f8396ba413753[m
+Author: Dark Fighter <sanhpanha3003@gmail.com>
+Date:   Wed Dec 18 16:41:54 2024 +0700
+
+    Dynamic Filter works
+
+[33mcommit 57516a38b142bb7c49b6f7cc01667d38b917d6a1[m
+Author: Dark Fighter <sanhpanha3003@gmail.com>
+Date:   Wed Dec 18 16:33:56 2024 +0700
+
+    Dynamic Filter works
+
+[33mcommit 5206d63804bb26982943f6b8977ff8ef97a5c55b[m
+Merge: 43cf931 c3faa92
+Author: kevin-kang-tido <kaykang84@gmail.com>
+Date:   Wed Dec 18 10:12:09 2024 +0700
+
+    Merge from main
+
+[33mcommit 43cf9318b2366378e253b4246714903c44ad8e3d[m
+Author: kevin-kang-tido <kaykang84@gmail.com>
+Date:   Wed Dec 18 09:57:19 2024 +0700
+
+    Edit card event components
+
+[33mcommit c3faa9252a1fee72cc3a42f4b6e75b7d3900f7da[m
+Author: Dark Fighter <sanhpanha3003@gmail.com>
+Date:   Wed Dec 18 09:46:04 2024 +0700
+
+    Fix layout
+
+[33mcommit 473b4f2fd5b414bf27c5909d51c9458be05e7523[m
+Author: Dark Fighter <sanhpanha3003@gmail.com>
+Date:   Wed Dec 18 09:14:33 2024 +0700
+
+    Fix after merge
+
+[33mcommit 28fcb4dbc1abdddbcc3633b6610f6273c2955022[m
+Author: Dark Fighter <sanhpanha3003@gmail.com>
+Date:   Wed Dec 18 09:11:18 2024 +0700
+
+    Merge from auth_dev
+
+[33mcommit b4305796a602b76c0dd303e9373199280a635b43[m
+Merge: df3651f 38f83df
+Author: Dark Fighter <sanhpanha3003@gmail.com>
+Date:   Wed Dec 18 09:10:36 2024 +0700
+
+    Merge from auth_dev
+
+[33mcommit 9d66658c50e32667d98329ab1d2f40df23aafcb0[m
+Author: kevin-kang-tido <kaykang84@gmail.com>
+Date:   Wed Dec 18 04:13:52 2024 +0700
+
+    fix mock up date for organization and organization Detail
+
+[33mcommit df3651ff09d22af23fcfdbb843025915222f3fa1[m
+Author: Sokcheatsrorng <sokcheatsrorng@gmail.com>
+Date:   Wed Dec 18 00:49:29 2024 +0700
+
+    FACTOR: Done MissionVission and HowItWork MockUp Data
+
+[33mcommit 38f83dfb6e8786c9f9a86d9bd2be4b540c3bf2c7[m
+Author: Dark Fighter <sanhpanha3003@gmail.com>
+Date:   Wed Dec 18 00:17:37 2024 +0700
+
+    Fix after merge
+
+[33mcommit 759adaa41af3cb7a2eceac3919f21ca902e7ccad[m
+Author: Sokcheatsrorng <sokcheatsrorng@gmail.com>
+Date:   Tue Dec 17 21:41:33 2024 +0700
+
+    FACTOR: Done Footer
+
+[33mcommit 1fd1e70b368a13772003581dfe0bb88e7c6f7fc5[m
+Author: Sokcheatsrorng <sokcheatsrorng@gmail.com>
+Date:   Tue Dec 17 17:29:09 2024 +0700
+
+    FACTOR: Done with AboutUs Page
+
+[33mcommit 20dbd74f004bd20f739723e330c75c0f5e11799d[m
+Merge: 41c5dad d3151b6
+Author: Dark Fighter <sanhpanha3003@gmail.com>
+Date:   Tue Dec 17 16:29:19 2024 +0700
+
+    Merge from auth_dev
+
+[33mcommit 41c5dad9d0e6734e3762cf0bde83f2a756c46685[m
+Author: Dark Fighter <sanhpanha3003@gmail.com>
+Date:   Tue Dec 17 16:05:52 2024 +0700
+
+    Finish Organization
+
+[33mcommit d3151b62599d54092e358f9b3284b7a0cc25e5ba[m[33m ([m[1;31morigin/recovered-mission-vision[m[33m, [m[1;32mrecovered-mission-vision[m[33m)[m
+Author: Sokcheatsrorng <sokcheatsrorng@gmail.com>
+Date:   Tue Dec 17 01:23:24 2024 +0700
+
+    FACTOR: Static Page mission-vision, about-us, footer, howitwork done layout
+
+[33mcommit b1e34ddec312fc6f5aae98f17ffa7d9f4e02ee07[m
+Author: jiporCK <srengchipor99@gmail.com>
+Date:   Mon Dec 16 16:34:06 2024 +0700
+
+    modify registration form
+
+[33mcommit bbe726e28c6384912da7c43e327a56d0a46b236e[m
+Merge: 60db0ec 33b469a
+Author: jiporCK <srengchipor99@gmail.com>
+Date:   Mon Dec 16 14:33:59 2024 +0700
+
+    Merge branch 'auth_dev' of https://github.com/Blockchain-ISTAD-ITE-GEN2/iDonate into jipor
+
+[33mcommit 60db0ecb16a327f1bdf572e7f704798b390d8220[m
+Author: jiporCK <srengchipor99@gmail.com>
+Date:   Mon Dec 16 14:28:48 2024 +0700
+
+    modify redux folder
+
+[33mcommit cf5cb75be64d56591daabb458e3a54fd159dbd3f[m
+Author: Dark Fighter <sanhpanha3003@gmail.com>
+Date:   Mon Dec 16 13:38:37 2024 +0700
+
+    Organizaion Setting
+
+[33mcommit e33d0f98056fafd3cda027854bca6b2e22ff4bc5[m
+Author: jiporCK <srengchipor99@gmail.com>
+Date:   Mon Dec 16 11:43:39 2024 +0700
+
+    configured redux folder
+
+[33mcommit 9565433ad0264cefcdb1aa2d51e341903c5dfb41[m
+Author: jiporCK <srengchipor99@gmail.com>
+Date:   Mon Dec 16 10:18:28 2024 +0700
+
+    pulling process
+
+[33mcommit 33b469a7daef2220b36975c9b4803688072f707b[m
+Author: Sokcheatsrorng <srorng.sokcheat.1221.@rupp.edu.kh>
+Date:   Sat Dec 14 14:13:38 2024 +0700
+
+    FACTOR: Add zos form
+
+[33mcommit e59d8ee4bc6b7fd50a5e7ee0a5e883d14689dd5c[m[33m ([m[1;31morigin/auth_login[m[33m, [m[1;32mauth_login[m[33m)[m
+Author: Dark Fighter <sanhpanha3003@gmail.com>
+Date:   Wed Dec 11 14:55:50 2024 +0700
+
+    Complete card event in Org
+
+[33mcommit 9fc538cd49b1cde8439401e207fd09592a14c9d5[m
+Author: kevin-kang-tido <kaykang84@gmail.com>
+Date:   Wed Dec 11 12:01:04 2024 +0700
+
+    save change
+
+[33mcommit 5db600dee816a89b60f9bb3ac2b029ebdcb7b039[m
+Author: Dark Fighter <sanhpanha3003@gmail.com>
+Date:   Wed Dec 11 08:21:40 2024 +0700
+
+    First init in ISTAD git

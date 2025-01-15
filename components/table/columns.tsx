@@ -1,14 +1,11 @@
-"use client"
+"use client";
 import { TransactionType } from "@/difinitions/types/table-type/transaction";
-import {ColumnDef} from "@tanstack/react-table";
-import { Checkbox } from "@/components/ui/checkbox"
+import { ColumnDef } from "@tanstack/react-table";
+import { Checkbox } from "@/components/ui/checkbox";
 import { DataTableColumnHeader } from "./data-table-column-header";
 import { DataTableRowActions } from "./data-table-row-actions";
 
-
-
 export const transactionColumns: ColumnDef<TransactionType>[] = [
-
   {
     id: "select",
     header: ({ table }) => (
@@ -31,26 +28,26 @@ export const transactionColumns: ColumnDef<TransactionType>[] = [
     enableSorting: false,
     enableHiding: false,
   },
-  
+
   {
     accessorKey: "date",
     header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Date" />
+      <DataTableColumnHeader column={column} title="Date" />
     ),
     cell: ({ row }) => <span>{row.getValue("date")}</span>,
     filterFn: (row, columnId, filterValue) => {
-        if (!filterValue) return true; // No filter applied
-    
-        const rowDate = new Date(row.getValue(columnId));
-        const { from, to } = filterValue;
-    
-        if (from && rowDate < new Date(from)) {
-          return false;
-        }
-        if (to && rowDate > new Date(to)) {
-          return false;
-        }
-        return true;
+      if (!filterValue) return true; // No filter applied
+
+      const rowDate = new Date(row.getValue(columnId));
+      const { from, to } = filterValue;
+
+      if (from && rowDate < new Date(from)) {
+        return false;
+      }
+      if (to && rowDate > new Date(to)) {
+        return false;
+      }
+      return true;
     },
     enableSorting: true,
     enableHiding: true,
@@ -71,8 +68,8 @@ export const transactionColumns: ColumnDef<TransactionType>[] = [
   {
     accessorKey: "donor",
     header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Donor" />
-      ),
+      <DataTableColumnHeader column={column} title="Donor" />
+    ),
     cell: ({ row }) => <div>{row.getValue("donor")}</div>,
     enableSorting: true,
     enableHiding: true,
@@ -81,8 +78,8 @@ export const transactionColumns: ColumnDef<TransactionType>[] = [
   {
     accessorKey: "email",
     header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Email" />
-      ),
+      <DataTableColumnHeader column={column} title="Email" />
+    ),
     cell: ({ row }) => <div>{row.getValue("email")}</div>,
     enableSorting: true,
     enableHiding: true,
@@ -91,8 +88,8 @@ export const transactionColumns: ColumnDef<TransactionType>[] = [
   {
     accessorKey: "event",
     header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Event" />
-      ),
+      <DataTableColumnHeader column={column} title="Event" />
+    ),
     cell: ({ row }) => <div>{row.getValue("event")}</div>,
     enableSorting: true,
     enableHiding: true,
@@ -101,16 +98,20 @@ export const transactionColumns: ColumnDef<TransactionType>[] = [
   {
     accessorKey: "amount",
     header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Amount" />
-      ),
+      <DataTableColumnHeader column={column} title="Amount" />
+    ),
     cell: ({ row }) => {
-      const amount = parseFloat(row.getValue("amount"))
+      const amount = parseFloat(row.getValue("amount"));
       const formatted = new Intl.NumberFormat("en-US", {
         style: "currency",
         currency: "USD",
-      }).format(amount)
- 
-      return <div className="text-iDonate-green-primary">{formatted}</div>
+      }).format(amount);
+
+      return (
+        <div className="text-iDonate-green-primary dark:text-iDonate-green-secondary">
+          {formatted}
+        </div>
+      );
     },
     // cell: ({ row }) => <div>{row.getValue("email")}</div>,
     enableSorting: true,
@@ -120,6 +121,5 @@ export const transactionColumns: ColumnDef<TransactionType>[] = [
   {
     id: "actions",
     cell: ({ row }) => <DataTableRowActions row={row} />,
-  }
-
-]
+  },
+];

@@ -1,10 +1,9 @@
 interface UserPayload {
-        user: {
-          id: string;
-          name: string;
-          email: string;
-          image: string;
-        };
-        expires: string;
+  user: {
+    id: string;
+    name: string;
+    email: string;
+    image: string;
+  };
+  expires: string;
 }
-      
