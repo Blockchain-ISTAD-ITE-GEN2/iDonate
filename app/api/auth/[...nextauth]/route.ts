@@ -1,2 +1,1 @@
-import { GET,POST } from "@/app/Auth/auth";
-
+import { GET, POST } from "@/app/Auth/auth";

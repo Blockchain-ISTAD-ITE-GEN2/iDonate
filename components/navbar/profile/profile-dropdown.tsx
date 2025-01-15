@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -10,31 +10,31 @@ import {
 import { Heart, LogOut, Search, User } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/router"; 
+import { useRouter } from "next/router";
 import { selectToken } from "@/redux/features/auth/authSlice";
 import { useAppSelector } from "@/redux/hooks";
-import AvartarPlaceHolder from '@/public/images/user-idonate.png'
+import AvartarPlaceHolder from "@/public/images/user-idonate.png";
 import { useGetUserProfileQuery } from "@/redux/services/user-profile";
 export const ProfileDropdown = ({
   session,
   signOut,
-  token
+  token,
 }: {
   session?: any;
   signOut?: any;
   token?: string | any;
 }) => {
-  const router = useRouter(); 
+  const router = useRouter();
 
   const handleSignOut = () => {
-    signOut(); 
+    signOut();
     router.push("/");
-  }
+  };
   // const {data:userProfile} = useGetUserProfileQuery({});
   const { data: userProfile, error, isLoading } = useGetUserProfileQuery({});
-  console.log("The value of Token: ",userProfile);
-  
-   if (isLoading) {
+  console.log("The value of Token: ", userProfile);
+
+  if (isLoading) {
     return <div>Loading...</div>;
   }
 
@@ -65,10 +65,10 @@ export const ProfileDropdown = ({
       <DropdownMenuContent className="w-64 p-2">
         {/* User Info */}
         <div className="p-3">
-          <div className="flex items-center space-x-3">   
+          <div className="flex items-center space-x-3">
             {session?.user?.image ? (
               <Image
-                src={session.user.image || AvartarPlaceHolder } 
+                src={session.user.image || AvartarPlaceHolder}
                 alt={`${session.user.name ?? "User"}'s avatar`}
                 width={40}
                 height={40}

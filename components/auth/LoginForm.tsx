@@ -22,7 +22,6 @@ import { useDispatch } from "react-redux";
 import { setToken } from "@/redux/features/auth/authSlice";
 import { useRouter } from "next/navigation";
 
-
 // Zod schema for form validation
 const loginSchema = z.object({
   email: z
@@ -62,12 +61,15 @@ export default function LoginForm() {
 
     try {
       // Make a POST request to the login API
-      const response = await fetch(`${process.env.NEXT_PUBLIC_IDONATE_API_URL}/api/v1/auth/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-        credentials: "include",
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_IDONATE_API_URL}/api/v1/auth/login`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+          credentials: "include",
+        },
+      );
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -77,13 +79,12 @@ export default function LoginForm() {
       const result = await response.json();
       console.log("Login Response:", result);
 
-
       // Set a cookie from the frontend (if needed)
-      // document.cookie = `idonate-refresh-token=${result.refreshToken};path=/;max-age=3600;`; 
+      // document.cookie = `idonate-refresh-token=${result.refreshToken};path=/;max-age=3600;`;
       document.cookie = `idonate-refresh-token=${result.refreshToken};path=/;max-age=3600;SameSite=Lax;Secure`;
 
       // console.log("Cookie set successfully");
-        // Set access token in Redux
+      // Set access token in Redux
       dispatch(setToken(result.accessToken));
       // router.push("/");
       console.log("Redirecting to home page...");
@@ -98,7 +99,7 @@ export default function LoginForm() {
       setLoading(false);
     }
   };
-  
+
   return (
     <div className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
       <div className="absolute inset-0 bg-grid-slate-100 [mask-image:linear-gradient(0deg,#fff,rgba(255,255,255,0.6))] -z-10" />
@@ -134,7 +135,10 @@ export default function LoginForm() {
           </motion.div>
           <AnimationText />
 
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 sm:space-y-6">
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="space-y-4 sm:space-y-6"
+          >
             <div>
               <label
                 htmlFor="email"
@@ -185,7 +189,11 @@ export default function LoginForm() {
                 onClick={() => setShowPassword(!showPassword)}
                 className="absolute right-3 top-8 text-gray-400 hover:text-gray-600 focus:outline-none items-center"
               >
-                {showPassword ? <Eye size={18} className="mt-1" /> : <EyeOff size={18} className="mt-1" />}
+                {showPassword ? (
+                  <Eye size={18} className="mt-1" />
+                ) : (
+                  <EyeOff size={18} className="mt-1" />
+                )}
               </button>
               {errors.password && (
                 <motion.p
@@ -249,7 +257,14 @@ export default function LoginForm() {
                 className="w-20 h-20 rounded-full bg-transparent border-none hover:bg-transparent transition-colors duration-200"
                 onClick={() => signIn("google", { callbackUrl: "/" })}
               >
-                <Image src={GoogleIcon} alt="Google" width={60} height={60} unoptimized className="w-[40px] h-[40px]" />
+                <Image
+                  src={GoogleIcon}
+                  alt="Google"
+                  width={60}
+                  height={60}
+                  unoptimized
+                  className="w-[40px] h-[40px]"
+                />
               </Button>
             </motion.div>
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
@@ -285,4 +300,3 @@ export default function LoginForm() {
     </div>
   );
 }
-

@@ -27,9 +27,8 @@ import ThemeSwitch from "../theme/ThemeSwitches";
 import { signOut, useSession } from "next-auth/react";
 import { useAppSelector } from "@/redux/hooks";
 import { selectToken } from "@/redux/features/auth/authSlice";
-import AvartarPlaceHolder from '@/public/images/user-idonate.png'
+import AvartarPlaceHolder from "@/public/images/user-idonate.png";
 import { useGetUserProfileQuery } from "@/redux/services/user-profile";
-
 
 export default function NavbarComponent() {
   const [menuList] = useState<NavMenuType[]>(NavMenulist);
@@ -48,12 +47,11 @@ export default function NavbarComponent() {
   //  console.log("The value of Token: ",userProfile.email);
 
   const handleSignOut = () => {
-    signOut(); 
+    signOut();
     router.push("/");
-  }
+  };
 
-  
-  useEffect(() => {},[accessTokenValue,session])
+  useEffect(() => {}, [accessTokenValue, session]);
   // console.log("User Profile: ",userProfile);
 
   if (
@@ -138,11 +136,15 @@ export default function NavbarComponent() {
 
           <div className="flex items-center">
             {session || accessTokenValue ? (
-                <DropdownMenu>
+              <DropdownMenu>
                 <DropdownMenuTrigger>
                   {session?.user?.image ? (
                     <Image
-                      src={session.user.image || AvartarPlaceHolder ||userProfile?.avatar}
+                      src={
+                        session.user.image ||
+                        AvartarPlaceHolder ||
+                        userProfile?.avatar
+                      }
                       alt={`${session.user.name ?? "user"}'s avatar`}
                       width={40}
                       height={40}
@@ -154,14 +156,18 @@ export default function NavbarComponent() {
                     </div>
                   )}
                 </DropdownMenuTrigger>
-          
+
                 <DropdownMenuContent className="w-72 p-2">
                   {/* User Info */}
                   <div className="p-3">
-                    <div className="flex items-center space-x-3">   
+                    <div className="flex items-center space-x-3">
                       {session?.user?.image ? (
                         <Image
-                          src={session.user.image || AvartarPlaceHolder || userProfile?.avatar  } 
+                          src={
+                            session.user.image ||
+                            AvartarPlaceHolder ||
+                            userProfile?.avatar
+                          }
                           alt={`${session.user.name ?? "User"}'s avatar`}
                           width={40}
                           height={40}
@@ -174,17 +180,21 @@ export default function NavbarComponent() {
                       )}
                       <div className="text-sm">
                         <div className="font-medium text-gray-900">
-                          {session?.user?.name || userProfile?.username ||"Guest User"}
+                          {session?.user?.name ||
+                            userProfile?.username ||
+                            "Guest User"}
                         </div>
                         <div className="text-gray-500">
-                          {session?.user?.email ||userProfile?.email || "No Email"}
+                          {session?.user?.email ||
+                            userProfile?.email ||
+                            "No Email"}
                         </div>
                       </div>
                     </div>
                   </div>
-          
+
                   <DropdownMenuSeparator />
-          
+
                   {/* Menu Items */}
                   <DropdownMenuItem asChild>
                     <Link
@@ -195,7 +205,7 @@ export default function NavbarComponent() {
                       <span>Profile Settings</span>
                     </Link>
                   </DropdownMenuItem>
-          
+
                   <DropdownMenuItem asChild>
                     <Link
                       href="/donations"
@@ -205,7 +215,7 @@ export default function NavbarComponent() {
                       <span>My Donations</span>
                     </Link>
                   </DropdownMenuItem>
-          
+
                   <DropdownMenuItem asChild>
                     <Link
                       href="/search"
@@ -215,9 +225,9 @@ export default function NavbarComponent() {
                       <span>Search</span>
                     </Link>
                   </DropdownMenuItem>
-          
+
                   <DropdownMenuSeparator />
-          
+
                   {/* Donate Button */}
                   <div className="p-2">
                     <Button className="w-full group bg-iDonate-white-space border-2 border-iDonate-navy-primary px-2 text-iDonate-navy-primary hover:bg-iDonate-navy-primary hover:text-white hover:border-iDonate-navy-primary rounded-[12px]">
@@ -228,9 +238,9 @@ export default function NavbarComponent() {
                       <span className="text-lg">Donate Now</span>
                     </Button>
                   </div>
-          
+
                   <DropdownMenuSeparator />
-          
+
                   {/* Sign Out */}
                   <DropdownMenuItem
                     onClick={handleSignOut} // Use handleSignOut instead of signOut directly

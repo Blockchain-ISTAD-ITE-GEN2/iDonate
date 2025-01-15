@@ -8,11 +8,10 @@ export const makeStore = () => {
     reducer: {
       // Add the generated reducer as a specific top-level slice
       [idonateApi.reducerPath]: idonateApi.reducer,
-        auth: authSlice,
+      auth: authSlice,
     },
     middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware()
-        .concat(idonateApi.middleware) // Add RTK Query middleware
+      getDefaultMiddleware().concat(idonateApi.middleware), // Add RTK Query middleware
   });
 };
 

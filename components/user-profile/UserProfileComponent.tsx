@@ -1,7 +1,7 @@
-'use client'
+"use client";
 
-import { Pencil } from 'lucide-react'
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Pencil } from "lucide-react";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export default function UserProfile() {
   return (
@@ -10,25 +10,25 @@ export default function UserProfile() {
       <div className="border-b mb-8">
         <Tabs defaultValue="edit-profile" className="w-full">
           <TabsList className="w-full justify-start h-14 bg-transparent border-0 p-0">
-            <TabsTrigger 
-              value="dashboard" 
+            <TabsTrigger
+              value="dashboard"
               className="data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-blue-600 rounded-none h-14 px-8"
             >
               Dashboard
             </TabsTrigger>
-            <TabsTrigger 
+            <TabsTrigger
               value="edit-profile"
               className="data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-blue-600 rounded-none h-14 px-8"
             >
               Edit Profile
             </TabsTrigger>
-            <TabsTrigger 
+            <TabsTrigger
               value="edit-password"
               className="data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-blue-600 rounded-none h-14 px-8"
             >
               Edit Password
             </TabsTrigger>
-            <TabsTrigger 
+            <TabsTrigger
               value="logout"
               className="data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-blue-600 rounded-none h-14 px-8"
             >
@@ -110,6 +110,5 @@ export default function UserProfile() {
         </div>
       </div>
     </div>
-  )
+  );
 }
-

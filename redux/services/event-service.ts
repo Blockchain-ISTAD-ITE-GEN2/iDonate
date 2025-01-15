@@ -8,26 +8,26 @@ export const eventApi = idonateApi.injectEndpoints({
     }),
     createEvents: builder.mutation({
       query: (newEvent) => ({
-          url: '/events',
-          method: 'POST',
-          body: newEvent,
+        url: "/events",
+        method: "POST",
+        body: newEvent,
       }),
-      invalidatesTags: [{type: 'event', id: 'LIST'}],
+      invalidatesTags: [{ type: "event", id: "LIST" }],
     }),
     editEvents: builder.mutation({
-      query: ({uuid, updatedData}) => ({
-          url: `/events/${uuid}`,
-          method: 'PUT',
-          body: updatedData,
+      query: ({ uuid, updatedData }) => ({
+        url: `/events/${uuid}`,
+        method: "PUT",
+        body: updatedData,
       }),
-      invalidatesTags: [{type: 'event', id: 'LIST'}],
+      invalidatesTags: [{ type: "event", id: "LIST" }],
     }),
     deleteEvents: builder.mutation({
       query: (uuid) => ({
-          url: `/events/${uuid}`,
-          method: 'DELETE',
+        url: `/events/${uuid}`,
+        method: "DELETE",
       }),
-      invalidatesTags: [{type: 'event', id: 'LIST'}],
+      invalidatesTags: [{ type: "event", id: "LIST" }],
     }),
   }),
 });

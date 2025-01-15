@@ -6,7 +6,7 @@ import { ChevronsLeft, ChevronsRight } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { useGetTestimonialsQuery } from "@/redux/features/testimony/testimonialSlice"; 
+import { useGetTestimonialsQuery } from "@/redux/features/testimony/testimonialSlice";
 
 interface Testimonial {
   name: string;
@@ -27,7 +27,7 @@ export default function TestimonialCarousel() {
     error,
   } = useGetTestimonialsQuery();
 
-  console.log("Data of Testimonials: ",testimonials);
+  console.log("Data of Testimonials: ", testimonials);
 
   useEffect(() => {
     const handleResize = () => {
@@ -70,7 +70,6 @@ export default function TestimonialCarousel() {
   if (isLoading) {
     return <div className="text-center py-8">Loading testimonials...</div>;
   }
-
 
   return (
     <div className="w-full container mx-auto px-4">

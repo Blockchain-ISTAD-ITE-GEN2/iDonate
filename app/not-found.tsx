@@ -31,8 +31,6 @@ const NotFound = () => {
           >
             Go back home
           </Link>
-
-          
         </div>
       </div>
     </main>

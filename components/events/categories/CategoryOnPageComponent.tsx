@@ -11,7 +11,6 @@ import events from "@/data/events-data.json";
 import { useGetCategoriesQuery } from "@/redux/services/category-service";
 
 export default function CategoryOnPageComponent() {
- 
   const category = useGetCategoriesQuery({});
 
   const typeCategories: CategoryType[] = category?.currentData || [];
@@ -25,7 +24,7 @@ export default function CategoryOnPageComponent() {
       {/* Start Card Categories */}
       <div className="w-full px-6 md:px-12 lg:px-24 space-y-6 text-center">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-          <CategoryCardComponent  />
+          <CategoryCardComponent />
         </div>
       </div>
 

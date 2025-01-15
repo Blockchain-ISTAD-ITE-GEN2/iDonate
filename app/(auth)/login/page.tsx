@@ -1,13 +1,11 @@
-
 import LoginForm from "@/components/auth/LoginForm";
-import { Metadata } from "next";
 
 function LoginPage() {
-    return (
-        <>
-            <LoginForm />
-        </>
-    );
+  return (
+    <>
+      <LoginForm />
+    </>
+  );
 }
 
 export default LoginPage;
