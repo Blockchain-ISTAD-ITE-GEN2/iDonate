@@ -32,9 +32,9 @@ export default function DesktopNavbar({
     }`;
 
   if (
-    pathname === "/auth/login" ||
-    pathname === "/auth/sign-up" ||
-    pathname === "/auth/verification"
+    pathname === "/login" ||
+    pathname === "/sign-up" ||
+    pathname === "/verification"
   ) {
     return null;
   }

@@ -92,7 +92,7 @@ export function MobileMenu({
               ) : (
                 <Button
                   onClick={() => {
-                    router.push("/auth/login");
+                    router.push("/login");
                     onClose();
                   }}
                   className="hidden sm:flex bg-transparent text-iDonate-navy-primary hover:bg-iDonate-light-gray font-medium dark:text-iDonate-navy-accent dark:hover:bg-iDonate-dark-mode "
@@ -179,7 +179,7 @@ export function MobileMenu({
           <div className="flex gap-2">
             <Button
               onClick={() => {
-                router.push("/auth/login");
+                router.push("/login");
                 onClose();
               }}
               className="sm:hidden flex-1 items-center justify-center space-x-2 bg-iDonate-white-space border-2 border-iDonate-navy-primary text-iDonate-navy-primary hover:bg-iDonate-navy-primary hover:text-white rounded-lg group px-2  hover:border-iDonate-navy-primary dark:text-iDonate-navy-accent dark:bg-iDonate-dark-mode dark:border-transparent"

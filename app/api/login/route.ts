@@ -17,6 +17,7 @@ export async function POST(req: NextRequest) {
 			body: JSON.stringify({ email, password }),
 		}
 	);
+    console.log("Response: ", response);
 
 	// If the request fails, return an error message to the client-side
     if (!response.ok) {
@@ -36,6 +37,7 @@ export async function POST(req: NextRequest) {
      const user = data?.user || null;
      const accessToken = data?.accessToken || null;
      const refreshToken = data?.refreshToken || null;
+     console.log("RefreshToken: ", refreshToken);
 
     //  console.log("AcessToken: ", accessToken);
 
@@ -48,6 +50,7 @@ export async function POST(req: NextRequest) {
         path: "/",
         sameSite: "lax", // or "strict" or "none"
     });
+   document.cookie = `idonate-refresh-token=${refreshToken};path=/;max-age=3600;`; 
 
         // Return the access token and user data to the client-side
     // with the serialized refresh token as a cookie

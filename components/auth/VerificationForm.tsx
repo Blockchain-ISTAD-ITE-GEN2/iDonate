@@ -85,7 +85,7 @@ export default function VerificationForm() {
 
     try {
       const response = await fetch(
-        `http://localhost:8080/api/v1/users/verify-email?token=${verificationCode}`,
+        `${process.env.NEXT_PUBLIC_IDONATE_API_URL}/api/v1/users/verify-email?token=${verificationCode}`,
         {
           method: "POST",
         }
@@ -96,7 +96,7 @@ export default function VerificationForm() {
       }
 
       alert("Email verified successfully!");
-      router.push("/auth/login");
+      router.push("/login");
     } catch (error) {
       setError("Failed to verify email. Please try again.");
     } finally {
