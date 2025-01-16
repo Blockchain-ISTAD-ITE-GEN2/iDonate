@@ -2,6 +2,7 @@
 
 import { Pencil } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import Image from "next/image";
 
 export default function UserProfile() {
   return (
@@ -42,11 +43,15 @@ export default function UserProfile() {
       <div className="border rounded-lg p-8">
         {/* Profile Image and Name */}
         <div className="flex flex-col items-center mb-8">
-          <img
-            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-IA05KGRj1qUBPMI5yLUAkszcpPDBZU.png"
-            alt="Profile"
-            className="w-32 h-32 rounded-full object-cover mb-4"
-          />
+            
+            <Image
+              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-IA05KGRj1qUBPMI5yLUAkszcpPDBZU.png"
+              alt="Profile"
+              width={128}
+              height={128} 
+              className="w-32 h-32 rounded-full object-cover mb-4"
+            />
+
           <h2 className="text-2xl font-semibold mb-2">Jessica Alba</h2>
           <div className="flex items-center text-gray-600">
             <span>@jennywilson</span>

@@ -7,6 +7,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { useGetTestimonialsQuery } from "@/redux/features/testimony/testimonialSlice";
+import TestmonailCardPleaceHolder from "./TestmonailCardPleaceHolder";
 
 interface Testimonial {
   name: string;
@@ -18,6 +19,9 @@ interface Testimonial {
 export default function TestimonialCarousel() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(3);
+
+
+
 
   // Fetch testimonials data using RTK Query
   const {
@@ -68,8 +72,25 @@ export default function TestimonialCarousel() {
   };
 
   if (isLoading) {
-    return <div className="text-center py-8">Loading testimonials...</div>;
+    return(
+      <div className="max-w-7xl mx-auto">
+      <div className="text-center py-8 p-6 md:gap-24 flex">
+          <TestmonailCardPleaceHolder />
+          <TestmonailCardPleaceHolder />
+          <TestmonailCardPleaceHolder />
+      </div>
+    </div>
+    )
+
   }
+
+
+  // if (isLoading) {
+  //   return (
+  //     <div>Loading...</div>
+  //   );
+  // }
+  
 
   return (
     <div className="w-full container mx-auto px-4">
@@ -78,6 +99,8 @@ export default function TestimonialCarousel() {
           មតិអ្នកបរិច្ចាគរបស់យើង
         </h2>
       </section>
+
+
 
       <div className="max-w-7xl mx-auto">
         <div className="relative">
