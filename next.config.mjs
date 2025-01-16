@@ -25,7 +25,7 @@
 //           },
 //           {
 //             key: 'Access-Control-Allow-Origin',
-//             value: 'http://localhost:8080', 
+//             value: 'http://localhost:8080',
 //           },
 //           {
 //             key: 'Access-Control-Allow-Methods',
@@ -63,45 +63,46 @@ const nextConfig = {
     return [
       {
         // Add specific route for API requests
-        source: '/api/:path*',
+        source: "/api/:path*",
         headers: [
           {
-            key: 'Access-Control-Allow-Credentials',
-            value: 'true',
+            key: "Access-Control-Allow-Credentials",
+            value: "true",
           },
           {
-            key: 'Access-Control-Allow-Origin',
-            value: '*', // Be careful with this in production
+            key: "Access-Control-Allow-Origin",
+            value: "*", // Be careful with this in production
           },
           {
-            key: 'Access-Control-Allow-Methods',
-            value: 'GET,POST,PUT,DELETE,OPTIONS',
+            key: "Access-Control-Allow-Methods",
+            value: "GET,POST,PUT,DELETE,OPTIONS",
           },
           {
-            key: 'Access-Control-Allow-Headers',
-            value: 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, Authorization',
+            key: "Access-Control-Allow-Headers",
+            value:
+              "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, Authorization",
           },
         ],
       },
       {
         // General routes
-        source: '/:path*',
+        source: "/:path*",
         headers: [
           {
-            key: 'Access-Control-Allow-Credentials',
-            value: 'true',
+            key: "Access-Control-Allow-Credentials",
+            value: "true",
           },
           {
-            key: 'Access-Control-Allow-Origin',
-            value: 'http://34.142.164.66:9999',
+            key: "Access-Control-Allow-Origin",
+            value: "https://idonateapi.kangtido.life",
           },
           {
-            key: 'Access-Control-Allow-Methods',
-            value: 'GET,POST,PUT,DELETE,OPTIONS',
+            key: "Access-Control-Allow-Methods",
+            value: "GET,POST,PUT,DELETE,OPTIONS",
           },
           {
-            key: 'Access-Control-Allow-Headers',
-            value: 'Authorization,Content-Type',
+            key: "Access-Control-Allow-Headers",
+            value: "Authorization,Content-Type",
           },
         ],
       },
@@ -111,24 +112,34 @@ const nextConfig = {
   async rewrites() {
     return [
       {
-        source: '/api/v1/:path*',
-        destination: 'http://34.142.164.66:9999/api/v1/:path*',
+        source: "/api/v1/:path*",
+        destination: "https://idonateapi.kangtido.life/api/v1/:path*",
       },
     ];
   },
   async headers() {
     return [
       {
-        source: '/api/:path*',
+        source: "/api/:path*",
         headers: [
-          { key: 'Access-Control-Allow-Credentials', value: 'true' },
-          { key: 'Access-Control-Allow-Origin', value: 'http://localhost:8080' },
-          { key: 'Access-Control-Allow-Methods', value: 'GET,POST,PUT,DELETE,OPTIONS' },
-          { key: 'Access-Control-Allow-Headers', value: 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, Authorization' },
+          { key: "Access-Control-Allow-Credentials", value: "true" },
+          {
+            key: "Access-Control-Allow-Origin",
+            value: "https://idonateapi.kangtido.life",
+          },
+          {
+            key: "Access-Control-Allow-Methods",
+            value: "GET,POST,PUT,DELETE,OPTIONS",
+          },
+          {
+            key: "Access-Control-Allow-Headers",
+            value:
+              "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, Authorization",
+          },
         ],
       },
     ];
-  }
+  },
 };
 
 export default nextConfig;

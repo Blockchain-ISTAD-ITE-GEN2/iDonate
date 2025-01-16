@@ -12,8 +12,8 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { useAppSelector, useAppDispatch } from "@/redux/hooks";
-import { selectUser, selectVerifyToken } from '@/redux/features/auth/authSlice';
-import { useGetUserByUuidQuery } from '@/redux/services/user-profile';
+import { selectUser, selectVerifyToken } from "@/redux/features/auth/authSlice";
+import { useGetUserByUuidQuery } from "@/redux/services/user-profile";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
@@ -71,7 +71,7 @@ export default function VerificationForm() {
 
   const handleKeyDown = (
     index: number,
-    e: React.KeyboardEvent<HTMLInputElement>
+    e: React.KeyboardEvent<HTMLInputElement>,
   ) => {
     if (e.key === "Backspace" && !code[index] && index > 0) {
       inputs.current[index - 1]?.focus();
@@ -85,10 +85,10 @@ export default function VerificationForm() {
 
     try {
       const response = await fetch(
-        `http://localhost:8080/api/v1/users/verify-email?token=${verificationCode}`,
+        `${process.env.NEXT_PUBLIC_IDONATE_API_URL}/api/v1/users/verify-email?token=${verificationCode}`,
         {
           method: "POST",
-        }
+        },
       );
 
       if (!response.ok) {
@@ -96,7 +96,7 @@ export default function VerificationForm() {
       }
 
       alert("Email verified successfully!");
-      router.push("/auth/login");
+      router.push("/login");
     } catch (error) {
       setError("Failed to verify email. Please try again.");
     } finally {
@@ -111,7 +111,8 @@ export default function VerificationForm() {
           2-Step Verification
         </CardTitle>
         <CardDescription className="text-center">
-          We sent a verification code to your device. Enter or paste the code to continue.
+          We sent a verification code to your device. Enter or paste the code to
+          continue.
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">

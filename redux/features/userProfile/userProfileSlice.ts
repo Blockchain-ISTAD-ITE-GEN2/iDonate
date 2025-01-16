@@ -36,7 +36,6 @@
 //     return data;
 // })
 
-
 //  const userProfileSlice = createSlice({
 //     name: "userProfile",
 //     initialState,
@@ -63,4 +62,3 @@
 // // create selector
 // export const selectAvatar = (state: RootState) => state.userProfile.userProfile?.avatar;
 // export const selectBio = (state: RootState) => state.userProfile.userProfile?.bio;
-

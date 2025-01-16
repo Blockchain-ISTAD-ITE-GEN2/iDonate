@@ -1,24 +1,28 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { format } from "date-fns"
-import { CalendarIcon } from 'lucide-react'
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import { Calendar } from "@/components/ui/calendar"
+import * as React from "react";
+import { format } from "date-fns";
+import { CalendarIcon } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover"
+} from "@/components/ui/popover";
 
 interface DatePickerProps {
-  selectedDate: Date | undefined
-  onDateChange: (date: Date | undefined) => void
-  error?: string
+  selectedDate: Date | undefined;
+  onDateChange: (date: Date | undefined) => void;
+  error?: string;
 }
 
-export function DatePicker({ selectedDate, onDateChange, error }: DatePickerProps) {
+export function DatePicker({
+  selectedDate,
+  onDateChange,
+  error,
+}: DatePickerProps) {
   return (
     <div className="relative">
       <Popover>
@@ -27,7 +31,7 @@ export function DatePicker({ selectedDate, onDateChange, error }: DatePickerProp
             variant={"outline"}
             className={cn(
               "w-full justify-start text-left font-normal",
-              !selectedDate && "text-muted-foreground"
+              !selectedDate && "text-muted-foreground",
             )}
           >
             <CalendarIcon className="mr-2 h-4 w-4" />
@@ -45,17 +49,12 @@ export function DatePicker({ selectedDate, onDateChange, error }: DatePickerProp
             onSelect={onDateChange}
             initialFocus
             disabled={(date) =>
-              date > new Date() || date < new Date('1900-01-01')
+              date > new Date() || date < new Date("1900-01-01")
             }
           />
         </PopoverContent>
       </Popover>
-      {error && (
-        <p className="text-red-500 text-xs mt-1 absolute">
-          {error}
-        </p>
-      )}
+      {error && <p className="text-red-500 text-xs mt-1 absolute">{error}</p>}
     </div>
-  )
+  );
 }
-

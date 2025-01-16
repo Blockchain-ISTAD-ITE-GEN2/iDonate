@@ -1,20 +1,20 @@
-import { OrganizationResponse } from "./OrganizationType"
+import { OrganizationResponse } from "./OrganizationType";
 
 export type EventRequest = {
-    name: string,
-    description: string,
-    location: string,
-    startDate: Date,
-    endDate: Date
-}
+  name: string;
+  description: string;
+  location: string;
+  startDate: Date;
+  endDate: Date;
+};
 
 export type EventResponse = {
-    uuid: string,
-    name: string,
-    description: string,
-    isVisible: boolean,
-    organization: OrganizationResponse
-}
+  uuid: string;
+  name: string;
+  description: string;
+  isVisible: boolean;
+  organization: OrganizationResponse;
+};
 export type EventType = {
   image: string;
   title: string;

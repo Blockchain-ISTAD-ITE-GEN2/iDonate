@@ -9,12 +9,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { UseDispatch } from "react-redux";
 
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardContent,
-} from "@/components/ui/card";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -103,9 +98,9 @@ const SignUpForm = () => {
     setIsSubmitting(true);
     try {
       const formatDate = (date: Date | undefined) => {
-        if (!date) return '';
-        const day = String(date.getDate()).padStart(2, '0');
-        const month = String(date.getMonth() + 1).padStart(2, '0');
+        if (!date) return "";
+        const day = String(date.getDate()).padStart(2, "0");
+        const month = String(date.getMonth() + 1).padStart(2, "0");
         const year = date.getFullYear();
         return `${day}-${month}-${year}`;
       };
@@ -121,25 +116,28 @@ const SignUpForm = () => {
         dateOfBirth: formatDate(formData.dateOfBirth),
       };
 
-      const response = await fetch(`${process.env.NEXT_PUBLIC_IDONATE_API_URL}/api/v1/users/user-registration`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_IDONATE_API_URL}/api/v1/users/user-registration`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(requestBody),
         },
-        body: JSON.stringify(requestBody),
-      });
+      );
 
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.message || 'Registration failed');
+        throw new Error(data.message || "Registration failed");
       }
 
-      toast.success('ការចុះឈ្មោះបានជោគជ័យ!');
-      router.push('/verification');
+      toast.success("ការចុះឈ្មោះបានជោគជ័យ!");
+      router.push("/verification");
     } catch (error) {
-      console.error('Registration error:', error);
-      toast.error(error instanceof Error ? error.message : 'ការចុះឈ្មោះបរាជ័យ');
+      console.error("Registration error:", error);
+      toast.error(error instanceof Error ? error.message : "ការចុះឈ្មោះបរាជ័យ");
     } finally {
       setIsSubmitting(false);
     }
@@ -417,8 +415,8 @@ const SignUpForm = () => {
                 {step === 1
                   ? "បន្ទាប់"
                   : isSubmitting
-                  ? "កំពុងធ្វើការចុះឈ្មោះ..."
-                  : "បង្កើតគណនី"}
+                    ? "កំពុងធ្វើការចុះឈ្មោះ..."
+                    : "បង្កើតគណនី"}
               </Button>
 
               <div className="flex items-center my-4 mb-0">

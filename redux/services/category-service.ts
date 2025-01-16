@@ -8,31 +8,31 @@ export const categoryApi = idonateApi.injectEndpoints({
     }),
     createCategories: builder.mutation({
       query: (newCategory) => ({
-          url: '/categories',
-          method: 'POST',
-          body: newCategory,
+        url: "/categories",
+        method: "POST",
+        body: newCategory,
       }),
-      invalidatesTags: [{type: 'category', id: 'LIST'}],
+      invalidatesTags: [{ type: "category", id: "LIST" }],
     }),
     editCategories: builder.mutation({
-      query: ({uuid, updatedData}) => ({
-          url: `/categories/${uuid}`,
-          method: 'PUT',
-          body: updatedData,
+      query: ({ uuid, updatedData }) => ({
+        url: `/categories/${uuid}`,
+        method: "PUT",
+        body: updatedData,
       }),
-      invalidatesTags: [{type: 'category', id: 'LIST'}],
+      invalidatesTags: [{ type: "category", id: "LIST" }],
     }),
     deleteCategories: builder.mutation({
       query: (uuid) => ({
-          url: `/categories/${uuid}`,
-          method: 'DELETE',
+        url: `/categories/${uuid}`,
+        method: "DELETE",
       }),
-      invalidatesTags: [{type: 'category', id: 'LIST'}],
+      invalidatesTags: [{ type: "category", id: "LIST" }],
     }),
   }),
 });
 
-export const { 
+export const {
   useGetCategoriesQuery,
   useCreateCategoriesMutation,
   useEditCategoriesMutation,

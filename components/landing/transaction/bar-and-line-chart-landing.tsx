@@ -22,11 +22,13 @@ export function BarAndLineChartLanding() {
     }),
   );
 
-  const recentTransactions: TransactionType[] = transactions.slice(0, 9).map(transaction => ({
-    ...transaction,
-    name: "",
-    avatar: ""
-  }));
+  const recentTransactions: TransactionType[] = transactions
+    .slice(0, 9)
+    .map((transaction) => ({
+      ...transaction,
+      name: "",
+      avatar: "",
+    }));
   const averageDate: AverageType[] = averages.map((item) => ({
     ...item,
     revenue_growth: 0,

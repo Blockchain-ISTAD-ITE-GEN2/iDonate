@@ -60,7 +60,6 @@ export function EventInfoFormCreation({
   onImagePercentageUpdate,
   onCategoryPercentageUpdate,
 }: EventInfoFormProps) {
-
   const categories = useGetCategoriesQuery({});
 
   const typeCategories: CategoryType[] = categories?.currentData || [];

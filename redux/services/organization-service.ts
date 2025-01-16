@@ -8,27 +8,27 @@ export const organizatioApi = idonateApi.injectEndpoints({
     }),
     createOrganizations: builder.mutation({
       query: (newOrganization) => ({
-          url: '/organizations',
-          method: 'POST',
-          body: newOrganization,
+        url: "/organizations",
+        method: "POST",
+        body: newOrganization,
       }),
-      invalidatesTags: [{type: 'organization', id: 'LIST'}],
+      invalidatesTags: [{ type: "organization", id: "LIST" }],
     }),
     editOrganizations: builder.mutation({
-      query: ({uuid, updatedData}) => ({
-          url: `/organizations/${uuid}`,
-          method: 'PUT',
-          body: updatedData,
+      query: ({ uuid, updatedData }) => ({
+        url: `/organizations/${uuid}`,
+        method: "PUT",
+        body: updatedData,
       }),
-      invalidatesTags: [{type: 'organization', id: 'LIST'}],
+      invalidatesTags: [{ type: "organization", id: "LIST" }],
     }),
     deleteOrganizations: builder.mutation({
       query: (uuid) => ({
-          url: `/organizations/${uuid}`,
-          method: 'DELETE',
+        url: `/organizations/${uuid}`,
+        method: "DELETE",
       }),
-      invalidatesTags: [{type: 'organization', id: 'LIST'}],
-    })
+      invalidatesTags: [{ type: "organization", id: "LIST" }],
+    }),
   }),
 });
 

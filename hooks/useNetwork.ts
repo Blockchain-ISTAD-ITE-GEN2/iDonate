@@ -1,7 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
 const useNetwork = () => {
-  const [isOnline, setNetwork] = useState(typeof window !== 'undefined' ? window.navigator.onLine : true);
+  const [isOnline, setNetwork] = useState(
+    typeof window !== "undefined" ? window.navigator.onLine : true,
+  );
 
   useEffect(() => {
     const updateNetwork = () => {

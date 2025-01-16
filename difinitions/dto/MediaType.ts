@@ -1,3 +1,3 @@
 export type ImageRequest = {
-    image: string
-}
+  image: string;
+};
