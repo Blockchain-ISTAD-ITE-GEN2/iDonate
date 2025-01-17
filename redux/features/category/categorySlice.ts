@@ -1,5 +1,4 @@
 import { CategoryType } from "@/difinitions/types/components-type/CategoryType";
-import { RootState } from "@/store/store";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
 type categoryState = {
