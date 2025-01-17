@@ -60,7 +60,9 @@ export function OrganizationMediaForm() {
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <Card
           className={`flex flex-col border-0 shadow-none px-20 py-12 rounded-none items-start gap-6 ${
-            previewImage ? "bg-iDonate-light-gray dark:bg-iDonate-dark-mode" : ""
+            previewImage
+              ? "bg-iDonate-light-gray dark:bg-iDonate-dark-mode"
+              : ""
           }`}
         >
           {/* Card Header: Conditionally rendered when previewImage exists */}

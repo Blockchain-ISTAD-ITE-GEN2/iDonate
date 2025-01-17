@@ -96,9 +96,7 @@ export function DonorInfoForm({
         {/* View Mode */}
         {!isEditing && (
           <Card className="flex flex-col rounded-lg border-2 border-iDonate-navy-accent gap-2 lg:gap-6 p-4 md:p-6 lg:p-9">
-
             <CardHeader className="flex flex-row items-center justify-between p-0 m-0">
-
               <CardTitle className="text-lg lg:text-2xl font-medium text-iDonate-navy-secondary">
                 Basic Information
               </CardTitle>
@@ -113,7 +111,6 @@ export function DonorInfoForm({
             </CardHeader>
 
             <CardContent className="flex flex-wrap gap-4 sm:gap-6 lg:gap-9 p-0 m-0">
-
               <div className="flex flex-col md:space-y-1 ">
                 <CardDescription className="text-xs sm:text-sm lg:text-lg text-iDonate-gray">
                   Full Name

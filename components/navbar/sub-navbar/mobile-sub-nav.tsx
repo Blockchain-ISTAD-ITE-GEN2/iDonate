@@ -51,7 +51,6 @@ export function MobileSubmenu({
       </div>
 
       <div className="flex flex-col p-4 gap-4 bg-iDonate-light-gray shadow-light dark:bg-iDonate-bg-dark-mode dark:border-b">
-
         <h2 className="text-xl font-semibold text-iDonate-navy-primary dark:text-iDonate-white-space">
           {activeSubmenu}
         </h2>

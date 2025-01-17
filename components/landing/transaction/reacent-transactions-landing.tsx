@@ -6,7 +6,9 @@ type RecentSalesProps = {
   transactions: TransactionType[];
 };
 
-export function ReacentTransacctionsLanding({ transactions }: RecentSalesProps) {
+export function ReacentTransacctionsLanding({
+  transactions,
+}: RecentSalesProps) {
   return (
     <div className="flex flex-col h-full items-center">
       {transactions.map((transaction, index) => (

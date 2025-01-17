@@ -4,9 +4,12 @@ import { Play } from "lucide-react"; // Importing Lucide icon
 import { Button } from "@/components/ui/button";
 import { CategoryType } from "@/difinitions/types/components-type/CategoryType";
 import categories from "@/data/category.json";
+import { useGetCategoriesQuery } from "@/redux/services/category-service";
 
 export function AllCategoriesButton() {
-  const typedCategory: CategoryType[] = categories;
+  const category = useGetCategoriesQuery({});
+
+  const typeCategories: CategoryType[] = category?.currentData || [];
   return (
     <div
       lang="km"
@@ -17,14 +20,14 @@ export function AllCategoriesButton() {
       </h2>
 
       <div className="flex flex-col items-start gap-4">
-        {typedCategory.map((item, index) => (
+        {typeCategories.map((item, index) => (
           <Button
             key={index}
             variant="outline"
             className="w-full border-0 text-iDonate-navy-primary gap-2 justify-start items-center hover:bg-iDonate-navy-accent text-lg"
           >
             <Play className="w-10 h-10" />
-            {item.title}
+            {item.name}
           </Button>
         ))}
       </div>

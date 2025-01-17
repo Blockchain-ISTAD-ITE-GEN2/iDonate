@@ -50,7 +50,6 @@ export default function Contributor() {
           <BannerComponent />
 
           <BarAndLineChart />
-          
         </div>
       </div>
     </section>

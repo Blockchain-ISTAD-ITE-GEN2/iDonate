@@ -6,69 +6,28 @@ import { ChevronsLeft, ChevronsRight } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
+import { useGetTestimonialsQuery } from "@/redux/features/testimony/testimonialSlice";
 
 interface Testimonial {
-  id: number;
   name: string;
   role: string;
   image: string;
   testimonial: string;
 }
 
-const testimonials: Testimonial[] = [
-  {
-    id: 1,
-    name: "Elizabeth Joe",
-    role: "Founder of ADRF",
-    image: "/members/sokcheat.jpg",
-    testimonial:
-      "iDonateគឺជាក្តីស្រមៃដើម្បីជួយសហគមន៍ការប្រមូលផ្តុំនិងផ្តល់ឱ្យមនុស្សគ្រប់គ្នាដែលខ្វះខាត។ ខ្ញុំស្រលាញ់ការដែលរបស់ពួកគេខ្ញុំដឹងថាស់។ ខ្ញុំត្រូវបានចូលរួមក្នុងការនិងកល្យបជាក្តីភាពត្រឹមត្រូវជាមួយពិភពលោក។ ខ្ញុំនឹងនៅទីនេះរហូតនៅពេលដែលពួកគេត្រូវការ។",
-  },
-  {
-    id: 2,
-    name: "Esther Howard",
-    role: "Web Designer",
-    image: "/members/sokcheat.jpg",
-    testimonial:
-      "iDonateគឺជាក្តីស្រមៃដើម្បីជួយសហគមន៍ការប្រមូលផ្តុំនិងផ្តល់ឱ្យមនុស្សគ្រប់គ្នាដែលខ្វះខាត។ ខ្ញុំស្រលាញ់ការដែលរបស់ពួកគេខ្ញុំដឹងថាស់។ ខ្ញុំត្រូវបានចូលរួមក្នុងការនិងកល្យបជាក្តីភាពត្រឹមត្រូវជាមួយពិភពលោក។ ខ្ញុំនឹងនៅទីនេះរហូតនៅពេលដែលពួកគេត្រូវការ។",
-  },
-  {
-    id: 3,
-    name: "Albert Flores",
-    role: "President of Sales",
-    image: "/members/sokcheat.jpg",
-    testimonial:
-      "iDonateគឺជាក្តីស្រមៃដើម្បីជួយសហគមន៍ការប្រមូលផ្តុំនិងផ្តល់ឱ្យមនុស្សគ្រប់គ្នាដែលខ្វះខាត។ ខ្ញុំស្រលាញ់ការដែលរបស់ពួកគេខ្ញុំដឹងថាស់។ ខ្ញុំត្រូវបានចូលរួមក្នុងការនិងកល្យបជាក្តីភាពត្រឹមត្រូវជាមួយពិភពលោក។ ខ្ញុំនឹងនៅទីនេះរហូតនៅពេលដែលពួកគេត្រូវការ។",
-  },
-  {
-    id: 4,
-    name: "John Doe",
-    role: "Marketing Manager",
-    image: "/members/sokcheat.jpg",
-    testimonial:
-      "iDonateគឺជាក្តីស្រមៃដើម្បីជួយសហគមន៍ការប្រមូលផ្តុំនិងផ្តល់ឱ្យមនុស្សគ្រប់គ្នាដែលខ្វះខាត។ ខ្ញុំស្រលាញ់ការដែលរបស់ពួកគេខ្ញុំដឹងថាស់។ ខ្ញុំត្រូវបានចូលរួមក្នុងការនិងកល្យបជាក្តីភាពត្រឹមត្រូវជាមួយពិភពលោក។ ខ្ញុំនឹងនៅទីនេះរហូតនៅពេលដែលពួកគេត្រូវការ។",
-  },
-  {
-    id: 5,
-    name: "Sarah Smith",
-    role: "Nonprofit Coordinator",
-    image: "/members/sokcheat.jpg",
-    testimonial:
-      "iDonateគឺជាក្តីស្រមៃដើម្បីជួយសហគមន៍ការប្រមូលផ្តុំនិងផ្តល់ឱ្យមនុស្សគ្រប់គ្នាដែលខ្វះខាត។ ខ្ញុំស្រលាញ់ការដែលរបស់ពួកគេខ្ញុំដឹងថាស់។ ខ្ញុំត្រូវបានចូលរួមក្នុងការនិងកល្យបជាក្តីភាពត្រឹមត្រូវជាមួយពិភពលោក។ ខ្ញុំនឹងនៅទីនេះរហូតនៅពេលដែលពួកគេត្រូវការ។",
-  },
-  {
-    id: 6,
-    name: "Michael Johnson",
-    role: "Volunteer Coordinator",
-    image: "/members/sokcheat.jpg",
-    testimonial:
-      "iDonateគឺជាក្តីស្រមៃដើម្បីជួយសហគមន៍ការប្រមូលផ្តុំនិងផ្តល់ឱ្យមនុស្សគ្រប់គ្នាដែលខ្វះខាត។ ខ្ញុំស្រលាញ់ការដែលរបស់ពួកគេខ្ញុំដឹងថាស់។ ខ្ញុំត្រូវបានចូលរួមក្នុងការនិងកល្យបជាក្តីភាពត្រឹមត្រូវជាមួយពិភពលោក។ ខ្ញុំនឹងនៅទីនេះរហូតនៅពេលដែលពួកគេត្រូវការ។",
-  },
-];
-
 export default function TestimonialCarousel() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(3);
+
+  // Fetch testimonials data using RTK Query
+  const {
+    data: testimonials = [],
+    isLoading,
+    isError,
+    error,
+  } = useGetTestimonialsQuery();
+
+  console.log("Data of Testimonials: ", testimonials);
 
   useEffect(() => {
     const handleResize = () => {
@@ -108,8 +67,12 @@ export default function TestimonialCarousel() {
     );
   };
 
+  if (isLoading) {
+    return <div className="text-center py-8">Loading testimonials...</div>;
+  }
+
   return (
-    <div className="w-full container mx-auto px-4 ">
+    <div className="w-full container mx-auto px-4">
       <section className="w-full text-center">
         <h2 className="text-2xl md:text-3xl font-semibold text-iDonate-navy-primary dark:text-iDonate-navy-accent">
           មតិអ្នកបរិច្ចាគរបស់យើង
@@ -137,7 +100,7 @@ export default function TestimonialCarousel() {
                 {Array.from({
                   length: Math.ceil(testimonials.length / itemsPerPage),
                 }).map((_, slideIndex) => (
-                  <div key={slideIndex} className="flex w-full shrink-0 gap-4 ">
+                  <div key={slideIndex} className="flex w-full shrink-0 gap-4">
                     {testimonials
                       .slice(
                         slideIndex * itemsPerPage,
@@ -165,10 +128,10 @@ export default function TestimonialCarousel() {
                                   {testimonial.name}
                                 </h3>
                                 <p className="text-sm md:text-base text-muted-foreground mb-4 text-iDonate-navy-primary dark:text-iDonate-green-secondary">
-                                  {testimonial.role}
+                                  {testimonial.position}
                                 </p>
                                 <p className="khmer-font text-sm md:text-base leading-relaxed text-iDonate-navy-primary dark:text-iDonate-navy-accent">
-                                  {testimonial.testimonial}
+                                  {testimonial.comment}
                                 </p>
                               </div>
                             </CardContent>

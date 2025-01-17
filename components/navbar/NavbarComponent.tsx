@@ -1,8 +1,17 @@
 "use client";
-import React, { useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { NavMenulist } from "@/components/navbar/NavbarMenu";
-import { Heart, Menu } from "lucide-react";
+import { Menu } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
+import { Heart, LogOut, Search, User } from "lucide-react";
+import Link from "next/link";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { EventMenulist } from "./sub-navbar/EventMenu";
 import { AboutMenulist } from "./sub-navbar/AboutMenu";
 import { ContributorMenulist } from "./sub-navbar/ContributorMenu";
@@ -14,8 +23,12 @@ import Image from "next/image";
 import logo from "@/public/logo/logodesign no background.png";
 import { Button } from "../ui/button";
 import ThemeSwitch from "../theme/ThemeSwitches";
-import { ProfileDropdown } from "./profile/profile-dropdown";
+// import { ProfileDropdown } from "./profile/profile-dropdown";
 import { signOut, useSession } from "next-auth/react";
+import { useAppSelector } from "@/redux/hooks";
+import { selectToken } from "@/redux/features/auth/authSlice";
+import AvartarPlaceHolder from "@/public/images/user-idonate.png";
+import { useGetUserProfileQuery } from "@/redux/services/user-profile";
 
 export default function NavbarComponent() {
   const [menuList] = useState<NavMenuType[]>(NavMenulist);
@@ -26,11 +39,27 @@ export default function NavbarComponent() {
 
   const router = useRouter();
   const { data: session, status } = useSession();
+  const accessTokenValue = useAppSelector(selectToken);
+  // const {data:userProfile} = useGetUserProfileQuery({});
+  // console.log("acessToken value : ",accessTokenValue);
+  //the result:acessToken value :  (state)=>state.auth.token
+  const { data: userProfile, error, isLoading } = useGetUserProfileQuery({});
+  //  console.log("The value of Token: ",userProfile.email);
+
+  const handleSignOut = () => {
+    signOut();
+    router.push("/");
+  };
+
+  useEffect(() => {}, [accessTokenValue, session]);
+  // console.log("User Profile: ",userProfile);
 
   if (
-    pathname === "/auth/login" ||
-    pathname === "/auth/sign-up" ||
-    pathname === "/auth/verification"
+    pathname === "/login" ||
+    pathname === "/sign-up" ||
+    pathname === "/verification" ||
+    pathname === "/forgot-password" ||
+    pathname === "/reset-password"
   ) {
     return null;
   }
@@ -106,12 +135,126 @@ export default function NavbarComponent() {
           </div>
 
           <div className="flex items-center">
-            {status === "authenticated" ? (
-              <ProfileDropdown session={session} signOut={signOut} />
+            {session || accessTokenValue ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger>
+                  {session?.user?.image ? (
+                    <Image
+                      src={
+                        session.user.image ||
+                        AvartarPlaceHolder ||
+                        userProfile?.avatar
+                      }
+                      alt={`${session.user.name ?? "user"}'s avatar`}
+                      width={40}
+                      height={40}
+                      className="rounded-full border-2 border-iDonate-navy-primary"
+                    />
+                  ) : (
+                    <div className="w-10 h-10 rounded-full bg-iDonate-navy-primary flex items-center justify-center">
+                      <User className="text-white" size={20} />
+                    </div>
+                  )}
+                </DropdownMenuTrigger>
+
+                <DropdownMenuContent className="w-72 p-2">
+                  {/* User Info */}
+                  <div className="p-3">
+                    <div className="flex items-center space-x-3">
+                      {session?.user?.image ? (
+                        <Image
+                          src={
+                            session.user.image ||
+                            AvartarPlaceHolder ||
+                            userProfile?.avatar
+                          }
+                          alt={`${session.user.name ?? "User"}'s avatar`}
+                          width={40}
+                          height={40}
+                          className="rounded-full border-2 border-iDonate-navy-primary"
+                        />
+                      ) : (
+                        <div className="w-10 h-10 rounded-full bg-iDonate-navy-primary flex items-center justify-center">
+                          <User className="text-white" size={20} />
+                        </div>
+                      )}
+                      <div className="text-sm">
+                        <div className="font-medium text-gray-900">
+                          {session?.user?.name ||
+                            userProfile?.username ||
+                            "Guest User"}
+                        </div>
+                        <div className="text-gray-500">
+                          {session?.user?.email ||
+                            userProfile?.email ||
+                            "No Email"}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <DropdownMenuSeparator />
+
+                  {/* Menu Items */}
+                  <DropdownMenuItem asChild>
+                    <Link
+                      href="/profile"
+                      className="flex items-center space-x-2 cursor-pointer"
+                    >
+                      <User className="text-iDonate-navy-primary" size={20} />
+                      <span>Profile Settings</span>
+                    </Link>
+                  </DropdownMenuItem>
+
+                  <DropdownMenuItem asChild>
+                    <Link
+                      href="/donations"
+                      className="flex items-center space-x-2 cursor-pointer"
+                    >
+                      <Heart className="text-iDonate-navy-primary" size={20} />
+                      <span>My Donations</span>
+                    </Link>
+                  </DropdownMenuItem>
+
+                  <DropdownMenuItem asChild>
+                    <Link
+                      href="/search"
+                      className="flex items-center space-x-2 cursor-pointer"
+                    >
+                      <Search className="text-iDonate-navy-primary" size={20} />
+                      <span>Search</span>
+                    </Link>
+                  </DropdownMenuItem>
+
+                  <DropdownMenuSeparator />
+
+                  {/* Donate Button */}
+                  <div className="p-2">
+                    <Button className="w-full group bg-iDonate-white-space border-2 border-iDonate-navy-primary px-2 text-iDonate-navy-primary hover:bg-iDonate-navy-primary hover:text-white hover:border-iDonate-navy-primary rounded-[12px]">
+                      <Heart
+                        style={{ width: "25px", height: "25px" }}
+                        className="bg-iDonate-navy-primary rounded-full p-1 fill-white group-hover:fill-iDonate-navy-primary group-hover:text-iDonate-navy-primary group-hover:bg-iDonate-green-secondary"
+                      />
+                      <span className="text-lg">Donate Now</span>
+                    </Button>
+                  </div>
+
+                  <DropdownMenuSeparator />
+
+                  {/* Sign Out */}
+                  <DropdownMenuItem
+                    onClick={handleSignOut} // Use handleSignOut instead of signOut directly
+                    className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                  >
+                    <LogOut className="mr-2 h-4 w-4" />
+                    <span>Sign Out</span>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             ) : (
               <Button
                 onClick={() => {
-                  router.push("/auth/login");
+                  router.push("/login");
                 }}
                 className="bg-transparent text-iDonate-navy-primary hover:bg-iDonate-light-gray font-medium dark:text-iDonate-navy-accent dark:hover:bg-iDonate-dark-mode"
               >

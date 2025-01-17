@@ -169,7 +169,10 @@ export default function LatestDonationCard() {
             >
               បច្ចុប្បន្នមិនមានព្រឹត្តិការណ៍បរិច្ចាគទេ
             </h3>
-            <p lang="km" className="text-iDonate-gray khmer-font dark:text-iDonate-navy-accent">
+            <p
+              lang="km"
+              className="text-iDonate-gray khmer-font dark:text-iDonate-navy-accent"
+            >
               សូមត្រឡប់មកម្តងទៀតនៅពេលក្រោយ ដើម្បីពិនិត្យមើលឱកាសបរិច្ចាគថ្មីៗ។
               អរគុណសម្រាប់ការគាំទ្ររបស់អ្នក!
             </p>

@@ -17,19 +17,19 @@ export function Overview({ data }: OverviewProps) {
   return (
     <ResponsiveContainer width="100%" height={480}>
       <BarChart data={data}>
-        <XAxis dataKey="name"
-               fontSize={12}
-               tickLine={false}
-               axisLine={false}
-               style={{ fill: '#DCE3F0' }}
-
+        <XAxis
+          dataKey="name"
+          fontSize={12}
+          tickLine={false}
+          axisLine={false}
+          style={{ fill: "#DCE3F0" }}
         />
         <YAxis
           fontSize={12}
           tickLine={false}
           axisLine={false}
           tickFormatter={(value) => `$${value}`}
-          style={{ fill: '#DCE3F0' }}
+          style={{ fill: "#DCE3F0" }}
         />
 
         <CartesianGrid

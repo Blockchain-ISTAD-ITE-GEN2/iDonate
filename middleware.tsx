@@ -1,24 +1,31 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { getToken } from "next-auth/jwt";
 
-export async function middleware(request: NextRequest) {
-  const token = await getToken({
-    req: request,
-    secret: process.env.NEXTAUTH_SECRET,
-  });
+export function middleware(request: NextRequest) {
+  // console.log("========| Middleware Running |========");
+  // console.log("=> Request URL: ", request.url);
+  // console.log("=> Request Method: ", request.method);
+  // console.log("=> Request Headers: ", request.headers)
 
-  if (!token && !request.nextUrl.pathname.startsWith("/")) {
-    return NextResponse.redirect(new URL("/auth/login", request.url));
+  const cookies = request.cookies;
+  // let session = cookies.get("authjs.session-token")
+  const refreshToken = cookies.get("idonate-refresh-token"); // later on we should use the ENV value for this
+
+  // console.log("Cookies: ", cookies)
+  // console.log("Refresh Token: ",refreshToken)
+
+  if (!refreshToken) {
+    // console.log("There is no session or refresh token, it will redirect back to the login ")
+    return NextResponse.redirect(new URL("/login", request.url).toString());
   }
-
-  if (token && request.nextUrl.pathname.startsWith("/")) {
-    return NextResponse.redirect(new URL("/dashboard", request.url));
-  }
-
-  return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
+  matcher: [
+    "/donor-dashboard/:path*",
+    "/organization-dashboard/dashboard/:path*",
+  ],
+  compiler: {
+    removeConsole: true,
+  },
 };

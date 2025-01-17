@@ -25,10 +25,15 @@ export default function SubNavbarComponent({
         const isActive = pathname === item.path;
 
         return (
-          <div key={index} className="flex bg-transparent flex-row items-center space-x-1 ">
+          <div
+            key={index}
+            className="flex bg-transparent flex-row items-center space-x-1 "
+          >
             {item?.children ? (
               <div className=" flex flex-row items-center ">
-                <Button className={`${navActiveClass(isActive)} text-lg dark:hover:bg-iDonate-dark-mode`}>
+                <Button
+                  className={`${navActiveClass(isActive)} text-lg dark:hover:bg-iDonate-dark-mode`}
+                >
                   {/* <item.icon style={{ width: '1.5rem', height: '1.5rem' }} fill="iDonate" /> */}
                   {item.icon && (
                     <item.icon style={{ width: "1.5rem", height: "1.5rem" }} />
@@ -40,7 +45,9 @@ export default function SubNavbarComponent({
             ) : (
               <Link href={item.path} passHref>
                 <div className="flex flex-row items-center space-x-1 bg-transparent ">
-                  <Button className={`${navActiveClass(isActive)}  text-lg dark:hover:bg-iDonate-dark-mode`}>
+                  <Button
+                    className={`${navActiveClass(isActive)}  text-lg dark:hover:bg-iDonate-dark-mode`}
+                  >
                     {/* <item.icon style={{ width: '1.5rem', height: '1.5rem' }} /> */}
                     {item.icon && (
                       <item.icon

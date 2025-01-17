@@ -1,4 +1,55 @@
 import { SearchPage } from "@/components/search/SearchOnPageComponent";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Search - iDonate",
+  description:
+    "Search for donation requests, organizations, and events on iDonate.",
+  keywords: [
+    "iDonate",
+    "Search",
+    "Donation Requests",
+    "Organizations",
+    "Events",
+  ],
+  openGraph: {
+    title: "Search - iDonate",
+    description:
+      "Find donation requests, organizations, and events on iDonate.",
+    url: "https://yourwebsite.com/search",
+    images: [
+      {
+        url: "https://yourwebsite.com/static/search-banner.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Search - iDonate",
+      },
+    ],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Search - iDonate",
+    description:
+      "Discover donation opportunities, organizations, and events on iDonate.",
+    images: ["https://yourwebsite.com/static/search-banner.jpg"],
+  },
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  alternates: {
+    canonical: "https://yourwebsite.com/search",
+    languages: {
+      en: "https://yourwebsite.com/search",
+      km: "https://yourwebsite.com/kh/search",
+    },
+  },
+};
 
 export default function Events() {
   return (

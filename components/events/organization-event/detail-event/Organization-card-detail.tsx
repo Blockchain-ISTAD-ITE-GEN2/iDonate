@@ -7,7 +7,7 @@ import events from "@/data/events-data.json";
 import { Button } from "@/components/ui/button";
 
 export function OrganizationDetail() {
-  const typedEvents: EventType[] = events.slice(0,8);
+  const typedEvents: EventType[] = events.slice(0, 8);
 
   const [filteredEvents, setFilteredEvents] =
     useState<EventType[]>(typedEvents);
@@ -73,8 +73,6 @@ export function OrganizationDetail() {
           </Button>
         </div>
       </div>
-
-     
     </section>
   );
 }

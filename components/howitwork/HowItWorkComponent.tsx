@@ -1,14 +1,25 @@
 "use client";
-
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import StudentHeroSection from "@/public/howitwork/students.png";
-import TransactionCommunication from "@/public/howitwork/image 24.png";
 import ProcessIllustration from "@/public/howitwork/Rectangle10206.png";
-import ProcessOrganisation from "@/public/howitwork/image.png";
+import HowItWork1 from "@/components/jsonComponent/HowItWork1.json";
+import HowItWork2 from "@/components/jsonComponent/HowItWork2.json";
+// import Lottie from "lottie-react";
+import { useEffect } from "react";
+import dynamic from "next/dynamic";
+
+// Dynamically import Lottie with SSR disabled
+const Lottie = dynamic(() => import("lottie-react"), { ssr: false });
 
 export default function HowItWorks() {
+  useEffect(() => {
+    // Any browser-specific logic here
+    if (typeof document !== "undefined") {
+      console.log("Document is available on the client!");
+    }
+  }, []);
   return (
     <div className="w-full">
       {/* Hero Section */}
@@ -113,13 +124,9 @@ export default function HowItWorks() {
               transition={{ duration: 0.5 }}
               className="order-first md:order-last"
             >
-              <Image
-                src={TransactionCommunication}
-                alt="Process illustration"
-                width={500}
-                height={400}
-                className="w-full"
-              />
+              <div className="w-auto h-auto sm:w-[350px] sm:h-[350px]">
+                <Lottie animationData={HowItWork1} />
+              </div>
             </motion.div>
           </div>
         </div>
@@ -164,8 +171,8 @@ export default function HowItWorks() {
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-xl md:text-2xl font-bold mb-8 md:mb-12 font-siemreap text-center text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
-
+            className="text-xl md:text-2xl font-bold mb-8 md:mb-12 font-siemreap text-center text-iDonate-navy-secondary dark:text-iDonate-navy-accent"
+          >
             ដំណើរការរបស់សប្បុរសជន
           </motion.h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
@@ -174,13 +181,9 @@ export default function HowItWorks() {
               animate={{ opacity: 1, x: 0 }}
               className="order-last md:order-first"
             >
-              <Image
-                src={ProcessOrganisation}
-                alt="Process steps"
-                width={500}
-                height={400}
-                className="w-full"
-              />
+              <div className="w-full h-auto sm:w-[350px] sm:h-[350px] items-end justify-end">
+                <Lottie animationData={HowItWork2} />
+              </div>
             </motion.div>
             <div className="space-y-6 md:space-y-8">
               {[
