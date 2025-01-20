@@ -4,6 +4,7 @@ import styled from "styled-components";
 
 const Loader = () => {
   return (
+    <div className="h-screen m-auto">
     <StyledWrapper>
       <div className="boxes">
         <div className="box">
@@ -32,6 +33,7 @@ const Loader = () => {
         </div>
       </div>
     </StyledWrapper>
+    </div>
   );
 };
 
