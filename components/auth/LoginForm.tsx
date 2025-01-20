@@ -17,10 +17,10 @@ import BackgroundImage from "@/public/images/donation-login.jpg";
 import GoogleIcon from "@/public/images/google.png";
 import FacebookIcon from "@/public/images/facebook.png";
 import SampleLogo from "@/public/images/iDonateLogoSample.png";
-import AnimationText from "@/components/auth/AnimationText";
 import { useDispatch } from "react-redux";
 import { setToken } from "@/redux/features/auth/authSlice";
 import { useRouter } from "next/navigation";
+import AnimatedText from "@/components/auth/AnimationText";
 
 // Zod schema for form validation
 const loginSchema = z.object({
@@ -133,7 +133,7 @@ export default function LoginForm() {
               priority
             />
           </motion.div>
-          <AnimationText />
+          <AnimatedText />
 
           <form
             onSubmit={handleSubmit(onSubmit)}

@@ -4,8 +4,7 @@ import styled from "styled-components";
 
 const Loader = () => {
   return (
-    <div className="h-screen m-auto">
-    <StyledWrapper>
+    <StyledWrapper className="flex items-center justify-center h-full w-full">
       <div className="boxes">
         <div className="box">
           <div />
