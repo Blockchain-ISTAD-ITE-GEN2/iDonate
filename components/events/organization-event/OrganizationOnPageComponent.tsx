@@ -1,18 +1,11 @@
 "use client";
 import { OrganizationCardComponent } from "@/components/events/organization-event/OrganizationCardComponent";
-import { SearchInput } from "@/components/ui/SearchInput";
-import OrganizationCarouseHerosection from "@/components/herosection/OrganizationCarouseHerosection";
-import { DropDownButtonComponent } from "@/components/dropdown-button/DropDownButtonComponent";
-import { useRouter } from "next/navigation";
 import { OrganizationParam } from "@/difinitions/types/media/organization";
 import { Button } from "@/components/ui/button";
 import OrganizationDetailHeroSection from "@/components/herosection/OrganizationDetailHeroSection";
 import { useEffect, useState } from "react";
 import { Toolbar } from "@/components/filter/toolbar";
 
-// const OrganizationCarouseHerosection = dynamic(() => import("@/components/herosection/OrganizationCarouseHerosection"), { ssr: false });
-
-// json data for testing
 const organizationData = [
   {
     image:

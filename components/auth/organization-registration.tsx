@@ -25,13 +25,14 @@ import {
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { useGetUserProfileQuery } from "@/redux/services/user-profile";
+import { useRouter } from "next/navigation";
 
 type RegistrationFormValues = z.infer<typeof organizationRegistrationSchema>;
 
 export default function OrganizationRegistration() {
   const { data: userProfile } = useGetUserProfileQuery({});
-
   const { toast } = useToast();
+  const router = useRouter();
 
   //  console.log("The value of Token: ",userProfile);
 
@@ -96,11 +97,15 @@ export default function OrganizationRegistration() {
         uuid: userProfile?.uuid,
       }).unwrap();
 
+      router.push(`/organization-dashboard/dashboard`)
+
       toast({
         title: "Success",
         description: "Organization created successfully!",
         variant: "default",
       });
+
+
     } catch (error: any) {
       handleErrorWithToast(
         error,
