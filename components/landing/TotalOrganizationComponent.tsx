@@ -1,15 +1,17 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { Building2, Gift, Users, CalendarDays } from "lucide-react";
+import { Client } from "@stomp/stompjs";
+import SockJS from "sockjs-client";
 
-const dataofTotalOrganization = [
-  { amount: 27, desc: "ចំនួនសរុប", title: "អង្គការភាព", icon: Building2 },
-  { amount: 18, desc: "ចំនួនសរុប", title: "កម្មវិធីបរិច្ចាគ", icon: Gift },
-  { amount: 99, desc: "ចំនួនសរុប", title: "អ្នកស្ម័គ្រចិត្ត", icon: Users },
-  { amount: 1, desc: "ឆ្នាំ", title: "នៃការបង្កើត", icon: CalendarDays },
+const initialData = [
+  { amount: 0, desc: "ចំនួនសរុប", title: "អង្គការភាព", icon: Building2, topic: "/topic/totalOrganizations" },
+  { amount: 0, desc: "ចំនួនសរុប", title: "កម្មវិធីបរិច្ចាគ", icon: Gift, topic: "/topic/totalEvents" },
+  { amount: 0, desc: "ចំនួនសរុប", title: "អ្នកស្ម័គ្រចិត្ត", icon: Users, topic: "/topic/totalDonors" },
+  { amount: 1, desc: "ឆ្នាំ", title: "នៃការបង្កើត", icon: CalendarDays, topic: null }, // Static value
 ];
 
 const CounterAnimation = ({ target }: { target: number }) => {
@@ -19,7 +21,7 @@ const CounterAnimation = ({ target }: { target: number }) => {
     threshold: 0.1,
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (inView) {
       let start = 0;
       const end = target;
@@ -44,6 +46,45 @@ const CounterAnimation = ({ target }: { target: number }) => {
 };
 
 export default function TotalOrganizationComponent() {
+  const [data, setData] = useState(initialData);
+
+  useEffect(() => {
+    const socket = new SockJS("https://idonateapi.kangtido.life/websocket"); // Adjust the URL if needed
+    const stompClient = new Client({
+      webSocketFactory: () => socket,
+      reconnectDelay: 5000,
+      debug: (str) => console.log(str),
+    });
+
+    stompClient.onConnect = () => {
+      console.log("WebSocket connected!");
+
+      // Subscribe to WebSocket topics
+      initialData.forEach((item, index) => {
+        if (item.topic) {
+          stompClient.subscribe(item.topic, (message) => {
+            const updatedAmount = parseInt(message.body, 10);
+            setData((prevData) =>
+              prevData.map((d, i) =>
+                i === index ? { ...d, amount: updatedAmount } : d
+              )
+            );
+          });
+        }
+      });
+    };
+
+    stompClient.onStompError = (frame) => {
+      console.error("STOMP error", frame);
+    };
+
+    stompClient.activate();
+
+    return () => {
+      stompClient.deactivate();
+    };
+  }, []);
+
   return (
     <motion.div
       lang="km"
@@ -54,12 +95,10 @@ export default function TotalOrganizationComponent() {
       </h2>
 
       <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 lg:gap-10 items-center">
-        {dataofTotalOrganization.map((item, index) => (
+        {data.map((item, index) => (
           <motion.div
             key={index}
-            // whileHover={{ scale: 1.05, rotate: 2 }}
-            // whileTap={{ scale: 0.95 }}
-            className="w-full flex justify-center items-center text-center "
+            className="w-full flex justify-center items-center text-center"
           >
             <motion.div
               className="flex flex-col items-center bg-white rounded-lg shadow-light p-4 sm:p-6 transition-all duration-300 w-full opacity-90 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
