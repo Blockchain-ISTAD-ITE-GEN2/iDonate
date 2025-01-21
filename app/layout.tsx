@@ -1,7 +1,7 @@
 "use client";
 import localFont from "next/font/local";
 import "./globals.css";
-import { ReactNode, Suspense } from "react";
+import { ReactNode } from "react";
 import SessionWrapper from "@/components/session/SessionWrapper";
 import CheckConnection from "@/components/checkConnection/CheckConnection";
 import StoreProvider from "./StoreProvider";
