@@ -4,8 +4,22 @@ import { Toolbar } from "@/components/filter/toolbar";
 import { EventType } from "@/difinitions/dto/EventType";
 import { CommonEventCard } from "@/components/events/organization-event/CommonEventCard";
 import events from "@/data/events-data.json";
+import { useGetEventsQuery } from "@/redux/services/event-service";
 
 export function SearchPage() {
+
+  // Get All event for search page Component
+    const {
+      data: events = [],
+      isLoading,
+      isError,
+      error,
+    } = useGetEventsQuery(undefined);
+
+    console.log("this is event data : ",events);
+
+   
+
   const typedEvents: EventType[] = events;
 
   const [filteredEvents, setFilteredEvents] =
@@ -44,9 +58,12 @@ export function SearchPage() {
     },
   ];
 
+  // useEffect(() => {
+  //   setFilteredEvents(typedEvents); // Reset filtered events whenever `events` prop changes
+  // }, [typedEvents]);
   useEffect(() => {
     setFilteredEvents(typedEvents); // Reset filtered events whenever `events` prop changes
-  }, [typedEvents]);
+  }, []);
 
   return (
     <section className="flex flex-col gap-6 container mx-auto">
