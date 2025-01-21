@@ -64,7 +64,15 @@ export default function TestimonialCarousel() {
   };
 
   if (isLoading) {
-    return <div className="text-center py-8">Loading testimonials...</div>;
+    return(
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center py-8 p-6 md:gap-24 flex">
+            <TestmonailCardPleaceHolder />
+            <TestmonailCardPleaceHolder />
+            <TestmonailCardPleaceHolder />
+          </div>
+        </div>
+    )
   }
 
   return (
