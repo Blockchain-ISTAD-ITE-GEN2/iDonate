@@ -10,10 +10,9 @@ import { useGetOrganizationsQuery } from "@/redux/services/organization-service"
 import { OrganizationPlaceholderComponent } from "./OrganizationPlaceholerComponent";
 
 export default function OrganizationOnPageComponent() {
-  // handle user click show more 
-  // const [page,setPage] = useState(1);
-  // const load = 3 ;
 
+ // add state 
+  const [visibleCount, setVisibleCount] = useState(6);
 
   const {
     data: apiResponse,
@@ -27,13 +26,6 @@ export default function OrganizationOnPageComponent() {
 
   const organizationData: OrganizationParam[] = apiResponse?.content || [];
 
-  // const [displayedOrganizations, setDisplayedOrganizations] = useState<OrganizationParam[]>([]);
-
-  // useEffect(() => {
-  //   if (organizationData.length > 0) {
-  //     setDisplayedOrganizations((prev) => [...prev, ...organizationData]);
-  //   }
-  // }, [organizationData]);
 
   const [filteredOrganizations, setFilteredOrganizations] = useState<OrganizationParam[]>(organizationData);
 
@@ -47,20 +39,30 @@ export default function OrganizationOnPageComponent() {
       })),
     },
   ];
-
-  const handleFilterChange = useCallback((filteredData: OrganizationParam[]) => {
-    setFilteredOrganizations(filteredData);
-  }, []);
+ 
 
 
+  // add all  to the filter state 
   useEffect(() => {
     setFilteredOrganizations(organizationData); 
   }, [organizationData]);
 
-  // 
-  // const hanldeLoadMore = () => {
-  //   setPage((prePage) => prePage +1 );
-  // }
+  const handleFilterChange = useCallback((filteredData: OrganizationParam[]) => {
+    setFilteredOrganizations(filteredData.slice(0, visibleCount)); 
+  }, [visibleCount]);
+
+
+ // show by count add 
+  useEffect(() => {
+    setFilteredOrganizations(organizationData.slice(0, visibleCount)); 
+  }, [organizationData, visibleCount]);
+
+
+  // handle show Organization 
+  const handleShowMore = () => {
+    setVisibleCount((prev) => prev + 3);
+  };
+
 
   if (isLoadingOrg) {
     return (
@@ -112,7 +114,7 @@ export default function OrganizationOnPageComponent() {
         <div className="flex justify-end">
           <Button
            className="text-medium-eng text-iDonate-navy-primary bg-iDonate-white-space border-2 border-iDonate-navy-accent hover:bg-iDonate-navy-accent"
-          //  onClick={hanldeLoadMore}
+           onClick={handleShowMore}
            >
             Show more
           </Button>
