@@ -35,14 +35,14 @@ export default function RootLayout({ children }: RootLayoutProps) {
     >
       <body className="flex flex-col h-full bg-background text-foreground">
         <StoreProvider>
-          <CheckConnection>
+          {/* <CheckConnection> */}
             <SessionWrapper>
               <ThemeProviders>
                 {children}
                 <Toaster />
               </ThemeProviders>
             </SessionWrapper>
-          </CheckConnection>
+          {/* </CheckConnection> */}
         </StoreProvider>
       </body>
     </html>
