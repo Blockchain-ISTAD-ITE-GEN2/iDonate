@@ -2,13 +2,17 @@ import { idonateApi } from "@/redux/api";
 
 export const organizatioApi = idonateApi.injectEndpoints({
   endpoints: (builder) => ({
+    // getOrganizations: builder.query({
+    //   query: () => `/api/v1/organizations`,
+    //   providesTags: [{ type: "organization", id: "LIST" }],
+    // }),
     getOrganizations: builder.query({
-      query: () => `/organizations`,
+      query: () => `/api/v1/organizations`,
       providesTags: [{ type: "organization", id: "LIST" }],
     }),
     createOrganizations: builder.mutation({
       query: (newOrganization) => ({
-        url: "/organizations",
+        url: "/api/v1/organizations",
         method: "POST",
         body: newOrganization,
       }),
@@ -16,7 +20,7 @@ export const organizatioApi = idonateApi.injectEndpoints({
     }),
     editOrganizations: builder.mutation({
       query: ({ uuid, updatedData }) => ({
-        url: `/organizations/${uuid}`,
+        url: `/api/v1/organizations/${uuid}`,
         method: "PUT",
         body: updatedData,
       }),
@@ -24,7 +28,7 @@ export const organizatioApi = idonateApi.injectEndpoints({
     }),
     deleteOrganizations: builder.mutation({
       query: (uuid) => ({
-        url: `/organizations/${uuid}`,
+        url: `/api/v1/organizations/${uuid}`,
         method: "DELETE",
       }),
       invalidatesTags: [{ type: "organization", id: "LIST" }],

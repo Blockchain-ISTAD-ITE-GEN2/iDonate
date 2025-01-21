@@ -3,7 +3,7 @@ import { idonateApi } from "@/redux/api";
 export const eventApi = idonateApi.injectEndpoints({
   endpoints: (builder) => ({
     getEvents: builder.query({
-      query: () => `/events`,
+      query: () => `/api/v1/events`,
       providesTags: [{ type: "event", id: "LIST" }],
     }),
     createEvents: builder.mutation({

@@ -17,13 +17,44 @@ import BackgroundImage from "@/public/images/donation-login.jpg";
 import GoogleIcon from "@/public/images/google.png";
 import FacebookIcon from "@/public/images/facebook.png";
 import SampleLogo from "@/public/images/iDonateLogoSample.png";
+import AnimationText from "@/components/auth/AnimationText";
 import { useDispatch } from "react-redux";
 import { setToken } from "@/redux/features/auth/authSlice";
 import { useRouter } from "next/navigation";
-import AnimatedText from "@/components/auth/AnimationText";
-import { LoginSchema } from "../schema/schema";
 
-type LoginFormValues = z.infer<typeof LoginSchema>;
+// Zod schema for form validation
+// const loginSchema = z.object({
+//   email: z
+//     .string()
+//     .email("Invalid email address")
+//     .nonempty("Email is required"),
+//   password: z
+//     .string()
+//     .min(6, "Password must be at least 6 characters")
+//     .max(50, "Password cannot exceed 50 characters")
+//     .regex(
+//       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/,
+//       "Password must include at least one uppercase letter, one lowercase letter, one number, and one special character",
+//     )
+//     .nonempty("Password is required"),
+// });
+
+//  skipping the validate password in login form 
+const loginSchema = z.object({
+  email: z
+    .string()
+    .email("Invalid email address")
+    .nonempty("Email is required"),
+  password: z
+    .string()
+    .nonempty("Password is required"),
+});
+
+
+
+
+
+type LoginFormValues = z.infer<typeof loginSchema>;
 
 export default function LoginForm() {
   const dispatch = useDispatch();
@@ -36,7 +67,7 @@ export default function LoginForm() {
     handleSubmit,
     formState: { errors },
   } = useForm<LoginFormValues>({
-    resolver: zodResolver(LoginSchema),
+    resolver: zodResolver(loginSchema),
     defaultValues: { email: "", password: "" },
   });
 
@@ -117,7 +148,7 @@ export default function LoginForm() {
               priority
             />
           </motion.div>
-          <AnimatedText />
+          <AnimationText />
 
           <form
             onSubmit={handleSubmit(onSubmit)}
