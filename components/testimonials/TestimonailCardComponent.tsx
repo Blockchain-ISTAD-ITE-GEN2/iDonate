@@ -8,6 +8,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { useGetTestimonialsQuery } from "@/redux/services/testimony";
 import { TestimonialType } from "@/difinitions/types/components-type/testimonial";
+import TestmonailCardPleaceHolder from "@/components/testimonials/TestmonailCardPleaceHolder";
 
 export default function TestimonialCarousel() {
   const [currentIndex, setCurrentIndex] = useState(0);
