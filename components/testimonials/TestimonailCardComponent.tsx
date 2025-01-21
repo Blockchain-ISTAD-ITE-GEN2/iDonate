@@ -69,13 +69,6 @@ export default function TestimonialCarousel() {
 
   if (isLoading) {
     return(
-      <div className="w-full container mx-auto px-4">
-      <section className="w-full text-center">
-        <h2 className="text-2xl md:text-3xl font-semibold text-iDonate-navy-primary dark:text-iDonate-navy-accent">
-          មតិអ្នកបរិច្ចាគរបស់យើង
-        </h2>
-      </section>
-
         <div className="max-w-7xl mx-auto">
           <div className="text-center py-8 p-6 md:gap-24 flex">
             <TestmonailCardPleaceHolder />
@@ -83,12 +76,8 @@ export default function TestimonialCarousel() {
             <TestmonailCardPleaceHolder />
           </div>
         </div>
-
-      </div>
-
     )
   }
-   // Handle Skalaton end
 
   return (
     <div className="w-full container mx-auto px-4">
