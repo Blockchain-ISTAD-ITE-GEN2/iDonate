@@ -17,11 +17,12 @@ export default function FooterComponent() {
   const pathname = usePathname();
 
   if (
-    pathname === "/auth/login" ||
-    pathname === "/auth/sign-up" ||
-    pathname === "/auth/verification" ||
-    pathname === "/auth/forgot-password" ||
-    pathname === "/auth/reset-password"
+    pathname === "/login" ||
+    pathname === "/sign-up" ||
+    pathname === "/verification" ||
+    pathname === "/forgot-password" ||
+    pathname === "/reset-password" ||
+    pathname === "/profile"
   ) {
     return null;
   }

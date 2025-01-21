@@ -73,18 +73,32 @@ export type ChangePasswordType = {
 };
 // Edit Profile Type
 export type EditprofileType = {
-  username: string;
-  firstName: string;
-  lastName: string;
-  position: string;
-  avatar: string;
-};
+  username: string,
+  firstName: string,
+  lastName: string,
+  gender: string,
+  avatar: string,
+  phoneNumber: string,
+  dateOfBirth: string
+}
 export type userProfileinfoType = {
-  username: string;
-  firstName: string;
-  lastName: string;
-  position: string;
-};
+  gender: string;
+  dateOfBirth: string;
+  phoneNumber: string;
+  username: string,
+  firstName: string,
+  lastName: string,
+  avatar: string,
+  email: string,
+  position: string,
+  role: [string],
+  isActive: boolean,
+  isFavourite: boolean,
+  createdAt: string,
+  updatedAt: string,
+  address: string
+
+}
 
 // Review type
 export type ReviewsType = {
@@ -110,9 +124,9 @@ export type UploadFileType = {
   fileUpload: string;
 };
 
-export type UpdateProfileImageType = {
-  profile: string;
-};
+export type UpdateProfileImageType ={
+image: string;
+}
 
 // user data type
 export type UserDataType = {

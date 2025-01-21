@@ -1,10 +1,9 @@
-import NextAuth from "next-auth";
+import NextAuth, { NextAuthOptions } from "next-auth";
 import FacebookProvider from "next-auth/providers/facebook";
 import GoogleProvider from "next-auth/providers/google";
+import { NextRequest, NextResponse } from "next/server";
 
-const host = process.env.NEXT_PUBLIC_URL || "https://idonateapi.kangtido.life";
-
-const authOptions = {
+const authOptions: NextAuthOptions = {
   providers: [
     FacebookProvider({
       clientId: process.env.NEXT_PUBLIC_FACEBOOK_CLIENT_ID as string,
@@ -17,14 +16,14 @@ const authOptions = {
   ],
   secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
-    async signIn({ user }: { user: any }) {
+    async signIn({ user }) {
       if (user) {
         return true;
       } else {
         return "/login";
       }
     },
-    async redirect({ url, baseUrl }: { url: string, baseUrl: string }) {
+    async redirect({ url, baseUrl }) {
       const parsedUrl = new URL(url, baseUrl);
       if (parsedUrl.searchParams.has("callbackUrl")) {
         return `${baseUrl}${parsedUrl.searchParams.get("callbackUrl")}`;
@@ -43,5 +42,8 @@ const authOptions = {
   debug: true,
 };
 
-// Export the default API route handler
-export default NextAuth(authOptions);
+// Create API handlers for Next.js App Directory
+const handler = NextAuth(authOptions);
+
+// Export GET and POST handlers for the route
+export { handler as GET, handler as POST };
