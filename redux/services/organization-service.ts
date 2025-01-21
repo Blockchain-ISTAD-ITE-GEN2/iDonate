@@ -29,7 +29,20 @@ export const organizatioApi = idonateApi.injectEndpoints({
       }),
       invalidatesTags: [{ type: "organization", id: "LIST" }],
     }),
+    createOrganization: builder.mutation({
+      query: ({ newOrganization, uuid }) => ({
+        url: `/organizations/${uuid}`,
+        method: "POST",
+        body: newOrganization,
+      }),
+    }),
   }),
 });
 
-export const { useGetOrganizationsQuery } = organizatioApi;
+export const {
+  useGetOrganizationsQuery,
+  useCreateOrganizationsMutation,
+  useEditOrganizationsMutation,
+  useDeleteOrganizationsMutation,
+  useCreateOrganizationMutation,
+} = organizatioApi;

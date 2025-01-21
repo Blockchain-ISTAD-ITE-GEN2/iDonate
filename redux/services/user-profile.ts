@@ -14,7 +14,7 @@ export const userProfileSettingApi = idonateApi.injectEndpoints({
   endpoints: (builder) => ({
     getUserProfile: builder.query({
       query: () => ({
-        url: `/api/v1/users/me`,
+        url: `/users/me`,
       }),
 
       providesTags: ["userProfile"],
@@ -26,7 +26,7 @@ export const userProfileSettingApi = idonateApi.injectEndpoints({
       { uuid: string; updatedUserProfile: userProfileinfoType }
     >({
       query: ({ uuid, updatedUserProfile }) => ({
-        url: `/api/v1/users/${uuid}`,
+        url: `/users/${uuid}`,
         method: "PATCH",
         body: updatedUserProfile,
       }),
@@ -38,7 +38,7 @@ export const userProfileSettingApi = idonateApi.injectEndpoints({
       { uuid: any; updatedProfileImage: UpdateProfileImageType }
     >({
       query: ({ uuid, updatedProfileImage }) => ({
-        url: `/api/v1/users/${uuid}/profile-image`,
+        url: `/users/${uuid}/profile-image`,
         method: "PUT",
         body: updatedProfileImage,
       }),
@@ -51,7 +51,7 @@ export const userProfileSettingApi = idonateApi.injectEndpoints({
       { uuid: string; updatedPassword: ChangePasswordType }
     >({
       query: ({ uuid, updatedPassword }) => ({
-        url: `/api/v1/users/${uuid}/change-password`,
+        url: `/users/${uuid}/change-password`,
         method: "PATCH",
         body: updatedPassword,
       }),
@@ -59,7 +59,7 @@ export const userProfileSettingApi = idonateApi.injectEndpoints({
     }),
     getUserByUuid: builder.query<any, any>({
       query: (uuid) => ({
-        url: `/api/v1/users/${uuid}/me`,
+        url: `/users/${uuid}/me`,
       }),
     }),
   }),

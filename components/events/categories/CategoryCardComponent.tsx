@@ -7,7 +7,6 @@ import { useGetCategoriesQuery } from "@/redux/services/category-service";
 
 export default function CategoryCardComponent() {
   const router = useRouter();
-
   const category = useGetCategoriesQuery({});
 
   const typeCategories: CategoryType[] = category?.currentData || [];

@@ -21,25 +21,9 @@ import { useDispatch } from "react-redux";
 import { setToken } from "@/redux/features/auth/authSlice";
 import { useRouter } from "next/navigation";
 import AnimatedText from "@/components/auth/AnimationText";
+import { LoginSchema } from "../schema/schema";
 
-// Zod schema for form validation
-const loginSchema = z.object({
-  email: z
-    .string()
-    .email("Invalid email address")
-    .nonempty("Email is required"),
-  password: z
-    .string()
-    .min(6, "Password must be at least 6 characters")
-    .max(50, "Password cannot exceed 50 characters")
-    .regex(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/,
-      "Password must include at least one uppercase letter, one lowercase letter, one number, and one special character",
-    )
-    .nonempty("Password is required"),
-});
-
-type LoginFormValues = z.infer<typeof loginSchema>;
+type LoginFormValues = z.infer<typeof LoginSchema>;
 
 export default function LoginForm() {
   const dispatch = useDispatch();
@@ -52,7 +36,7 @@ export default function LoginForm() {
     handleSubmit,
     formState: { errors },
   } = useForm<LoginFormValues>({
-    resolver: zodResolver(loginSchema),
+    resolver: zodResolver(LoginSchema),
     defaultValues: { email: "", password: "" },
   });
 

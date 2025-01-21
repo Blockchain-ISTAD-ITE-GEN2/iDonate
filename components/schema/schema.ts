@@ -16,12 +16,15 @@ export const RegisterSchema = z.object({
 });
 
 export const LoginSchema = z.object({
-  email: z.string().email({
-    message: "Please enter a valid email address",
-  }),
-  password: z.string().min(6, {
-    message: "Password must be at least 6 characters long",
-  }),
+  email: z
+    .string()
+    .email("Invalid email address")
+    .nonempty("Email is required"),
+  password: z
+    .string()
+    .min(8, "Password must be at least 8 characters")
+    .max(50, "Password cannot exceed 50 characters")
+    .nonempty("Password is required"),
 });
 
 export const formSchema = z.object({
@@ -89,4 +92,29 @@ export const eventInfoSchema = z.object({
     message: "Contact must be a valid phone number with 10-15 digits",
   }),
   image: z.array(z.instanceof(File)),
+});
+
+export const organizationRegistrationSchema = z.object({
+  email: z.string().email({
+    message: "Please enter a valid email address",
+  }),
+  name: z.string().min(1, {
+    message: "Please enter your name",
+  }),
+  description: z.string().min(10, {
+    message: "Description must be at least 10 characters long",
+  }),
+  phone: z.string().regex(/^\+?\d{10,15}$/, {
+    message: "Contact must be a valid phone number with 10-15 digits",
+  }),
+  address: z.string().min(1, {
+    message: "Address is required",
+  }),
+  image: z.string().nullable(),
+  bio: z.string().min(10, {
+    message: "Bio must be at least 10 characters long",
+  }),
+  purpose: z.string().min(10, {
+    message: "Purpose must be at least 10 characters long",
+  }),
 });
