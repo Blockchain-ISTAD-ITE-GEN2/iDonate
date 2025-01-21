@@ -7,8 +7,20 @@ import { CommonEventCard } from "@/components/events/organization-event/CommonEv
 import { useGetEventsQuery } from "@/redux/services/event-service";
 
 export function SearchPage() {
-  const { data: events } = useGetEventsQuery({});
-  const typedEvents: EventType[] = events?.content || [];
+
+  // Get All event for search page Component
+    // const {
+    //   data: events = [],
+    //   isLoading,
+    //   isError,
+    //   error,
+    // } = useGetEventsQuery(undefined);
+
+    // console.log("this is event data : ",events);
+
+   
+
+  const typedEvents: EventType[] = events;
 
   const [filteredEvents, setFilteredEvents] = useState<EventType[]>(typedEvents);
 
