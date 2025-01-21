@@ -23,7 +23,18 @@ import { useRouter } from "next/navigation";
 import AnimatedText from "@/components/auth/AnimationText";
 import { LoginSchema } from "../schema/schema";
 
-type LoginFormValues = z.infer<typeof LoginSchema>;
+// Zod schema for form validation
+const loginSchema = z.object({
+  email: z
+    .string()
+    .email("គណនីអ៊ីមែលមិនត្រឹមត្រូវ")
+    .nonempty("អ៊ីមែលត្រូវបានទាមទារឲ្យស្នើ"),
+  password: z
+    .string()
+    .nonempty("ពាក្យសម្ងាត់ត្រូវបានទាមទារឲ្យស្នើ"),
+});
+
+type LoginFormValues = z.infer<typeof loginSchema>;
 
 export default function LoginForm() {
   const dispatch = useDispatch();
@@ -36,7 +47,7 @@ export default function LoginForm() {
     handleSubmit,
     formState: { errors },
   } = useForm<LoginFormValues>({
-    resolver: zodResolver(LoginSchema),
+    resolver: zodResolver(loginSchema),
     defaultValues: { email: "", password: "" },
   });
 
@@ -57,7 +68,7 @@ export default function LoginForm() {
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || "Login failed");
+        throw new Error(errorData.message || "ការចូលប្រើបរាជ័យ");
       }
 
       const result = await response.json();
@@ -75,10 +86,10 @@ export default function LoginForm() {
       // toast.success("Redirecting to home page...");
       // router.refresh();
       router.push("/");
-      toast.success("Logged in successfully!");
+      toast.success("ការចូលប្រើទទួលបានជោគជ័យ");
     } catch (error) {
       console.error("Login error:", error);
-      toast.error(error instanceof Error ? error.message : "Login failed");
+      toast.error(error instanceof Error ? error.message : "ការចូលប្រើបានបរាជ័យ");
     } finally {
       setLoading(false);
     }

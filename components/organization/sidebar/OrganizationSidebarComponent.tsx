@@ -19,11 +19,11 @@ export default function OrganizationSidebarComponent() {
 
   if (
     pathname === "/" ||
-    pathname === "/auth/login" ||
-    pathname === "/auth/sign-up" ||
-    pathname === "/auth/verification" ||
-    pathname === "/auth/forgot-password" ||
-    pathname === "/auth/reset-password" ||
+    pathname === "/login" ||
+    pathname === "/sign-up" ||
+    pathname === "/verification" ||
+    pathname === "/forgot-password" ||
+    pathname === "/reset-password" ||
     pathname === "/search" ||
     pathname === "/about-us" ||
     pathname === "/categories" ||
@@ -31,7 +31,8 @@ export default function OrganizationSidebarComponent() {
     pathname === "/contributors" ||
     pathname === "/mission-vision" ||
     pathname === "/organizations" ||
-    pathname === "/how-it-works"
+    pathname === "/how-it-works" ||
+    pathname === "/organization-dashboard/create-organization" 
   )
     return null;
   else

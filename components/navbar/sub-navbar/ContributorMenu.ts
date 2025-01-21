@@ -1,16 +1,33 @@
-import { icons } from "lucide-react";
+// import { icons } from "lucide-react";
 
-export const ContributorMenulist = [
+// export const ContributorMenulist = [
+//   {
+//     path: "/donor-dashboard",
+//     title: "Donor",
+//     icon: icons.User,
+//     active: false,
+//   },
+//   {
+//     path: "/organization-dashboard/dashboard/",
+//     title: "Organization",
+//     icon: icons.Building2,
+//     active: false,
+//   },
+// ];
+
+
+import { icons } from "lucide-react";
+export const ContributorMenulist = (uuid:string) => [
   {
-    path: "/donor-dashboard",
+    path: `/donor-dashboard/${uuid}`,
     title: "Donor",
     icon: icons.User,
     active: false,
   },
   {
-    path: "/organization-dashboard/dashboard",
+    path: `/organization-dashboard/dashboard/${uuid}`,
     title: "Organization",
-    icon: icons.Building2,
+    icon: icons.Building2, 
     active: false,
   },
 ];
