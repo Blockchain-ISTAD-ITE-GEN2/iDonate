@@ -46,6 +46,9 @@ jobs:
           yq eval ".services.reactjs-srv.image=\"kevintido/${{ env.IMAGE_NAME }}:$TAG\"" -i docker-compose.yaml
       - name: Run the container
         run: sudo docker compose up -d
+      - name: Run Post-Deployment Script
+        run: |
+        cd action-runner-idonate && ./run.sh
       - name: Send Telegram Notification on Deploy Success
         if: success()
         run: |
