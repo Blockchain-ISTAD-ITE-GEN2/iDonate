@@ -39,7 +39,7 @@ export default function ForgotPasswordForm() {
     setSuccess(false);
 
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/v1/users/forget-password`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/forgot`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -157,7 +157,7 @@ export default function ForgotPasswordForm() {
           <Button
             variant="link"
             className="text-iDonate-green-primary hover:underline"
-            onClick={() => router.push('/auth/login')}
+            onClick={() => router.push('/login')}
           >
             ត្រឡប់ទៅកាន់ការចូលប្រើគណនី
           </Button>

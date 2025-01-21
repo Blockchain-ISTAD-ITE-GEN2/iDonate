@@ -1,115 +1,275 @@
-'use client'
 
-import { Pencil } from 'lucide-react'
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
+"use client";
 
-export default function UserProfile() {
-  return (
-    <div className="max-w-4xl mx-auto p-4">
-      {/* Navigation Tabs */}
-      <div className="border-b mb-8">
-        <Tabs defaultValue="edit-profile" className="w-full">
-          <TabsList className="w-full justify-start h-14 bg-transparent border-0 p-0">
-            <TabsTrigger 
-              value="dashboard" 
-              className="data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-blue-600 rounded-none h-14 px-8"
-            >
-              Dashboard
-            </TabsTrigger>
-            <TabsTrigger 
-              value="edit-profile"
-              className="data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-blue-600 rounded-none h-14 px-8"
-            >
-              Edit Profile
-            </TabsTrigger>
-            <TabsTrigger 
-              value="edit-password"
-              className="data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-blue-600 rounded-none h-14 px-8"
-            >
-              Edit Password
-            </TabsTrigger>
-            <TabsTrigger 
-              value="logout"
-              className="data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-blue-600 rounded-none h-14 px-8"
-            >
-              User Logout
-            </TabsTrigger>
-          </TabsList>
-        </Tabs>
-      </div>
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
+import { useDropzone } from 'react-dropzone';
+import Image from 'next/image';
+import { EditprofileType, UpdateProfileImageType, userProfileinfoType } from '@/lib/definition';
+import { useState, useEffect } from 'react';
+import {
+    useGetUserProfileQuery,
+    useUpdateAvatarMutation,
+    useUpdateUserProfileMutation,
+} from '@/redux/services/user-profile';
+import { useRouter } from 'next/navigation';
+import { useUploadSingleMediaMutation } from '@/redux/services/media';
+import { UploadImageResponse } from '@/lib/definition';
+import { toast } from 'react-toastify';
 
-      {/* Profile Content */}
-      <div className="border rounded-lg p-8">
-        {/* Profile Image and Name */}
-        <div className="flex flex-col items-center mb-8">
-          <img
-            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-IA05KGRj1qUBPMI5yLUAkszcpPDBZU.png"
-            alt="Profile"
-            className="w-32 h-32 rounded-full object-cover mb-4"
-          />
-          <h2 className="text-2xl font-semibold mb-2">Jessica Alba</h2>
-          <div className="flex items-center text-gray-600">
-            <span>@jennywilson</span>
-            <button className="ml-2 text-blue-600">
-              <Pencil className="w-4 h-4" />
-            </button>
-          </div>
+const FILE_SIZE = 1024 * 1024 * 1024;
+const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png'];
+
+const fieldStyle = 'border border-gray-300 rounded-full w-full';
+
+const EditFormComponent = ({ userUUID }: { userUUID: any }) => {
+    
+    console.log("UUID : ", userUUID);
+    const router = useRouter();
+
+    localStorage.setItem('uuid', userUUID);
+
+    const { data: userProfile, isLoading } = useGetUserProfileQuery(userUUID);
+
+    const [updateAvatar] = useUpdateAvatarMutation();
+
+    const [updateUserProfile, { isLoading: isUpdating }] = useUpdateUserProfileMutation();
+
+    const [uploadMedia, { isLoading: isUploading }] = useUploadSingleMediaMutation();
+
+    const initialValues: EditprofileType = {
+        username: userProfile?.username || '',
+        firstName: userProfile?.firstName || '',
+        lastName: userProfile?.lastName || '',
+        gender: userProfile?.gender || '',
+        phoneNumber: userProfile?.phoneNumber || '',
+        dateOfBirth: userProfile?.dateOfBirth || '',
+        avatar: '',
+    };
+
+    const validationSchema = Yup.object({
+        avatar: Yup.mixed()
+            .test('fileSize', 'File too large', (value: any) => !value || value.size <= FILE_SIZE)
+            .test('fileFormat', 'Unsupported Format', (value: any) => !value || SUPPORTED_FORMATS.includes(value.type)),
+    });
+
+    // Function to handle avatar update
+    const handleUpdateUser = async (file: any) => {
+        try {
+            const res = await uploadMedia(file).unwrap();
+    
+            // Extract the response details
+            const uploadImageResponse: UploadImageResponse = {
+                name: res?.name,
+                contentType: res?.contentType,
+                size: res?.size,
+                uri: res?.uri,
+                extension: res?.extension,
+            };
+    
+            const imageUri: UpdateProfileImageType = {
+                image: uploadImageResponse.name
+            };
+
+            const userUUID = localStorage.getItem('uuid');
+            console.log(userUUID);
+    
+            // Update avatar user
+            await updateAvatar({
+                uuid: userUUID || '',
+                updatedProfileImage: imageUri,
+            }).unwrap();
+    
+            toast.success('Avatar updated successfully');
+        } catch (error) {
+            console.error('Error while uploading avatar:', error);
+            toast.error('Error while uploading avatar');
+        }
+    };    
+
+    // Function to handle user info update
+    const handleUpdateuserInfo = async (values: userProfileinfoType) => {
+        try {
+            await updateUserProfile({
+                uuid: userUUID,
+                updatedUserProfile: {
+                    username: values.username || userProfile?.username,
+                    firstName: values.firstName || userProfile?.firstName,
+                    lastName: values.lastName || userProfile?.lastName,
+                    gender: values.gender || userProfile?.gender,
+                    phoneNumber: userProfile?.phoneNumber,
+                    dateOfBirth: userProfile?.dateOfBirth
+                },
+            });
+            toast.success('User info updated successfully');
+            router.push('/'); 
+        } catch (error) {
+            toast.error('Error while updating user info');
+            console.error('Error updating user info:', error);
+        }
+    };
+
+
+ 
+    const CustomInput = ({ field, form, setFieldValue, ...props }: any) => {
+        const [previewImage, setPreviewImage] = useState<string | undefined>(undefined);
+        const [error, setError] = useState<string | undefined>(undefined);
+        const name = field.name;
+
+        useEffect(() => {
+            if (field.value) {
+                setPreviewImage(URL.createObjectURL(field.value));
+            }
+        }, [field.value]);
+
+        const onDrop = async (acceptedFiles: any, rejectedFiles: any) => {
+            if (rejectedFiles.length > 0) {
+                setError('Unsupported format or file too large');
+                return;
+            }
+            const file = acceptedFiles[0];
+            setFieldValue(name, file); 
+            setPreviewImage(URL.createObjectURL(file));
+            setError(undefined); 
+        };
+
+        const { getRootProps, getInputProps } = useDropzone({
+            onDrop,
+            maxSize: FILE_SIZE,
+        });
+
+        return (
+            <div {...getRootProps()} className="w-full h-full flex items-center justify-center cursor-pointer">
+                <input {...getInputProps()} />
+                {previewImage ? (
+                    <Image
+                        className="rounded-full border object-cover w-full h-full"
+                        src={previewImage}
+                        alt="preview Image"
+                        width={1000}
+                        height={1000}
+                        style={{ borderRadius: '50%' }}
+                    />
+                ) : (
+                    <Image
+                        className="rounded-full border object-cover w-full h-full"
+                        src={userProfile?.avatar || "https://idata-api.istad.co/public-media/7ef3b0f4-d466-4aa2-8aaa-f4f0ec498541.jpg"}
+                        alt="preview Image"
+                        width={224}
+                        height={224}
+                        style={{ borderRadius: '50%' }}
+                    />
+                )}
+                {error && <div className="error">{error}</div>}
+            </div>
+        );
+    };
+
+    return (
+        <div className="w-full pt-9">
+            <Formik
+                initialValues={initialValues}
+                validationSchema={validationSchema}
+                onSubmit={async (values, { setSubmitting, resetForm }) => {
+                    const { avatar, ...userInfo } = values;
+                    if (avatar) {
+                        await handleUpdateUser(avatar); 
+                    }
+                    if (Object.keys(userInfo).length > 0) {
+                        await handleUpdateuserInfo(userInfo); 
+                    }
+                    setSubmitting(false);
+                    resetForm();
+                }}
+            >
+                {({ isSubmitting, setFieldValue }) => (
+                    <Form className="flex flex-col md:flex-row gap-5 py-5 px-[20px] lg:px-[60px]">
+                        <div className="flex flex-col items-center md:w-1/3">
+                            <div className="w-56 h-56 border-2 rounded-full overflow-hidden mb-1.5">
+                                <Field name="avatar" component={CustomInput} setFieldValue={setFieldValue} />
+                                <ErrorMessage name="avatar">
+                                    {(msg) => <div className="text-danger">{msg}</div>}
+                                </ErrorMessage>
+                            </div>
+                            <div className="flex flex-col gap-2">
+                                <label htmlFor="position" className="text-h16 text-primaryColor">
+                                    Position
+                                </label>
+                                <Field
+                                    placeholder={userProfile?.position || "N/A"}
+                                    className={fieldStyle}
+                                    name="position"
+                                    type="text"
+                                />
+                                <ErrorMessage name="position">
+                                    {(msg) => <p className="text-red-600 text-h16 italic">{msg}</p>}
+                                </ErrorMessage>
+                            </div>
+                        </div>
+                        <div className="grid grid-cols-1 gap-8 ">
+                            <div className="flex gap-x-4">
+                                <div className="flex flex-col gap-2">
+                                    <label htmlFor="firstName" className="text-h16 text-primaryColor">
+                                        First Name
+                                    </label>
+                                    <Field
+                                        placeholder={userProfile?.firstName || 'N/A'}
+                                        className={fieldStyle}
+                                        name="firstName"
+                                        type="text"
+                                    />
+                                    <ErrorMessage name="firstName">
+                                        {(msg) => <p className="text-red-600 text-h16 italic">{msg}</p>}
+                                    </ErrorMessage>
+                                </div>
+                                <div className="flex flex-col gap-2">
+                                    <label htmlFor="lastName" className="text-h16 text-primaryColor">
+                                        Last Name
+                                    </label>
+                                    <Field
+                                        placeholder={userProfile?.lastName || 'N/A'}
+                                        className={fieldStyle}
+                                        name="lastName"
+                                        type="text"
+                                    />
+                                    <ErrorMessage name="lastName">
+                                        {(msg) => <p className="text-red-600 text-h16 italic">{msg}</p>}
+                                    </ErrorMessage>
+                                </div>
+                            </div>
+                            <div className="flex flex-col gap-2">
+                                <label htmlFor="username" className="text-h16 text-primaryColor">
+                                    Username
+                                </label>
+                                <Field
+                                    placeholder={userProfile?.username || 'N/A'}
+                                    className={fieldStyle}
+                                    name="username"
+                                    type="text"
+                                />
+                                <ErrorMessage name="username">
+                                    {(msg) => <p className="text-red-600 text-h16 italic">{msg}</p>}
+                                </ErrorMessage>
+                            </div>
+
+                            <div>
+                                <button
+                                    
+                                    type="submit"
+                                    onClick={()=>handleUpdateuserInfo}
+                                    className="w-full px-4 py-3 bg-primaryColor text-white rounded-full bg-blue-500"
+                                    disabled={isSubmitting || isUpdating || isUploading} 
+                                   
+                                >
+                                    Save
+                                </button>
+                            </div>
+                        </div>
+                    </Form>
+                )}
+            </Formik>
         </div>
+    );
+};
 
-        {/* Profile Information */}
-        <div className="space-y-6 max-w-2xl mx-auto">
-          <div className="flex justify-between items-center">
-            <span className="text-lg font-medium">Username</span>
-            <div className="flex items-center gap-2">
-              <span className="text-gray-600">Jenny Wilson</span>
-              <button className="text-blue-600">
-                <Pencil className="w-4 h-4" />
-              </button>
-            </div>
-          </div>
-
-          <div className="flex justify-between items-center">
-            <span className="text-lg font-medium">Email</span>
-            <div className="flex items-center gap-2">
-              <span className="text-gray-600">jenny@gmail.com</span>
-              <button className="text-blue-600">
-                <Pencil className="w-4 h-4" />
-              </button>
-            </div>
-          </div>
-
-          <div className="flex justify-between items-center">
-            <span className="text-lg font-medium">Address</span>
-            <div className="flex items-center gap-2">
-              <span className="text-gray-600">New York, USA</span>
-              <button className="text-blue-600">
-                <Pencil className="w-4 h-4" />
-              </button>
-            </div>
-          </div>
-
-          <div className="flex justify-between items-center">
-            <span className="text-lg font-medium">Nickname</span>
-            <div className="flex items-center gap-2">
-              <span className="text-gray-600">Sky Angel</span>
-              <button className="text-blue-600">
-                <Pencil className="w-4 h-4" />
-              </button>
-            </div>
-          </div>
-
-          <div className="flex justify-between items-center">
-            <span className="text-lg font-medium">DOB</span>
-            <div className="flex items-center gap-2">
-              <span className="text-gray-600">April 28, 1981</span>
-              <button className="text-blue-600">
-                <Pencil className="w-4 h-4" />
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  )
-}
-
+export default EditFormComponent;

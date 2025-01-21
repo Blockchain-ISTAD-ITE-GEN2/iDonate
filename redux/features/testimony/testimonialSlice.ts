@@ -20,8 +20,9 @@ export const testimonialApi = idonateApi.injectEndpoints({
         endpoints: (builder) => ({
                 getTestimonials: builder.query<testimoial[], void>({
                 query: () => '/api/v1/testimonies',
-                
+             
                 }),
+                invalidatesTags: [{type: 'testimonial', id: 'LIST'}] as any,
         }),
         
 })

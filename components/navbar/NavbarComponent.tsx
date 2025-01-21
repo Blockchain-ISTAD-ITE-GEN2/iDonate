@@ -29,7 +29,8 @@ import { useAppSelector } from "@/redux/hooks";
 import { selectToken } from "@/redux/features/auth/authSlice";
 import AvartarPlaceHolder from '@/public/images/user-idonate.png'
 import { useGetUserProfileQuery } from "@/redux/services/user-profile";
-
+import toast from "react-hot-toast";
+import { getUuidFromToken } from "@/lib/uuid";
 
 export default function NavbarComponent() {
   const [menuList] = useState<NavMenuType[]>(NavMenulist);
@@ -44,14 +45,74 @@ export default function NavbarComponent() {
   // const {data:userProfile} = useGetUserProfileQuery({});
   // console.log("acessToken value : ",accessTokenValue);
   //the result:acessToken value :  (state)=>state.auth.token
-  const { data: userProfile, error, isLoading } = useGetUserProfileQuery({});
+  const { data: userProfile, error, isLoading } = useGetUserProfileQuery();
+  console.log("User Profile: ", userProfile);
+  useEffect(() => {}, [accessTokenValue, session]);
+  const uuid = getUuidFromToken(accessTokenValue as string);
+  // console.log("image of user : ", userProfile?.avatar);
+
   //  console.log("The value of Token: ",userProfile.email);
 
-  const handleSignOut = () => {
-    signOut(); 
-    router.push("/");
-  }
+  // const handleSignOut = () => {
+  //   signOut(); 
 
+  //   router.push("/");
+  // }
+
+  const handleRoutes = (): void => {
+    if (session || accessTokenValue) {
+      handleLogout();
+    } else {
+      router.push("/login");
+    }
+  };
+
+  const handleLogout = () => {
+    if (accessTokenValue) {
+      fetch(`http://localhost:3000/api/logout`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({}),
+      }).then((res) => {
+        if (res.ok) {
+          toast.success("Logout successful", {
+            position: "top-right",
+            duration: 3000,
+            // onClose: () => {
+            //   route.refresh();
+            // },
+          });
+        } else {
+          console.log("Error ");
+        }
+      });
+    } else {
+      // handleLogoutAuth();
+    }
+  };
+
+  const handleSignOut = () => {
+    if (accessTokenValue) {
+      fetch(`http://localhost:3000/api/logout`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({}),
+      }).then((res) => {
+        if (res.ok) {
+          toast.success("Logout successful", {
+            position: "top-right",
+            duration: 3000,
+          });
+        } else {
+          console.log("Error ");
+        }
+      });
+    } 
+  };
   
   useEffect(() => {},[accessTokenValue,session])
   // console.log("User Profile: ",userProfile);
@@ -88,7 +149,7 @@ export default function NavbarComponent() {
         onClose={() => setIsMobileMenuOpen(false)}
         menuItems={menuList}
         eventMenulist={EventMenulist}
-        contributorMenulist={ContributorMenulist}
+        contributorMenulist={ContributorMenulist(uuid as string)}
         aboutMenulist={AboutMenulist}
       />
     );
@@ -123,7 +184,7 @@ export default function NavbarComponent() {
       <DesktopNavbar
         menuItems={menuList}
         eventMenulist={EventMenulist}
-        contributorMenulist={ContributorMenulist}
+        contributorMenulist={ContributorMenulist(uuid as string)}
         aboutMenulist={AboutMenulist}
       />
 
@@ -135,18 +196,23 @@ export default function NavbarComponent() {
               <ThemeSwitch />
             </div>
           </div>
-
+         
+        
           <div className="flex items-center">
             {session || accessTokenValue ? (
                 <DropdownMenu>
                 <DropdownMenuTrigger>
-                  {session?.user?.image ? (
+                  {userProfile? (
                     <Image
-                      src={session.user.image || AvartarPlaceHolder ||userProfile?.avatar}
-                      alt={`${session.user.name ?? "user"}'s avatar`}
-                      width={40}
-                      height={40}
-                      className="rounded-full border-2 border-iDonate-navy-primary"
+                    src={
+                      AvartarPlaceHolder ||
+                      `https://idonateapi.kangtido.life/media/${userProfile?.avatar}`
+                    }
+                    
+                      alt={`${userProfile?.username ?? "user"}'s avatar`}
+                      width={50}
+                      height={50}
+                      className="rounded-full border-2 border-iDonate-navy-secondary"
                     />
                   ) : (
                     <div className="w-10 h-10 rounded-full bg-iDonate-navy-primary flex items-center justify-center">
@@ -159,13 +225,17 @@ export default function NavbarComponent() {
                   {/* User Info */}
                   <div className="p-3">
                     <div className="flex items-center space-x-3">   
-                      {session?.user?.image ? (
+                      {userProfile? (
                         <Image
-                          src={session.user.image || AvartarPlaceHolder || userProfile?.avatar  } 
-                          alt={`${session.user.name ?? "User"}'s avatar`}
-                          width={40}
-                          height={40}
-                          className="rounded-full border-2 border-iDonate-navy-primary"
+                        src={
+                          AvartarPlaceHolder ||
+                          `https://idonateapi.kangtido.life/media/${userProfile?.avatar}`
+                        }
+                        
+                          alt={`${userProfile?.username ?? "User"}'s avatar`}
+                          width={50}
+                          height={50}
+                          className="rounded-full border-2 border-iDonate-navy-secondary"
                         />
                       ) : (
                         <div className="w-10 h-10 rounded-full bg-iDonate-navy-primary flex items-center justify-center">
@@ -188,48 +258,14 @@ export default function NavbarComponent() {
                   {/* Menu Items */}
                   <DropdownMenuItem asChild>
                     <Link
-                      href="/profile"
+                      href={`/donor-dashboard/${uuid}`}
                       className="flex items-center space-x-2 cursor-pointer"
                     >
                       <User className="text-iDonate-navy-primary" size={20} />
                       <span>Profile Settings</span>
                     </Link>
                   </DropdownMenuItem>
-          
-                  <DropdownMenuItem asChild>
-                    <Link
-                      href="/donations"
-                      className="flex items-center space-x-2 cursor-pointer"
-                    >
-                      <Heart className="text-iDonate-navy-primary" size={20} />
-                      <span>My Donations</span>
-                    </Link>
-                  </DropdownMenuItem>
-          
-                  <DropdownMenuItem asChild>
-                    <Link
-                      href="/search"
-                      className="flex items-center space-x-2 cursor-pointer"
-                    >
-                      <Search className="text-iDonate-navy-primary" size={20} />
-                      <span>Search</span>
-                    </Link>
-                  </DropdownMenuItem>
-          
-                  <DropdownMenuSeparator />
-          
-                  {/* Donate Button */}
-                  <div className="p-2">
-                    <Button className="w-full group bg-iDonate-white-space border-2 border-iDonate-navy-primary px-2 text-iDonate-navy-primary hover:bg-iDonate-navy-primary hover:text-white hover:border-iDonate-navy-primary rounded-[12px]">
-                      <Heart
-                        style={{ width: "25px", height: "25px" }}
-                        className="bg-iDonate-navy-primary rounded-full p-1 fill-white group-hover:fill-iDonate-navy-primary group-hover:text-iDonate-navy-primary group-hover:bg-iDonate-green-secondary"
-                      />
-                      <span className="text-lg">Donate Now</span>
-                    </Button>
-                  </div>
-          
-                  <DropdownMenuSeparator />
+
           
                   {/* Sign Out */}
                   <DropdownMenuItem

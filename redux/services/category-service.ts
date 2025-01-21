@@ -16,7 +16,7 @@ export const categoryApi = idonateApi.injectEndpoints({
     }),
     editCategories: builder.mutation({
       query: ({uuid, updatedData}) => ({
-          url: `/categories/${uuid}`,
+          url: `/api/v1/categories/${uuid}`,
           method: 'PUT',
           body: updatedData,
       }),

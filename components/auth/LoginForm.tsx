@@ -27,17 +27,11 @@ import { useRouter } from "next/navigation";
 const loginSchema = z.object({
   email: z
     .string()
-    .email("Invalid email address")
-    .nonempty("Email is required"),
+    .email("គណនីអ៊ីមែលមិនត្រឹមត្រូវ")
+    .nonempty("អ៊ីមែលត្រូវបានទាមទារឲ្យស្នើ"),
   password: z
     .string()
-    .min(6, "Password must be at least 6 characters")
-    .max(50, "Password cannot exceed 50 characters")
-    .regex(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/,
-      "Password must include at least one uppercase letter, one lowercase letter, one number, and one special character",
-    )
-    .nonempty("Password is required"),
+    .nonempty("ពាក្យសម្ងាត់ត្រូវបានទាមទារឲ្យស្នើ"),
 });
 
 type LoginFormValues = z.infer<typeof loginSchema>;
@@ -71,7 +65,7 @@ export default function LoginForm() {
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || "Login failed");
+        throw new Error(errorData.message || "ការចូលប្រើបរាជ័យ");
       }
 
       const result = await response.json();
@@ -90,15 +84,15 @@ export default function LoginForm() {
       // toast.success("Redirecting to home page...");
       // router.refresh();
       router.push("/");
-      toast.success("Logged in successfully!");
+      toast.success("ការចូលប្រើទទួលបានជោគជ័យ");
     } catch (error) {
       console.error("Login error:", error);
-      toast.error(error instanceof Error ? error.message : "Login failed");
+      toast.error(error instanceof Error ? error.message : "ការចូលប្រើបានបរាជ័យ");
     } finally {
       setLoading(false);
     }
   };
-  
+
   return (
     <div className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
       <div className="absolute inset-0 bg-grid-slate-100 [mask-image:linear-gradient(0deg,#fff,rgba(255,255,255,0.6))] -z-10" />
@@ -110,7 +104,6 @@ export default function LoginForm() {
         quality={100}
         priority
       />
-
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}

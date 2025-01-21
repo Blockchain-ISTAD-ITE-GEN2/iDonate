@@ -1,11 +1,47 @@
+"use client"; 
+
 import { CalendarDateRangePicker } from "@/components/organization/dashboard/date-range-picker";
 import { Button } from "@/components/ui/button";
 import { BannerComponent } from "@/components/organization/card/banner";
 import { BarAndLineChart } from "@/components/organization/dashboard/bar-and-line-chart";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import organization from "@/public/images/Cambodia-Kantha-Bopha-Foundation.jpeg";
+import { useGetOrganizationByuuidQuery } from "@/redux/services/organization-service";
+import { useRouter } from "next/navigation";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { ZodNullable } from "zod";
 
-export default function Contributor() {
+export default function OrganizationDashboard({ params }: { params: { uuid: string } }) {
+  const { uuid } = params; 
+  const router = useRouter();
+  const { data, isLoading, isError } = useGetOrganizationByuuidQuery(uuid);
+  console.log("Data of Organization", data)
+  // Extract the first organization from the array (with error handling)
+  const organization = data && data.length > 0 ? data[0] : null;
+
+  // // Redirect logic
+  // useEffect(() => {
+  //   if (!isLoading && !isError) {
+  //     if (!organization) {
+  //       // If no organization data is found, redirect to create organization page
+  //       console.log("No organization found. Redirecting to /create-organization...");
+  //       router.push("/organization-dashboard/create-organization");
+  //     }
+  //   }
+  // }, [organization, isLoading, isError, router]);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  console.log("Approve check : ", organization?.isApproved)
+
+  if (!organization) {
+    router.push("/organization-dashboard/create-organization");
+  }
+
+  else if(organization?.isApproved == true){
   return (
     <section className="flex flex-col h-full">
       <div className="hidden flex-col md:flex gap-9">
@@ -24,28 +60,15 @@ export default function Contributor() {
 
                 <div className="flex flex-col flex-1 text-left text-sm leading-tight">
                   <span className="text-iDonate-navy-primary text-lg truncate font-semibold dark:text-iDonate-navy-accent">
-                    Cambodia Kantha Bopha Foundation
+                    {organization?.name || "Organization Name"}
                   </span>
                   <span className="truncate text-iDonate-gray text-sm dark:text-iDonate-green-secondary">
-                    info@beat-richner.ch
+                    {organization?.email || "info@example.com"}
                   </span>
                 </div>
               </span>
             </div>
           </div>
-
-          {/* <div className="flex items-center justify-between space-y-2">
-            <h2 className="text-heading-two-eng font-bold tracking-tight text-iDonate-navy-primary">
-              Dashboard
-            </h2>
-
-            <div className="flex items-center space-x-2">
-              <CalendarDateRangePicker />
-              <Button className="bg-iDonate-navy-secondary hover:bg-iDonate-navy-primary">
-                Download
-              </Button>
-            </div>
-          </div> */}
 
           <BannerComponent />
 
@@ -54,4 +77,5 @@ export default function Contributor() {
       </div>
     </section>
   );
+ }
 }

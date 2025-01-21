@@ -13,20 +13,20 @@ import Loader from "./loading";
 import CheckConnection from "@/components/checkConnection/CheckConnection";
 import StoreProvider from "../StoreProvider";
 
-// const inter = localFont({
-//   src: "/fonts/Inter-VariableFont_opsz,wght.ttf",
-//   variable: "--font-inter",
-//   display: "swap",
-//   preload: true,
-//   fallback: ["serif"],
-// });
+const inter = localFont({
+  src: "/fonts/Inter-VariableFont_opsz,wght.ttf",
+  variable: "--font-inter",
+  display: "swap",
+  preload: true,
+  fallback: ["serif"],
+});
 
-// const suwannaphum = localFont({
-//   src: "/fonts/Suwannaphum-Regular.ttf",
-//   display: "swap",
-//    preload: true,
-//   variable: "--font-suwannaphum",
-// });
+const suwannaphum = localFont({
+  src: "/fonts/Suwannaphum-Regular.ttf",
+  display: "swap",
+   preload: true,
+  variable: "--font-suwannaphum",
+});
 
 type RootLayoutProps = {
     children: ReactNode;
@@ -39,7 +39,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
     return (
         <html
             lang="en"
-            // className={`min-h-screen w-full overflow-auto scrollbar-hide ${suwannaphum.variable} ${inter.variable}`}
+             className={`min-h-screen w-full overflow-auto scrollbar-hide ${suwannaphum.variable} ${inter.variable}`}
         >
         <body className="flex flex-col h-full bg-background text-foreground">
         <StoreProvider>
