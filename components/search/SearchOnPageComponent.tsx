@@ -9,14 +9,14 @@ import { useGetEventsQuery } from "@/redux/services/event-service";
 export function SearchPage() {
 
   // Get All event for search page Component
-    const {
-      data: events = [],
-      isLoading,
-      isError,
-      error,
-    } = useGetEventsQuery(undefined);
+    // const {
+    //   data: events = [],
+    //   isLoading,
+    //   isError,
+    //   error,
+    // } = useGetEventsQuery(undefined);
 
-    console.log("this is event data : ",events);
+    // console.log("this is event data : ",events);
 
    
 
