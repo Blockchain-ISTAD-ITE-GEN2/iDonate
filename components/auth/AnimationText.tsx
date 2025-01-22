@@ -38,7 +38,7 @@ export default function AnimatedText() {
     <h1 className="text-2xl sm:text-3xl font-bold text-center mb-6 sm:mb-8 text-iDonate-navy-primary">
       <motion.span initial={{ opacity: 0 }} animate={controls}>
         {displayText.split(" ").map((word, index) => (
-          <span key={index} className="inline-block mr-2">
+          <span key={index} lang="km" className="inline-block mr-2">
             {word === "iDonate" ? (
               <span className="text-iDonate-green-primary inline-block transform hover:scale-110 transition-transform duration-200">
                 {word}

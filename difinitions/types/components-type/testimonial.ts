@@ -1,5 +1,6 @@
 export type TestimonialType = {
-  media: string;
+  uuid: string;
+  image: string;
   name: string;
   position: string;
   comment: string;

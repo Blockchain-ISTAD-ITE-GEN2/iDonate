@@ -1,6 +1,4 @@
-import categories from "@/data/category.json";
 import CategoryCardComponent from "@/components/events/categories/CategoryCardComponent";
-import { CategoryType } from "@/difinitions/types/components-type/CategoryType";
 import HeroSectionComponent from "@/components/herosection/HeroSectionComponent";
 import TotalOrganizationComponent from "@/components/landing/TotalOrganizationComponent";
 import LatestDonationCard from "@/components/landing/latest-donation-event/LatestDonationCard";

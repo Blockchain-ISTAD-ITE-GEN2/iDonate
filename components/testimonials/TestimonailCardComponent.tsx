@@ -6,14 +6,9 @@ import { ChevronsLeft, ChevronsRight } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { useGetTestimonialsQuery } from "@/redux/features/testimony/testimonialSlice";
-
-interface Testimonial {
-  name: string;
-  role: string;
-  image: string;
-  testimonial: string;
-}
+import { useGetTestimonialsQuery } from "@/redux/services/testimony";
+import { TestimonialType } from "@/difinitions/types/components-type/testimonial";
+import TestmonailCardPleaceHolder from "@/components/testimonials/TestmonailCardPleaceHolder";
 
 export default function TestimonialCarousel() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -25,7 +20,9 @@ export default function TestimonialCarousel() {
     isLoading,
     isError,
     error,
-  } = useGetTestimonialsQuery();
+  } = useGetTestimonialsQuery({});
+
+  const typedTestimonials: TestimonialType[] = testimonials || [];
 
   console.log("Data of Testimonials: ", testimonials);
 
@@ -68,7 +65,15 @@ export default function TestimonialCarousel() {
   };
 
   if (isLoading) {
-    return <div className="text-center py-8">Loading testimonials...</div>;
+    return(
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center py-8 p-6 md:gap-24 flex">
+            <TestmonailCardPleaceHolder />
+            <TestmonailCardPleaceHolder />
+            <TestmonailCardPleaceHolder />
+          </div>
+        </div>
+    )
   }
 
   return (
@@ -98,17 +103,17 @@ export default function TestimonialCarousel() {
                 style={{ transform: `translateX(-${currentIndex * 100}%)` }}
               >
                 {Array.from({
-                  length: Math.ceil(testimonials.length / itemsPerPage),
+                  length: Math.ceil(typedTestimonials.length / itemsPerPage),
                 }).map((_, slideIndex) => (
                   <div key={slideIndex} className="flex w-full shrink-0 gap-4">
-                    {testimonials
+                    {typedTestimonials
                       .slice(
                         slideIndex * itemsPerPage,
                         slideIndex * itemsPerPage + itemsPerPage,
                       )
                       .map((testimonial) => (
                         <div
-                          key={testimonial.id}
+                          key={testimonial.uuid}
                           className={`w-full ${itemsPerPage === 1 ? "" : itemsPerPage === 2 ? "md:w-full" : "md:w-1/2 lg:w-1/3"} lg:p-8 md:p-8`}
                         >
                           <Card className="h-full">

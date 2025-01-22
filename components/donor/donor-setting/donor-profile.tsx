@@ -2,10 +2,11 @@
 
 import { useState } from "react";
 import { DonorProfilePercentage } from "@/components/donor/donor-setting/doner-profile-percentage";
-import { DonorMediaForm } from "@/components/donor/donor-setting/donor-media-form";
 import { DonorInfoForm } from "@/components/donor/donor-setting/donor-info-form";
 import { DonorAddressForm } from "@/components/donor/donor-setting/donor-address-form";
 import { DonorBioForm } from "@/components/donor/donor-setting/donor-bio-form";
+import { DonorMediaForm } from "./donor-media-form";
+
 
 export function DonorProfileComponent() {
   const [imagePercentage, setImagePercentage] = useState(0);

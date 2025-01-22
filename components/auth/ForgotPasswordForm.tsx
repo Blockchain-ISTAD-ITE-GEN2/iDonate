@@ -1,58 +1,51 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { Mail } from "lucide-react";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { setForgotToken, setEmail } from "@/redux/features/auth/authSlice";
-import { z } from "zod";
-import { useFormik } from "formik";
-import toast from "react-hot-toast";
-import { useAppDispatch } from "@/redux/hooks";
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { Mail } from 'lucide-react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { useAppDispatch } from '@/redux/hooks';
+import { setForgotToken, setEmail } from '@/redux/features/auth/authSlice';
+import { z } from 'zod';
+import { useFormik } from 'formik';
+import toast from 'react-hot-toast';
 
 // Define the validation schema using Zod
 const validationSchema = z.object({
-  email: z.string().min(1, "* Email is required").email("* Email is invalid"),
+  email: z.string()
+    .min(1, '* Email is required')
+    .email('* Email is invalid'),
 });
 
 // Define the initial values for the form
 const initialValues = {
-  email: "",
+  email: '',
 };
 
 export default function ForgotPasswordForm() {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
 
   // Handle form submission
   const handleSubmit = async (values: { email: string }) => {
     setIsLoading(true);
-    setError("");
+    setError('');
     setSuccess(false);
 
     try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_URL}/api/v1/users/forget-password`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ email: values.email }),
+      const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/forgot`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
         },
-      );
+        body: JSON.stringify({ email: values.email }),
+      });
 
       if (res.ok) {
         const data = await res.json();
@@ -60,27 +53,25 @@ export default function ForgotPasswordForm() {
           dispatch(setForgotToken(data.token));
           dispatch(setEmail(values.email));
           setSuccess(true);
-          toast.success("Password reset link sent to your email!", {
+          toast.success('Password reset link sent to your email!', {
             duration: 2000,
-            position: "top-center",
+            position: 'top-center',
           });
-          setTimeout(() => router.push("/reset-password"), 2000);
+          setTimeout(() => router.push('/reset-password'), 2000);
         }
       } else {
         const errorData = await res.json();
-        setError(
-          errorData.message || "Failed to send reset link. Please try again.",
-        );
-        toast.error(errorData.message || "Failed to send reset link.", {
+        setError(errorData.message || 'Failed to send reset link. Please try again.');
+        toast.error(errorData.message || 'Failed to send reset link.', {
           duration: 2000,
-          position: "top-center",
+          position: 'top-center',
         });
       }
     } catch (err) {
-      setError("An unexpected error occurred. Please try again.");
-      toast.error("An unexpected error occurred.", {
+      setError('An unexpected error occurred. Please try again.');
+      toast.error('An unexpected error occurred.', {
         duration: 2000,
-        position: "top-center",
+        position: 'top-center',
       });
     } finally {
       setIsLoading(false);
@@ -96,7 +87,7 @@ export default function ForgotPasswordForm() {
       const result = validationSchema.safeParse(values);
       if (!result.success) {
         result.error.issues.forEach((issue) => {
-          issue.message && (errors[issue.path[0]] = issue.message);
+         issue.message && (errors[issue.path[0]] = issue.message);
         });
       }
       return errors;
@@ -137,9 +128,7 @@ export default function ForgotPasswordForm() {
                 required
               />
               {formik.touched.email && formik.errors.email && (
-                <p className="text-sm text-red-500 mt-1">
-                  {formik.errors.email}
-                </p>
+                <p className="text-sm text-red-500 mt-1">{formik.errors.email}</p>
               )}
             </div>
           </div>
@@ -151,11 +140,8 @@ export default function ForgotPasswordForm() {
           {success && (
             <Alert>
               <AlertDescription className="text-iDonate-navy-primary">
-                ប្រសិនបើគណនីរបស់អ្នកមានស្រាប់{" "}
-                <span className="font-semibold text-iDonate-green-primary">
-                  {formik.values.email}
-                </span>{" "}
-                យើងនឹងផ្ញើលីងក្នុងការកំណត់ពាក្យសម្ងាត់ទៅកាន់គណនីនោះ
+                ប្រសិនបើគណនីរបស់អ្នកមានស្រាប់{' '}
+                <span className="font-semibold text-iDonate-green-primary">{formik.values.email}</span> យើងនឹងផ្ញើលីងក្នុងការកំណត់ពាក្យសម្ងាត់ទៅកាន់គណនីនោះ
               </AlertDescription>
             </Alert>
           )}
@@ -164,14 +150,14 @@ export default function ForgotPasswordForm() {
             className="w-full bg-iDonate-navy-primary hover:bg-iDonate-navy-secondary"
             disabled={isLoading}
           >
-            {isLoading ? "កំពុងផ្ញើរ..." : "កំណត់ពាក្យសម្ងាត់ឡើងវិញ"}
+            {isLoading ? 'កំពុងផ្ញើរ...' : 'កំណត់ពាក្យសម្ងាត់ឡើងវិញ'}
           </Button>
         </form>
         <div className="mt-4 text-center">
           <Button
             variant="link"
             className="text-iDonate-green-primary hover:underline"
-            onClick={() => router.push("/auth/login")}
+            onClick={() => router.push('/login')}
           >
             ត្រឡប់ទៅកាន់ការចូលប្រើគណនី
           </Button>

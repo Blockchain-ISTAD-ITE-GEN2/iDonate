@@ -2,14 +2,9 @@ import NextAuth from "next-auth";
 import FacebookProvider from "next-auth/providers/facebook";
 import GoogleProvider from "next-auth/providers/google";
 
-const host = process.env.NEXT_PUBLIC_URL || "https://idonate.istad.co";
+const host = process.env.NEXT_PUBLIC_URL || "https://idonateapi.kangtido.life";
 
-export const {
-  handlers: { GET, POST },
-  auth,
-  signIn,
-  signOut,
-} = NextAuth({
+const authOptions = {
   providers: [
     FacebookProvider({
       clientId: process.env.NEXT_PUBLIC_FACEBOOK_CLIENT_ID as string,
@@ -22,14 +17,14 @@ export const {
   ],
   secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
-    async signIn({ user }) {
+    async signIn({ user }: { user: any }) {
       if (user) {
         return true;
       } else {
         return "/login";
       }
     },
-    async redirect({ url, baseUrl }) {
+    async redirect({ url, baseUrl }: { url: string, baseUrl: string }) {
       const parsedUrl = new URL(url, baseUrl);
       if (parsedUrl.searchParams.has("callbackUrl")) {
         return `${baseUrl}${parsedUrl.searchParams.get("callbackUrl")}`;
@@ -45,6 +40,8 @@ export const {
     signOut: "/",
     error: "/login",
   },
-  //   trustHost: host === 'https://idonate.istad.co'? true: false,
   debug: true,
-});
+};
+
+// Export the default API route handler
+export default NextAuth(authOptions);

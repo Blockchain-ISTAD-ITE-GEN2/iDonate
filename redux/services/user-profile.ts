@@ -6,48 +6,50 @@ import {
   userProfileinfoType,
 } from "@/lib/definition";
 
-export type user = {
+export type User = {
   uuid: string | null;
 };
 
 export const userProfileSettingApi = idonateApi.injectEndpoints({
-  endpoints: (builder) => ({
-    getUserProfile: builder.query({
-      query: () => ({
-        url: `/api/v1/users/me`,
-      }),
 
-      providesTags: ["userProfile"],
-    }),
+    endpoints: (builder) => ({
+		getUserProfile: builder.query({
+			query: () => ({
+				url:`/users/me`
+			}),
+	
+			providesTags: ["userProfile"]
+		}),
 
-    // update user info
+    // Update user profile
     updateUserProfile: builder.mutation<
-      any,
+      userProfileinfoType,
       { uuid: string; updatedUserProfile: userProfileinfoType }
     >({
       query: ({ uuid, updatedUserProfile }) => ({
-        url: `/api/v1/users/${uuid}`,
+        url: `/users/${uuid}`,
         method: "PATCH",
         body: updatedUserProfile,
       }),
       invalidatesTags: ["userProfile"],
     }),
-    // update avatar user
+
+    // Update user avatar
     updateAvatar: builder.mutation<
-      any,
-      { uuid: any; updatedProfileImage: UpdateProfileImageType }
+      { avatar: string },
+      { uuid: string; updatedProfileImage: UpdateProfileImageType }
     >({
       query: ({ uuid, updatedProfileImage }) => ({
-        url: `/api/v1/users/${uuid}/profile-image`,
+        url: `/users/${uuid}/upload-image`,
         method: "PUT",
         body: updatedProfileImage,
       }),
       invalidatesTags: ["userProfile"],
     }),
 
-    // update password user
+    // Update user password
     updatePassWords: builder.mutation<
-      any,
+      void,
       { uuid: string; updatedPassword: ChangePasswordType }
     >({
       query: ({ uuid, updatedPassword }) => ({
@@ -57,7 +59,9 @@ export const userProfileSettingApi = idonateApi.injectEndpoints({
       }),
       invalidatesTags: ["userProfile"],
     }),
-    getUserByUuid: builder.query<any, any>({
+
+    // Get user by UUID
+    getUserByUuid: builder.query<userProfileinfoType, string>({
       query: (uuid) => ({
         url: `/api/v1/users/${uuid}/me`,
       }),
@@ -71,5 +75,5 @@ export const {
   useUpdateUserProfileMutation,
   useUpdatePassWordsMutation,
   useUpdateAvatarMutation,
-  useGetUserByUuidQuery,
+  useGetUserByUuidQuery
 } = userProfileSettingApi;

@@ -1,10 +1,11 @@
 export type OrganizationParam = {
-  image: string;
-  title: string;
+  image: string | ""; 
+  name: string; 
   description: string;
   key?: number;
-  location: string;
+  address?: string;
 };
+
 export type EventTypeParam = {
   image: string;
   title: string;
