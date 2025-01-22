@@ -32,7 +32,6 @@ const Loader = () => {
         </div>
       </div>
     </StyledWrapper>
-    </div>
   );
 };
 
