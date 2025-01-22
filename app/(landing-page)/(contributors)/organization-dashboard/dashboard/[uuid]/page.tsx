@@ -10,10 +10,13 @@ import { useRouter } from "next/navigation";
 export default function OrganizationDashboard({ params }: { params: { uuid: string } }) {
   const { uuid } = params; 
   const router = useRouter();
-  const { data, isLoading, isError } = useGetOrganizationByuuidQuery(uuid);
-  console.log("Data of Organization", data)
+  const { data: organization, isLoading, isError } = useGetOrganizationByuuidQuery(uuid);
+
+  console.log("UUID: ", uuid)
+
+  console.log("Data of Organization", organization)
   // Extract the first organization from the array (with error handling)
-  const organization = data && data.length > 0 ? data[0] : null;
+  
 
   // // Redirect logic
   // useEffect(() => {
@@ -33,7 +36,7 @@ export default function OrganizationDashboard({ params }: { params: { uuid: stri
   console.log("Approve check : ", organization?.isApproved)
 
   if (!organization) {
-    router.push("/organization-registration");
+    router.push("/organization-dashboard/organization-registration");
   }
 
   else if(organization?.isApproved == true){
