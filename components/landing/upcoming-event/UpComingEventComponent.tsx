@@ -14,65 +14,48 @@ import RuralStudent2 from "@/public/landing/Student.jpg";
 import RuralStudent3 from "@/public/landing/Student_1.jpg";
 import RuralStudent4 from "@/public/landing/Student_2.jpg";
 import PoorFamily from "@/public/landing/PoorFamily.jpg";
+import { useGetEventsQuery } from "@/redux/services/event-service";
+import UpcommingEventPlaceholderComponent from "./UpcommingEventPlaceholderComponent";
 
 interface Event {
   id: number;
-  title: string;
+  name: string;
   description?: string;
-  date: string;
-  category: string;
-  image: string;
+  startDate: string;
+  category: {
+    name: string;
+  };
+  images: string[];
 }
 
-const events: Event[] = [
-  {
-    id: 1,
-    title: "ការផ្តល់ជំនួយទៅឲ្យក្រុមគ្រួសាររបស់សុខ",
-    description:
-      "ទឹកទន្លេមេគង្គហក់ឡើងលឿនគួរជាទីកត់សម្គាល់ដោយសារតែភ្លៀងធ្លាក់ជាបន្តបន្ទាប់ស្របពេលមានព្យុះផង បង្កឲ្យផ្ទះ សាលារៀន មន្ទីរពេទ្យ និងវត្តអារាមនៅតាមបណ្តាខេត្តមួយចំនួននៅតាមដងទន្លេត្រូវបានជន់លិច និង​មានប្រជាជនមួយចំនួនត្រូវបានជម្លៀសទៅកាន់ទីទួលសុវត្ថិភាព។​​ ក្នុងនោះក៏មានក្រុមគ្រួសាររបស់សុខត្រូវបានចួបប្រទះទៅនឹងគ្រោះថ្នាក់ខ្យល់ព្យុះដែលបណ្តាល់ឲ្យផ្ទះរបស់ពួគគេត្រូវបានខ្ទិចខ្ទីខូចខាតច្រើនសឹងតែទាំងស្រុង។​ គ្រោះថ្នាក់នេះមិនបណ្តាលឲ្យមានជនរងគ្រោះរហូតដល់បាត់បង់ជីវិតនោះទេ ប៉ុន្តែគ្រាន់តែធ្វើឲ្យខូចខាងសម្ភារប្រើប្រាស់នានាតែប៉ុណ្ណោះ",
-    date: "25, May 2025",
-    category: "Kid Education",
-    image: PoorFamily.src,
-  },
-  {
-    id: 2,
-    title: "រូបថតពាក់ព័ន្ធ ",
-    description:
-      "ទឹកទន្លេមេគង្គហក់ឡើងលឿនគួរជាទីកត់សម្គាល់ដោយសារតែភ្លៀងធ្លាក់ជាបន្តបន្ទាប់ស្របពេលមានព្យុះផង បង្កឲ្យផ្ទះ សាលារៀន មន្ទីរពេទ្យ និងវត្តអារាមនៅតាមបណ្តាខេត្តមួយចំនួននៅតាមដងទន្លេត្រូវបានជន់លិច និង​មានប្រជាជនមួយចំនួនត្រូវបានជម្លៀសទៅកាន់ទីទួលសុវត្ថិភាព។​​ ក្នុងនោះក៏មានក្រុមគ្រួសាររបស់សុខត្រូវបានចួបប្រទះទៅនឹងគ្រោជន់ថ",
-    date: "25, May 2025",
-    category: "Kid Education",
-    image: RuralStudent1.src,
-  },
-  {
-    id: 3,
-    title: "រូបថតពាក់ព័ន្ធ ",
-    description:
-      "ទឹកទន្លេមេគង្គហក់ឡើងលឿនគួរជាទីកត់សម្គាល់ដោយសារតែភ្លៀងធ្លាក់ជាបន្តបន្ទាប់ស្របពេលមានព្យុះផង បង្កឲ្យផ្ទះ សាលារៀន មន្ទីរពេទ្យ និងវត្តអារាមនៅតាមបណ្តាខេត្តមួយចំនួននៅតាមដងទន្លេត្រូវបានជន់លិច និង​មានប្រជាជនមួយចំនួនត្រូវបានជម្លៀសទៅកាន់ទីទួលសុវត្ថិភាព។​​ ក្នុងនោះក៏មានក្រុមគ្រួសាររបស់សុខត្រូវបានចួបប្រទះទៅនឹងគ្រោជន់ថ",
-    date: "25, May 2025",
-    category: "Kid Education",
-    image: RuralStudent2.src,
-  },
-  {
-    id: 4,
-    title: "រូបថតពាក់ព័ន្ធ ",
-    date: "25, May 2025",
-    description:
-      "ទឹកទន្លេមេគង្គហក់ឡើងលឿនគួរជាទីកត់សម្គាល់ដោយសារតែភ្លៀងធ្លាក់ជាបន្តបន្ទាប់ស្របពេលមានព្យុះផង បង្កឲ្យផ្ទះ សាលារៀន មន្ទីរពេទ្យ និងវត្តអារាមនៅតាមបណ្តាខេត្តមួយចំនួននៅតាមដងទន្លេត្រូវបានជន់លិច និង​មាន",
-    category: "Kid Education",
-    image: RuralStudent3.src,
-  },
-  {
-    id: 5,
-    title: "រូបថតពាក់ព័ន្ធ ",
-    description:
-      "ទឹកទន្លេមេគង្គហក់ឡើងលឿនគួរជាទីកត់សម្គាល់ដោយសារតែភ្លៀងធ្លាក់ជាបន្តបន្ទាប់ស្របពេលមានព្យុះផង បង្កឲ្យផ្ទះ សាលារៀន មន្ទីរពេទ្យ និងវត្តអារាមនៅតាមបណ្តាខេត្តមួយចំនួននៅតាមដងទន្លេត្រូវបានជន់លិច និង​មានប្រជាជនមួយចំនួនត្រូវបានជម្លៀសទៅកាន់ទីទួលសុវត្ថិភាព។​​ ក្នុងនោះក៏មានក្រុមគ្រួសាររបស់សុខត្រូវបានចួបប្រទះទៅនឹងគ្រោជន់",
-    date: "25, May 2025",
-    category: "Kid Education",
-    image: RuralStudent4.src,
-  },
-];
 
 export default function UpcomingEvents() {
+
+const {
+  data:upCommingApiReponse = {content:[]},
+  isLoading,
+  isError
+  } = useGetEventsQuery(undefined);
+
+  // isDraft == true mean that event is panding or upcomming event
+
+  const events:Event[] = upCommingApiReponse?.content?.filter(
+    (event:any) => event.isDraft
+  );
+
+  // logs the data after fetch
+  console.log("====> UP Comming Data RTK: ",events)
+
+  if (isLoading){
+    return(
+      <UpcommingEventPlaceholderComponent/>
+    )
+  }
+  if (isError){
+    return<h1>Faild to load upComming event data . check it again </h1>
+  }
+
+
   return (
     <section className="w-full lg:w-full mx-auto md:px-4 px-4 lg:px-[100px] pb-9 space-y-4">
       <h2
@@ -88,81 +71,125 @@ export default function UpcomingEvents() {
         កម្មវិធីបរិច្ចាគ ដែលនិងកើតឡើងឆាប់នេះ!
       </h3>
 
-      <div className="grid lg:grid-cols-2 gap-6 bg-transparent ">
-        {/* Featured Event */}
-        <Card className="overflow-hidden transition-transform hover:scale-[1.01] cursor-pointer">
-          <div className="flex-1 aspect-video relative">
-            <Image
-              src={events[0].image}
-              alt={events[0].title}
-              fill
-              className="object-cover w-full h-full"
-              // sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            />
-          </div>
-
-          <CardContent lang="km" className="flex-grow p-6 space-y-4">
-            <CardTitle className="text-title-khmer font-semibold text-iDonate-navy-primary dark:text-iDonate-navy-accent">
-              {events[0].title}
-            </CardTitle>
-
-            <p className="line-clamp-2 sm:line-clamp-none text-description-khmer text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
-              {events[0].description}
-            </p>
-
-            <div className="flex flex-wrap justify-between gap-4">
-              <div className="flex items-center justify-center gap-2 text-iDonate-navy-secondary dark:text-iDonate-green-secondary">
-                <CalendarDays className="h-4 w-4 flex-shrink-0" />
-                <span>{events[0].date}</span>
-              </div>
-
-              <div className="flex items-center justify-center  gap-2 text-iDonate-navy-primary dark:text-iDonate-green-secondary">
-                <School className="h-4 w-4 flex-shrink-0" />
-                <span>{events[0].category}</span>
-              </div>
+     
+      <div className="grid lg:grid-cols-2 gap-6 bg-transparent">
+        {/* Featured Big  Event Card */}
+        {events[0] && (
+          <Card className="overflow-hidden transition-transform hover:scale-[1.01] cursor-pointer flex flex-col">
+            <div className="flex-1 aspect-video relative">
+              <Image
+                src={events[0]?.images[0] || "https://t4.ftcdn.net/jpg/06/71/92/37/360_F_671923740_x0zOL3OIuUAnSF6sr7PuznCI5bQFKhI0.jpg"}
+                alt={events[0]?.name || "event_image"}
+                fill
+                className="object-cover w-full h-full"
+              />
             </div>
-          </CardContent>
-        </Card>
 
-        {/* Grid of Smaller Events */}
-        <div className="grid sm:grid-cols-2 gap-4">
-          {events.slice(1).map((event) => (
-            <Card
-              key={event.id}
-              className="overflow-hidden transition-transform hover:scale-[1.02] cursor-pointer dark:text-iDonate-navy-accentbg-iDonate-dark-mode"
-            >
-              <div className="aspect-video relative">
-                <Image
-                  src={event.image}
-                  alt={event.title}
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-                />
-              </div>
+              <CardContent lang="km" className="flex-grow p-6 flex flex-col justify-between">
+                <div>
+                  <CardTitle className="text-title-khmer mb-2 font-semibold text-iDonate-navy-primary dark:text-iDonate-navy-accent">
+                    {events[0]?.name || ""}
+                  </CardTitle>
 
-              <CardContent className="flex-grow p-4 space-y-2">
-                <CardTitle className="text-title-khmer font-semibold text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
-                  {event.title}
-                </CardTitle>
+                  <p className="line-clamp-4 sm:line-clamp-none text-description-khmer text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
+                    {events[0]?.description || ""}
+                  </p>
+                </div>
 
-                <p className="flex-1 text-description-khmer text-iDonate-navy-secondary line-clamp-2 dark:text-iDonate-navy-accent">
-                  {event?.description}
-                </p>
-
-                <div className="flex flex-wrap justify-between gap-4">
-                  <div className="flex items-center gap-2 text-iDonate-navy-secondary dark:text-iDonate-green-secondary">
-                    <CalendarDays className="h-3 w-3 flex-shrink-0" />
-                    <span>{event.date}</span>
+                {/* Move to bottom of the card */}
+                <div className="flex flex-wrap justify-between gap-4 pt-4">
+                  <div className="flex items-center justify-center gap-2 text-iDonate-navy-secondary dark:text-iDonate-green-secondary">
+                    <CalendarDays className="h-4 w-4 flex-shrink-0" />
+                    <span>{events[0].startDate || "N/A"}</span>
                   </div>
 
-                  <div className="flex items-center gap-2 text-iDonate-navy-secondary dark:text-iDonate-green-secondary">
-                    <School className="h-3 w-3 flex-shrink-0" />
-                    <span>{event.category}</span>
+                  <div className="flex items-center justify-center gap-2 text-iDonate-navy-primary dark:text-iDonate-green-secondary">
+                    <School className="h-4 w-4 flex-shrink-0" />
+                    <span>{events[0].category?.name || ""}</span>
                   </div>
                 </div>
               </CardContent>
-            </Card>
+          </Card>
+        )}
+
+
+        {/* Grid of Smaller Events */}
+
+        <div className="grid sm:grid-cols-2 gap-4">
+          {events.slice(1).map((event:any) => (
+            // <Card
+            //   key={event.id}
+            //   className="overflow-hidden transition-transform hover:scale-[1.02] cursor-pointer dark:text-iDonate-navy-accentbg-iDonate-dark-mode"
+            // >
+            //   <div className="aspect-video relative">
+            //     <Image
+            //       src={event.images[0]}
+            //       alt={event.name}
+            //       fill
+            //       className="object-cover"
+            //       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+            //     />
+            //   </div>
+
+            //   <CardContent className="flex-grow p-4 space-y-2">
+            //     <CardTitle className="text-title-khmer font-semibold text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
+            //       {event.name || ""}
+            //     </CardTitle>
+
+            //     <p className="flex-1 text-description-khmer text-iDonate-navy-secondary line-clamp-2 dark:text-iDonate-navy-accent">
+            //       {event?.description || ""}
+            //     </p>
+
+            //     <div className="flex flex-wrap justify-between gap-4 bottom-0">
+            //       <div className="flex items-center gap-2 text-iDonate-navy-secondary dark:text-iDonate-green-secondary">
+            //         <CalendarDays className="h-3 w-3 flex-shrink-0" />
+            //         <span>{event.startDate || "N/A"}</span>
+            //       </div>
+
+            //       <div className="flex items-center gap-2 text-iDonate-navy-secondary dark:text-iDonate-green-secondary">
+            //         <School className="h-3 w-3 flex-shrink-0" />
+            //         <span>{event.category?.name || ""}</span>
+            //       </div>
+            //     </div>
+            //   </CardContent>
+            // </Card>
+
+            <Card
+            key={event.id}
+            className="flex flex-col overflow-hidden transition-transform hover:scale-[1.02] cursor-pointer dark:text-iDonate-navy-accentbg-iDonate-dark-mode"
+          >
+            <div className="aspect-video relative">
+              <Image
+                src={event.images[0]}
+                alt={event.name}
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+              />
+            </div>
+
+            <CardContent className="flex flex-col flex-grow  p-4 space-y-2">
+              <CardTitle className="text-title-khmer font-semibold text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
+                {event.name || ""}
+              </CardTitle>
+
+              <p className="flex-1 text-description-khmer text-iDonate-navy-secondary line-clamp-2 dark:text-iDonate-navy-accent">
+                {event?.description || ""}
+              </p>
+
+              <div className="flex flex-wrap justify-between gap-4 mt-auto">
+                <div className="flex items-center gap-2 text-iDonate-navy-secondary dark:text-iDonate-green-secondary">
+                  <CalendarDays className="h-3 w-3 flex-shrink-0" />
+                  <span>{event.startDate || "N/A"}</span>
+                </div>
+
+                <div className="flex items-center gap-2 text-iDonate-navy-secondary dark:text-iDonate-green-secondary">
+                  <School className="h-3 w-3 flex-shrink-0" />
+                  <span>{event.category?.name || ""}</span>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
           ))}
         </div>
       </div>
