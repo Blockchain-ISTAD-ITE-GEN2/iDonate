@@ -122,7 +122,7 @@ const {
         {/* Grid of Smaller Events */}
 
         <div className="grid sm:grid-cols-2 gap-4">
-          {events.slice(1).map((event:any) => (
+          {events.slice(1,5).map((event:any) => (
             <Card
             key={event.id}
             className="flex flex-col overflow-hidden transition-transform hover:scale-[1.02] cursor-pointer dark:text-iDonate-navy-accentbg-iDonate-dark-mode"
@@ -137,8 +137,8 @@ const {
               />
             </div>
 
-            <CardContent className="flex flex-col flex-grow  p-4 space-y-2">
-              <CardTitle className="text-title-khmer font-semibold text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
+            <CardContent className="flex flex-col flex-grow  p-4 space-y-2 ">
+              <CardTitle className="text-title-khmer line-clamp-1  font-semibold text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
                 {event.name || ""}
               </CardTitle>
 
