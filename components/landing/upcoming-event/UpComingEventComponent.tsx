@@ -9,11 +9,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { CalendarDays, School } from "lucide-react";
-import RuralStudent1 from "@/public/landing/CambodianRuralStudent.jpg";
-import RuralStudent2 from "@/public/landing/Student.jpg";
-import RuralStudent3 from "@/public/landing/Student_1.jpg";
-import RuralStudent4 from "@/public/landing/Student_2.jpg";
-import PoorFamily from "@/public/landing/PoorFamily.jpg";
 import { useGetEventsQuery } from "@/redux/services/event-service";
 import UpcommingEventPlaceholderComponent from "./UpcommingEventPlaceholderComponent";
 
@@ -53,6 +48,17 @@ const {
   }
   if (isError){
     return<h1>Faild to load upComming event data . check it again </h1>
+  }
+
+    // function to covert format 
+  function formatDate(dateString: string | undefined): string {
+    if (!dateString) return "N/A";
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-GB", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+    });
   }
 
 
@@ -100,7 +106,7 @@ const {
                 <div className="flex flex-wrap justify-between gap-4 pt-4">
                   <div className="flex items-center justify-center gap-2 text-iDonate-navy-secondary dark:text-iDonate-green-secondary">
                     <CalendarDays className="h-4 w-4 flex-shrink-0" />
-                    <span>{events[0].startDate || "N/A"}</span>
+                    <span>{formatDate(events[0].startDate) || "N/A"}</span>
                   </div>
 
                   <div className="flex items-center justify-center gap-2 text-iDonate-navy-primary dark:text-iDonate-green-secondary">
@@ -117,43 +123,6 @@ const {
 
         <div className="grid sm:grid-cols-2 gap-4">
           {events.slice(1).map((event:any) => (
-            // <Card
-            //   key={event.id}
-            //   className="overflow-hidden transition-transform hover:scale-[1.02] cursor-pointer dark:text-iDonate-navy-accentbg-iDonate-dark-mode"
-            // >
-            //   <div className="aspect-video relative">
-            //     <Image
-            //       src={event.images[0]}
-            //       alt={event.name}
-            //       fill
-            //       className="object-cover"
-            //       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-            //     />
-            //   </div>
-
-            //   <CardContent className="flex-grow p-4 space-y-2">
-            //     <CardTitle className="text-title-khmer font-semibold text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
-            //       {event.name || ""}
-            //     </CardTitle>
-
-            //     <p className="flex-1 text-description-khmer text-iDonate-navy-secondary line-clamp-2 dark:text-iDonate-navy-accent">
-            //       {event?.description || ""}
-            //     </p>
-
-            //     <div className="flex flex-wrap justify-between gap-4 bottom-0">
-            //       <div className="flex items-center gap-2 text-iDonate-navy-secondary dark:text-iDonate-green-secondary">
-            //         <CalendarDays className="h-3 w-3 flex-shrink-0" />
-            //         <span>{event.startDate || "N/A"}</span>
-            //       </div>
-
-            //       <div className="flex items-center gap-2 text-iDonate-navy-secondary dark:text-iDonate-green-secondary">
-            //         <School className="h-3 w-3 flex-shrink-0" />
-            //         <span>{event.category?.name || ""}</span>
-            //       </div>
-            //     </div>
-            //   </CardContent>
-            // </Card>
-
             <Card
             key={event.id}
             className="flex flex-col overflow-hidden transition-transform hover:scale-[1.02] cursor-pointer dark:text-iDonate-navy-accentbg-iDonate-dark-mode"
@@ -180,7 +149,7 @@ const {
               <div className="flex flex-wrap justify-between gap-4 mt-auto">
                 <div className="flex items-center gap-2 text-iDonate-navy-secondary dark:text-iDonate-green-secondary">
                   <CalendarDays className="h-3 w-3 flex-shrink-0" />
-                  <span>{event.startDate || "N/A"}</span>
+                  <span>{formatDate(event.startDate) || "N/A"}</span>
                 </div>
 
                 <div className="flex items-center gap-2 text-iDonate-navy-secondary dark:text-iDonate-green-secondary">

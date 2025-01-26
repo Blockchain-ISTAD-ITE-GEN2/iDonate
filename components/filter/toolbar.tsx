@@ -5,7 +5,10 @@ import { DateRangePicker } from "./date-range-picker";
 import { DateRange } from "react-day-picker";
 
 type ToolbarProps = {
-  events: { [key: string]: string | number | Date }[];
+
+  events: { [key: string]:any}[];
+  // events: { [key: string]: string | number | Date }[];
+
   searchKey: string;
   filtersFace: {
     key: string;
@@ -83,6 +86,9 @@ export function Toolbar({
   useEffect(() => {
     onFilterChange(filteredEvents);
   }, [filteredEvents, onFilterChange]);
+
+
+  
 
   return (
     <div className="flex items-center justify-between">

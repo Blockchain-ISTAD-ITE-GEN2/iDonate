@@ -46,6 +46,7 @@ export default function OrganizationOnPageComponent() {
   useEffect(() => {
     setFilteredOrganizations(organizationData); 
   }, [organizationData]);
+  
 
   const handleFilterChange = useCallback((filteredData: OrganizationParam[]) => {
     setFilteredOrganizations(filteredData.slice(0, visibleCount)); 
@@ -58,28 +59,30 @@ export default function OrganizationOnPageComponent() {
   }, [organizationData, visibleCount]);
 
 
+
+
   // handle show Organization 
   const handleShowMore = () => {
     setVisibleCount((prev) => prev + 3);
   };
 
 
-  if (isLoadingOrg) {
-    return (
-      <div className="grid gap-6 grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 m-6">
-        {Array(6)
-          .fill(null)
-          .map((_, index) => (
-            <OrganizationPlaceholderComponent key={index} />
-          ))}
-      </div>
-    );
-  }
+  // if (isLoadingOrg) {
+  //   return (
+  //     <div className="grid gap-6 grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 m-6">
+  //       {Array(6)
+  //         .fill(null)
+  //         .map((_, index) => (
+  //           <OrganizationPlaceholderComponent key={index} />
+  //         ))}
+  //     </div>
+  //   );
+  // }
 
   if (isError) {
 
     console.error("Error fetching organizations");
-    return <div className="text-center m-12">Something went Wrong!</div>;
+    // return <div className="text-center m-12">Something went Wrong!</div>;
   }
 
   return (
@@ -99,6 +102,28 @@ export default function OrganizationOnPageComponent() {
           onFilterChange={handleFilterChange}
         />;
 
+      <div className="grid gap-6 grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
+        {isLoadingOrg
+          ? Array(visibleCount)   // 06 
+              .fill(null)
+              .map((_, index) => (
+                <OrganizationPlaceholderComponent key={index} />
+              ))
+          : filteredOrganizations.map((org: OrganizationParam, index: number) => (
+              <OrganizationCardComponent
+                key={index}
+                image={org.image || ""}
+                name={org.name}
+                description={org.description}
+                address={org.address}
+              />
+            ))}
+      </div>
+
+
+
+
+{/* 
         <div className="grid gap-6 grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
           {filteredOrganizations.map((org: OrganizationParam, index: number) => (
             <OrganizationCardComponent
@@ -109,7 +134,7 @@ export default function OrganizationOnPageComponent() {
               address={org.address}
             />
           ))}
-        </div>
+        </div> */}
 
         <div className="flex justify-end">
           <Button
