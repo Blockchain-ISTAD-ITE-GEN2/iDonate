@@ -39,7 +39,7 @@ export default function ForgotPasswordForm() {
     setSuccess(false);
 
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/forgot`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/forgot-password`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

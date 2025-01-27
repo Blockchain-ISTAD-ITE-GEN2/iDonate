@@ -25,6 +25,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { AlertComfirmDialog } from "@/components/Alert/Alert-Dialog";
+import { useGetUserProfileQuery, useUpdateUserProfileMutation } from "@/redux/services/user-profile";
 
 type DonorInfoFormProps = {
   onFullnamePercentageUpdate: (fullnamePercentage: number) => void;
@@ -37,16 +38,20 @@ export function DonorInfoForm({
   onEmailPercentageUpdate,
   onContactPercentageUpdate,
 }: DonorInfoFormProps) {
-  // 1. State to toggle between view and edit mode
   const [isEditing, setIsEditing] = useState(false);
 
-  // 2. Define your form.
+  // Fetch donor profile data
+  const { data: donorProfile } = useGetUserProfileQuery({});
+
+  // Mutation to update donor profile
+  const [updateUserProfile] = useUpdateUserProfileMutation();
+
   const form = useForm<z.infer<typeof organizationInfomationSchema>>({
     resolver: zodResolver(organizationInfomationSchema),
     defaultValues: {
-      fullName: "",
-      email: "",
-      contact: "",
+      fullName: donorProfile?.fullName || "",
+      email: donorProfile?.email || "",
+      contact: donorProfile?.contact || "",
     },
   });
 
@@ -56,20 +61,13 @@ export function DonorInfoForm({
   const email = watch("email");
   const contact = watch("contact");
 
-  // 3. Define a submit handler.
-  function onSubmit(values: z.infer<typeof organizationInfomationSchema>) {
-    console.log(values);
-    setIsEditing(false);
-  }
-
+  // Update percentages based on input
   useEffect(() => {
-    // Calculate percentage for each field
     const calculateCompletionPercentage = () => {
       const fullNamePercentage = fullName.trim() ? 20 : 0;
       const emailPercentage = email.trim() ? 20 : 0;
       const contactPercentage = contact.trim() ? 20 : 0;
 
-      // Call individual percentage update functions for each field
       onFullnamePercentageUpdate(fullNamePercentage);
       onEmailPercentageUpdate(emailPercentage);
       onContactPercentageUpdate(contactPercentage);
@@ -85,10 +83,33 @@ export function DonorInfoForm({
     onContactPercentageUpdate,
   ]);
 
-  function handleCancel() {
-    reset(); // Reset the form
-    setIsEditing(false); // Switch back to view mode
-  }
+  // Handle form submission
+  const onSubmit = async (values: z.infer<typeof organizationInfomationSchema>) => {
+    try {
+      if (!donorProfile?.uuid) return;
+
+      // Update the profile using RTK Mutation
+      await updateUserProfile({
+        uuid: donorProfile.uuid,
+        updatedUserProfile: values,
+      }).unwrap();
+
+      console.log("Profile updated successfully!");
+      setIsEditing(false);
+    } catch (error) {
+      console.error("Failed to update profile:", error);
+    }
+  };
+
+  // Handle cancel
+  const handleCancel = () => {
+    reset({
+      fullName: donorProfile?.fullName || "",
+      email: donorProfile?.email || "",
+      contact: donorProfile?.contact || "",
+    });
+    setIsEditing(false);
+  };
 
   return (
     <Form {...form}>
@@ -116,7 +137,7 @@ export function DonorInfoForm({
                   Full Name
                 </CardDescription>
                 <CardDescription className="text-sm sm:text-description-eng lg:text-medium-eng text-iDonate-navy-primary">
-                  Elizabeth Joe
+                  {donorProfile?.fullName || "No full name provided"}
                 </CardDescription>
               </div>
 
@@ -125,7 +146,7 @@ export function DonorInfoForm({
                   Email
                 </CardDescription>
                 <CardDescription className="text-sm sm:text-description-eng lg:text-medium-eng text-iDonate-navy-primary">
-                  ElizabethJoe@gmail.com
+                  {donorProfile?.email || "No email provided"}
                 </CardDescription>
               </div>
 
@@ -134,7 +155,7 @@ export function DonorInfoForm({
                   Contact
                 </CardDescription>
                 <CardDescription className="text-sm sm:text-description-eng lg:text-medium-eng text-iDonate-navy-primary">
-                  +855 12345678
+                  {donorProfile?.contact || "No contact provided"}
                 </CardDescription>
               </div>
             </CardContent>
@@ -212,7 +233,7 @@ export function DonorInfoForm({
               />
 
               <FormField
-                control={form.control}
+                control={control}
                 name="email"
                 render={({ field }) => (
                   <FormItem className="flex-1">
@@ -235,7 +256,7 @@ export function DonorInfoForm({
               />
 
               <FormField
-                control={form.control}
+                control={control}
                 name="contact"
                 render={({ field }) => (
                   <FormItem className="flex-1">

@@ -125,7 +125,7 @@ export type UploadFileType = {
 };
 
 export type UpdateProfileImageType ={
-image: string;
+file: string;
 }
 
 // user data type

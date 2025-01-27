@@ -24,28 +24,39 @@ export const userProfileSettingApi = idonateApi.injectEndpoints({
     // Update user profile
     updateUserProfile: builder.mutation<
       userProfileinfoType,
-      { uuid: string; updatedUserProfile: userProfileinfoType }
+      { uuid: string; updatedUserProfile: EditprofileType }
     >({
       query: ({ uuid, updatedUserProfile }) => ({
         url: `/users/${uuid}`,
-        method: "PATCH",
+        method: "PUT",
         body: updatedUserProfile,
       }),
       invalidatesTags: ["userProfile"],
     }),
 
     // Update user avatar
-    updateAvatar: builder.mutation<
-      { avatar: string },
-      { uuid: string; updatedProfileImage: UpdateProfileImageType }
-    >({
-      query: ({ uuid, updatedProfileImage }) => ({
-        url: `/users/${uuid}/upload-image`,
-        method: "PUT",
-        body: updatedProfileImage,
+    // updateAvatar: builder.mutation<
+    // { file: FormData; uuid: string },
+    // { uuid: string }
+    // >({
+    //   query: ({ uuid, file:FormData }) => ({
+    //     url: `/users/${uuid}/upload-image`,
+    //     method: "PUT",
+    //     body: file,
+    //   }),
+    //   invalidatesTags: ["userProfile"],
+    // }),
+        updateAvatar: builder.mutation<
+        void,  // Response type (assuming server returns nothing)
+        { file: FormData; uuid: string }  // Request type
+      >({
+        query: ({ uuid, file }) => ({  // Destructure both parameters correctly
+          url: `/users/${uuid}/upload-image`,
+          method: "PUT",
+          body: file,
+        }),
+        invalidatesTags: ["userProfile"],
       }),
-      invalidatesTags: ["userProfile"],
-    }),
 
     // Update user password
     updatePassWords: builder.mutation<

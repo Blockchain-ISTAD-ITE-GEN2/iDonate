@@ -16,6 +16,7 @@ import { selectToken } from "@/redux/features/auth/authSlice";
 import { useGetUserProfileQuery } from "@/redux/services/user-profile";
 import AvartarPlaceHolder from '@/public/images/user-idonate.png'
 import { getUuidFromToken } from "@/lib/uuid";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
 type MobileMenuProps = {
   isOpen: boolean;
@@ -121,18 +122,21 @@ export function MobileMenu({
                 <DropdownMenu>
                   <DropdownMenuTrigger>
                     {userProfile? (
-                      <Image
-                      src={
-        
-                        AvartarPlaceHolder ||
-                        `https://idonateapi.kangtido.life/media/${userProfile?.avatar || ''}`
-                      }
-                      
-                        alt={`${userProfile?.username ?? "user"}'s avatar`}
-                        width={40}
-                        height={40}
-                        className="rounded-full border-2 border-iDonate-navy-primary"
-                      />
+                 <Avatar className="w-14 h-14">
+                 <AvatarImage
+                 width={1000}
+                 height={1000}
+                   src={
+                     userProfile?.avatar
+                     ? `${process.env.NEXT_PUBLIC_IDONATE_API_URL}/media/${userProfile?.avatar}`
+                     : AvartarPlaceHolder.src
+                   }
+                   alt={`${userProfile?.username ?? "user"}'s avatar`}
+                 />
+                     <AvatarFallback className="text-gray-700">
+                     {userProfile?.username?.[0]?.toUpperCase() || "?"}
+                   </AvatarFallback>
+               </Avatar>
                     ) : (
                       <div className="w-10 h-10 rounded-full bg-iDonate-navy-primary flex items-center justify-center">
                         <User className="text-white" size={20} />
@@ -144,18 +148,21 @@ export function MobileMenu({
                     <div className="p-3">
                       <div className="flex items-center space-x-3">
                         {userProfile ? (
-                          <Image
-                          src={
-                  
-                            AvartarPlaceHolder ||
-                            `https://idonateapi.kangtido.life/media/${userProfile?.avatar || ''}`
-                          }
-                          
-                            alt={`${userProfile?.username ?? "User"}'s avatar`}
-                            width={50}
-                            height={50}
-                            className="rounded-full border-2 border-iDonate-navy-primary"
+                          <Avatar className="w-14 h-14">
+                          <AvatarImage
+                          width={1000}
+                          height={1000}
+                            src={
+                              userProfile?.avatar
+                              ? `${process.env.NEXT_PUBLIC_IDONATE_API_URL}/media/${userProfile?.avatar}`
+                              : AvartarPlaceHolder.src
+                            }
+                            alt={`${userProfile?.username ?? "user"}'s avatar`}
                           />
+                              <AvatarFallback className="text-gray-700">
+                              {userProfile?.username?.[0]?.toUpperCase() || "?"}
+                            </AvatarFallback>
+                        </Avatar>
                         ) : (
                           <div className="w-10 h-10 rounded-full bg-iDonate-navy-primary flex items-center justify-center">
                             <User className="text-white" size={20} />
