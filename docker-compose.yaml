@@ -10,7 +10,7 @@ services:
       - NEXT_PUBLIC_URL=https://idonate.kangtido.life
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.idonate.rule=Host(`idonate.kangtido.life`)"
+      - "traefik.http.routers.idonate.rule=Host(`idonate.istad.co`)"
       - "traefik.http.routers.idonate.entrypoints=websecure"
       - "traefik.http.routers.idonate.tls=true"
       - "traefik.http.routers.idonate.tls.certresolver=letsencrypt"
