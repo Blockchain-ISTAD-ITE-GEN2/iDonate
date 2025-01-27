@@ -12,7 +12,7 @@ import transactions from "@/data/recent-transaction.json";
 import { HandCoins, HeartIcon, Share2Icon, Users } from "lucide-react";
 
 export function EventDetailBanner() {
-  const recentTransactions = transactions.slice(0, 4);
+  const recentTransactions = transactions.slice(0, 3);
 
   return (
     <Card className="w-[440px] h-full border-2 border-iDonate-navy-accent shadow-light">
@@ -46,11 +46,11 @@ export function EventDetailBanner() {
             <Share2Icon />
             Share Event
           </Button>
-
+{/* 
           <Button className="w-full rounded-lg bg-iDonate-green-secondary hover:bg-iDonate-green-secondary text-iDonate-navy-primary font-semibold">
             <HeartIcon className="fill-iDonate-navy-primary" />
             Donate Now
-          </Button>
+          </Button> */}
         </div>
 
         <div className="flex flex-col gap-6">

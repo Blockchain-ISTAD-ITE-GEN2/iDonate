@@ -1,19 +1,24 @@
 // Page Detail
-import HeroSectionCategoryComponent from "@/components/events/categories/categorydetail/HeroSectionCategoryComponent";
-import CategoryDetailComponent from "@/components/events/categories/categorydetail/CategoryDetailComponent";
+import HeroSectionCategoryComponent from "@/components/events/categories/HeroSectionCategoryComponent";
+import CategoryDetailComponent from "@/components/events/categories/CategoryDetailComponent";
 
-export default function Page() {
+
+
+
+export default function Page(props: { params: { uuid: string } }) {
+
+
   return (
     <section className="flex flex-col gap-9 justify-center">
       {/*Start Hero Section*/}
       <HeroSectionCategoryComponent />
 
-      <CategoryDetailComponent />
+      <CategoryDetailComponent params={props?.params}/>
     </section>
   );
 }
 
-import { Metadata } from "next";
+// import { Metadata } from "next";
 
 // type Props = {
 //     params: { id: string };

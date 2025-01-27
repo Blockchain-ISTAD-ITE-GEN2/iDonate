@@ -1,7 +1,13 @@
 import { ChevronRight, Heart, LogOut, Search, User, X } from "lucide-react";
 import { Button } from "../ui/button";
 import Image from "next/image";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "../ui/dropdown-menu";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
 import ThemeSwitch from "../theme/ThemeSwitches";
 import { ProfileDropdown } from "./profile/profile-dropdown";
 import { useEffect, useState } from "react";
@@ -14,7 +20,7 @@ import toast from "react-hot-toast";
 import { useAppSelector } from "@/redux/hooks";
 import { selectToken } from "@/redux/features/auth/authSlice";
 import { useGetUserProfileQuery } from "@/redux/services/user-profile";
-import AvartarPlaceHolder from '@/public/images/user-idonate.png'
+import AvartarPlaceHolder from "@/public/images/user-idonate.png";
 import { getUuidFromToken } from "@/lib/uuid";
 
 type MobileMenuProps = {
@@ -45,9 +51,7 @@ export function MobileMenu({
   const accessTokenValue = useAppSelector(selectToken);
   const { data: userProfile, error, isLoading } = useGetUserProfileQuery({});
 
-
-
-  console.log("User Profile",userProfile);
+  console.log("User Profile", userProfile);
   const uuid = getUuidFromToken(accessTokenValue as string);
 
   const handleLogoutAuth = (): void => {
@@ -103,7 +107,10 @@ export function MobileMenu({
 
   return (
     <nav className="w-full h-20 self-start lg:hidden flex items-center justify-between shadow-sm z-10">
-      <div className="fixed inset-0 bg-black bg-opacity-50 z-50 lg:hidden" onClick={onClose}>
+      <div
+        className="fixed inset-0 bg-black bg-opacity-50 z-50 lg:hidden"
+        onClick={onClose}
+      >
         <div className="w-full h-[72px] flex items-center justify-between shadow-sm px-4 bg-white dark:bg-iDonate-bg-dark-mode">
           <section
             className="flex items-center cursor-pointer"
@@ -120,14 +127,12 @@ export function MobileMenu({
               {session || accessTokenValue ? (
                 <DropdownMenu>
                   <DropdownMenuTrigger>
-                    {userProfile? (
+                    {userProfile ? (
                       <Image
-                      src={
-        
-                        AvartarPlaceHolder ||
-                        `https://idonateapi.kangtido.life/media/${userProfile?.avatar || ''}`
-                      }
-                      
+                        src={
+                          AvartarPlaceHolder ||
+                          `https://idonateapi.kangtido.life/media/${userProfile?.avatar || ""}`
+                        }
                         alt={`${userProfile?.username ?? "user"}'s avatar`}
                         width={40}
                         height={40}
@@ -145,12 +150,10 @@ export function MobileMenu({
                       <div className="flex items-center space-x-3">
                         {userProfile ? (
                           <Image
-                          src={
-                  
-                            AvartarPlaceHolder ||
-                            `https://idonateapi.kangtido.life/media/${userProfile?.avatar || ''}`
-                          }
-                          
+                            src={
+                              AvartarPlaceHolder ||
+                              `https://idonateapi.kangtido.life/media/${userProfile?.avatar || ""}`
+                            }
                             alt={`${userProfile?.username ?? "User"}'s avatar`}
                             width={50}
                             height={50}
@@ -163,10 +166,14 @@ export function MobileMenu({
                         )}
                         <div className="text-sm">
                           <div className="font-medium text-gray-900 dark:text-white">
-                            {session?.user?.name || userProfile?.username || "Guest User"}
+                            {session?.user?.name ||
+                              userProfile?.username ||
+                              "Guest User"}
                           </div>
                           <div className="text-gray-500 dark:text-gray-400">
-                            {session?.user?.email || userProfile?.email || "No Email"}
+                            {session?.user?.email ||
+                              userProfile?.email ||
+                              "No Email"}
                           </div>
                         </div>
                       </div>
@@ -179,8 +186,13 @@ export function MobileMenu({
                         href={`/donor-dashboard/${uuid}`}
                         className="flex items-center space-x-2 cursor-pointer p-2 hover:bg-gray-100 dark:hover:bg-gray-700"
                       >
-                        <User className="text-iDonate-navy-primary dark:text-white" size={20} />
-                        <span className="dark:text-white">Profile Settings</span>
+                        <User
+                          className="text-iDonate-navy-primary dark:text-white"
+                          size={20}
+                        />
+                        <span className="dark:text-white">
+                          Profile Settings
+                        </span>
                       </Link>
                     </DropdownMenuItem>
 
@@ -217,7 +229,9 @@ export function MobileMenu({
         <div className="flex flex-col p-4 gap-4 bg-white dark:bg-iDonate-bg-dark-mode shadow-light dark:border-b">
           <div className="flex flex-col gap-2">
             {menuList.map((item, index) => {
-              const hasSubmenu = ["Events", "Contributors", "About"].includes(item.title);
+              const hasSubmenu = ["Events", "Contributors", "About"].includes(
+                item.title,
+              );
               const specialPaths = ["/how-it-works", "/search"];
 
               if (specialPaths.includes(item.path)) {
@@ -277,22 +291,18 @@ export function MobileMenu({
           )}
 
           <div className="flex gap-2">
-            {
-              !accessTokenValue && (
-                <Button
-                  onClick={() => {
-                    router.push("/login");
-                    onClose();
-                  }}
-                  className="sm:hidden flex-1 items-center justify-center space-x-2 bg-iDonate-white-space border-2 border-iDonate-navy-primary text-iDonate-navy-primary hover:bg-iDonate-navy-primary hover:text-white rounded-lg group px-2 hover:border-iDonate-navy-primary dark:text-iDonate-navy-accent dark:bg-iDonate-dark-mode dark:border-transparent"
-                >
-                  Sign In
-                </Button>
-              )
-              
-            }
-          
-         
+            {!accessTokenValue && (
+              <Button
+                onClick={() => {
+                  router.push("/login");
+                  onClose();
+                }}
+                className="sm:hidden flex-1 items-center justify-center space-x-2 bg-iDonate-white-space border-2 border-iDonate-navy-primary text-iDonate-navy-primary hover:bg-iDonate-navy-primary hover:text-white rounded-lg group px-2 hover:border-iDonate-navy-primary dark:text-iDonate-navy-accent dark:bg-iDonate-dark-mode dark:border-transparent"
+              >
+                Sign In
+              </Button>
+            )}
+
             <Button className="flex-1 items-center justify-center space-x-2 bg-iDonate-navy-primary border-2 border-iDonate-navy-primary text-iDonate-white-space-hovering hover:bg-iDonate-navy-primary hover:text-white rounded-lg dark:text-iDonate-navy-accent dark:bg-iDonate-dark-mode dark:border-transparent">
               <Heart className="w-5 h-5 dark:fill-iDonate-green-primary dark:text-iDonate-green-primary" />
               <span>Donate Now</span>

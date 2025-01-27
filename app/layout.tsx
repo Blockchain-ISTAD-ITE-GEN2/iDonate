@@ -36,12 +36,12 @@ export default function RootLayout({ children }: RootLayoutProps) {
       <body className="flex flex-col h-full bg-background text-foreground">
         <StoreProvider>
           {/* <CheckConnection> */}
-            <SessionWrapper>
-              <ThemeProviders>
-                {children}
-                <Toaster />
-              </ThemeProviders>
-            </SessionWrapper>
+          <SessionWrapper>
+            <ThemeProviders>
+              {children}
+              <Toaster />
+            </ThemeProviders>
+          </SessionWrapper>
           {/* </CheckConnection> */}
         </StoreProvider>
       </body>

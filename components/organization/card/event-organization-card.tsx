@@ -46,7 +46,7 @@ export function OrganizationEventCard({
                 width={300}
                 height={300}
                 src={event?.image}
-                alt={event?.title}
+                alt={event?.name || "Media"}
                 className="w-full h-full object-cover rounded-lg"
               />
             ) : (
@@ -59,7 +59,7 @@ export function OrganizationEventCard({
           <div className="flex flex-col flex-1 justify-between h-full min-h-0">
             <CardContent className="p-0 flex flex-col gap-4 flex-grow">
               <CardTitle className="text-3xl font-medium text-iDonate-navy-secondary p-0 dark:text-iDonate-navy-accent ">
-                {event?.title || "Untitled Event"}
+                {event?.name || "Untitled Event"}
               </CardTitle>
 
               <CardDescription className="text-xl leading-loose text-iDonate-navy-secondary p-0 overflow-hidden dark:text-iDonate-navy-accent">

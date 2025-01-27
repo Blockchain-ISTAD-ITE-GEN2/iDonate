@@ -3,20 +3,30 @@ import { useEffect, useState } from "react";
 import { Toolbar } from "@/components/filter/toolbar";
 import { EventType } from "@/difinitions/dto/EventType";
 import { CommonEventCard } from "@/components/events/organization-event/CommonEventCard";
-import events from "@/data/events-data.json";
 import { Button } from "@/components/ui/button";
+import { useGetEventsQuery } from "@/redux/services/event-service";
 
 export function OrganizationDetail() {
+
+  // use static for testing
+
+  // const typedEvents: EventType[] = events.slice(0, 4);
+  const { data: eventsApiResponse = { content: [] }, isLoading: isEventsLoading } = useGetEventsQuery({});
+     
+  const events: EventType[] = eventsApiResponse.content || [];
+      
+  // const typedEvents: EventType[] = events.slice(0, 4); 
+
   const typedEvents: EventType[] = events.slice(0, 8);
 
-  const [filteredEvents, setFilteredEvents] =
-    useState<EventType[]>(typedEvents);
+
+  const [filteredEvents, setFilteredEvents] = useState<EventType[]>(typedEvents);
 
   const filtersFace = [
     {
       key: "title",
       title: "Events",
-      options: Array.from(new Set(typedEvents.map((event) => event.title))).map(
+      options: Array.from(new Set(typedEvents.map((event) => event.name))).map(
         (event) => ({
           label: event,
           value: event,
@@ -40,7 +50,7 @@ export function OrganizationDetail() {
         new Set(typedEvents.map((event) => event.total_amount)),
       ).map((amount) => ({
         label: amount.toString(),
-        value: amount.toString(),
+        value: amount.toString(), 
       })),
     },
   ];

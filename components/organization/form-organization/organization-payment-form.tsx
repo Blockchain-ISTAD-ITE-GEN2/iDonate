@@ -43,7 +43,7 @@ export function OrganizationPaymentForm() {
       }
       const previewURL = URL.createObjectURL(file);
       setPreviewImage(previewURL);
-      onChange(previewURL); 
+      onChange(previewURL);
     }
   }
 

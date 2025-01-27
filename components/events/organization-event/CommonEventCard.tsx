@@ -2,32 +2,48 @@
 import Image from "next/image";
 import { Card, CardContent, CardHeader } from "../../ui/card";
 import { CircleDollarSign, Users } from "lucide-react";
-import { EventType } from "@/difinitions/dto/EventType";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { FaRegCalendarAlt } from "react-icons/fa";
 import { HiCalendarDateRange } from "react-icons/hi2";
+import { EventType } from "@/difinitions/dto/EventType";
+// import { EventType } from "next-auth";
+// import { EventTypes } from "@/difinitions/dto/EventType";
+
+
+// function to covert format
+function formatDate(dateString: string | undefined): string {
+  if (!dateString) return "N/A";
+  const date = new Date(dateString);
+  return date.toLocaleDateString("en-GB", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  });
+}
 
 export function CommonEventCard({ event }: { event: EventType }) {
+
   const router = useRouter();
+
 
   return (
     <Card
-      onClick={() => router.push(`/event-detail`)}
+      onClick={() => router.push(`/event-detail/${event?.uuid}`)}
       className=" w-full rounded-[10px] bg-iDonate-light-gray border-0 cursor-pointer shadow-md transition-transform hover:scale-[1.02] dark:bg-iDonate-dark-mode "
     >
       {/* Header with Image */}
       <CardHeader className="w-full h-[180px] p-0 rounded-t-[10px] overflow-hidden">
-        {event?.image ? (
+        {event?.images? (
           <Image
             className="w-full h-full object-cover"
             width={1000}
             height={1000}
             src={
-              event?.image ||
+              event?.images[0] ||
               "https://i.pinimg.com/736x/2a/86/a5/2a86a560f0559704310d98fc32bd3d32.jpg"
             }
-            alt={event?.title || "Media"}
+            alt={event?.name || "Media"}
           />
         ) : (
           <div className="w-full h-full bg-gray-200 flex items-center justify-center">
@@ -46,12 +62,12 @@ export function CommonEventCard({ event }: { event: EventType }) {
                 <FaRegCalendarAlt />
               </span>
               <p className="text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
-                Order date
+                Start date
               </p>
             </div>
 
             <p className="text-iDonate-green-primary dark:text-iDonate-green-secondary">
-              {event?.date || "12 Dec 2024"}
+              {formatDate(event?.startDate) || "12 Dec 2024"}
             </p>
           </div>
           <div className="flex flex-col">
@@ -65,7 +81,7 @@ export function CommonEventCard({ event }: { event: EventType }) {
             </div>
 
             <p className="text-iDonate-green-primary dark:text-iDonate-green-secondary">
-              {event?.date || "12 Dec 2025"}
+              {formatDate(event?.endDate )|| "12 Dec 2025"}
             </p>
           </div>
         </div>
@@ -76,7 +92,7 @@ export function CommonEventCard({ event }: { event: EventType }) {
             lang="km"
             className="font-bold text-medium-khmer text-iDonate-navy-primary line-clamp-1 dark:text-iDonate-navy-accent "
           >
-            {event?.title || "Untitled Event"}
+            {event?.name || "Untitled Event"}
           </h3>
           <p
             lang="km"

@@ -6,18 +6,20 @@ import { useRouter } from "next/navigation";
 import { useGetCategoriesQuery } from "@/redux/services/category-service";
 
 export default function CategoryCardComponent() {
+
   const router = useRouter();
+  
   const category = useGetCategoriesQuery({});
 
   const typeCategories: CategoryType[] = category?.currentData || [];
 
-  console.log("typeCategory", typeCategories);
+  // console.log("typeCategory", typeCategories);
 
   return (
     <>
       {typeCategories.map((item, index) => (
         <motion.div
-          onClick={() => router.push(`/categories/0`)}
+          onClick={() => router.push(`/categories/${item?.uuid}`)}
           lang="km"
           key={index}
           // className="lg:w-[300px] md:w-full h-[370px] flex flex-col items-center gap-6 px-10 py-12 rounded-[15px] shadow-light"
@@ -52,7 +54,7 @@ export default function CategoryCardComponent() {
               {item.description}
             </p>
           )}
-          {/* {item.benefits && <span className="text-sm">{item.benefits}</span>} */}
+          
         </motion.div>
       ))}
     </>

@@ -1,5 +1,6 @@
 export type OrganizationEventType = {
-  title: string;
+  uuid: string;
+  name: string;
   description: string;
   order_date: string;
   end_date: string;

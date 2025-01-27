@@ -1,6 +1,6 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { EvenDetailDescription } from "@/components/events/even-detail/event-detail-description";
-import { DonotionForm } from "@/components/events/even-detail/donation-form";
+import { DonationForm } from "@/components/events/even-detail/donation-form";
 
 export function TabEventDetail() {
   return (
@@ -25,7 +25,7 @@ export function TabEventDetail() {
       </TabsContent>
 
       <TabsContent value="make-donation">
-        <DonotionForm />
+        <DonationForm />
       </TabsContent>
     </Tabs>
   );

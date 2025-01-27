@@ -3,7 +3,15 @@ import { idonateApi } from "@/redux/api";
 export const eventApi = idonateApi.injectEndpoints({
   endpoints: (builder) => ({
     getEvents: builder.query({
-      query: () => `/api/v1/events`,
+      query: () => `/events`,
+      providesTags: [{ type: "event", id: "LIST" }],
+    }),
+    getEventByUuid: builder.query({
+      query: (uuid) => `/events/get-event-by-uuid/${uuid}`,
+      providesTags: [{ type: "event", id: "LIST" }],
+    }),
+    getEventByCategory: builder.query({
+      query: ({uuid}) => `/events/get-event-by-category/${uuid}`,
       providesTags: [{ type: "event", id: "LIST" }],
     }),
     createEvents: builder.mutation({
@@ -29,7 +37,15 @@ export const eventApi = idonateApi.injectEndpoints({
       }),
       invalidatesTags: [{ type: "event", id: "LIST" }],
     }),
+    getEventsByCategory: builder.query({
+      query: (categoryUuid:string) => `/events/get-event-by-category/${categoryUuid}`,
+      providesTags: [{ type: "event", id: "LIST" }],
+    }),
   }),
 });
 
-export const { useGetEventsQuery } = eventApi;
+export const {
+  useGetEventsQuery,
+  useGetEventByCategoryQuery,
+  useGetEventByUuidQuery,
+} = eventApi;

@@ -1,22 +1,24 @@
 "use client";
 import { Toolbar } from "@/components/filter/toolbar";
 import { OrganizationEventType } from "@/difinitions/dto/Organization-event";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { OrganizationEventCard } from "@/components/organization/card/event-organization-card";
 import events from "@/data/organizaation-event-data.json";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import { useGetEventsQuery } from "@/redux/services/event-service";
 
 export function OrganizationEventPage() {
   const router = useRouter();
 
-  const typedEvents: OrganizationEventType[] = events;
+  const {data: events} = useGetEventsQuery({});
+  const typedEvents: OrganizationEventType[] = events?.content || [];
 
   const filtersFace = [
     {
       key: "title",
       title: "Events",
-      options: Array.from(new Set(typedEvents.map((event) => event.title))).map(
+      options: Array.from(new Set(typedEvents.map((event) => event.name))).map(
         (event) => ({
           label: event,
           value: event,

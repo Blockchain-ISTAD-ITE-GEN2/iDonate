@@ -71,11 +71,35 @@ export const organizationReferenceSchema = z.object({
 });
 
 export const donationSchema = z.object({
-  remark: z
+  donationEventID: z
     .string()
-    .max(500, "Remark cannot exceed 500 characters.")
-    .nullable(),
-  visibily: z.boolean(),
+    .uuid("Invalid donation event ID. Must be a valid UUID."),
+  donor: z.string().uuid("Invalid donor ID. Must be a valid UUID."),
+  amount: z
+    .number()
+    .positive("Amount must be greater than zero."),                 
+    // .min(0.01, "Minimum amount is 0.01."),
+  recipient: z.string().uuid("Invalid recipient ID. Must be a valid UUID."),
+  acquiringBank: z
+    .string()
+    .min(1, "Acquiring bank cannot be empty.")
+    .max(50, "Acquiring bank cannot exceed 50 characters."),
+  currency: z
+    .string()
+    .length(3, "Currency must be a 3-character code.")
+    .regex(
+      /^[A-Z]{3}$/,
+      "Currency must consist of uppercase letters (e.g., USD).",
+    ),
+  city: z
+    .string()
+    .min(1, "City cannot be empty.")
+    .max(100, "City cannot exceed 100 characters."),
+  // remark: z
+  //   .string()
+  //   .max(500, "Remark cannot exceed 500 characters.")
+  //   .nullable(),
+  // visibily: z.boolean(),
 });
 
 export const eventSchema = z.object({
@@ -96,25 +120,86 @@ export const eventInfoSchema = z.object({
 
 export const organizationRegistrationSchema = z.object({
   email: z.string().email({
-    message: "Please enter a valid email address",
+    message: "Please enter a valid email address, e.g., user@example.com.",
   }),
-  name: z.string().min(1, {
-    message: "Please enter your name",
+  name: z
+    .string()
+    .min(3, {
+      message: "Organization name must be at least 3 characters long.",
+    })
+    .max(100, {
+      message: "Organization name must not exceed 100 characters.",
+    }),
+  description: z
+    .string()
+    .nullable(),
+    // .min(20, {
+    //   message: "Description must be at least 20 characters long.",
+    // })
+    // .max(500, {
+    //   message: "Description must not exceed 500 characters.",
+    // }),
+  phone: z.string().regex(/^(0\d{8,9}|\+855\d{8,9})$/, {
+    message: "Phone number must be in the format 0123456789 or +855123456789.",
   }),
-  description: z.string().min(10, {
-    message: "Description must be at least 10 characters long",
-  }),
-  phone: z.string().regex(/^\+?\d{10,15}$/, {
-    message: "Contact must be a valid phone number with 10-15 digits",
-  }),
-  address: z.string().min(1, {
-    message: "Address is required",
-  }),
-  image: z.string().nullable(),
-  bio: z.string().min(10, {
-    message: "Bio must be at least 10 characters long",
-  }),
-  purpose: z.string().min(10, {
-    message: "Purpose must be at least 10 characters long",
-  }),
+  address: z
+    .string()
+    .min(5, {
+      message: "Address must be at least 5 characters long.",
+    })
+    .max(200, {
+      message: "Address must not exceed 200 characters.",
+    }),
+  image: z
+    .any()
+    // .refine(
+    //   (file) =>
+    //     file instanceof File &&
+    //     ["image/png", "image/jpeg", "image/jpg"].includes(file.type),
+    //   {
+    //     message: "Please upload a valid image file (JPEG or PNG).",
+    //   },
+    // ),
+    ,
+  bio: z
+    .string()
+    .nullable(),
+    // .min(20, {
+    //   message: "Bio must be at least 20 characters long.",
+    // })
+    // .max(300, {
+    //   message: "Bio must not exceed 300 characters.",
+    // }),
+  purpose: z
+    .string()
+    .nullable(),
+    // .min(20, {
+    //   message: "Purpose must be at least 20 characters long.",
+    // })
+    // .max(300, {
+    //   message: "Purpose must not exceed 300 characters.",
+    // }),
+  referenceInformation: z
+    .array(
+      z
+        .instanceof(File)
+        .refine(
+          (file) =>
+            [
+              "image/png",
+              "image/jpeg",
+              "image/jpg",
+              "application/pdf",
+              "application/msword",
+              "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+            ].includes(file.type),
+          {
+            message:
+              "Please upload a valid file (JPEG, PNG, PDF, DOC, or DOCX).",
+          },
+        ),
+    )
+    .nullable()
+    // .min(1, { message: "Please upload at least one reference file." })
+    // .max(5, { message: "You can upload up to 5 reference files." }),
 });

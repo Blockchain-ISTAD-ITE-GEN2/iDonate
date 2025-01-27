@@ -32,7 +32,6 @@ import { useGetUserProfileQuery } from "@/redux/services/user-profile";
 import toast from "react-hot-toast";
 import { getUuidFromToken } from "@/lib/uuid";
 
-
 export default function NavbarComponent() {
   const [menuList] = useState<NavMenuType[]>(NavMenulist);
   const pathname = usePathname();
@@ -114,8 +113,8 @@ export default function NavbarComponent() {
       });
     }
   };
-  
-  useEffect(() => {},[accessTokenValue,session])
+
+  useEffect(() => {}, [accessTokenValue, session]);
   // console.log("User Profile: ",userProfile);
 
   if (
@@ -198,18 +197,16 @@ export default function NavbarComponent() {
             </div>
           </div>
 
-
           <div className="flex items-center">
             {session || accessTokenValue ? (
               <DropdownMenu>
                 <DropdownMenuTrigger>
-                  {userProfile? (
+                  {userProfile ? (
                     <Image
-                    src={
-                      AvartarPlaceHolder ||
-                      `https://idonateapi.kangtido.life/media/${userProfile?.avatar}`
-                    }
-
+                      src={
+                        AvartarPlaceHolder ||
+                        `https://idonateapi.kangtido.life/media/${userProfile?.avatar}`
+                      }
                       alt={`${userProfile?.username ?? "user"}'s avatar`}
                       width={50}
                       height={50}
@@ -225,14 +222,13 @@ export default function NavbarComponent() {
                 <DropdownMenuContent className="w-72 p-2">
                   {/* User Info */}
                   <div className="p-3">
-                    <div className="flex items-center space-x-3">   
-                      {userProfile? (
+                    <div className="flex items-center space-x-3">
+                      {userProfile ? (
                         <Image
-                        src={
-                          AvartarPlaceHolder ||
-                          `https://idonateapi.kangtido.life/media/${userProfile?.avatar}`
-                        }
-
+                          src={
+                            AvartarPlaceHolder ||
+                            `https://idonateapi.kangtido.life/media/${userProfile?.avatar}`
+                          }
                           alt={`${userProfile?.username ?? "User"}'s avatar`}
                           width={50}
                           height={50}
@@ -271,7 +267,6 @@ export default function NavbarComponent() {
                     </Link>
                   </DropdownMenuItem>
 
-          
                   {/* Sign Out */}
                   <DropdownMenuItem
                     onClick={handleSignOut} // Use handleSignOut instead of signOut directly

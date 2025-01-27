@@ -1,36 +1,39 @@
-"use client"; 
+"use client";
 
 import { BannerComponent } from "@/components/organization/card/banner";
 import { BarAndLineChart } from "@/components/organization/dashboard/bar-and-line-chart";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useGetOrganizationByuuidQuery } from "@/redux/services/organization-service";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
-
-export default function OrganizationDashboard({ params }: { params: { uuid: string } }) {
-  const { uuid } = params; 
+export default function OrganizationDashboard({
+  params,
+}: {
+  params: { uuid: string };
+}) {
+  const { uuid } = params;
   const router = useRouter();
-  const { data, isLoading, isError } = useGetOrganizationByuuidQuery(uuid);
-  console.log("Data of Organization", data)
+  const {
+    data: organization
+  } = useGetOrganizationByuuidQuery(uuid);
+
+  console.log("UUID: ", uuid);
+
+  console.log("Data of Organization", organization);
   // Extract the first organization from the array (with error handling)
-  const organization = data && data.length > 0 ? data[0] : null;
 
   // // Redirect logic
-  // useEffect(() => {
-  //   if (!isLoading && !isError) {
-  //     if (!organization) {
-  //       // If no organization data is found, redirect to create organization page
-  //       console.log("No organization found. Redirecting to /create-organization...");
-  //       router.push("/organization-dashboard/create-organization");
-  //     }
-  //   }
-  // }, [organization, isLoading, isError, router]);
+  useEffect(() => {
+      if (!organization) {
+        // If no organization data is found, redirect to create organization page
+        console.log("No organization found. Redirecting to /create-organization...");
+        router.push("/organization-registration");
+      }
+  }, [organization,  router]);
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
 
-  console.log("Approve check : ", organization?.isApproved)
+  console.log("Approve check : ", organization?.isApproved);
 
   if (!organization) {
     router.push("/organization-registration");
@@ -49,7 +52,7 @@ export default function OrganizationDashboard({ params }: { params: { uuid: stri
             <div className="flex items-center space-x-2">
               <span className="flex gap-2 items-center">
                 <Avatar className="h-16 w-16 rounded-lg">
-                  <AvatarImage src={organization.src} alt={""} />
+                  <AvatarImage src={organization} alt={""} />
                   <AvatarFallback className="rounded-lg">CN</AvatarFallback>
                 </Avatar>
 
@@ -72,5 +75,5 @@ export default function OrganizationDashboard({ params }: { params: { uuid: stri
       </div>
     </section>
   );
- }
+}
 }

@@ -41,7 +41,7 @@ export default function TransactionCardHistory() {
 
   const filtersDateRange = [
     {
-      key: "order_date", 
+      key: "order_date",
       title: "Date Range",
     },
   ];

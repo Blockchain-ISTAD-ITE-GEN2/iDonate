@@ -1,4 +1,4 @@
-import { EventDetail } from "@/components/events/even-detail/event-detail";
+import { EventDetail } from "@/components/events/even-detail/[uuid]/event-detail";
 
 import { Metadata } from "next";
 
@@ -52,10 +52,18 @@ export const metadata: Metadata = {
   },
 };
 
-export default function EvenDetailPage() {
+type PropsParams = {
+
+  params: {
+    uuid: string;
+  };
+};
+
+export default function EvenDetailPage(props: PropsParams) {
+
   return (
     <section className="flex flex-col p-9">
-      <EventDetail />
+      <EventDetail params={props.params}/>
     </section>
   );
 }

@@ -7,9 +7,17 @@ import { SubNavbarMenuType } from "@/difinitions/types/components-type/SubNavbar
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { SidebarGroupLabel } from "@/components/ui/sidebar";
+import { useGetUserProfileQuery } from "@/redux/services/user-profile";
 
 export default function OrganizationSidebarComponent() {
-  const [menuList] = useState<SubNavbarMenuType[]>(OrganizationSidebarMenuList);
+
+  const {data: userProfile} = useGetUserProfileQuery({});
+
+  console.log("User Profile: ", userProfile);   
+
+  const uuid = userProfile?.uuid;
+
+  const [menuList] = useState<SubNavbarMenuType[]>(OrganizationSidebarMenuList(uuid));
   const pathname = usePathname();
 
   const navActiveClass = (isActive: boolean) =>
@@ -32,7 +40,7 @@ export default function OrganizationSidebarComponent() {
     pathname === "/mission-vision" ||
     pathname === "/organizations" ||
     pathname === "/how-it-works" ||
-    pathname === "/organization-dashboard/create-organization" 
+    pathname === "/organization-dashboard/create-organization"
   )
     return null;
   else

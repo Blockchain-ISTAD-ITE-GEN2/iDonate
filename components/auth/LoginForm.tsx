@@ -29,9 +29,7 @@ const loginSchema = z.object({
     .string()
     .email("គណនីអ៊ីមែលមិនត្រឹមត្រូវ")
     .nonempty("អ៊ីមែលត្រូវបានទាមទារឲ្យស្នើ"),
-  password: z
-    .string()
-    .nonempty("ពាក្យសម្ងាត់ត្រូវបានទាមទារឲ្យស្នើ"),
+  password: z.string().nonempty("ពាក្យសម្ងាត់ត្រូវបានទាមទារឲ្យស្នើ"),
 });
 
 type LoginFormValues = z.infer<typeof loginSchema>;
@@ -89,7 +87,9 @@ export default function LoginForm() {
       toast.success("ការចូលប្រើទទួលបានជោគជ័យ");
     } catch (error) {
       console.error("Login error:", error);
-      toast.error(error instanceof Error ? error.message : "ការចូលប្រើបានបរាជ័យ");
+      toast.error(
+        error instanceof Error ? error.message : "ការចូលប្រើបានបរាជ័យ",
+      );
     } finally {
       setLoading(false);
     }

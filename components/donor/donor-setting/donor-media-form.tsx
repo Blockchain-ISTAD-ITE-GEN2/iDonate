@@ -17,9 +17,12 @@ import Image from "next/image";
 import { organizationMediaSchema } from "@/components/schema/schema";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { AlertComfirmDialog } from "@/components/Alert/Alert-Dialog";
-import { useGetUserProfileQuery, useUpdateAvatarMutation } from "@/redux/services/user-profile";
+import {
+  useGetUserProfileQuery,
+  useUpdateAvatarMutation,
+} from "@/redux/services/user-profile";
 import { useParams } from "next/navigation";
-import AvartarPlaceHolder from '@/public/images/family-photo.png';
+import AvartarPlaceHolder from "@/public/images/family-photo.png";
 import { toast } from "react-hot-toast";
 import { UpdateProfileImageType, UploadImageResponse } from "@/lib/definition";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -28,17 +31,20 @@ import { useUploadSingleMediaMutation } from "@/redux/services/media";
 // Define the uploadMedia function
 const uploadMedia = async (file: File): Promise<UploadImageResponse> => {
   const formData = new FormData();
-  formData.append('file', file);
+  formData.append("file", file);
 
-  const response = await fetch(`${process.env.NEXT_PUBLIC_IDONATE_API_URL}/api/v1/media/upload-single`, {
-    method: 'POST',
-    body: formData,
-  });
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_IDONATE_API_URL}/api/v1/media/upload-single`,
+    {
+      method: "POST",
+      body: formData,
+    },
+  );
 
   // const response = useUploadSingleMediaMutation(form)
 
   if (!response.ok) {
-    throw new Error('Failed to upload file');
+    throw new Error("Failed to upload file");
   }
 
   return response.json();
@@ -102,25 +108,25 @@ export function DonorMediaForm({
 
     try {
       const uploadResponse = await uploadMedia(selectedFile);
-      
+
       const imageUri: UpdateProfileImageType = {
-        image: uploadResponse?.name
+        image: uploadResponse?.name,
       };
 
       await updateAvatar({
-        uuid:"a1690bd3-f0a1-4117-9d73-e24feee398cb",
+        uuid: "a1690bd3-f0a1-4117-9d73-e24feee398cb",
         updatedProfileImage: imageUri,
       }).unwrap();
 
-      toast.success('Avatar updated successfully');
+      toast.success("Avatar updated successfully");
       handleCancel();
     } catch (error) {
-      console.error('Error while uploading avatar:', error);
-      toast.error('Error while uploading avatar');
+      console.error("Error while uploading avatar:", error);
+      toast.error("Error while uploading avatar");
     }
   };
 
-  const profileImageUrl = userProfile?.avatar 
+  const profileImageUrl = userProfile?.avatar
     ? `https://idonateapi.kangtido.life/media/${userProfile.avatar}`
     : AvartarPlaceHolder;
 

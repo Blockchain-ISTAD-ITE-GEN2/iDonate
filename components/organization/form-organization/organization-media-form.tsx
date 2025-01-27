@@ -12,7 +12,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { Upload } from "lucide-react";
 import Image from "next/image";
 import organization from "@/public/images/Cambodia-Kantha-Bopha-Foundation.jpeg";
@@ -35,7 +35,7 @@ export function OrganizationMediaForm() {
   }
 
   function handleFileChange(
-    event: React.ChangeEvent<HTMLInputElement>,
+    event: ChangeEvent<HTMLInputElement>,
     onChange: (value: string) => void,
   ) {
     const file = event.target.files?.[0];
