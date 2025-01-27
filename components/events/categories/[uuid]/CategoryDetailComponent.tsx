@@ -3,8 +3,8 @@
 import Image from "next/image";
 import { CommonEventCard } from "@/components/events/organization-event/CommonEventCard";
 import { Button } from "@/components/ui/button";
-import { AccordionCategory } from "@/components/events/categories/categorydetail/AccordionCategory";
-import { AllCategoriesButton } from "@/components/events/categories/categorydetail/AllCategoriesAccordion";
+import { AccordionCategory } from "@/components/events/categories/[uuid]/AccordionCategory";
+import { AllCategoriesButton } from "@/components/events/categories/[uuid]/AllCategoriesAccordion";
 import { EventType } from "@/difinitions/dto/EventType";
 import { useGetEventsQuery } from "@/redux/services/event-service";
 
