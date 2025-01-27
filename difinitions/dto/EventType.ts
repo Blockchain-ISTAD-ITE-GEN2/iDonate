@@ -1,3 +1,4 @@
+import { OrganizationEventType } from "./Organization-event";
 import { OrganizationResponse } from "./OrganizationType";
 
 export type EventRequest = {
@@ -16,12 +17,14 @@ export type EventResponse = {
   organization: OrganizationResponse;
 };
 export type EventType = {
-  image: string;
-  title: string;
+  uuid: string;
+  name: string;
+  images: [string];
   description: string;
+  organization: OrganizationEventType;
   total_amount: number;
   total_donor: number;
   date?: string;
-  key?: number;
   category?: string;
+  [key: string]: any; // Add index signature
 };

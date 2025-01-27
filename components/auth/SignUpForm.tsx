@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Mail, Lock, EyeOff, Eye, CalendarIcon } from 'lucide-react';
+import { Mail, Lock, EyeOff, Eye, CalendarIcon } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import GoogleIcon from "@/public/images/google.png";
 import FacebookIcon from "@/public/images/facebook.png";
@@ -9,13 +9,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { UseDispatch } from "react-redux";
 
-
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardContent,
-} from "@/components/ui/card";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -36,9 +30,9 @@ import { add } from "date-fns";
 
 const inputClassName = (value: string) =>
   `w-full px-4 py-2 border ${
-    value ? 'border-green-500' : 'border-gray-300'
+    value ? "border-green-500" : "border-gray-300"
   } rounded-md ${
-    value ? 'ring-2 ring-green-500' : 'ring-1 ring-gray-300'
+    value ? "ring-2 ring-green-500" : "ring-1 ring-gray-300"
   } focus:ring-2 focus:ring-green-500 focus:border-green-500 transition duration-200 ease-in-out bg-transparent`;
 
 const SignUpForm = () => {
@@ -56,7 +50,6 @@ const SignUpForm = () => {
     dateOfBirth: Date | undefined;
     address: string;
     phoneNumber: string;
-
   }
 
   const [formData, setFormData] = useState<FormData>({
@@ -116,9 +109,9 @@ const SignUpForm = () => {
     setIsSubmitting(true);
     try {
       const formatDate = (date: Date | undefined) => {
-        if (!date) return '';
-        const day = String(date.getDate()).padStart(2, '0');
-        const month = String(date.getMonth() + 1).padStart(2, '0');
+        if (!date) return "";
+        const day = String(date.getDate()).padStart(2, "0");
+        const month = String(date.getMonth() + 1).padStart(2, "0");
         const year = date.getFullYear();
         return `${day}-${month}-${year}`;
       };
@@ -135,32 +128,31 @@ const SignUpForm = () => {
         dateOfBirth: formatDate(formData.dateOfBirth),
       };
 
-      const response = await fetch(`${process.env.NEXT_PUBLIC_IDONATE_API_URL}/api/v1/users/user-registration`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_IDONATE_API_URL}/api/v1/users/user-registration`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(requestBody),
         },
-        body: JSON.stringify(requestBody),
-      });
+      );
 
-      if(response.status === 409) {
-        toast.error('អ៊ីមែលនេះបានចុះឈ្មោះរួចហើយ');
-      }
-      else if(response.status === 400) {
-        toast.error('ការចុះឈ្មោះបរាជ័យ');
-      }
-      else if(response.status === 500) {
-        toast.error('មានបញ្ហាកើតឡើងក្នុងការចុះឈ្មោះ');
-      }
-      else if(response.status === 401) {
-        toast.error('ការចុះឈ្មោះបរាជ័យ');
-
+      if (response.status === 409) {
+        toast.error("អ៊ីមែលនេះបានចុះឈ្មោះរួចហើយ");
+      } else if (response.status === 400) {
+        toast.error("ការចុះឈ្មោះបរាជ័យ");
+      } else if (response.status === 500) {
+        toast.error("មានបញ្ហាកើតឡើងក្នុងការចុះឈ្មោះ");
+      } else if (response.status === 401) {
+        toast.error("ការចុះឈ្មោះបរាជ័យ");
       }
 
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.message || toast.error('ការចុះឈ្មោះបរាជ័យ'));
+        throw new Error(data.message || toast.error("ការចុះឈ្មោះបរាជ័យ"));
       }
 
       toast.success("ការចុះឈ្មោះបានជោគជ័យ!");
@@ -322,7 +314,8 @@ const SignUpForm = () => {
                             <label className="flex items-center space-x-2 text-sm font-medium text-iDonate-navy-primary mb-1">
                               <Lock className="w-4 h-4 text-iDonate-navy-primary" />
                               <span>
-                                ពាក្យសម្ងាត់<span className="text-red-500">*</span>
+                                ពាក្យសម្ងាត់
+                                <span className="text-red-500">*</span>
                               </span>
                             </label>
                             <div className="relative">
@@ -397,7 +390,8 @@ const SignUpForm = () => {
 
                             <div>
                               <label className="block text-sm font-medium text-iDonate-navy-primary mb-1">
-                                នាមត្រកូល <span className="text-red-500">*</span>
+                                នាមត្រកូល{" "}
+                                <span className="text-red-500">*</span>
                               </label>
                               <Input
                                 type="text"
@@ -434,7 +428,8 @@ const SignUpForm = () => {
 
                             <div>
                               <label className="block text-sm font-medium text-iDonate-navy-primary mb-1">
-                                ថ្ងៃ ខែ ឆ្នាំ កំណើត <span className="text-red-500">*</span>
+                                ថ្ងៃ ខែ ឆ្នាំ កំណើត{" "}
+                                <span className="text-red-500">*</span>
                               </label>
                               <DatePicker
                                 selectedDate={selectedDate}
@@ -465,7 +460,8 @@ const SignUpForm = () => {
 
                           <div>
                             <label className="block text-sm font-medium text-iDonate-navy-primary mb-1">
-                              លេខទូរស័ព្ទ <span className="text-red-500">*</span>
+                              លេខទូរស័ព្ទ{" "}
+                              <span className="text-red-500">*</span>
                             </label>
                             <Input
                               type="tel"
@@ -504,8 +500,8 @@ const SignUpForm = () => {
                         {step === 1
                           ? "បន្ទាប់"
                           : isSubmitting
-                          ? "កំពុងធ្វើការចុះឈ្មោះ..."
-                          : "បង្កើតគណនី"}
+                            ? "កំពុងធ្វើការចុះឈ្មោះ..."
+                            : "បង្កើតគណនី"}
                       </Button>
 
                       <div className="flex items-center my-4 mb-0">
@@ -517,32 +513,49 @@ const SignUpForm = () => {
                       </div>
 
                       <div className="flex items-center justify-center mt-4 space-x-[-20px] md:mt-[-1px]">
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Button
-                variant="outline"
-                className="w-20 h-20 rounded-full bg-transparent border-none hover:bg-transparent transition-colors duration-200"
-                onClick={() => signIn("google", { callbackUrl: "/" })}
-              >
-                <Image src={GoogleIcon || "/placeholder.svg"} alt="Google" width={60} height={60} unoptimized className="w-[40px] h-[40px]" />
-              </Button>
-            </motion.div>
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Button
-                variant="outline"
-                className="w-20 h-20 rounded-full bg-transparent border-none hover:bg-transparent transition-colors duration-200"
-                onClick={() => signIn("facebook", { callbackUrl: "/" })}
-              >
-                <Image
-                  src={FacebookIcon || "/placeholder.svg"}
-                  alt="Facebook"
-                  width={500}
-                  height={500}
-                  className="w-[40px] h-[40px]"
-                  unoptimized
-                />
-              </Button>
-            </motion.div>
-          </div>
+                        <motion.div
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                        >
+                          <Button
+                            variant="outline"
+                            className="w-20 h-20 rounded-full bg-transparent border-none hover:bg-transparent transition-colors duration-200"
+                            onClick={() =>
+                              signIn("google", { callbackUrl: "/" })
+                            }
+                          >
+                            <Image
+                              src={GoogleIcon || "/placeholder.svg"}
+                              alt="Google"
+                              width={60}
+                              height={60}
+                              unoptimized
+                              className="w-[40px] h-[40px]"
+                            />
+                          </Button>
+                        </motion.div>
+                        <motion.div
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                        >
+                          <Button
+                            variant="outline"
+                            className="w-20 h-20 rounded-full bg-transparent border-none hover:bg-transparent transition-colors duration-200"
+                            onClick={() =>
+                              signIn("facebook", { callbackUrl: "/" })
+                            }
+                          >
+                            <Image
+                              src={FacebookIcon || "/placeholder.svg"}
+                              alt="Facebook"
+                              width={500}
+                              height={500}
+                              className="w-[40px] h-[40px]"
+                              unoptimized
+                            />
+                          </Button>
+                        </motion.div>
+                      </div>
                     </form>
                   </motion.div>
                 </AnimatePresence>

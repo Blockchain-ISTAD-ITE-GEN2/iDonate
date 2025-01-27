@@ -111,7 +111,7 @@ export function FileUploader(props: FileUploaderProps) {
         accept={accept}
         maxSize={maxSize}
         maxFiles={maxFileCount}
-        multiple={maxFileCount > 1 || multiple}
+        // multiple={maxFileCount > 1 || multiple}
         disabled={isDisabled}
       >
         {({ getRootProps, getInputProps, isDragActive }) => (
@@ -164,9 +164,10 @@ export function FileUploader(props: FileUploaderProps) {
           </div>
         )}
       </Dropzone>
+
       {files?.length ? (
         <ScrollArea className="h-fit w-full px-3">
-          <div className="flex max-h-48 flex-col gap-4">
+          <div className="flex h-full flex-col gap-4">
             {files?.map((file, index) => (
               <FileCard
                 key={index}

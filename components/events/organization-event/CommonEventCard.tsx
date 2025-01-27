@@ -11,23 +11,23 @@ import { HiCalendarDateRange } from "react-icons/hi2";
 export function CommonEventCard({ event }: { event: EventType }) {
   const router = useRouter();
 
+
   return (
     <Card
-      onClick={() => router.push(`/event-detail`)}
+      onClick={() => router.push(`/event-detail/${event?.uuid}`)}
       className=" w-full rounded-[10px] bg-iDonate-light-gray border-0 cursor-pointer shadow-md transition-transform hover:scale-[1.02] dark:bg-iDonate-dark-mode "
     >
       {/* Header with Image */}
       <CardHeader className="w-full h-[180px] p-0 rounded-t-[10px] overflow-hidden">
-        {event?.image ? (
+        {event?.images ? (
           <Image
             className="w-full h-full object-cover"
             width={1000}
             height={1000}
             src={
-              event?.image ||
-              "https://i.pinimg.com/736x/2a/86/a5/2a86a560f0559704310d98fc32bd3d32.jpg"
+              "https://i.pinimg.com/236x/a9/9e/ff/a99eff25eb1ba71647fcd884c15c035a.jpg"
             }
-            alt={event?.title || "Media"}
+            alt={event?.name || "Media"}
           />
         ) : (
           <div className="w-full h-full bg-gray-200 flex items-center justify-center">
@@ -76,7 +76,7 @@ export function CommonEventCard({ event }: { event: EventType }) {
             lang="km"
             className="font-bold text-medium-khmer text-iDonate-navy-primary line-clamp-1 dark:text-iDonate-navy-accent "
           >
-            {event?.title || "Untitled Event"}
+            {event?.name || "Untitled Event"}
           </h3>
           <p
             lang="km"

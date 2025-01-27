@@ -52,7 +52,11 @@ export const metadata: Metadata = {
   },
 };
 
-export default function ContributorDonor({ params }: { params: { uuid: string } }) {
+export default function ContributorDonor({
+  params,
+}: {
+  params: { uuid: string };
+}) {
   return (
     <section className="flex flex-col p-4 sm:p-6 lg:p-9 ">
       <TabsDonorProfile />

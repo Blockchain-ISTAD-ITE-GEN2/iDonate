@@ -24,7 +24,7 @@ const authOptions = {
         return "/login";
       }
     },
-    async redirect({ url, baseUrl }: { url: string, baseUrl: string }) {
+    async redirect({ url, baseUrl }: { url: string; baseUrl: string }) {
       const parsedUrl = new URL(url, baseUrl);
       if (parsedUrl.searchParams.has("callbackUrl")) {
         return `${baseUrl}${parsedUrl.searchParams.get("callbackUrl")}`;

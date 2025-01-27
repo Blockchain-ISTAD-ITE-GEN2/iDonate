@@ -11,15 +11,14 @@ export type User = {
 };
 
 export const userProfileSettingApi = idonateApi.injectEndpoints({
+  endpoints: (builder) => ({
+    getUserProfile: builder.query({
+      query: () => ({
+        url: `/users/me`,
+      }),
 
-    endpoints: (builder) => ({
-		getUserProfile: builder.query({
-			query: () => ({
-				url:`/users/me`
-			}),
-	
-			providesTags: ["userProfile"]
-		}),
+      providesTags: ["userProfile"],
+    }),
 
     // Update user profile
     updateUserProfile: builder.mutation<
@@ -75,5 +74,5 @@ export const {
   useUpdateUserProfileMutation,
   useUpdatePassWordsMutation,
   useUpdateAvatarMutation,
-  useGetUserByUuidQuery
+  useGetUserByUuidQuery,
 } = userProfileSettingApi;
