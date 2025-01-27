@@ -13,6 +13,20 @@ import { motion } from "framer-motion";
 import { usePathname } from "next/navigation";
 import logo from "@/public/logo/logodesign no background.png";
 
+
+const links = [
+  { name: "Home", href: "/" },
+  { name: "About Us", href: "/about-us" },
+  { name: "Contributors", href: "/donor-dashboard" },
+  { name: "Events", href: "/organizations" },
+];
+const links_suppoort  = [
+  { name: "How It Works", href: "/how-it-works" },
+  { name: "Mission & Vision", href: "/mission-vision" },
+  { name: "Donor", href: "/donor-dashboard" },
+  { name: "Organization", href:"/organization-dashboard/dashboard"},
+  { name: "Categories", href: "/categories"}
+];
 export default function FooterComponent() {
   const pathname = usePathname();
 
@@ -137,17 +151,17 @@ export default function FooterComponent() {
               Quick Link
             </h3>
             <ul className="space-y-2">
-              {["Home", "About Us", "Contributors", "Events"].map((item) => (
-                <li key={item}>
-                  <Link
-                    href="#"
-                    className="text-iDonate-navy-primary hover:text-iDonate-green-primary transition-colors dark:text-iDonate-navy-accent"
-                  >
-                    {item}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+        {links.map((link) => (
+          <li key={link.name}>
+            <Link
+              href={link.href}
+              className="text-iDonate-navy-primary hover:text-iDonate-green-primary transition-colors dark:text-iDonate-navy-accent"
+            >
+              {link.name}
+            </Link>
+          </li>
+        ))}
+      </ul>
           </div>
 
           {/* Support */}
@@ -206,7 +220,7 @@ export default function FooterComponent() {
                   alt="MPTC Logo"
                   width={1000}
                   height={1000}
-                  className="p-2 w-full h-full object-cover"
+                  className="p-2 w-full h-full object-cover  "
                   onClick={() => window.open("https://www.mptc.gov.kh/")}
                 />
                 <Image

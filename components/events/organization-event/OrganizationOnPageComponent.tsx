@@ -95,7 +95,7 @@ export default function OrganizationOnPageComponent() {
 
       <div className="container mx-auto px-6 md:px-6 lg:px-8 xl:px-10 flex flex-col gap-6">
         <h2 className="text-2xl font-semibold text-center text-iDonate-navy-primary dark:text-iDonate-navy-accent">
-          អង្កការភាពដែលបាន ចូលរួមជាមួយពួកយើង
+          អង្គការភាពដែលបាន ចូលរួមជាមួយពួកយើង
         </h2>
 
         <Toolbar
@@ -122,9 +122,6 @@ export default function OrganizationOnPageComponent() {
               />
             ))}
       </div>
-
-
-
 
 {/* 
         <div className="grid gap-6 grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">

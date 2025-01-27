@@ -27,7 +27,7 @@ const donationCards: DonationCard[] = [
     description: "ផ្តល់ការអប់រំពេលចេញពីសាលាដល់កុមារនៅក្នុងតំបន់ដាច់ស្រយាល",
     donors: 1.2,
     amount: 1000,
-    isCurrent: false,
+    isCurrent: true,
   },
   {
     id: "2",
@@ -36,7 +36,7 @@ const donationCards: DonationCard[] = [
     description: "កុមារនឹងទទួលបានអាហារពេលចូលនិងថ្នាំពេទ្យពេលឈឺទៀតផង",
     donors: 1.2,
     amount: 1000,
-    isCurrent: false,
+    isCurrent: true,
   },
   {
     id: "3",
@@ -45,7 +45,7 @@ const donationCards: DonationCard[] = [
     description: "ផ្តល់ឱកាសដល់សិស្សក្រីក្រឱ្យកូនៗពួកគេទៅសាលារៀន",
     donors: 1.2,
     amount: 1000,
-    isCurrent: false,
+    isCurrent: true,
   },
 ];
 
