@@ -33,10 +33,15 @@ export const eventApi = idonateApi.injectEndpoints({
       }),
       invalidatesTags: [{ type: "event", id: "LIST" }],
     }),
+    getEventsByCategory: builder.query({
+      query: (categoryUuid:string) => `/events/get-event-by-category/${categoryUuid}`,
+      providesTags: [{ type: "event", id: "LIST" }],
+    }),
   }),
 });
 
 export const { 
   useGetEventsQuery,
   useGetEventByUuidQuery,
+  useGetEventsByCategoryQuery
  } = eventApi;

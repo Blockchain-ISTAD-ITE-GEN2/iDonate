@@ -11,7 +11,7 @@ export default function CategoryCardComponent() {
 
   const typeCategories: CategoryType[] = category?.currentData || [];
 
-  console.log("typeCategory", typeCategories);
+  // console.log("typeCategory", typeCategories);
 
   return (
     <>

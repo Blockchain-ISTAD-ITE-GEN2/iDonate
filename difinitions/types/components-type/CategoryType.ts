@@ -1,4 +1,5 @@
 export type CategoryType = {
+  uuid: string;
   media: string;
   name: string;
   description: string;

@@ -145,8 +145,7 @@ import SuccessDialog from "./Success-dialog";
         {
           method: "POST",
           headers: {
-            authorization:
-              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjoiYzIwOWMwNDYzNjBlNDEwMSJ9LCJpYXQiOjE3MzczNTg3NTcsImV4cCI6MTc0NTEzNDc1N30.8CdSi4fVh_b1bT-pjEN0peTi_ws4K4AOKGCxrrH0EYE",
+            "Authorization": `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjoiYzIwOWMwNDYzNjBlNDEwMSJ9LCJpYXQiOjE3MzczNTg3NTcsImV4cCI6MTc0NTEzNDc1N30.8CdSi4fVh_b1bT-pjEN0peTi_ws4K4AOKGCxrrH0EYE`,
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
@@ -154,6 +153,7 @@ import SuccessDialog from "./Success-dialog";
           }),
         }
       );
+      
 
       const successData = await successResponse.json();
       setTransactionData(successData); // Save transaction data
@@ -301,7 +301,7 @@ import SuccessDialog from "./Success-dialog";
 />
 
 
-{transactionData && isSuccessDialogOpen && (
+{/* {transactionData && isSuccessDialogOpen && (
   <SuccessDialog
     isOpen={true}
     onClose={() => setTransactionData(undefined)}
@@ -320,7 +320,7 @@ import SuccessDialog from "./Success-dialog";
       },
     }}
   />
-)} 
+)}  */}
 
       </Form>
     );

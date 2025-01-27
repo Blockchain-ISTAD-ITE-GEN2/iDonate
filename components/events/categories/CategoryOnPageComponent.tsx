@@ -1,20 +1,22 @@
 "use client";
 import OrganizationDetailHeroSection from "@/components/herosection/OrganizationDetailHeroSection";
 import { CategoryType } from "@/difinitions/types/components-type/CategoryType";
-import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import categories from "@/data/category.json";
 import CategoryCardComponent from "./CategoryCardComponent";
 import { EventType } from "@/difinitions/dto/EventType";
 import { CommonEventCard } from "@/components/events/organization-event/CommonEventCard";
 import events from "@/data/events-data.json";
 import { useGetCategoriesQuery } from "@/redux/services/category-service";
+import { useGetEventsQuery } from "@/redux/services/event-service";
 
 export default function CategoryOnPageComponent() {
   const category = useGetCategoriesQuery({});
 
   const typeCategories: CategoryType[] = category?.currentData || [];
-  const typedEvents: EventType[] = events.slice(0, 4);
+
+  const { data: events } = useGetEventsQuery({});
+
+  const typedEvents: EventType[] = events?.content?.slice(0, 4);
 
   return (
     <section className="flex flex-col gap-9 mb-5 ">
@@ -29,7 +31,7 @@ export default function CategoryOnPageComponent() {
       </div>
 
       {/* List Card Events */}
-      {typeCategories.map((category, categoryIndex) => (
+      {typeCategories?.map((category, categoryIndex) => (
         <section
           key={categoryIndex}
           className="flex flex-col gap-6 container mx-auto"
@@ -44,16 +46,10 @@ export default function CategoryOnPageComponent() {
             </h2>
 
             <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-              {typedEvents.map((event, eventIndex) => (
+              {typedEvents?.map((event, eventIndex) => (
                 <CommonEventCard
                   key={eventIndex}
-                  event={{
-                    image: event.image,
-                    title: event.title,
-                    description: event.description,
-                    total_donor: event.total_donor,
-                    total_amount: event.total_amount,
-                  }}
+                  event={typedEvents[eventIndex]}
                 />
               ))}
             </div>
