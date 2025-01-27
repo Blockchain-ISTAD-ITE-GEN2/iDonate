@@ -19,7 +19,7 @@ export default function CategoryCardComponent() {
     <>
       {typeCategories.map((item, index) => (
         <motion.div
-          onClick={() => router.push(`/categories/0`)}
+          onClick={() => router.push(`/categories/${item?.uuid}`)}
           lang="km"
           key={index}
           // className="lg:w-[300px] md:w-full h-[370px] flex flex-col items-center gap-6 px-10 py-12 rounded-[15px] shadow-light"

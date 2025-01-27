@@ -25,9 +25,9 @@ export type EventType = {
   organization: OrganizationEventType;
   total_amount: number;
   total_donor: number;
-  key?: number;
   category?: {
     name:string;
   };
   images: string[];
+  [key: string]: any; // Add index signature
 };
