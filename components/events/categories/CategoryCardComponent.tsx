@@ -6,7 +6,9 @@ import { useRouter } from "next/navigation";
 import { useGetCategoriesQuery } from "@/redux/services/category-service";
 
 export default function CategoryCardComponent() {
+
   const router = useRouter();
+  
   const category = useGetCategoriesQuery({});
 
   const typeCategories: CategoryType[] = category?.currentData || [];
@@ -53,7 +55,7 @@ export default function CategoryCardComponent() {
               {item.description}
             </p>
           )}
-          {/* {item.benefits && <span className="text-sm">{item.benefits}</span>} */}
+          
         </motion.div>
       ))}
     </>
