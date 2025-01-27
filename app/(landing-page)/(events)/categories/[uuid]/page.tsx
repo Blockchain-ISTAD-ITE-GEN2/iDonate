@@ -13,7 +13,7 @@ export default function Page() {
   );
 }
 
-import { Metadata } from "next";
+// import { Metadata } from "next";
 
 // type Props = {
 //     params: { id: string };
