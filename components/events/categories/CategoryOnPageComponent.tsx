@@ -8,7 +8,7 @@ import CategoryWithEventComponent from "./CategoryWithEventComponent";
 
 export default function CategoryOnPageComponent() {
   const {
-    data: apiReponseCategory = { content: [] }, // Default value to ensure `content` exists
+    data: apiReponseCategory = { content: [] }, 
     isLoading: isLoadingCategory,
   } = useGetCategoriesQuery({});
 
