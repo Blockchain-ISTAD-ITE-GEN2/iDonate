@@ -1,3 +1,4 @@
+
 import Image from "next/image";
 import { CircleDollarSign, Users } from "lucide-react";
 import { EventType } from "@/difinitions/dto/EventType";
@@ -24,15 +25,15 @@ export function GetMostDonationCardComponent({
               index === 0 ? "h-[520px]" : "h-[520px] md:h-[520px] lg:h-[141px]"
             }`}
           >
-            {item.image && (
+            {item.images && (
               <Image
                 className={`rounded-t-[10px] object-cover ${
                   index === 0
                     ? "w-full h-[520px]"
                     : "h-[520px] md:h-[520px] lg:h-[170px] w-full"
                 }`}
-                src={item.image}
-                alt={item.title || "Media"}
+                src={item.images[0]}
+                alt={item.name || "Media"}
                 width={index === 0 ? 636 : 280}
                 height={index === 0 ? 470 : 170} // 459
               />
@@ -45,7 +46,7 @@ export function GetMostDonationCardComponent({
             }`}
           >
             <div className={index === 0 ? "mt-[30px]" : "mt-[30px]"}>
-              {item.title && (
+              {item.name && (
                 <h3
                   className={`font-extrabold text-medium-khmer text-left ${
                     index === 0
@@ -53,12 +54,12 @@ export function GetMostDonationCardComponent({
                       : "line-clamp-1 text-iDonate-navy-primary"
                   }`}
                 >
-                  {item.title}
+                  {item.name}
                 </h3>
               )}
               {item.description && (
                 <p
-                  className={`font-thin text-iDonate-navy-secondary text-title-card text-start ${
+                  className={`font-thin text-iDonate-navy-secondary text-name-card text-start ${
                     index === 0 ? "line-clamp-3" : "line-clamp-2"
                   }`}
                 >

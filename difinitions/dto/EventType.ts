@@ -1,5 +1,5 @@
-import { OrganizationEventType } from "./Organization-event";
 import { OrganizationResponse } from "./OrganizationType";
+import {OrganizationEventType} from "@/difinitions/dto/Organization-event";
 
 export type EventRequest = {
   name: string;
@@ -19,12 +19,15 @@ export type EventResponse = {
 export type EventType = {
   uuid: string;
   name: string;
-  images: [string];
   description: string;
+  startDate:string;
+  endDate:string;
   organization: OrganizationEventType;
   total_amount: number;
   total_donor: number;
-  date?: string;
-  category?: string;
-  [key: string]: any; // Add index signature
+  key?: number;
+  category?: {
+    name:string;
+  };
+  images: string[];
 };

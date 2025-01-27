@@ -1,5 +1,4 @@
 import { EventDetail } from "@/components/events/even-detail/[uuid]/event-detail";
-import { useGetEventByUuidQuery } from "@/redux/services/event-service";
 
 import { Metadata } from "next";
 

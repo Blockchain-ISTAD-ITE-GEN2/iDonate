@@ -13,13 +13,13 @@ export function CardEvent({ events }: { events: EventType[] }) {
         >
           {/* Image Section */}
           <CardHeader className="w-full h-[180px] p-0">
-            {item.image && (
+            {item.images && (
               <Image
                 className="object-cover w-full h-full"
                 width={280}
                 height={180}
-                src={item.image}
-                alt={item.title || "Event"}
+                src={item.images[0]}
+                alt={item.name || "Event"}
               />
             )}
           </CardHeader>
@@ -27,9 +27,9 @@ export function CardEvent({ events }: { events: EventType[] }) {
           {/* Content Section */}
           <CardContent className="p-4 flex flex-col gap-2">
             {/* Title */}
-            {item.title && (
+            {item.name && (
               <h3 className="text-base font-semibold text-gray-800 line-clamp-1">
-                {item.title}
+                {item.name}
               </h3>
             )}
 

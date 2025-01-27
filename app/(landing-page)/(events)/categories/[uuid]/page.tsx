@@ -1,6 +1,6 @@
 // Page Detail
-import HeroSectionCategoryComponent from "@/components/events/categories/categorydetail/HeroSectionCategoryComponent";
-import CategoryDetailComponent from "@/components/events/categories/categorydetail/CategoryDetailComponent";
+import HeroSectionCategoryComponent from "@/components/events/categories/[uuid]/HeroSectionCategoryComponent";
+import CategoryDetailComponent from "@/components/events/categories/[uuid]/CategoryDetailComponent";
 
 export default function Page() {
   return (

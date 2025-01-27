@@ -1,98 +1,89 @@
 "use client";
+
 import { OrganizationCardComponent } from "@/components/events/organization-event/OrganizationCardComponent";
 import { OrganizationParam } from "@/difinitions/types/media/organization";
 import { Button } from "@/components/ui/button";
 import OrganizationDetailHeroSection from "@/components/herosection/OrganizationDetailHeroSection";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Toolbar } from "@/components/filter/toolbar";
-
-const organizationData = [
-  {
-    image:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSz7ISTnNfD0aD2BShZNw3_VmxokXpB7kryEg&s",
-    title: "Cambodia Kantha Bopha Foundation",
-    description:
-      "មូលនិធិកម្ពុជា គន្ធបុប្ផា គឺជាស្ថាប័នដែលមានបំណង ផ្តល់សេវាសុខាភិបាលដោយឥតគិតថ្លៃដល់កុមារខ្សត់ខ្សោយនៅទូទាំងប្រទេសកម្ពុជា។ ដោយផ្តោតលើការថែទាំសុខភាពដែលមាន",
-    location: "St 123 Phom Penh",
-  },
-  {
-    image:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRw6MAAOLgnKKemUTNtx2BWXrqPRmFsulj02A&s",
-    title: "Cambodia Kantha Bopha Foundation",
-    description:
-      "មូលនិធិកម្ពុជា គន្ធបុប្ផា គឺជាស្ថាប័នដែលមានបំណង ផ្តល់សេវាសុខាភិបាលដោយឥតគិតថ្លៃដល់កុមារខ្សត់ខ្សោយនៅទូទាំងប្រទេសកម្ពុជា។ ដោយផ្តោតលើការថែទាំសុខភាពដែលមាន",
-    location: "St 123 Phom Penh",
-  },
-  {
-    image:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Logo_of_Cambodian_Red_Cross.svg/1024px-Logo_of_Cambodian_Red_Cross.svg.png",
-    title: "Cambodia Kantha Bopha Foundation",
-    description:
-      "មូលនិធិកម្ពុជា គន្ធបុប្ផា គឺជាស្ថាប័នដែលមានបំណង ផ្តល់សេវាសុខាភិបាលដោយឥតគិតថ្លៃដល់កុមារខ្សត់ខ្សោយនៅទូទាំងប្រទេសកម្ពុជា។ ដោយផ្តោតលើការថែទាំសុខភាពដែលមាន",
-    location: "St 123 Phom Penh",
-  },
-  {
-    image:
-      "https://newhopeforcambodianchildren.org/wp-content/uploads/2016/12/nhcclogowtrans.png",
-    title: "Cambodia Kantha Bopha Foundation",
-    description:
-      "មូលនិធិកម្ពុជា គន្ធបុប្ផា គឺជាស្ថាប័នដែលមានបំណង ផ្តល់សេវាសុខាភិបាលដោយឥតគិតថ្លៃដល់កុមារខ្សត់ខ្សោយនៅទូទាំងប្រទេសកម្ពុជា។ ដោយផ្តោតលើការថែទាំសុខភាពដែលមាន",
-    location: "St 123 Phom Penh",
-  },
-  {
-    image:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRw6MAAOLgnKKemUTNtx2BWXrqPRmFsulj02A&s",
-    title: "Cambodia Kantha Bopha Foundation",
-    description:
-      "មូលនិធិកម្ពុជា គន្ធបុប្ផា គឺជាស្ថាប័នដែលមានបំណង ផ្តល់សេវាសុខាភិបាលដោយឥតគិតថ្លៃដល់កុមារខ្សត់ខ្សោយនៅទូទាំងប្រទេសកម្ពុជា។ ដោយផ្តោតលើការថែទាំសុខភាពដែលមាន",
-    location: "St 123 Phom Penh",
-  },
-  {
-    image:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Logo_of_Cambodian_Red_Cross.svg/1024px-Logo_of_Cambodian_Red_Cross.svg.png",
-    title: "Cambodia Kantha Bopha Foundation",
-    description:
-      "មូលនិធិកម្ពុជា គន្ធបុប្ផា គឺជាស្ថាប័នដែលមានបំណង ផ្តល់សេវាសុខាភិបាលដោយឥតគិតថ្លៃដល់កុមារខ្សត់ខ្សោយនៅទូទាំងប្រទេសកម្ពុជា។ ដោយផ្តោតលើការថែទាំសុខភាពដែលមាន",
-    location: "St 123 Phom Penh",
-  },
-  {
-    image:
-      "https://newhopeforcambodianchildren.org/wp-content/uploads/2016/12/nhcclogowtrans.png",
-    title: "Cambodia Kantha Bopha Foundation",
-    description:
-      "មូលនិធិកម្ពុជា គន្ធបុប្ផា គឺជាស្ថាប័នដែលមានបំណង ផ្តល់សេវាសុខាភិបាលដោយឥតគិតថ្លៃដល់កុមារខ្សត់ខ្សោយនៅទូទាំងប្រទេសកម្ពុជា។ ដោយផ្តោតលើការថែទាំសុខភាពដែលមាន",
-    location: "St 123 Phom Penh",
-  },
-  {
-    image:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Logo_of_Cambodian_Red_Cross.svg/1024px-Logo_of_Cambodian_Red_Cross.svg.png",
-    title: "Cambodia Kantha Bopha Foundation",
-    description:
-      "មូលនិធិកម្ពុជា គន្ធបុប្ផា គឺជាស្ថាប័នដែលមានបំណង ផ្តល់សេវាសុខាភិបាលដោយឥតគិតថ្លៃដល់កុមារខ្សត់ខ្សោយនៅទូទាំងប្រទេសកម្ពុជា។ ដោយផ្តោតលើការថែទាំសុខភាពដែលមាន",
-    location: "St 123 Phom Penh",
-  },
-];
+import { useGetOrganizationsQuery } from "@/redux/services/organization-service";
+import { OrganizationPlaceholderComponent } from "./OrganizationPlaceholerComponent";
 
 export default function OrganizationOnPageComponent() {
-  const [filteredOrganizations, setFilteredOrganizations] =
-    useState(organizationData);
+
+ // add state 
+  const [visibleCount, setVisibleCount] = useState(6);
+
+  const {
+    data: apiResponse,
+    isLoading:isLoadingOrg,
+    isError,
+  } = useGetOrganizationsQuery(undefined);
+
+  console.log("API Response Data :", apiResponse);
+
+
+
+  const organizationData: OrganizationParam[] = apiResponse?.content || [];
+
+
+  const [filteredOrganizations, setFilteredOrganizations] = useState<OrganizationParam[]>(organizationData);
 
   const filtersFace = [
     {
-      key: "title",
+      key: "name",
       title: "Organizations",
-      options: Array.from(
-        new Set(organizationData.map((organization) => organization.title)),
-      ).map((organization) => ({
-        label: organization,
-        value: organization,
+      options: Array.from(new Set(organizationData.map((org) => org.name || "Untitled"))).map((name) => ({
+        label: name,                               
+        value: name,
       })),
     },
   ];
+ 
 
+
+  // add all  to the filter state 
   useEffect(() => {
-    setFilteredOrganizations(organizationData); // Reset filtered events whenever `events` prop changes
+    setFilteredOrganizations(organizationData); 
   }, [organizationData]);
+  
+
+  const handleFilterChange = useCallback((filteredData: OrganizationParam[]) => {
+    setFilteredOrganizations(filteredData.slice(0, visibleCount)); 
+  }, [visibleCount]);
+
+
+ // show by count add 
+  useEffect(() => {
+    setFilteredOrganizations(organizationData.slice(0, visibleCount)); 
+  }, [organizationData, visibleCount]);
+
+
+
+
+  // handle show Organization 
+  const handleShowMore = () => {
+    setVisibleCount((prev) => prev + 3);
+  };
+
+
+  // if (isLoadingOrg) {
+  //   return (
+  //     <div className="grid gap-6 grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 m-6">
+  //       {Array(6)
+  //         .fill(null)
+  //         .map((_, index) => (
+  //           <OrganizationPlaceholderComponent key={index} />
+  //         ))}
+  //     </div>
+  //   );
+  // }
+
+  if (isError) {
+
+    console.error("Error fetching organizations");
+    // return <div className="text-center m-12">Something went Wrong!</div>;
+  }
 
   return (
     <section className="flex flex-col py-9 gap-9 items-center">
@@ -107,26 +98,49 @@ export default function OrganizationOnPageComponent() {
         <Toolbar
           events={organizationData}
           filtersFace={filtersFace}
-          searchKey={"title"}
-          onFilterChange={setFilteredOrganizations}
-        />
+          searchKey={"name"}
+          onFilterChange={handleFilterChange}
+        />;
 
-        <div className="grid gap-6 grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
-          {filteredOrganizations.map(
-            (org: OrganizationParam, index: number) => (
+      <div className="grid gap-6 grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
+        {isLoadingOrg
+          ? Array(visibleCount)   // 06 
+              .fill(null)
+              .map((_, index) => (
+                <OrganizationPlaceholderComponent key={index} />
+              ))
+          : filteredOrganizations.map((org: OrganizationParam, index: number) => (
               <OrganizationCardComponent
                 key={index}
-                image={org.image}
-                title={org.title}
+                image={org.image || ""}
+                name={org.name}
                 description={org.description}
-                location={org.location}
+                address={org.address}
               />
-            ),
-          )}
-        </div>
+            ))}
+      </div>
+
+
+
+
+{/* 
+        <div className="grid gap-6 grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
+          {filteredOrganizations.map((org: OrganizationParam, index: number) => (
+            <OrganizationCardComponent
+              key={index}
+              image={org.image || ""}
+              name={org.name} 
+              description={org.description}
+              address={org.address}
+            />
+          ))}
+        </div> */}
 
         <div className="flex justify-end">
-          <Button className="text-medium-eng text-iDonate-navy-primary bg-iDonate-white-space border-2 border-iDonate-navy-accent hover:bg-iDonate-navy-accent">
+          <Button
+           className="text-medium-eng text-iDonate-navy-primary bg-iDonate-white-space border-2 border-iDonate-navy-accent hover:bg-iDonate-navy-accent"
+           onClick={handleShowMore}
+           >
             Show more
           </Button>
         </div>
@@ -134,3 +148,5 @@ export default function OrganizationOnPageComponent() {
     </section>
   );
 }
+
+
