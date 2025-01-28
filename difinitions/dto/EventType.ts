@@ -1,4 +1,5 @@
 import { OrganizationResponse } from "./OrganizationType";
+import {OrganizationEventType} from "@/difinitions/dto/Organization-event";
 
 export type EventRequest = {
   name: string;
@@ -42,6 +43,7 @@ export type EventType = {
   category?: {
     name:string;
   };
+  organization?:OrganizationEventType;
   images: string[];
 };
 

@@ -56,7 +56,7 @@ import SuccessDialog from "./Success-dialog";
         donationEventID: firstEvent?.uuid || "",
         donor: userProfile?.uuid || "",
         amount: 0,
-        recipient: firstEvent?.organization.uuid || "",
+        recipient: firstEvent?.organization?.uuid || "",
         acquiringBank: "aba",
         currency: "USD",
         city: "Phnom Penh",
@@ -72,26 +72,48 @@ import SuccessDialog from "./Success-dialog";
    async function onSubmit(values: z.infer<typeof donationSchema>) {
     try {
       // Build the donation object
+      // const donation: DonationType = {
+      //   donationEventID: firstEvent?.uuid,
+      //   donor: userProfile?.uuid,
+      //   amount: values.amount,
+      //   recipient: firstEvent?.organization.uuid,
+      //   acquiringBank: values.acquiringBank,
+      //   currency: values.currency,
+      //   city: values.city,
+      // };
+
       const donation: DonationType = {
-        donationEventID: firstEvent?.uuid,
-        donor: userProfile?.uuid,
+        donationEventID: firstEvent?.uuid ?? "",
+        donor: userProfile?.uuid ?? "",
         amount: values.amount,
-        recipient: firstEvent?.organization.uuid,
+        recipient: firstEvent?.organization?.uuid ?? "",  // Fix possible undefined
         acquiringBank: values.acquiringBank,
         currency: values.currency,
         city: values.city,
       };
+      
 
       // Save payment data for QR dialog
+      // setPaymentData({
+      //   donationEventID: firstEvent?.name,
+      //   donor: userProfile?.username,
+      //   amount: values.amount,
+      //   recipient: firstEvent?.organization?.name,
+      //   acquiringBank: values.acquiringBank,
+      //   currency: values.currency,
+      //   city: values.city,
+      // });
+
       setPaymentData({
-        donationEventID: firstEvent?.name,
-        donor: userProfile?.username,
+        donationEventID: firstEvent?.name ?? "",
+        donor: userProfile?.username ?? "",
         amount: values.amount,
-        recipient: firstEvent?.organization?.name,
+        recipient: firstEvent?.organization?.name ?? "", // Ensure recipient is always a string
         acquiringBank: values.acquiringBank,
         currency: values.currency,
         city: values.city,
       });
+      
 
       // Validate required fields
       if (!donation.donationEventID || !donation.donor || !donation.recipient) {
