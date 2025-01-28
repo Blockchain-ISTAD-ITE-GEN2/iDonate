@@ -39,4 +39,4 @@ yarn-error.log*
 next-env.d.ts
 
 # Ignore all .env files (optional, but recommended)
-.env*
+#.env*
