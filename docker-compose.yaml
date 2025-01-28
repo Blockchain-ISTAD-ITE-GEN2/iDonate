@@ -1,3 +1,4 @@
+
 services:
   reactjs-srv:
     image: imagename
@@ -6,17 +7,30 @@ services:
       - "3000:3000"
     environment:
       - NODE_ENV=production
-      - NEXTAUTH_URL=https://idonate.kangtido.life
-      - NEXT_PUBLIC_URL=https://idonate.kangtido.life
+      # Load environment variables from .env.production
+      - NEXTAUTH_URL=${NEXTAUTH_URL}
+      - NEXTAUTH_SECRET=${NEXTAUTH_SECRET}
+      - NEXT_PUBLIC_FACEBOOK_CLIENT_ID=${NEXT_PUBLIC_FACEBOOK_CLIENT_ID}
+      - NEXT_PUBLIC_FACEBOOK_CLIENT_SECRET=${NEXT_PUBLIC_FACEBOOK_CLIENT_SECRET}
+      - NEXT_PUBLIC_API_BASE_URL=${NEXT_PUBLIC_API_BASE_URL}
+      - NEXT_PUBLIC_GOOGLE_CLIENT_ID=${NEXT_PUBLIC_GOOGLE_CLIENT_ID}
+      - NEXT_PUBLIC_GOOGLE_CLIENT_SECRET=${NEXT_PUBLIC_GOOGLE_CLIENT_SECRET}
+      - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
+      - NEXT_PUBLIC_IDONATE_API_URL=${NEXT_PUBLIC_IDONATE_API_URL}
+      - COOKIE_REFRESH_TOKEN_NAME=${COOKIE_REFRESH_TOKEN_NAME}
+      - IDONATE_BASE_URL=${IDONATE_BASE_URL}
+      - NEXT_PUBLIC_URL=${NEXT_PUBLIC_URL}
+    env_file:
+      - .env.production # Load environment variables from this file
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.idonate.rule=Host(`idonate.kangtido.life`)"
       - "traefik.http.routers.idonate.entrypoints=websecure"
-      # - "traefik.http.routers.idonate.tls=true"
       - "traefik.http.routers.idonate.tls.certresolver=letsencrypt"
       - "traefik.http.services.idonate.loadbalancer.server.port=3000"
     networks:
       - proxy
+
 networks:
   proxy:
     external: true
