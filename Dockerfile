@@ -1,35 +1,31 @@
-# Build Stage
-FROM node:lts AS build
+# Build stage
+FROM node:lts as build
 WORKDIR /app
 
-# Copy package files and install dependencies
+# Copy package.json and package-lock.json
 COPY package*.json ./
+
+# Install dependencies
 RUN npm install --force
 
-# Copy source files explicitly, excluding unnecessary files
-COPY . .  
+# Copy the rest of the application code
+COPY . .
 
-# Ensure .env.production is explicitly copied
-COPY /.env.production .env.production
-
-# Debugging: Check if the file exists in the container
-RUN ls -la /app
-
-# Build the application
+# Build the Next.js application
 RUN npm run build
 
-# Production Stage
+# Production stage
 FROM node:lts
 WORKDIR /app
 
-# Copy built files from the previous stage
+# Copy the build artifacts and necessary files from the build stage
 COPY --from=build /app ./
 
-# Install serve for static file hosting
-RUN npm install -g serve
+# Install only production dependencies, forcefully
+RUN npm install --only=production --force
 
-# Expose port
+# Expose the port the app runs on
 EXPOSE 3000
 
-# Start the application
+# Start the application using 'next start' to serve the built Next.js application
 CMD ["npm", "start"]
