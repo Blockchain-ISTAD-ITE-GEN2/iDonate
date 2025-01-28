@@ -1,4 +1,5 @@
 "use client";
+
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
@@ -8,7 +9,6 @@ import {
   FormDescription,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
@@ -24,20 +24,26 @@ import {
 } from "@/components/ui/card";
 import { AlertComfirmDialog } from "@/components/Alert/Alert-Dialog";
 import { Textarea } from "@/components/ui/textarea";
+import { useGetUserProfileQuery, useUpdateUserProfileMutation } from "@/redux/services/user-profile";
+import { EditprofileType, EditUserBioType } from "@/lib/definition";
 
 export function DonorBioForm({
   onPercentageUpdate,
 }: {
   onPercentageUpdate: (percentage: number) => void;
 }) {
-  // 1. State to toggle between view and edit mode
   const [isEditing, setIsEditing] = useState(false);
 
-  // 2. Define your form.
+  // Fetch donor profile data
+  const { data: donorProfile } = useGetUserProfileQuery({});
+
+  // Mutation to update donor profile
+  const [updateUserProfile] = useUpdateUserProfileMutation();
+
   const form = useForm<z.infer<typeof organizationBioSchema>>({
     resolver: zodResolver(organizationBioSchema),
     defaultValues: {
-      bio: "Elizabeth Joe គឺជាអ្នកសកម្មក្នុងវិស័យឧស្សាហកម្មស្រ្តីដែលបង្កើតរបស់ជាច្រើនគាត់ជាអ្នកផ្តល់ជំនួយដល់ជំនួយដ៏ធំដល់អ្នកដទៃគាត់គឺជាមនុស្សម្ន ាក់ ដែលស្រឡាញវិជ្ជាសាស្រ្ត ពិភពលោក ផងដែរ🌍។គាត់គឺជាស្ថាបត្យករ GreenFuture Innovations ដែលពេញនិយមសម្រាប់ការបង្កើតដំណោះស្រាយមិត្តភាពដូចជា គ្រឿងពិនិត្យការពុលអាកាសដែលប្រើថាមពលព្រះអាទិត្យ។ គាត់ក៏ជាកម្មសិក្ខារ EmpowerHer Foundation ដែលគាំទ្រស្រ្តីក្នុងវិស័យ STEM តាមរយៈទទួល​អាហារូបករណ៍ និងការបណ្ដុះបណ្ដាលផ្សេង 💡។ គាត់ក៏បានសរសេរសៀវភៅ Sustainability Starts With You ដែលជាសៀវភៅបង្ហាញបុគ្គលភាពទៅកាន់ការរស់នៅ ក្នុងរបរិស្ថានតែមួយ។ ក្នុងពេលសំរាករបស់នាង Elizabeth មានការចូលរួមក្នុងការឆ្លងកាត់ភ្នំ គំនូរ និងចំណាយពេលជាមួយឆ្មារបស់នាង ​🐾 តែពេលនេះគាត់ពិតត្រូវការ  ជួយពីអ្នកទាំងអស់យ៉ាងក្រៃឡេង ដោយសារគាត់បានជួបជាមួយ និងឧបទ្ទវហេតុក្នុងគ្រោះថ្នាក់ចរាចរណ៍ពេលនេះគាត់កំពុងត្រូវអ្នកទាំងអស់គ្នាដើ់ម្បីបន្តនិងសេចក្តីសង្ឈឹមនូវជិវិតរបស់គាត់។",
+      bio: donorProfile?.bio || "",
     },
   });
 
@@ -47,35 +53,45 @@ export function DonorBioForm({
   // Update percentage based on input
   useEffect(() => {
     if (bioValue.trim()) {
-      onPercentageUpdate(10); // Address field filled, update percentage
+      onPercentageUpdate(10); // Bio field filled, update percentage
     } else {
-      onPercentageUpdate(0); // Address field empty, reset percentage
+      onPercentageUpdate(0); // Bio field empty, reset percentage
     }
   }, [bioValue, onPercentageUpdate]);
 
-  // 3. Define a submit handler.
-  function onSubmit(values: z.infer<typeof organizationBioSchema>) {
-    console.log(values);
-    // Switch back to view mode after submitting
-    setIsEditing(false);
-  }
+  // Handle form submission
+  const onSubmit = async (values: z.infer<typeof organizationBioSchema>) => {
+    try {
+      if (!donorProfile?.uuid) return;
+  
+      // Update the profile using RTK Mutation
+      await updateUserProfile({
+        uuid: donorProfile.uuid,
+        updatedUserProfile: values?.bio as unknown as EditprofileType
+      }).unwrap();
+  
+      console.log("Bio updated successfully!");
+      setIsEditing(false);
+    } catch (error) {
+      console.error("Failed to update bio:", error);
+    }
+  };
 
-  function handleCancel() {
-    reset(); // Reset the form
-    setIsEditing(false); // Switch back to view mode
-  }
+  // Handle cancel
+  const handleCancel = () => {
+    reset({ bio: donorProfile?.bio || "" });
+    setIsEditing(false);
+  };
 
   return (
     <Form {...form}>
       <form onSubmit={handleSubmit(onSubmit)}>
-        {/* View Mode */}
         {!isEditing && (
           <Card className="flex flex-col rounded-lg border-2 border-iDonate-navy-accent gap-2 lg:gap-6 p-4 md:p-6 lg:p-9">
             <CardHeader className="flex flex-row items-center justify-between p-0 m-0">
               <CardTitle className="text-lg lg:text-2xl font-medium text-iDonate-navy-secondary">
                 Bio
               </CardTitle>
-
               <Button
                 onClick={() => setIsEditing(true)}
                 className="bg-iDonate-white-space border-2 text-xs lg:text-sm hover:bg-iDonate-light-gray border-iDonate-navy-accent text-iDonate-navy-primary"
@@ -84,44 +100,23 @@ export function DonorBioForm({
                 Edit
               </Button>
             </CardHeader>
-
             <CardContent className="flex flex-wrap gap-4 sm:gap-6 lg:gap-9 p-0 m-0">
               <div className="flex flex-col md:space-y-1 ">
-                <CardDescription
-                  lang="km"
-                  className="text-sm sm:text-description-eng lg:text-medium-eng text-iDonate-navy-primary"
-                >
-                  Elizabeth Joe
-                  គឺជាអ្នកសកម្មក្នុងវិស័យឧស្សាហកម្មស្រ្តីដែលបង្កើតរបស់ជាច្រើនគាត់ជាអ្នកផ្តល់ជំនួយដល់ជំនួយដ៏ធំដល់អ្នកដទៃគាត់គឺជាមនុស្សម្នាក់
-                  ដែលស្រឡាញវិជ្ជាសាស្រ្ត ពិភពលោក ផងដែរ🌍។គាត់គឺជាស្ថាបត្យករ
-                  GreenFuture Innovations
-                  ដែលពេញនិយមសម្រាប់ការបង្កើតដំណោះស្រាយមិត្តភាពដូចជា
-                  គ្រឿងពិនិត្យការពុលអាកាសដែលប្រើថាមពលព្រះអាទិត្យ។
-                  គាត់ក៏ជាកម្មសិក្ខារ EmpowerHer Foundation
-                  ដែលគាំទ្រស្រ្តីក្នុងវិស័យ STEM តាមរយៈទទួល​អាហារូបករណ៍
-                  និងការបណ្ដុះបណ្ដាលផ្សេង 💡។ គាត់ក៏បានសរសេរសៀវភៅ Sustainability
-                  Starts With You ដែលជាសៀវភៅបង្ហាញបុគ្គលភាពទៅកាន់ការរស់នៅ
-                  ក្នុងរបរិស្ថានតែមួយ។ ក្នុងពេលសំរាករបស់នាង Elizabeth
-                  មានការចូលរួមក្នុងការឆ្លងកាត់ភ្នំ គំនូរ
-                  និងចំណាយពេលជាមួយឆ្មារបស់នាង ​🐾 តែពេលនេះគាត់ពិតត្រូវការ
-                  ជួយពីអ្នកទាំងអស់យ៉ាងក្រៃឡេង ដោយសារគាត់បានជួបជាមួយ
-                  និងឧបទ្ទវហេតុក្នុងគ្រោះថ្នាក់ចរាចរណ៍ពេលនេះគាត់កំពុងត្រូវអ្នកទាំងអស់គ្នាដើ់ម្បីបន្តនិងសេចក្តីសង្ឈឹមនូវជិវិតរបស់គាត់។
+                <CardDescription className="text-sm sm:text-description-eng lg:text-medium-eng text-iDonate-navy-primary">
+                  {donorProfile?.bio || "No bio provided"}
                 </CardDescription>
               </div>
             </CardContent>
           </Card>
         )}
 
-        {/* Edit Mode */}
         {isEditing && (
           <Card className="flex flex-col bg-iDonate-light-gray rounded-lg border-2 border-iDonate-navy-accent gap-2 lg:gap-6 p-4 md:p-6 lg:p-9">
             <CardHeader className="flex flex-col sm:flex-row items-start justify-between p-0 m-0">
               <CardTitle className="text-lg lg:text-2xl font-medium text-iDonate-navy-secondary">
                 Bio
               </CardTitle>
-
               <div className="flex w-full justify-end gap-3">
-                {/* Cancel Button */}
                 {formState.isDirty ? (
                   <AlertComfirmDialog
                     trigger={
@@ -147,8 +142,6 @@ export function DonorBioForm({
                     Cancel
                   </Button>
                 )}
-
-                {/* Submit Button */}
                 <Button
                   type="submit"
                   className="bg-iDonate-white-space border-2 text-xs lg:text-sm hover:bg-iDonate-light-gray border-iDonate-navy-accent text-iDonate-navy-primary"
@@ -163,17 +156,13 @@ export function DonorBioForm({
                 control={control}
                 name="bio"
                 render={({ field }) => (
-                  <FormItem className="w-full h-full">
+                  <FormItem className="w-full">
                     <FormControl className="text-sm lg:text-medium-eng">
-                      <Textarea
-                        className="h-auto overflow-auto scrollbar-hide"
-                        placeholder="Elizabeth Joe"
-                        {...field}
-                      />
+                      <Textarea placeholder="Enter your bio" {...field} />
                     </FormControl>
                     <FormMessage />
                     <FormDescription className="text-iDonate-gray text-xs sm:text-sm lg:text-lg">
-                      This is your organization's address.
+                      This is your organization's bio.
                     </FormDescription>
                   </FormItem>
                 )}

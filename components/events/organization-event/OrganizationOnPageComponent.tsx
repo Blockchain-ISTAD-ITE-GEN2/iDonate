@@ -100,7 +100,7 @@ export default function OrganizationOnPageComponent() {
           filtersFace={filtersFace}
           searchKey={"name"}
           onFilterChange={handleFilterChange}
-        />;
+        />
 
       <div className="grid gap-6 grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
         {isLoadingOrg

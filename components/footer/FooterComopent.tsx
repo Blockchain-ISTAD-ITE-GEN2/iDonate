@@ -22,7 +22,8 @@ export default function FooterComponent() {
     pathname === "/verification" ||
     pathname === "/forgot-password" ||
     pathname === "/reset-password" ||
-    pathname === "/profile"
+    pathname === "/profile" ||
+    pathname === "/waiting-verification"
   ) {
     return null;
   }

@@ -10,7 +10,7 @@ export async function POST(req: NextRequest) {
 
   // Make a POST request to the Our API
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_IDONATE_API_URL}/api/v1/auth/login/`,
+    `${process.env.NEXT_PUBLIC_IDONATE_API_URL}/api/v1/auth/login`,
     {
       method: "POST",
       headers: { "Content-Type": "application/json" },

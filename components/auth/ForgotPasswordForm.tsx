@@ -19,12 +19,10 @@ import { z } from "zod";
 import { useFormik } from "formik";
 import toast from "react-hot-toast";
 
-// Define the validation schema using Zod
 const validationSchema = z.object({
   email: z.string().min(1, "* Email is required").email("* Email is invalid"),
 });
 
-// Define the initial values for the form
 const initialValues = {
   email: "",
 };
@@ -36,14 +34,14 @@ export default function ForgotPasswordForm() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
 
-  // Handle form submission
   const handleSubmit = async (values: { email: string }) => {
     setIsLoading(true);
     setError("");
     setSuccess(false);
 
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/forgot`, {
+      // Update the endpoint to match your API
+      const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/v1/users/forget-password`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -51,29 +49,48 @@ export default function ForgotPasswordForm() {
         body: JSON.stringify({ email: values.email }),
       });
 
+      // Always get the response data first
+      const data = await res.json();
+      console.log("Response:", { status: res.status, data });
+
       if (res.ok) {
-        const data = await res.json();
-        if (data?.token) {
-          dispatch(setForgotToken(data.token));
+        // Make sure we're checking for token in the correct path based on your API response
+        const token = data?.token;
+        
+        if (token) {
+          // Store both token and email in Redux
+          dispatch(setForgotToken(token));
           dispatch(setEmail(values.email));
+          
           setSuccess(true);
           toast.success("Password reset link sent to your email!", {
             duration: 2000,
             position: "top-center",
           });
-          setTimeout(() => router.push("/reset-password"), 2000);
+
+          // Navigate after a short delay
+          setTimeout(() => {
+            console.log("Navigating with token:", token);
+            router.push(`/reset-password?token=${token}`);
+          }, 2000);
+        } else {
+          console.error("Token missing from response");
+          setError("Reset token not received. Please try again.");
+          toast.error("Failed to get reset token.", {
+            duration: 2000,
+            position: "top-center",
+          });
         }
       } else {
-        const errorData = await res.json();
-        setError(
-          errorData.message || "Failed to send reset link. Please try again.",
-        );
-        toast.error(errorData.message || "Failed to send reset link.", {
+        // Handle error response
+        setError(data.message || "Failed to send reset link. Please try again.");
+        toast.error(data.message || "Failed to send reset link.", {
           duration: 2000,
           position: "top-center",
         });
       }
     } catch (err) {
+      console.error("Request error:", err);
       setError("An unexpected error occurred. Please try again.");
       toast.error("An unexpected error occurred.", {
         duration: 2000,
@@ -84,7 +101,7 @@ export default function ForgotPasswordForm() {
     }
   };
 
-  // Formik form handling
+  // Rest of your component remains the same...
   const formik = useFormik({
     initialValues,
     onSubmit: handleSubmit,

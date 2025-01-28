@@ -17,38 +17,13 @@ import Image from "next/image";
 import { organizationMediaSchema } from "@/components/schema/schema";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { AlertComfirmDialog } from "@/components/Alert/Alert-Dialog";
-import {
-  useGetUserProfileQuery,
-  useUpdateAvatarMutation,
-} from "@/redux/services/user-profile";
+import { useGetUserProfileQuery, useUpdateAvatarMutation } from "@/redux/services/user-profile";
 import { useParams } from "next/navigation";
-import AvartarPlaceHolder from "@/public/images/family-photo.png";
+import AvartarPlaceHolder from '@/public/logo/logodesign no background.png';
 import { toast } from "react-hot-toast";
-import { UpdateProfileImageType, UploadImageResponse } from "@/lib/definition";
+import { UpdateProfileImageType } from "@/lib/definition";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useUploadSingleMediaMutation } from "@/redux/services/media";
-
-// Define the uploadMedia function
-const uploadMedia = async (file: File): Promise<UploadImageResponse> => {
-  const formData = new FormData();
-  formData.append("file", file);
-
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_IDONATE_API_URL}/api/v1/media/upload-single`,
-    {
-      method: "POST",
-      body: formData,
-    },
-  );
-
-  // const response = useUploadSingleMediaMutation(form)
-
-  if (!response.ok) {
-    throw new Error("Failed to upload file");
-  }
-
-  return response.json();
-};
 
 export function DonorMediaForm({
   onPercentageUpdate,
@@ -67,6 +42,7 @@ export function DonorMediaForm({
 
   const { uuid } = useParams();
   const [updateAvatar, { isLoading: isUpdating }] = useUpdateAvatarMutation();
+  const [uploadMedia] = useUploadSingleMediaMutation();
   const { data: userProfile } = useGetUserProfileQuery({});
 
   const { watch, handleSubmit, reset, control, formState } = form;
@@ -107,19 +83,29 @@ export function DonorMediaForm({
     if (!selectedFile || !uuid) return;
 
     try {
-      const uploadResponse = await uploadMedia(selectedFile);
+      if(selectedFile instanceof File){
+        console.log("file")
+      // Upload the file using RTK Query
+      const formData = new FormData();
+      formData.append("file", selectedFile);
 
+      console.log("Form Data value : ", formData);
+
+      const uploadResponse = await uploadMedia(formData).unwrap();
+
+      // Update the user's avatar
       const imageUri: UpdateProfileImageType = {
-        image: uploadResponse?.name,
+        file: uploadResponse?.name,
       };
 
       await updateAvatar({
-        uuid: "a1690bd3-f0a1-4117-9d73-e24feee398cb",
-        updatedProfileImage: imageUri,
+        uuid: uuid as string,
+        file: formData
       }).unwrap();
 
       toast.success("Avatar updated successfully");
       handleCancel();
+    }
     } catch (error) {
       console.error("Error while uploading avatar:", error);
       toast.error("Error while uploading avatar");
@@ -127,7 +113,7 @@ export function DonorMediaForm({
   };
 
   const profileImageUrl = userProfile?.avatar
-    ? `https://idonateapi.kangtido.life/media/${userProfile.avatar}`
+    ? `${process.env.NEXT_PUBLIC_IDONATE_API_URL}/media/${userProfile?.avatar}`
     : AvartarPlaceHolder;
 
   return (
