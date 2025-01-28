@@ -12,10 +12,10 @@ services:
       - NODE_ENV=production
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.nextjs.rule=Host(`nextjs.kangtido.life`)"
-      - "traefik.http.routers.nextjs.entrypoints=websecure"
-      - "traefik.http.routers.nextjs.tls.certresolver=letsencrypt"
-      - "traefik.http.services.nextjs.loadbalancer.server.port=3000"
+      - "traefik.http.routers.idonate.rule=Host(`idonate.kangtido.life`)"
+      - "traefik.http.routers.idonate.entrypoints=websecure"
+      - "traefik.http.routers.idonate.tls.certresolver=letsencrypt"
+      - "traefik.http.services.idonate.loadbalancer.server.port=3000"
     # volumes:
     #   - /home/kang/action-ruuner-idonate/.env.production:/app/.env.production
     networks:
