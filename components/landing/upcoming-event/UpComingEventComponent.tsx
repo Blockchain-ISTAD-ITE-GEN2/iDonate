@@ -84,7 +84,7 @@ const {
           <Card className="overflow-hidden transition-transform hover:scale-[1.01] cursor-pointer flex flex-col">
             <div className="flex-1 aspect-video relative">
               <Image
-                src={events[0]?.images[0] || "https://t4.ftcdn.net/jpg/06/71/92/37/360_F_671923740_x0zOL3OIuUAnSF6sr7PuznCI5bQFKhI0.jpg"}
+                src={events[0]?.images?.[0] || "https://t4.ftcdn.net/jpg/06/71/92/37/360_F_671923740_x0zOL3OIuUAnSF6sr7PuznCI5bQFKhI0.jpg"}
                 alt={events[0]?.name || "event_image"}
                 fill
                 className="object-cover w-full h-full"
@@ -129,7 +129,7 @@ const {
           >
             <div className="aspect-video relative">
               <Image
-                src={event.images[0]}
+                src={event.images?.[0]}
                 alt={event.name}
                 fill
                 className="object-cover"
