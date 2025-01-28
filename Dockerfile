@@ -23,7 +23,7 @@ COPY --from=build /app/node_modules ./node_modules
 COPY --from=build /app/package.json ./package.json
 # Copy .env.production only if it exists
 # Copy .env.production if it exists
-COPY --from=build /app/.env.production /.env.production
+# COPY --from=build /app/.env.production /.env.production
 
 
 
