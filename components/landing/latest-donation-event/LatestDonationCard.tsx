@@ -33,16 +33,20 @@ export default function LatestDonationCard() {
   
 
   return (
-    <div className="w-full h-auto bg-transparent flex flex-col gap-6 lg:pb-[440px]">
+    <div className="w-full h-auto bg-transparent flex flex-col gap-6  lg:pb-[500px]">
       {typedEvents.slice(3,4).map((item, key) => (
         <Card
           key={item.uuid}
-          className="w-full h-[660px] z-2 p-0 m-0 border-none grid lg:grid-cols-2 item-center lg:z-0 lg:relative"
+          className="w-full h-auto lg:h-[660px] z-2 p-0 m-0 border-none grid lg:grid-cols-2 item-center lg:z-0 lg:relative"
         >
           {/* Image Section */}
           <div className="relative min-h-[660px]">
             <Image
-              src={item.images[0]}
+              src={
+                Array.isArray(item?.images) && item.images[0]
+                  ? item.images[0]
+                  : "https://i.pinimg.com/736x/2a/86/a5/2a86a560f0559704310d98fc32bd3d32.jpg"
+              }
               fill
               alt="Community support image"
               className="absolute inset-0 w-full h-full object-cover"
@@ -102,15 +106,19 @@ export default function LatestDonationCard() {
 
       <div className="w-full flex flex-col gap-2 z-2 Lg:z-1 lg:absolute">
         {typedEvents.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 items-center justify-center mx-auto lg:grid-cols-3 gap-6 p-2 mt-[440px] lg:mt-[440px]">
+          <div className="grid grid-cols-1 sm:grid-cols-2 items-center justify-center mx-auto lg:grid-cols-3 gap-6 p-2 lg:mt-[500px]">
             {typedEvents.slice(0,3).map((item,key) => (
               <Card
                 key={item.uuid}
-                className="h-auto lg:h-[653px] lg:w-[400px]  rounded-[10px] bg-iDonate-light-gray border-0 cursor-pointer shadow-md transition-transform hover:scale-[1.02] dark:bg-iDonate-dark-mode  "
+                className="h-auto lg:h-[653px] lg:w-[400px] rounded-[10px] bg-iDonate-light-gray border-0 cursor-pointer shadow-md transition-transform hover:scale-[1.02] dark:bg-iDonate-dark-mode  "
               >
-                <div className="h-[55%]">
+                <div className="h-[55%] ">
                 <Image
-                    src={item.images[0]}
+                  src={
+                    Array.isArray(item?.images) && item.images[0]
+                      ? item.images[0]
+                      : "https://i.pinimg.com/736x/2a/86/a5/2a86a560f0559704310d98fc32bd3d32.jpg"
+                  }
                     alt={item.name}
                     width={5000}
                     height={5000}
