@@ -1,162 +1,156 @@
 "use client";
-
-import { Heart, User, Users, CircleDollarSign } from "lucide-react";
+import { Users, CircleDollarSign, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import Image from "next/image";
 import FamilyImage from "@/public/landing/LateDonation.jpg";
-import FamilyOne from "@/public/images/Group 4630.png";
-import FamilyTwo from "@/public/images/image (7).png";
-import FamilyThree from "@/public/images/image (8).png";
-
-interface DonationCard {
-  id: string;
-  image: string;
-  title: string;
-  description: string;
-  donors: number;
-  amount: number;
-  isCurrent?: boolean;
-}
-
-const donationCards: DonationCard[] = [
-  {
-    id: "1",
-    image: FamilyTwo.src,
-    title: "ប្រាក់សំរាប់កុមារ",
-    description: "ផ្តល់ការអប់រំពេលចេញពីសាលាដល់កុមារនៅក្នុងតំបន់ដាច់ស្រយាល",
-    donors: 1.2,
-    amount: 1000,
-    isCurrent: false,
-  },
-  {
-    id: "2",
-    image: FamilyOne.src,
-    title: "ជួយខ្ញុំផង",
-    description: "កុមារនឹងទទួលបានអាហារពេលចូលនិងថ្នាំពេទ្យពេលឈឺទៀតផង",
-    donors: 1.2,
-    amount: 1000,
-    isCurrent: false,
-  },
-  {
-    id: "3",
-    image: FamilyThree.src,
-    title: "សុខភាពសហគមន៍បច្ចុប្បន្ន",
-    description: "ផ្តល់ឱកាសដល់សិស្សក្រីក្រឱ្យកូនៗពួកគេទៅសាលារៀន",
-    donors: 1.2,
-    amount: 1000,
-    isCurrent: false,
-  },
-];
+import { useGetEventsQuery } from "@/redux/services/event-service";
+import { EventType } from "@/difinitions/dto/EventType";
 
 export default function LatestDonationCard() {
-  const currentDonations = donationCards.filter((card) => card.isCurrent);
+
+  // fetch data from RTK  
+  // Get the latest event
+  const {
+    data:apiEventReponse = {content:[]},
+    isLoading,
+    isError
+    } = useGetEventsQuery({});
+  
+
+    // const typedEvents: EventType[] = apiEventReponse?.content || [];
+  // Query the lastest  evnet
+
+  const typedEvents: EventType[] = apiEventReponse?.content?.toSorted(
+
+    (a: any, b: any) => new Date(b.startDate).getTime() - new Date(a.startDate).getTime()
+
+  )?.slice(0, 4) || [];
+  
+
+
+    console.log("========> Get Latest Event: ",typedEvents);
+  
 
   return (
-    <div className="w-full bg-transparent flex flex-col gap-6">
-      {/* Hero Section */}
-      <Card className="p-0 m-0 h-auto border-none grid lg:grid-cols-2 ">
-        {/* Image Section */}
-        <div className="relative min-h-[500px]">
-          <Image
-            src={FamilyImage}
-            fill
-            alt="Community support image"
-            className="absolute inset-0 w-full h-full object-cover"
-          />
-        </div>
-
-        {/* Content Section */}
-        <div className="p-9 bg-iDonate-navy-primary text-iDonate-white-space flex flex-grow flex-col gap-4 dark:bg-iDonate-dark-mode">
-          <h2
-            lang="km"
-            className="text-title-khmer md:text-heading-one-khmer font-semibold leading-relaxed"
-          >
-            កិច្ចប្រឹងប្រែងការពារសេរីភាព និងសិទ្ធិរបស់កុមារ
-          </h2>
-
-          <p
-            lang="km"
-            className="flex-1 text-description-khmer md:text-medium-khmer leading-relaxed"
-          >
-            កុមារទាំងនេះត្រូវការជំនួយក្នុងការការពារសេរីភាពនិងសិទ្ធិរបស់កុមារ
-            និងជួយធ្វើឱ្យពួកគេរស់នៅក្នុងសង្គម។
-            វាជាការលំបាកណាស់ដែលប្រឈមសេរីភាពរបស់កុមារគ្រប់ៗគ្នា។
-          </p>
-
-          <div
-            lang="km"
-            className="p-4 bg-iDonate-navy-accent rounded-lg flex flex-col sm:flex-row items-center justify-between gap-4"
-          >
-            <div className="flex items-center gap-2">
-              {/* <Users className="h-4 w-4 text-iDonate-navy-primary" /> */}
-              <span className=" text-iDonate-navy-primary">
-                អ្នកបរិច្ចាគ: 1.2 ពាន់នាក់
-              </span>
-            </div>
-
-            <div className="text-iDonate-navy-primary">
-              ​​ទឹកប្រាក់ទទួលបាន: $100
-            </div>
+    <div className="w-full h-auto bg-transparent flex flex-col gap-6 lg:pb-[440px]">
+      {typedEvents.slice(3,4).map((item, key) => (
+        <Card
+          key={item.uuid}
+          className="w-full h-[660px] z-2 p-0 m-0 border-none grid lg:grid-cols-2 item-center lg:z-0 lg:relative"
+        >
+          {/* Image Section */}
+          <div className="relative min-h-[660px]">
+            <Image
+              src={item.images[0]}
+              fill
+              alt="Community support image"
+              className="absolute inset-0 w-full h-full object-cover"
+            />
           </div>
 
-          <Button className=" w-full bg-iDonate-green-secondary hover:bg-iDonate-green-primary text-iDonate-navy-primary font-semibold">
-            Donate Now
-          </Button>
-        </div>
-      </Card>
+          {/* Content Section */}
+          <div className="p-9 bg-iDonate-navy-primary text-iDonate-white-space flex flex-grow flex-col gap-4 dark:bg-iDonate-dark-mode">
+            <div>
+              <h2
+                lang="km"
+                className="text-title-khmer md:text-heading-one-khmer font-semibold leading-relaxed"
+              >
+                {item.name}
+              </h2>
+
+              {/* Part 2 Description */}
+              <p
+                lang="km"
+                className="flex-1 mb-[36px] text-description-khmer md:text-medium-khmer leading-relaxed"
+              >
+                {item.description}
+              </p>
+
+              {/* Part 3 */}
+              <div
+                lang="km"
+                className="p-4 bg-iDonate-navy-accent rounded-lg flex flex-col sm:flex-row items-center justify-between gap-4"
+              >
+                <div className="flex items-center gap-2 p-1">
+                  <span className=" text-iDonate-navy-primary p-1">
+                    អ្នកបរិច្ចាគ: {item?.total_donor || "0"} ពាន់នាក់
+                  </span>
+                </div>
+
+                <div className="text-iDonate-navy-primary">
+                  ​​ទឹកប្រាក់ទទួលបាន: ${item?.total_amount || "0"}
+                </div>
+              </div>
+
+              <Button className="w-full my-[36px] bg-iDonate-green-secondary hover:bg-iDonate-green-primary text-iDonate-navy-primary font-semibold">
+                <Heart
+                  style={{ width: "25px", height: "25px" }}
+                  className="bg-iDonate-navy-primary rounded-full p-1 fill-white group-hover:fill-iDonate-navy-primary group-hover:text-iDonate-navy-primary hover:bg-iDonate-green-secondary group-hover:bg-iDonate-green-secondary dark:bg-iDonate-green-secondary  dark:text-iDonate-navy-primary dark:fill-iDonate-navy-primary"
+                />
+                Donate Now
+              </Button>
+            </div>
+          </div>
+        </Card>
+      ))}
+
+      
+
 
       {/* Current Donations Section */}
-      <div className="w-full flex flex-col gap-2">
-        <h2
-          lang="km"
-          className="text-heading-two-khmer text-iDonate-navy-primary khmer-font text-center dark:text-iDonate-navy-accent"
-        >
-          បច្ចុប្បន្នភាពនៃការបរិច្ចាគ
-        </h2>
 
-        {currentDonations.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-2">
-            {currentDonations.map((card) => (
+      <div className="w-full flex flex-col gap-2 z-2 Lg:z-1 lg:absolute">
+        {typedEvents.length > 0 ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 items-center justify-center mx-auto lg:grid-cols-3 gap-6 p-2 mt-[440px] lg:mt-[440px]">
+            {typedEvents.slice(0,3).map((item,key) => (
               <Card
-                key={card.id}
-                className="overflow-hidden text-iDonate-navy-primary p-4"
+                key={item.uuid}
+                className="h-auto lg:h-[653px] lg:w-[400px]  rounded-[10px] bg-iDonate-light-gray border-0 cursor-pointer shadow-md transition-transform hover:scale-[1.02] dark:bg-iDonate-dark-mode  "
               >
-                <div className="relative h-64">
-                  <Image
-                    src={card.image}
-                    alt={card.title}
+                <div className="h-[55%]">
+                <Image
+                    src={item.images[0]}
+                    alt={item.name}
                     width={5000}
                     height={5000}
-                    className="w-full h-full object-cover"
+                    className="w-full h-[100%] rounded-t-lg object-cover"
                   />
                 </div>
-                <div className="p-4 space-y-4">
+              
+                <div className="p-4 space-y-4 ">
                   <div>
-                    <h3 className="font-semibold text-lg khmer-font">
-                      {card.title}
+                    <h3 className="font-bold text-medium-khmer text-iDonate-navy-primary line-clamp-2 dark:text-iDonate-navy-accent ">
+                      {item.name}
                     </h3>
-                    <p className="text-sm text-iDonate-navy-secondary khmer-font mt-1">
-                      {card.description}
+                    <p className="font-light text-description-khmer text-iDonate-navy-secondary line-clamp-2 dark:text-iDonate-navy-accent">
+                      {item.description}
                     </p>
                   </div>
-                  <div className="flex flex-col sm:flex-row items-center justify-between text-sm gap-4">
-                    <div className="flex items-center gap-2">
+                  
+                  <div className="flex flex-col  sm:flex-row items-center justify-between text-sm gap-4">
+                    <div className="flex items-center gap-2 font-light text-iDonate-navy-secondary line-clamp-2 dark:text-iDonate-navy-accent h-12 ">
                       <Users className="h-4 w-4 text-iDonate-navy-primary" />
                       <span className="khmer-font">
-                        អ្នកបរិច្ចាគ៖ {card.donors} ពាន់នាក់
+                        អ្នកបរិច្ចាគ៖ {item?.total_donor || "0"} ពាន់នាក់
                       </span>
                     </div>
-                    <span className="flex items-center gap-1">
+                    <span className="flex items-center gap-1 font-light text-iDonate-navy-secondary line-clamp-2 dark:text-iDonate-navy-accent h-12 ">
                       <CircleDollarSign size={16} />
                       <span className="khmer-font">
-                        ទឹកប្រាក់ទទួលបាន៖​​ ${card.amount}
+                        ទឹកប្រាក់ទទួលបាន៖​​ ${item.total_amount ||  " 0 "}
                       </span>
                     </span>
                   </div>
-                  <Button className="w-full bg-iDonate-green-primary hover:bg-[#22c55e] text-[#1e2c49] font-semibold">
-                    បរិច្ចាគឥឡូវនេះ
+
+                  <Button className="w-full bg-iDonate-green-secondary hover:bg-[#22c55e] text-[#1e2c49] font-semibold">
+                    <Heart
+                      style={{ width: "25px", height: "25px" }}
+                      className="bg-iDonate-navy-primary rounded-full p-1 fill-white group-hover:fill-iDonate-navy-primary group-hover:text-iDonate-navy-primary hover:bg-iDonate-green-secondary group-hover:bg-iDonate-green-secondary dark:bg-iDonate-green-secondary  dark:text-iDonate-navy-primary dark:fill-iDonate-navy-primary"
+                    />
+                        Donate Now
                   </Button>
+
                 </div>
               </Card>
             ))}
@@ -168,6 +162,7 @@ export default function LatestDonationCard() {
               className="text-medium-khmer font-medium  text-iDonate-navy-primary khmer-font dark:text-iDonate-green-secondary"
             >
               បច្ចុប្បន្នមិនមានព្រឹត្តិការណ៍បរិច្ចាគទេ
+
             </h3>
             <p
               lang="km"
