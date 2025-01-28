@@ -1,11 +1,11 @@
-version: "3.9"
-
+version: '3.9'
 services:
-  nextjs-app:
+  idata_frontend:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: nextjs-container
+    container_name: idata-frontend-container
+    restart: always
     ports:
       - "3000:3000"
     environment:
@@ -16,14 +16,8 @@ services:
       - "traefik.http.routers.nextjs.entrypoints=websecure"
       - "traefik.http.routers.nextjs.tls.certresolver=letsencrypt"
       - "traefik.http.services.nextjs.loadbalancer.server.port=3000"
-    secrets:
-      - nextjs_env
     networks:
       - proxy
-
-secrets:
-  nextjs_env:
-    file: ./secrets/nextjs_env  # Path to your secret file containing environment variables
 
 networks:
   proxy:
