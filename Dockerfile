@@ -12,6 +12,7 @@ RUN npm run build
 
 # Production Stage
 FROM node:lts
+
 WORKDIR /app
 
 # Copy necessary files from the build stage
@@ -21,7 +22,9 @@ COPY --from=build /app/public ./public
 COPY --from=build /app/node_modules ./node_modules
 COPY --from=build /app/package.json ./package.json
 # Copy .env.production only if it exists
-COPY --from=build /app/.env.production ./.env.production 
+# Copy .env.production if it exists
+COPY --from=build /app/.env.production /app/.env.production
+
 
 
 # Expose the Next.js default port
