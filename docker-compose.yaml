@@ -12,6 +12,7 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.idonate.rule=Host(`idonate.istad.co`)"
       - "traefik.http.routers.idonate.entrypoints=websecure"
+      - "traefik.http.routers.idonate.tls=true"
       - "traefik.http.routers.idonate.tls.certresolver=letsencrypt"
       - "traefik.http.services.idonate.loadbalancer.server.port=3000"
     networks:
