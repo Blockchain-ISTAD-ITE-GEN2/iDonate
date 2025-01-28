@@ -11,7 +11,7 @@ import { EventType } from "@/difinitions/dto/EventType";
 // import { EventTypes } from "@/difinitions/dto/EventType";
 
 
-// function to covert format 
+// function to covert format
 function formatDate(dateString: string | undefined): string {
   if (!dateString) return "N/A";
   const date = new Date(dateString);
@@ -24,7 +24,6 @@ function formatDate(dateString: string | undefined): string {
 
 export function CommonEventCard({ event }: { event: EventType }) {
 
-
   const router = useRouter();
 
 
@@ -36,17 +35,14 @@ export function CommonEventCard({ event }: { event: EventType }) {
       {/* Header with Image */}
       <CardHeader className="w-full h-[180px] p-0 rounded-t-[10px] overflow-hidden">
         {event?.images? (
-        {event?.images? (
           <Image
             className="w-full h-full object-cover"
             width={1000}
             height={1000}
             src={
               event?.images[0] ||
-              event?.images[0] ||
               "https://i.pinimg.com/736x/2a/86/a5/2a86a560f0559704310d98fc32bd3d32.jpg"
             }
-            alt={event?.name || "Media"}
             alt={event?.name || "Media"}
           />
         ) : (
@@ -67,12 +63,10 @@ export function CommonEventCard({ event }: { event: EventType }) {
               </span>
               <p className="text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
                 Start date
-                Start date
               </p>
             </div>
 
             <p className="text-iDonate-green-primary dark:text-iDonate-green-secondary">
-              {formatDate(event?.startDate) || "12 Dec 2024"}
               {formatDate(event?.startDate) || "12 Dec 2024"}
             </p>
           </div>
@@ -88,7 +82,6 @@ export function CommonEventCard({ event }: { event: EventType }) {
 
             <p className="text-iDonate-green-primary dark:text-iDonate-green-secondary">
               {formatDate(event?.endDate )|| "12 Dec 2025"}
-              {formatDate(event?.endDate )|| "12 Dec 2025"}
             </p>
           </div>
         </div>
@@ -99,7 +92,6 @@ export function CommonEventCard({ event }: { event: EventType }) {
             lang="km"
             className="font-bold text-medium-khmer text-iDonate-navy-primary line-clamp-1 dark:text-iDonate-navy-accent "
           >
-            {event?.name || "Untitled Event"}
             {event?.name || "Untitled Event"}
           </h3>
           <p

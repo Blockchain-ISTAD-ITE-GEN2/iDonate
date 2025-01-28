@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-//import React, { useState, useEffect } from "react";
+
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { Building2, Gift, Users, CalendarDays } from "lucide-react";
@@ -22,7 +22,7 @@ const CounterAnimation = ({ target }: { target: number }) => {
     threshold: 0.1,
   });
 
-  useEffect(() => {
+  
   useEffect(() => {
     if (inView) {
       let start = 0;

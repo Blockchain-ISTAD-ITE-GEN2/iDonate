@@ -4,7 +4,7 @@ import { useParams } from "next/navigation"; // ✅ Correct way to get params in
 import Image from "next/image";
 import { TabEventDetail } from "@/components/events/even-detail/tab-event-detail";
 import { EventDetailBanner } from "@/components/events/even-detail/event-detail-banner";
-import { useGetEventByUuidQuery } from "@/redux/services/event-service";
+import { useGetEventsQuery } from "@/redux/services/event-service";
 import { EventType } from "@/difinitions/dto/EventType";
 
 export default function EventDetail() {
@@ -12,7 +12,7 @@ export default function EventDetail() {
   const uuid = params.uuid as string; // ✅ Extract uuid
 
   // Ensure uuid is defined before making the query
-  const { data: events } = useGetEventByUuidQuery(uuid, { skip: !uuid });
+  const { data: events } = useGetEventsQuery(uuid, { skip: !uuid });
   const typedEvent: EventType = events || {};
 
   return (

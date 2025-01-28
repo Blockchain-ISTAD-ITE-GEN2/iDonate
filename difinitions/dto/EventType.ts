@@ -31,6 +31,7 @@ export type EventResponse = {
 
 
 export type EventType = {
+  [x: string]: any;
   name: string;
   description: string;
   startDate:string;

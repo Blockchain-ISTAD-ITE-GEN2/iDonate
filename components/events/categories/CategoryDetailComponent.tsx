@@ -3,12 +3,12 @@
 import Image from "next/image";
 import { CommonEventCard } from "@/components/events/organization-event/CommonEventCard";
 import { Button } from "@/components/ui/button";
-import { AccordionCategory } from "@/components/events/categories/categorydetail/AccordionCategory";
-import { AllCategoriesButton } from "@/components/events/categories/categorydetail/AllCategoriesAccordion";
 import { EventType } from "@/difinitions/dto/EventType";
 import { useGetEventsQuery } from "@/redux/services/event-service";
+import { AccordionCategory } from "./AccordionCategory";
+import { AllCategoriesButton } from "./AllCategoriesAccordion";
 
-export default function CategoryDetailComponent() {
+export default function CategoryDetailComponent(params: any) {
 
   // const typedEvents: EventType[] = events.slice(0, 4);
     const { data: eventsApiResponse = { content: [] }, isLoading: isEventsLoading } = useGetEventsQuery({});
