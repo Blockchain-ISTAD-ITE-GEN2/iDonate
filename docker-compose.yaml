@@ -1,8 +1,10 @@
-version: '3.8'
+
 
 services:
   reactjs-srv:
-    image: imagename
+    build:
+      context: . 
+      dockerfile: Dockerfile 
     container_name: idonate-container
     ports:
       - "3000:3000"
