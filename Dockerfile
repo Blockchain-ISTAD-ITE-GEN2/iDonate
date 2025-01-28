@@ -24,11 +24,6 @@ COPY --from=build /app/package.json ./package.json
 # Copy .env.production only if it exists
 # Copy .env.production if it exists
 # COPY --from=build /app/.env.production /.env.production
-
-
-
-# Expose the Next.js default port
 EXPOSE 3000
-
 # Run the Next.js production server
 CMD ["npm", "start"]
