@@ -15,7 +15,7 @@ services:
       - "traefik.http.routers.nextjs.entrypoints=websecure"
       - "traefik.http.routers.nextjs.tls.certresolver=letsencrypt"
       - "traefik.http.services.nextjs.loadbalancer.server.port=3000"
-    volumes:
-      -/home/kang/action-ruuner-idonate/.env.production:/app/.env.production
+    # volumes:
+    #   -/home/kang/action-ruuner-idonate/.env.production:/app/.env.production
     networks:
       - proxy
