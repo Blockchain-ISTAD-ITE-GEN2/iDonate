@@ -1,3 +1,4 @@
+version: '3.9'
 services:
   idata_frontend:
     build:
@@ -19,3 +20,7 @@ services:
       - /home/kang/action-ruuner-idonate/.env.production:/app/.env.production
     networks:
       - proxy
+
+networks:
+  proxy:
+    external: true
