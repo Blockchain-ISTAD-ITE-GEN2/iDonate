@@ -6,8 +6,8 @@ services:
       - "3000:3000"
     environment:
       - NODE_ENV=production
-      - NEXTAUTH_URL=https://idonate.istad.co
-      - NEXT_PUBLIC_URL=https://idonate.istad.co
+      - NEXTAUTH_URL=https://idonate.kangtido.life
+      - NEXT_PUBLIC_URL=https://idonate.kangtido.life
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.idonate.rule=Host(`idonate.kangtido.life`)"
