@@ -28,7 +28,7 @@ yarn-error.log*
 # local env files
 .env*.local
 .env.development
-.env.production
+#.env.production
 .env.test  # Add this if you have a test environment file
 
 # vercel

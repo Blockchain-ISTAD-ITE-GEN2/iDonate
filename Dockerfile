@@ -1,4 +1,4 @@
-FROM node:lts as build 
+FROM node:lts AS build 
 WORKDIR /app 
 COPY package*.json ./ 
 RUN npm install  --force
@@ -10,7 +10,7 @@ FROM node:lts
 WORKDIR /app
 COPY --from=build /app ./
 # copy the .env.production file
-# COPY --from=build /app/.env.production ./.env.production
+COPY --from=build /app/.env.production ./.env.production
 RUN npm install -g serve
 EXPOSE 3000
 CMD ["npm", "start"]
