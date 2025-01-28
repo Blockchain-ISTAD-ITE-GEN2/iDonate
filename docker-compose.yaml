@@ -16,8 +16,6 @@ services:
       - "traefik.http.routers.idonate.entrypoints=websecure"
       - "traefik.http.routers.idonate.tls.certresolver=letsencrypt"
       - "traefik.http.services.idonate.loadbalancer.server.port=3000"
-    volumes:
-      - /home/kang/action-ruuner-idonate/.env.production:/app/.env.production
     networks:
       - proxy
 
