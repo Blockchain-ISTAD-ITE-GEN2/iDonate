@@ -10,7 +10,7 @@ RUN npm install --force
 COPY . .  
 
 # Ensure .env.production is explicitly copied
-COPY .env.production .env.production
+COPY /.env.production .env.production
 
 # Debugging: Check if the file exists in the container
 RUN ls -la /app
