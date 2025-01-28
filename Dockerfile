@@ -27,7 +27,7 @@ COPY --from=build /app/node_modules ./node_modules
 COPY --from=build /app/package.json ./package.json
 
 # Copy the .env.production file
-COPY --from=build /app/.env.production ./.env.production  
+# COPY --from=build /app/.env.production ./.env.production  
 
 # Expose Next.js default port
 EXPOSE 3000
