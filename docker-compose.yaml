@@ -1,18 +1,20 @@
+
 services:
-  reactjs-srv:
-    image: imagename
-    container_name: idonate-container
+  idata_frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: idata-frontend-container
+    restart: always
     ports:
       - "3000:3000"
     environment:
       - NODE_ENV=production
-      - NEXTAUTH_URL=https://idonate.kangtido.life
-      - NEXT_PUBLIC_URL=https://idonate.kangtido.life
+      # - GENERATE_SOURCEMAP=false
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.idonate.rule=Host(`idonate.istad.co`)"
+      - "traefik.http.routers.idonate.rule=Host(`idonate.kangtido.life`)"
       - "traefik.http.routers.idonate.entrypoints=websecure"
-      - "traefik.http.routers.idonate.tls=true"
       - "traefik.http.routers.idonate.tls.certresolver=letsencrypt"
       - "traefik.http.services.idonate.loadbalancer.server.port=3000"
     networks:

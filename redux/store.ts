@@ -2,7 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import authSlice from "@/redux/features/auth/authSlice";
 import { idonateApi } from "@/redux/api";
 
-// create store
+// create stores
 export const makeStore = () => {
   return configureStore({
     reducer: {
