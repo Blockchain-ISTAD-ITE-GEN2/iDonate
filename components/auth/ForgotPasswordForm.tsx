@@ -41,8 +41,9 @@ export default function ForgotPasswordForm() {
 
     try {
       // Update the endpoint to match your API
-      const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/v1/users/forget-password`, {
-        method: "POST",
+     
+      const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/forgot-password`, {
+        method: 'POST',
         headers: {
           "Content-Type": "application/json",
         },

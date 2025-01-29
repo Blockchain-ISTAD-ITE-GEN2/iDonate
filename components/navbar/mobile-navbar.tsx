@@ -22,6 +22,7 @@ import { selectToken } from "@/redux/features/auth/authSlice";
 import { useGetUserProfileQuery } from "@/redux/services/user-profile";
 import AvartarPlaceHolder from "@/public/images/user-idonate.png";
 import { getUuidFromToken } from "@/lib/uuid";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
 type MobileMenuProps = {
   isOpen: boolean;

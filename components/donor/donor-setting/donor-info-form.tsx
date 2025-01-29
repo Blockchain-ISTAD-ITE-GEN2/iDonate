@@ -26,6 +26,7 @@ import {
 } from "@/components/ui/card";
 import { AlertComfirmDialog } from "@/components/Alert/Alert-Dialog";
 import { useGetUserProfileQuery, useUpdateUserProfileMutation } from "@/redux/services/user-profile";
+import { useGetUserProfileQuery, useUpdateUserProfileMutation } from "@/redux/services/user-profile";
 
 type DonorInfoFormProps = {
   onFullnamePercentageUpdate: (fullnamePercentage: number) => void;
@@ -46,9 +47,18 @@ export function DonorInfoForm({
   // Mutation to update donor profile
   const [updateUserProfile] = useUpdateUserProfileMutation();
 
+  // Fetch donor profile data
+  const { data: donorProfile } = useGetUserProfileQuery({});
+
+  // Mutation to update donor profile
+  const [updateUserProfile] = useUpdateUserProfileMutation();
+
   const form = useForm<z.infer<typeof organizationInfomationSchema>>({
     resolver: zodResolver(organizationInfomationSchema),
     defaultValues: {
+      fullName: donorProfile?.fullName || "",
+      email: donorProfile?.email || "",
+      contact: donorProfile?.contact || "",
       fullName: donorProfile?.fullName || "",
       email: donorProfile?.email || "",
       contact: donorProfile?.contact || "",
@@ -61,6 +71,7 @@ export function DonorInfoForm({
   const email = watch("email");
   const contact = watch("contact");
 
+  // Update percentages based on input
   // Update percentages based on input
   useEffect(() => {
     const calculateCompletionPercentage = () => {
@@ -149,6 +160,7 @@ export function DonorInfoForm({
                 </CardDescription>
                 <CardDescription className="text-sm sm:text-description-eng lg:text-medium-eng text-iDonate-navy-primary">
                   {donorProfile?.fullName || "No full name provided"}
+                  {donorProfile?.fullName || "No full name provided"}
                 </CardDescription>
               </div>
 
@@ -157,6 +169,7 @@ export function DonorInfoForm({
                   Email
                 </CardDescription>
                 <CardDescription className="text-sm sm:text-description-eng lg:text-medium-eng text-iDonate-navy-primary">
+                  {donorProfile?.email || "No email provided"}
                   {donorProfile?.email || "No email provided"}
                 </CardDescription>
               </div>
@@ -245,6 +258,7 @@ export function DonorInfoForm({
 
               <FormField
                 control={control}
+                control={control}
                 name="email"
                 render={({ field }) => (
                   <FormItem className="flex-1">
@@ -267,6 +281,7 @@ export function DonorInfoForm({
               />
 
               <FormField
+                control={control}
                 control={control}
                 name="contact"
                 render={({ field }) => (

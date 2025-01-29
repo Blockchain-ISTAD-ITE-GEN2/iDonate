@@ -1,5 +1,6 @@
 "use client";
 
+
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
@@ -40,9 +41,16 @@ export function DonorBioForm({
   // Mutation to update donor profile
   const [updateUserProfile] = useUpdateUserProfileMutation();
 
+  // Fetch donor profile data
+  const { data: donorProfile } = useGetUserProfileQuery({});
+
+  // Mutation to update donor profile
+  const [updateUserProfile] = useUpdateUserProfileMutation();
+
   const form = useForm<z.infer<typeof organizationBioSchema>>({
     resolver: zodResolver(organizationBioSchema),
     defaultValues: {
+      bio: donorProfile?.bio || "",
       bio: donorProfile?.bio || "",
     },
   });
@@ -54,7 +62,9 @@ export function DonorBioForm({
   useEffect(() => {
     if (bioValue.trim()) {
       onPercentageUpdate(10); // Bio field filled, update percentage
+      onPercentageUpdate(10); // Bio field filled, update percentage
     } else {
+      onPercentageUpdate(0); // Bio field empty, reset percentage
       onPercentageUpdate(0); // Bio field empty, reset percentage
     }
   }, [bioValue, onPercentageUpdate]);
@@ -82,6 +92,7 @@ export function DonorBioForm({
     reset({ bio: donorProfile?.bio || "" });
     setIsEditing(false);
   };
+  };
 
   return (
     <Form {...form}>
@@ -102,6 +113,8 @@ export function DonorBioForm({
             </CardHeader>
             <CardContent className="flex flex-wrap gap-4 sm:gap-6 lg:gap-9 p-0 m-0">
               <div className="flex flex-col md:space-y-1 ">
+                <CardDescription className="text-sm sm:text-description-eng lg:text-medium-eng text-iDonate-navy-primary">
+                  {donorProfile?.bio || "No bio provided"}
                 <CardDescription className="text-sm sm:text-description-eng lg:text-medium-eng text-iDonate-navy-primary">
                   {donorProfile?.bio || "No bio provided"}
                 </CardDescription>
@@ -157,11 +170,14 @@ export function DonorBioForm({
                 name="bio"
                 render={({ field }) => (
                   <FormItem className="w-full">
+                  <FormItem className="w-full">
                     <FormControl className="text-sm lg:text-medium-eng">
+                      <Textarea placeholder="Enter your bio" {...field} />
                       <Textarea placeholder="Enter your bio" {...field} />
                     </FormControl>
                     <FormMessage />
                     <FormDescription className="text-iDonate-gray text-xs sm:text-sm lg:text-lg">
+                      This is your organization's bio.
                       This is your organization's bio.
                     </FormDescription>
                   </FormItem>

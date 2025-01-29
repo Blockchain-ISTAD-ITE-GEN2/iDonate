@@ -1,5 +1,7 @@
 "use client";
 
+"use client";
+
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
@@ -25,6 +27,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { useGetUserProfileQuery, useUpdateUserProfileMutation } from "@/redux/services/user-profile";
+import { useGetUserProfileQuery, useUpdateUserProfileMutation } from "@/redux/services/user-profile";
 
 export function DonorAddressForm({
   onPercentageUpdate,
@@ -39,9 +42,16 @@ export function DonorAddressForm({
   // Mutation to update donor profile
   const [updateUserProfile] = useUpdateUserProfileMutation();
 
+  // Fetch donor profile data
+  const { data: donorProfile } = useGetUserProfileQuery({});
+
+  // Mutation to update donor profile
+  const [updateUserProfile] = useUpdateUserProfileMutation();
+
   const form = useForm<z.infer<typeof organizationAddressSchema>>({
     resolver: zodResolver(organizationAddressSchema),
     defaultValues: {
+      address: donorProfile?.address || "",
       address: donorProfile?.address || "",
     },
   });
@@ -92,7 +102,11 @@ export function DonorAddressForm({
   // Handle cancel
   const handleCancel = () => {
     reset({ address: donorProfile?.address || "" });
+  // Handle cancel
+  const handleCancel = () => {
+    reset({ address: donorProfile?.address || "" });
     setIsEditing(false);
+  };
   };
 
   return (
@@ -116,6 +130,7 @@ export function DonorAddressForm({
               <div className="flex flex-col md:space-y-1 ">
                 <CardDescription className="text-sm sm:text-description-eng lg:text-medium-eng text-iDonate-navy-primary">
                   {donorProfile?.address || "No address provided"}
+                  {donorProfile?.address || "No address provided"}
                 </CardDescription>
               </div>
             </CardContent>
@@ -135,6 +150,7 @@ export function DonorAddressForm({
                       <Button
                         type="button"
                         className="bg-iDonate-white-space border-2 hover:bg-red-50 border-iDonate-error text-iDonate-error"
+                        className="bg-iDonate-white-space border-2 hover:bg-red-50 border-iDonate-error text-iDonate-error"
                       >
                         Cancel
                       </Button>
@@ -150,12 +166,14 @@ export function DonorAddressForm({
                     type="button"
                     onClick={handleCancel}
                     className="bg-iDonate-white-space border-2 text-xs lg:text-sm hover:bg-red-50 border-iDonate-error text-iDonate-error"
+                    className="bg-iDonate-white-space border-2 text-xs lg:text-sm hover:bg-red-50 border-iDonate-error text-iDonate-error"
                   >
                     Cancel
                   </Button>
                 )}
                 <Button
                   type="submit"
+                  className="bg-iDonate-white-space border-2 text-xs lg:text-sm hover:bg-iDonate-light-gray border-iDonate-navy-accent text-iDonate-navy-primary"
                   className="bg-iDonate-white-space border-2 text-xs lg:text-sm hover:bg-iDonate-light-gray border-iDonate-navy-accent text-iDonate-navy-primary"
                 >
                   Submit

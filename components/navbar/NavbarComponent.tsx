@@ -32,6 +32,7 @@ import { useGetUserProfileQuery } from "@/redux/services/user-profile";
 import toast from "react-hot-toast";
 import { getUuidFromToken } from "@/lib/uuid";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 
 export default function NavbarComponent() {
@@ -68,8 +69,16 @@ export default function NavbarComponent() {
   //     router.push("/login");
   //   }
   // };
+  // const handleRoutes = (): void => {
+  //   if (session || accessTokenValue) {
+  //     handleLogout();
+  //   } else {
+  //     router.push("/login");
+  //   }
+  // };
 
   const handleLogout = () => {
+    //  alert("Logout successful");
     //  alert("Logout successful");
     if (accessTokenValue) {
       fetch(`http://localhost:3000/api/logout`, {
@@ -81,11 +90,15 @@ export default function NavbarComponent() {
       }).then((res) => {
         if (res.ok) {
           alert("Logout successful");
+          alert("Logout successful");
           toast.success("Logout successful", {
             position: "top-right",
             duration: 3000,
 
+
           });
+          router.refresh();
+          router.push("/")
           router.refresh();
           router.push("/")
         } else {
@@ -96,6 +109,7 @@ export default function NavbarComponent() {
   };
 
   const handleSignOut = () => {
+    console.log("Access Token:", accessTokenValue); // Debugging
     console.log("Access Token:", accessTokenValue); // Debugging
     if (accessTokenValue) {
       fetch(`http://localhost:3000/api/logout`, {
@@ -112,10 +126,14 @@ export default function NavbarComponent() {
           });
           router.refresh();
           router.push("/");
+          router.refresh();
+          router.push("/");
         } else {
           console.log("Error ");
         }
       });
+    } else {
+      console.error("Access token is missing."); // Debugging
     } else {
       console.error("Access token is missing."); // Debugging
     }
@@ -291,6 +309,7 @@ export default function NavbarComponent() {
           
                   {/* Sign Out */}
                   <DropdownMenuItem
+                    onClick={handleLogout} // Use handleSignOut instead of signOut directly
                     onClick={handleLogout} // Use handleSignOut instead of signOut directly
                     className="text-red-600 hover:text-red-700 hover:bg-red-50"
                   >

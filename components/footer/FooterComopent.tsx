@@ -222,6 +222,7 @@ export default function FooterComponent() {
                   height={1000}
                   className="p-2 w-full h-full object-cover  "
                   onClick={() => window.open("https://www.mptc.gov.kh/")}
+                  unoptimized
                 />
                 <Image
                   src={CBRDLogo}
@@ -230,6 +231,7 @@ export default function FooterComponent() {
                   height={1000}
                   className="p-2 w-full h-full object-cover"
                   onClick={() => window.open("https://cbrd.gov.kh/")}
+                  unoptimized
                 />
                 <Image
                   src={ISTADLogo}
@@ -238,6 +240,7 @@ export default function FooterComponent() {
                   height={1000}
                   className="p-2 w-full h-full object-cover"
                   onClick={() => window.open("https://www.cstad.edu.kh/")}
+                  unoptimized
                 />
               </div>
             </div>
