@@ -19,11 +19,11 @@ export function SearchPage() {
     } = useGetEventsQuery({});
   
     // isDraft == true mean that event is panding or upcomming event 
-    const typedEvents:EventType[] = apiEventReponse?.content?.filter(
-      (event:any) => event?.isDraft
-    ) || [];
+    // const typedEvents:EventType[] = apiEventReponse?.content?.filter(
+    //   (event:any) => event?.isDraft
+    // ) || [];
 
-    // const typedEvents: EventType[] = apiEventReponse?.content || [];
+    const typedEvents: EventType[] = apiEventReponse?.content || [];
 
   
      // logs the data after fetch
