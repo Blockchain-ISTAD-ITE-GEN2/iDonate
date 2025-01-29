@@ -31,6 +31,7 @@ export type EventResponse = {
 
 
 export type EventType = {
+  uuid?:string;
   name: string;
   description: string;
   startDate:string;
@@ -42,8 +43,10 @@ export type EventType = {
   category?: {
     name:string;
   };
+  organization?:OrganizationEventType;
   images: string[];
 };
+
 
 interface EventTTT {
   id: number;

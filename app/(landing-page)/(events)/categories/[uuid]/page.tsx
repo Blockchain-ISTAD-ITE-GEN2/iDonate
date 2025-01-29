@@ -13,7 +13,7 @@ export default function Page(props: { params: { uuid: string } }) {
       {/*Start Hero Section*/}
       <HeroSectionCategoryComponent />
 
-      <CategoryDetailComponent params={props?.params}/>
+      <CategoryDetailComponent />
     </section>
   );
 }

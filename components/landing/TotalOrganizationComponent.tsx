@@ -23,7 +23,6 @@ const CounterAnimation = ({ target }: { target: number }) => {
   });
 
   useEffect(() => {
-  useEffect(() => {
     if (inView) {
       let start = 0;
       const end = target;

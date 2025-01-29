@@ -4,7 +4,7 @@ export const organizatioApi = idonateApi.injectEndpoints({
   endpoints: (builder) => ({
     getOrganizations: builder.query({
       query: () => `/organizations`,
-      query: () => `/organizations`,
+      
       providesTags: [{ type: "organization", id: "LIST" }],
     }),
 
@@ -14,7 +14,7 @@ export const organizatioApi = idonateApi.injectEndpoints({
     }),
 
     getPendingOrganizations: builder.query({
-      query: () => `/organizations/get-pending-organizations`,
+  
       query: () => `/organizations/get-pending-organizations`,
       providesTags: [{ type: "organization", id: "LIST" }],
     }),

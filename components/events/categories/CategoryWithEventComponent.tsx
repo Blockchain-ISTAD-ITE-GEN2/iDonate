@@ -44,6 +44,7 @@ export default function CategoryWithEventComponent({ category }: { category: Cat
             <CommonEventCard
               key={eventIndex}
               event={{
+                uuid: event.uuid,
                 images: event.images,
                 name: event.name,
                 description: event.description,

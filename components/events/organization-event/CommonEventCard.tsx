@@ -36,7 +36,7 @@ export function CommonEventCard({ event }: { event: EventType }) {
       {/* Header with Image */}
       <CardHeader className="w-full h-[180px] p-0 rounded-t-[10px] overflow-hidden">
         {event?.images? (
-        {event?.images? (
+   
           <Image
             className="w-full h-full object-cover"
             width={1000}
@@ -47,7 +47,7 @@ export function CommonEventCard({ event }: { event: EventType }) {
               "https://i.pinimg.com/736x/2a/86/a5/2a86a560f0559704310d98fc32bd3d32.jpg"
             }
             alt={event?.name || "Media"}
-            alt={event?.name || "Media"}
+           
           />
         ) : (
           <div className="w-full h-full bg-gray-200 flex items-center justify-center">
