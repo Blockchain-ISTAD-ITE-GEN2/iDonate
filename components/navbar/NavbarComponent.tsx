@@ -48,7 +48,7 @@ export default function NavbarComponent() {
   // console.log("acessToken value : ",accessTokenValue);
   //the result:acessToken value :  (state)=>state.auth.token
   const { data: userProfile, error, isLoading } = useGetUserProfileQuery({});
-  console.log("User Profile: ", userProfile);
+  // console.log("User Profile: ", userProfile);
   useEffect(() => {}, [accessTokenValue, session]);
   const uuid = getUuidFromToken(accessTokenValue as string);
   // console.log("image of user : ", userProfile?.avatar);
@@ -157,7 +157,7 @@ export default function NavbarComponent() {
         onClose={() => setIsMobileMenuOpen(false)}
         menuItems={menuList}
         eventMenulist={EventMenulist}
-        contributorMenulist={ContributorMenulist()}
+        contributorMenulist={ContributorMenulist() || []}
         aboutMenulist={AboutMenulist}
       />
     );
@@ -192,7 +192,7 @@ export default function NavbarComponent() {
       <DesktopNavbar
         menuItems={menuList}
         eventMenulist={EventMenulist}
-        contributorMenulist={ContributorMenulist()}
+        contributorMenulist={ContributorMenulist() || []}
         aboutMenulist={AboutMenulist}
       />
 

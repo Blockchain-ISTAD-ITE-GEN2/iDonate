@@ -6,4 +6,5 @@ export type OrganizationEventType = {
   end_date: string;
   total_raised: number;
   image: string;
+  address: string
 };

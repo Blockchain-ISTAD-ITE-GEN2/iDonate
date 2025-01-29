@@ -8,7 +8,7 @@ export default function WaitingForVerification() {
         <h1 className="text-2xl font-bold text-iDonate-navy-primary mb-4">កំពុងដំណើរការផ្ទៀងផ្ទាត់</h1>
         <div className="text-iDonate-navy-secondary mb-6">
           <p className="mb-4 text-9xl">🙏</p>
-          <p className="mb-4">សូមអរគុណសម្រាប់ការចុះឈ្មោះជាមួយ iDonatePlatform។ គណនីរបស់អ្នកកំពុងរង់ចាំការផ្ទៀងផ្ទាត់ពីអ្នកគ្រប់គ្រងរបស់យើង។</p>
+          <p className="mb-4">សូមអរគុណសម្រាប់ការចុះឈ្មោះជាមួយ iDonate Platform។ គណនីរបស់អ្នកកំពុងរង់ចាំការផ្ទៀងផ្ទាត់ពីអ្នកគ្រប់គ្រងរបស់យើង។</p>
           <p>សូមអត់ធ្មត់ព្រោះដំណើរការនេះអាចចំណាយពេលបន្តិច។ យើងនឹងជូនដំណឹងដល់អ្នកនៅពេលគណនីរបស់អ្នកត្រូវបានផ្ទៀងផ្ទាត់។</p>
         </div>
         {/* <div className="flex justify-center mb-6">

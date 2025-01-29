@@ -2,7 +2,7 @@ export type OrganizationParam = {
   image: string | ""; 
   name: string; 
   description: string;
-  key?: number;
+  key?: number | string;
   address?: string;
 };
 

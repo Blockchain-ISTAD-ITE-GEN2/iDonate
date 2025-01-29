@@ -1,7 +1,7 @@
 "use client";
 import React, { Fragment, useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 import { OrganizationSidebarMenuList } from "@/components/organization/sidebar/OrganizationSidebarMenu";
 import { SubNavbarMenuType } from "@/difinitions/types/components-type/SubNavbarMenuType";
 import { Button } from "@/components/ui/button";
@@ -11,11 +11,8 @@ import { useGetUserProfileQuery } from "@/redux/services/user-profile";
 
 export default function OrganizationSidebarComponent() {
 
-  const {data: userProfile} = useGetUserProfileQuery({});
-
-  console.log("User Profile: ", userProfile);   
-
-  const uuid = userProfile?.uuid;
+  const params = useParams();
+  const uuid = String(params.uuid); // Ensures `uuid` is a string
 
   const [menuList] = useState<SubNavbarMenuType[]>(OrganizationSidebarMenuList(uuid));
   const pathname = usePathname();
