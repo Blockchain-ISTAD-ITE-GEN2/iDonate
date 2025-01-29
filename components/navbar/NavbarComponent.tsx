@@ -1,9 +1,9 @@
 "use client";
-import React, { use, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NavMenulist } from "@/components/navbar/NavbarMenu";
 import { Menu } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
-import { Heart, LogOut, Search, User } from "lucide-react";
+import { Heart, LogOut, User } from "lucide-react";
 import Link from "next/link";
 import {
   DropdownMenu,
@@ -23,17 +23,13 @@ import Image from "next/image";
 import logo from "@/public/logo/logodesign no background.png";
 import { Button } from "../ui/button";
 import ThemeSwitch from "../theme/ThemeSwitches";
-// import { ProfileDropdown } from "./profile/profile-dropdown";
 import { signOut, useSession } from "next-auth/react";
 import { useAppSelector } from "@/redux/hooks";
 import { selectToken } from "@/redux/features/auth/authSlice";
-import AvartarPlaceHolder from "@/public/images/user-idonate.png";
 import { useGetUserProfileQuery } from "@/redux/services/user-profile";
 import toast from "react-hot-toast";
 import { getUuidFromToken } from "@/lib/uuid";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-
 
 export default function NavbarComponent() {
   const [menuList] = useState<NavMenuType[]>(NavMenulist);
@@ -45,74 +41,12 @@ export default function NavbarComponent() {
   const router = useRouter();
   const { data: session, status } = useSession();
   const accessTokenValue = useAppSelector(selectToken);
-  // const {data:userProfile} = useGetUserProfileQuery({});
-  // console.log("acessToken value : ",accessTokenValue);
-  //the result:acessToken value :  (state)=>state.auth.token
   const { data: userProfile, error, isLoading } = useGetUserProfileQuery({});
-  console.log("User Profile: ", userProfile);
-  useEffect(() => {}, [accessTokenValue, session]);
   const uuid = getUuidFromToken(accessTokenValue as string);
-  // console.log("image of user : ", userProfile?.avatar);
-
-  //  console.log("The value of Token: ",userProfile.email);
-
-  // const handleSignOut = () => {
-  //   signOut();
-
-  //   router.push("/");
-  // }
-
-  // const handleRoutes = (): void => {
-  //   if (session || accessTokenValue) {
-  //     handleLogout();
-  //   } else {
-  //     router.push("/login");
-  //   }
-  // };
-  // const handleRoutes = (): void => {
-  //   if (session || accessTokenValue) {
-  //     handleLogout();
-  //   } else {
-  //     router.push("/login");
-  //   }
-  // };
 
   const handleLogout = () => {
-    //  alert("Logout successful");
-    //  alert("Logout successful");
     if (accessTokenValue) {
-      fetch(`http://localhost:3000/api/logout`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({}),
-      }).then((res) => {
-        if (res.ok) {
-          alert("Logout successful");
-          alert("Logout successful");
-          toast.success("Logout successful", {
-            position: "top-right",
-            duration: 3000,
-
-
-          });
-          router.refresh();
-          router.push("/")
-          router.refresh();
-          router.push("/")
-        } else {
-          console.log("Error ");
-        }
-      });
-    }
-  };
-
-  const handleSignOut = () => {
-    console.log("Access Token:", accessTokenValue); // Debugging
-    console.log("Access Token:", accessTokenValue); // Debugging
-    if (accessTokenValue) {
-      fetch(`http://localhost:3000/api/logout`, {
+      fetch(`${process.env.NEXT_PUBLIC_URL}/api/logout`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -126,21 +60,14 @@ export default function NavbarComponent() {
           });
           router.refresh();
           router.push("/");
-          router.refresh();
-          router.push("/");
         } else {
           console.log("Error ");
         }
       });
-    } else {
-      console.error("Access token is missing."); // Debugging
-    } else {
-      console.error("Access token is missing."); // Debugging
     }
   };
-  
-  useEffect(() => {},[accessTokenValue,session])
-  // console.log("User Profile: ",userProfile);
+
+  useEffect(() => {}, [accessTokenValue, session]);
 
   if (
     pathname === "/login" ||
@@ -154,7 +81,7 @@ export default function NavbarComponent() {
   }
 
   if (isMobileMenuOpen) {
-    return activeSubmenu ? ( 
+    return activeSubmenu ? (
       <MobileSubmenu
         activeSubmenu={activeSubmenu}
         submenuItems={submenuItems}
@@ -167,10 +94,8 @@ export default function NavbarComponent() {
       />
     ) : (
       <MobileMenu
-        // activeSubmenu={activeSubmenu}
         setActiveSubmenu={setActiveSubmenu}
         setSubmenuItems={setSubmenuItems}
-        // submenuItems={submenuItems}
         isOpen={isMobileMenuOpen}
         onClose={() => setIsMobileMenuOpen(false)}
         menuItems={menuList}
@@ -180,6 +105,17 @@ export default function NavbarComponent() {
       />
     );
   }
+
+  const renderAvatar = (size: "sm" | "lg") => {
+    if (!userProfile) {
+      return (
+        <div className={`${size === "sm" ? "w-10 h-10" : "w-14 h-14"} rounded-full bg-iDonate-navy-primary flex items-center justify-center`}>
+          <User className="text-white" size={size === "sm" ? 20 : 24} />
+        </div>
+      );
+    }
+
+
 
   return (
     <nav className="w-full h-[72px] flex items-center justify-between shadow-sm z-10 top-0 px-4 xl:px-10  2xl:px-[80px] dark:border-b">
@@ -223,61 +159,53 @@ export default function NavbarComponent() {
             </div>
           </div>
 
-
           <div className="flex items-center">
-            {session || accessTokenValue ? (
+            {accessTokenValue ? (
               <DropdownMenu>
-                <DropdownMenuTrigger>
-                  {userProfile? (
-               <Avatar className="w-14 h-14">
-               {userProfile?.avatar ? (
-                 <AvatarImage
-                   width={5000}
-                   height={5000}
-                   src={`${process.env.NEXT_PUBLIC_IDONATE_API_URL}/media/${userProfile?.avatar}`}
-                   className="object-cover w-full rounded-full ring-2 h-full ring-iDonate-navy-primary"
-                   alt={`${userProfile?.username ?? "-full h-user"}'s avatar`}
-                 />
-               ) : (
-                 <AvatarFallback className="text-gray-700">
-                   {userProfile?.username?.[0]?.toUpperCase() || "?"}
-                 </AvatarFallback>
-               )}
-             </Avatar>
-             
-                  ) : (
-                    <div className="w-10 h-10 rounded-full bg-iDonate-navy-primary flex items-center justify-center">
-                      <User className="text-white" size={20} />
-                    </div>
-                  )}
-                </DropdownMenuTrigger>
+                      <DropdownMenuTrigger>
+                      <Avatar className={size === "sm" ? "w-10 h-10" : "w-14 h-14"}>
+        {userProfile.avatar ? (
+          <AvatarImage
+            width={500}
+            height={500}
+            src={`${process.env.NEXT_PUBLIC_IDONATE_API_URL}/media/${userProfile.avatar}`}
+            className="object-cover w-full rounded-full ring-2 h-full ring-iDonate-navy-primary"
+            alt={`${userProfile.username || 'User'}'s avatar`}
+            onError={(e) => {
+              e.currentTarget.style.display = 'none';
+            }}
+          />
+        ) : (
+          <AvatarFallback className="text-gray-700">
+            {userProfile.username?.[0]?.toUpperCase() || "?"}
+          </AvatarFallback>
+        )}
+      </Avatar>
+                    </DropdownMenuTrigger>
 
-                <DropdownMenuContent className="w-72 p-2">
-                  {/* User Info */}
-                  <div className="p-3">
-                    <div className="flex items-center space-x-3">   
-                      {userProfile? (
-                      <Avatar className="w-14 h-14">
-                      {userProfile?.avatar ? (
-                        <AvatarImage
-                          width={5000}
-                          height={5000}
-                          src={`${process.env.NEXT_PUBLIC_IDONATE_API_URL}/media/${userProfile?.avatar}`}
-                          className="object-cover w-full rounded-full ring-2 h-full ring-iDonate-navy-primary"
-                          alt={`${userProfile?.username ?? "-full h-user"}'s avatar`}
-                        />
-                      ) : (
-                        <AvatarFallback className="text-gray-700">
-                          {userProfile?.username?.[0]?.toUpperCase() || "?"}
-                        </AvatarFallback>
-                      )}
-                    </Avatar>
-                    
-                      ) : (
-                        <div className="w-10 h-10 rounded-full bg-iDonate-navy-primary flex items-center justify-center">
-                          <User className="text-white" size={20} />
-                        </div>
-                      )}
+                      <DropdownMenuContent className="w-72 p-2">
+                        {/* User Info */}
+                        <div className="p-3">
+                          <div className="flex items-center space-x-3">
+                          <Avatar className="w-14 h-14">
+            {userProfile.avatar ? (
+              <AvatarImage
+                width={500}
+                height={500}
+                src={`${process.env.NEXT_PUBLIC_IDONATE_API_URL}/media/${userProfile.avatar}`}
+                className="object-cover w-full rounded-full ring-2 h-full ring-iDonate-navy-primary"
+                alt={`${userProfile.username || 'User'}'s avatar`}
+                onError={(e) => {
+                  e.currentTarget.style.display = 'none';
+                }}
+              />
+            ) : (
+              <AvatarFallback className="text-gray-700">
+                {userProfile?.username?.[0]?.toUpperCase() || "?"}
+              </AvatarFallback>
+            )}
+          </Avatar>
+                     
                       <div className="text-sm">
                         <div className="font-medium text-gray-900">
                           {session?.user?.name ||
@@ -306,11 +234,9 @@ export default function NavbarComponent() {
                     </Link>
                   </DropdownMenuItem>
 
-          
                   {/* Sign Out */}
                   <DropdownMenuItem
-                    onClick={handleLogout} // Use handleSignOut instead of signOut directly
-                    onClick={handleLogout} // Use handleSignOut instead of signOut directly
+                    onClick={handleLogout}
                     className="text-red-600 hover:text-red-700 hover:bg-red-50"
                   >
                     <LogOut className="mr-2 h-4 w-4" />
@@ -343,4 +269,5 @@ export default function NavbarComponent() {
       </section>
     </nav>
   );
+  }
 }

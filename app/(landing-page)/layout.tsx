@@ -2,11 +2,12 @@
 
 import "../globals.css";
 import { ReactNode, Suspense } from "react";
-import NavbarComponent from "@/components/navbar/NavbarComponent";
+
 import OrganizationSidebarComponent from "@/components/organization/sidebar/OrganizationSidebarComponent";
 import FooterComponent from "@/components/footer/FooterComopent";
 import { usePathname } from "next/navigation";
 import Loader from "../loading";
+import NavbarComponent from "@/components/navbar/NavbarComponent";
 
 type RootLayoutProps = {
   children: ReactNode;

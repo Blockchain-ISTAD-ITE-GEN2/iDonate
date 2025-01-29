@@ -3,8 +3,8 @@
 import { useState } from "react";
 import { DonorProfilePercentage } from "@/components/donor/donor-setting/doner-profile-percentage";
 import { DonorInfoForm } from "@/components/donor/donor-setting/donor-info-form";
-import { DonorAddressForm } from "@/components/donor/donor-setting/donor-address-form";
-import { DonorBioForm } from "@/components/donor/donor-setting/donor-bio-form";
+// import { DonorAddressForm } from "@/components/donor/donor-setting/donor-address-form";
+// import { DonorBioForm } from "@/components/donor/donor-setting/donor-bio-form";
 import { DonorMediaForm } from "./donor-media-form";
 
 
@@ -24,15 +24,16 @@ export function DonorProfileComponent() {
         </div>
 
         <div className="w-full flex flex-col gap-6 px-4 sm:px-6 lg-px-9 xl:px-12 pb-9">
-          <DonorInfoForm
-            onFullnamePercentageUpdate={setFullNamePercentage}
+          {/* <DonorInfoForm
+            onFullNamePercentageUpdate={setFullNamePercentage}
             onEmailPercentageUpdate={setEmailPercentage}
             onContactPercentageUpdate={setContactPercentage}
-          />
-
+          /> */}
+          <DonorInfoForm />
+{/* 
           <DonorAddressForm onPercentageUpdate={setAddressPercentage} />
 
-          <DonorBioForm onPercentageUpdate={setBioPercentage} />
+          <DonorBioForm onPercentageUpdate={setBioPercentage} /> */}
         </div>
       </div>
 

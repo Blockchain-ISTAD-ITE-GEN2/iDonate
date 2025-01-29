@@ -78,7 +78,7 @@ export const userProfileSettingApi = idonateApi.injectEndpoints({
       query: (uuid) => ({
         url: `/users/${uuid}/me`,
       }),
-    }),
+    })
   }),
   overrideExisting: false,
 });
