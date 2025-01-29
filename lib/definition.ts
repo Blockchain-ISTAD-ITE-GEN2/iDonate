@@ -77,11 +77,8 @@ export type EditprofileType = {
   firstName: string;
   lastName: string;
   gender: string;
-  avatar: string;
   phoneNumber: string;
   dateOfBirth: string;
-  address: string;
-  bio: string;
 };
 
 export type EditUserAddressType ={
