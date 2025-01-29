@@ -70,7 +70,7 @@ const nextConfig = {
     return [
       {
         // Add specific route for API requests
-        source: "/api/:path*",
+        source: "/api/v1:path*",
         headers: [
           {
             key: "Access-Control-Allow-Credentials",
@@ -128,7 +128,7 @@ const nextConfig = {
   async headers() {
     return [
       {
-        source: "/api/:path*",
+        source: "/api/v1:path*",
         headers: [
           { key: "Access-Control-Allow-Credentials", value: "true" },
           {
