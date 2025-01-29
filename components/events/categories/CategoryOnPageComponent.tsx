@@ -14,12 +14,13 @@ export default function CategoryOnPageComponent() {
   } = useGetCategoriesQuery({});
 
   // Extract the array of categories from the response
-  const categories: CategoryType[] = apiReponseCategory.content || [];
+  const categories: CategoryType[] = apiReponseCategory?.content || [];
 
   // Debugging logs
   console.log(" =====> Categories Data : ", categories);
 
   return (
+
     <section className="flex flex-col gap-9 mb-5">
       {/* Hero Section Start */}
       <OrganizationDetailHeroSection />
@@ -35,7 +36,7 @@ export default function CategoryOnPageComponent() {
       {isLoadingCategory ? (
         <p>Loading categories...</p>
       ) : (
-        apiReponseCategory.map((category:any) => (
+        categories?.map((category:any) => (
           <CategoryWithEventComponent key={category.uuid} category={category} />
         ))
       )}

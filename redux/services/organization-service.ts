@@ -4,17 +4,22 @@ export const organizatioApi = idonateApi.injectEndpoints({
   endpoints: (builder) => ({
     getOrganizations: builder.query({
       query: () => `/organizations`,
-      query: () => `/organizations`,
+
       providesTags: [{ type: "organization", id: "LIST" }],
     }),
 
     getOrganizationByuuid: builder.query({
-      query: (uuid) => `/organizations/${uuid}`,
-      providesTags: [{ type: "organization"}],
+      query: (uuid) => `/organizations/${uuid}/get-by-uuid`,
+      providesTags: [{ type: "organization" }],
+    }),
+
+    getOrganizationByUser: builder.query({
+      query: (userUuid) => `/organizations/${userUuid}`,
+      providesTags: [{ type: "organization" }]
     }),
 
     getPendingOrganizations: builder.query({
-      query: () => `/organizations/get-pending-organizations`,
+
       query: () => `/organizations/get-pending-organizations`,
       providesTags: [{ type: "organization", id: "LIST" }],
     }),
@@ -68,4 +73,5 @@ export const {
   useDeleteOrganizationsMutation,
   useCreateOrganizationMutation,
   useGetOrganizationByuuidQuery,
+  useGetOrganizationByUserQuery
 } = organizatioApi;

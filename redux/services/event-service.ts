@@ -7,10 +7,14 @@ export const eventApi = idonateApi.injectEndpoints({
       providesTags: [{ type: "event", id: "LIST" }],
     }),
     getEventByUuid: builder.query({
-      query: ({uuid}) => `/events/get-event-by-uuid/${uuid}`,
+      query: (uuid) => `/events/get-event-by-uuid/${uuid}`,
       providesTags: [{ type: "event", id: "LIST" }],
     }),
     getEventByCategory: builder.query({
+      query: ({uuid}) => `/events/get-event-by-category/${uuid}`,
+      providesTags: [{ type: "event", id: "LIST" }],
+    }),
+    getEventByUser: builder.query({
       query: ({uuid}) => `/events/get-event-by-category/${uuid}`,
       providesTags: [{ type: "event", id: "LIST" }],
     }),
@@ -37,15 +41,11 @@ export const eventApi = idonateApi.injectEndpoints({
       }),
       invalidatesTags: [{ type: "event", id: "LIST" }],
     }),
-    getEventsByCategory: builder.query({
-      query: (categoryUuid:string) => `/events/get-event-by-category/${categoryUuid}`,
-      providesTags: [{ type: "event", id: "LIST" }],
-    }),
   }),
 });
 
-export const { 
+export const {
   useGetEventsQuery,
   useGetEventByCategoryQuery,
-  useGetEventByUuidQuery
+  useGetEventByUuidQuery,
 } = eventApi;

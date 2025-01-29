@@ -91,6 +91,7 @@ export const donationSchema = z.object({
       /^[A-Z]{3}$/,
       "Currency must consist of uppercase letters (e.g., USD).",
     ),
+  timezone: z.string().min(1, "Timezone cannot be empty."),
   city: z
     .string()
     .min(1, "City cannot be empty.")

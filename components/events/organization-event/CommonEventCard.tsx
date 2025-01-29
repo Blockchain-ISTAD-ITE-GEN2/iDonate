@@ -21,52 +21,8 @@ function formatDate(dateString: string | undefined): string {
 }
 
 export function CommonEventCard({ event }: { event: EventType }) {
+
   const router = useRouter();
-  const [totalDonors, setTotalDonors] = useState(event?.total_donor || 0);
-  const [totalAmount, setTotalAmount] = useState(event?.total_amount || 0);
-
-  useEffect(() => {
-    // Initialize SockJS and STOMP client
-    const socket = new SockJS("http://your-server-url/websocket-endpoint"); // Replace with your SockJS endpoint
-    const stompClient = new Client({
-      webSocketFactory: () => socket,
-      reconnectDelay: 5000,
-      heartbeatIncoming: 4000,
-      heartbeatOutgoing: 4000,
-    });
-
-    // Connect to the STOMP server
-    stompClient.onConnect = (frame) => {
-      console.log("Connected to STOMP server");
-
-      // Subscribe to the totalDonors topic
-      stompClient.subscribe("/topic/totalDonors", (message) => {
-        const donors = JSON.parse(message.body);
-        setTotalDonors(donors);
-      });
-
-      // Subscribe to the totalDonations topic
-      stompClient.subscribe("/topic/totalDonations", (message) => {
-        const amount = JSON.parse(message.body);
-        setTotalAmount(amount);
-      });
-    };
-
-    // Handle connection errors
-    stompClient.onStompError = (frame) => {
-      console.error("STOMP error:", frame.headers.message);
-    };
-
-    // Activate the STOMP client
-    stompClient.activate();
-
-    // Cleanup on unmount
-    return () => {
-      if (stompClient.connected) {
-        stompClient.deactivate();
-      }
-    };
-  }, []);
 
   return (
     <Card
@@ -75,13 +31,12 @@ export function CommonEventCard({ event }: { event: EventType }) {
     >
       {/* Header with Image */}
       <CardHeader className="w-full h-[180px] p-0 rounded-t-[10px] overflow-hidden">
-        {event?.images ? (
+        {event?.images? (
           <Image
             className="w-full h-full object-cover"
             width={1000}
             height={1000}
             src={
-              event?.images[0] ||
               event?.images[0] ||
               "https://i.pinimg.com/736x/2a/86/a5/2a86a560f0559704310d98fc32bd3d32.jpg"
             }
@@ -105,12 +60,10 @@ export function CommonEventCard({ event }: { event: EventType }) {
               </span>
               <p className="text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
                 Start date
-                Start date
               </p>
             </div>
 
             <p className="text-iDonate-green-primary dark:text-iDonate-green-secondary">
-              {formatDate(event?.startDate) || "12 Dec 2024"}
               {formatDate(event?.startDate) || "12 Dec 2024"}
             </p>
           </div>
@@ -125,7 +78,7 @@ export function CommonEventCard({ event }: { event: EventType }) {
             </div>
 
             <p className="text-iDonate-green-primary dark:text-iDonate-green-secondary">
-              {formatDate(event?.endDate) || "12 Dec 2025"}
+              {formatDate(event?.endDate )|| "12 Dec 2025"}
             </p>
           </div>
         </div>
@@ -137,7 +90,6 @@ export function CommonEventCard({ event }: { event: EventType }) {
             className="font-bold text-medium-khmer text-iDonate-navy-primary line-clamp-1 dark:text-iDonate-navy-accent"
           >
             {event?.name || "Untitled Event"}
-            {event?.name || "Untitled Event"}
           </h3>
           <p
             lang="km"
@@ -146,6 +98,7 @@ export function CommonEventCard({ event }: { event: EventType }) {
             {event?.description || "No description available"}
           </p>
         </div>
+
 
         {/* Donor and Amount Information */}
         <div className="flex flex-col gap-2">

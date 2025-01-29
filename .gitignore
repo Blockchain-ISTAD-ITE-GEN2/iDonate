@@ -29,7 +29,7 @@ yarn-error.log*
 #.env*.local
 #.env.development
 #.env.production
-.env.test  # Add this if you have a test environment file
+#.env.test  # Add this if you have a test environment file
 
 # vercel
 .vercel
