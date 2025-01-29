@@ -23,30 +23,6 @@ export function SearchPage() {
         })
       ),
     },
-    {
-      key: "total_donor",
-      title: "Donor Range",
-      options: Array.from(
-        new Set(typedEvents.map((event) => event.total_donor))
-      )
-        .filter((donor) => donor != null) // Filter null values
-        .map((donor) => ({
-          label: donor.toString(),
-          value: donor.toString(),
-        })),
-    },
-    {
-      key: "total_amount",
-      title: "Amount Range",
-      options: Array.from(
-        new Set(typedEvents.map((event) => event.total_amount))
-      )
-        .filter((amount) => amount != null) // Filter null values
-        .map((amount) => ({
-          label: amount.toString(),
-          value: amount.toString(),
-        })),
-    },
   ];
 
   useEffect(() => {

@@ -67,7 +67,6 @@ export function CommonEventCard({ event }: { event: EventType }) {
               </span>
               <p className="text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
                 Start date
-                Start date
               </p>
             </div>
 
