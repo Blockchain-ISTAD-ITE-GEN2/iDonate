@@ -1,112 +1,128 @@
-"use client";
+"use client"
 
-import { signIn } from "next-auth/react";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Card } from "@/components/ui/card";
-import { Loader2, Eye, EyeOff, Mail, Lock } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
-import { useState } from "react";
-import { toast, Toaster } from "react-hot-toast";
-import { motion } from "framer-motion";
-import BackgroundImage from "@/public/images/donation-login.jpg";
-import GoogleIcon from "@/public/images/google.png";
-import FacebookIcon from "@/public/images/facebook.png";
-import SampleLogo from "@/public/images/iDonateLogoSample.png";
-import { useDispatch } from "react-redux";
-import { setToken } from "@/redux/features/auth/authSlice";
-import { useRouter } from "next/navigation";
-import AnimatedText from "@/components/auth/AnimationText";
-import { LoginSchema } from "../schema/schema";
+import { signIn } from "next-auth/react"
+import { type SubmitHandler, useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { z } from "zod"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Card } from "@/components/ui/card"
+import { Loader2, Eye, EyeOff, Mail, Lock } from "lucide-react"
+import Image from "next/image"
+import Link from "next/link"
+import { useState } from "react"
+import { motion } from "framer-motion"
+import BackgroundImage from "@/public/images/donation-login.jpg"
+import GoogleIcon from "@/public/images/google.png"
+import FacebookIcon from "@/public/images/facebook.png"
+import SampleLogo from "@/public/logo/logodesign no background.png"
+import { useDispatch } from "react-redux"
+import { setToken } from "@/redux/features/auth/authSlice"
+import { useRouter } from "next/navigation"
+import AnimatedText from "@/components/auth/AnimationText"
+import { LoginSchema } from "../schema/schema"
+import { useToast } from "@/hooks/use-toast"
+import { Toaster } from "@/components/ui/toaster"
 
 // Zod schema for form validation
 const loginSchema = z.object({
-  email: z
-    .string()
-    .email("គណនីអ៊ីមែលមិនត្រឹមត្រូវ")
-    .nonempty("អ៊ីមែលត្រូវបានទាមទារឲ្យស្នើ"),
+  email: z.string().email("គណនីអ៊ីមែលមិនត្រឹមត្រូវ").nonempty("អ៊ីមែលត្រូវបានទាមទារឲ្យស្នើ"),
   password: z.string().nonempty("ពាក្យសម្ងាត់ត្រូវបានទាមទារឲ្យស្នើ"),
-});
+})
 
-type LoginFormValues = z.infer<typeof loginSchema>;
+type LoginFormValues = z.infer<typeof loginSchema>
 
 export default function LoginForm() {
-  const dispatch = useDispatch();
-  const [showPassword, setShowPassword] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const router = useRouter();
+  const dispatch = useDispatch()
+  const [showPassword, setShowPassword] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const router = useRouter()
+  const { toast } = useToast()
 
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors },
   } = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
     defaultValues: { email: "", password: "" },
-  });
+  })
 
   const onSubmit: SubmitHandler<LoginFormValues> = async (data) => {
-    setLoading(true);
+    setLoading(true)
 
     try {
-      // Make a POST request to the login API
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_IDONATE_API_URL}/api/v1/auth/login`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data),
-          credentials: "include",
-        },
-      );
+      const response = await fetch(`${process.env.NEXT_PUBLIC_IDONATE_API_URL}/api/v1/auth/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+        credentials: "include",
+      })
+
+      const result = await response.json()
 
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "ការចូលប្រើបរាជ័យ");
+        if (response.status === 401) {
+          setError("password", {
+            type: "manual",
+            message: "ពាក្យសម្ងាត់មិនត្រឹមត្រូវ",
+          })
+          toast({
+            variant: "destructive",
+            title: "ការចូលប្រើបរាជ័យ",
+            description: "ពាក្យសម្ងាត់មិនត្រឹមត្រូវ សូមព្យាយាមម្តងទៀត។",
+          })
+        } else if (response.status === 404) {
+          setError("email", {
+            type: "manual",
+            message: "រកមិនឃើញគណនីអ៊ីមែលនេះទេ",
+          })
+          toast({
+            variant: "destructive",
+            title: "ការចូលប្រើបរាជ័យ",
+            description: "រកមិនឃើញគណនីអ៊ីមែលនេះទេ សូមពិនិត្យមើលអាសយដ្ឋានអ៊ីមែលរបស់អ្នកម្តងទៀត។",
+          })
+        } else {
+          throw new Error("ការចូលប្រើបរាជ័យ")
+        }
+        return
       }
 
-      const result = await response.json();
-      console.log("Login Response:", result);
-
-      // Set a cookie from the frontend (if needed)
-      // document.cookie = `idonate-refresh-token=${result.refreshToken};path=/;max-age=3600;`;
-      document.cookie = `idonate-refresh-token=${result.refreshToken};path=/;max-age=3600;SameSite=Lax;Secure`;
-
-      // console.log("Cookie set successfully");
-      // Set access token in Redux
-      dispatch(setToken(result.accessToken));
-      // router.push("/");
-      console.log("Redirecting to home page...");
-      // toast.success("Redirecting to home page...");
-      // router.refresh();
-      router.push("/");
-      toast.success("ការចូលប្រើទទួលបានជោគជ័យ");
+      console.log("Login Response:", result)
+      document.cookie = `idonate-refresh-token=${result.refreshToken};path=/;max-age=3600;SameSite=Lax;Secure`
+      dispatch(setToken(result.accessToken))
+      console.log("Redirecting to home page...")
+      router.push("/")
+      toast({
+        variant: "success",
+        title: "ជោគជ័យ",
+        description: "សូមស្វាគមន៍មកកាន់ iDonate",
+      })
     } catch (error) {
-      console.error("Login error:", error);
-      toast.error(
-        error instanceof Error ? error.message : "ការចូលប្រើបានបរាជ័យ",
-      );
+      console.error("Login error:", error)
+      toast({
+        variant: "destructive",
+        title: "ការចូលប្រើបរាជ័យ",
+        description: "មានបញ្ហាក្នុងការភ្ជាប់ទៅកាន់ប្រព័ន្ធ សូមព្យាយាមម្តងទៀត។",
+      })
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   return (
     <div className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
       <div className="absolute inset-0 bg-grid-slate-100 [mask-image:linear-gradient(0deg,#fff,rgba(255,255,255,0.6))] -z-10" />
       <Image
-        src={BackgroundImage}
+        src={BackgroundImage || "/placeholder.svg"}
         alt="Background Image"
         layout="fill"
         objectFit="cover"
         quality={100}
         priority
       />
-
+      
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -119,26 +135,13 @@ export default function LoginForm() {
             whileTap={{ scale: 0.95, rotate: -5 }}
             className="flex justify-center mb-6 xl:mb-4 md:mb-0"
           >
-            <Image
-              src={SampleLogo}
-              alt="iDonate Logo"
-              width={100}
-              height={100}
-              className="rounded-full shadow-lg"
-              priority
-            />
+            <Image src={SampleLogo || "/placeholder.svg"} alt="iDonate Logo" width={160} height={160} unoptimized />
           </motion.div>
           <AnimatedText />
 
-          <form
-            onSubmit={handleSubmit(onSubmit)}
-            className="space-y-4 sm:space-y-6"
-          >
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 sm:space-y-6">
             <div>
-              <label
-                htmlFor="email"
-                className="flex items-center space-x-2 text-sm font-medium text-gray-700 mb-1"
-              >
+              <label htmlFor="email" className="flex items-center space-x-2 text-sm font-medium text-gray-700 mb-1">
                 <Mail className="w-4 h-4 text-iDonate-navy-primary" />
                 <span>
                   អ៉ីមែល <span className="text-red-500">*</span>
@@ -163,10 +166,7 @@ export default function LoginForm() {
             </div>
 
             <div className="relative">
-              <label
-                htmlFor="password"
-                className="flex items-center space-x-2 text-sm font-medium text-gray-700 mb-1"
-              >
+              <label htmlFor="password" className="flex items-center space-x-2 text-sm font-medium text-gray-700 mb-1">
                 <Lock className="w-4 h-4 text-iDonate-navy-primary" />
                 <span>
                   បញ្ចូលពាក្យសម្ងាត់ <span className="text-red-500">*</span>
@@ -184,11 +184,7 @@ export default function LoginForm() {
                 onClick={() => setShowPassword(!showPassword)}
                 className="absolute right-3 top-8 text-gray-400 hover:text-gray-600 focus:outline-none items-center"
               >
-                {showPassword ? (
-                  <Eye size={18} className="mt-1" />
-                ) : (
-                  <EyeOff size={18} className="mt-1" />
-                )}
+                {showPassword ? <Eye size={18} className="mt-1" /> : <EyeOff size={18} className="mt-1" />}
               </button>
               {errors.password && (
                 <motion.p
@@ -217,31 +213,20 @@ export default function LoginForm() {
               </Link>
             </div>
 
-            <motion.div
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              className="mt-6 sm:mt-8"
-            >
+            <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="mt-6 sm:mt-8">
               <Button
                 type="submit"
-                // onClick={()=>router.push("/")}
                 className="w-full h-10 sm:h-11 bg-iDonate-navy-primary hover:bg-iDonate-navy-primary/90 text-white font-medium rounded-md transition-all duration-200 shadow-md hover:shadow-lg"
                 disabled={loading}
               >
-                {loading ? (
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                ) : (
-                  "ចូលប្រើ"
-                )}
+                {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : "ចូលប្រើ"}
               </Button>
             </motion.div>
           </form>
 
           <div className="flex items-center my-4 mb-0">
             <span className="flex-grow border-t border-gray-400"></span>
-            <span className="mx-4 text-sm text-gray-500 font-medium">
-              បន្តជាមួយគណនី
-            </span>
+            <span className="mx-4 text-sm text-gray-500 font-medium">បន្តជាមួយគណនី</span>
             <span className="flex-grow border-t border-gray-400"></span>
           </div>
 
@@ -253,7 +238,7 @@ export default function LoginForm() {
                 onClick={() => signIn("google", { callbackUrl: "/" })}
               >
                 <Image
-                  src={GoogleIcon}
+                  src={GoogleIcon || "/placeholder.svg"}
                   alt="Google"
                   width={60}
                   height={60}
@@ -269,7 +254,7 @@ export default function LoginForm() {
                 onClick={() => signIn("facebook", { callbackUrl: "/" })}
               >
                 <Image
-                  src={FacebookIcon}
+                  src={FacebookIcon || "/placeholder.svg"}
                   alt="Facebook"
                   width={500}
                   height={500}
@@ -291,7 +276,8 @@ export default function LoginForm() {
           </p>
         </Card>
       </motion.div>
-      <Toaster position="top-center" reverseOrder={false} />
+      <Toaster />
     </div>
-  );
+  )
 }
+

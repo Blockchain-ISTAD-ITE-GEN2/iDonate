@@ -16,7 +16,7 @@ export async function POST(req: NextRequest) {
   }: SignupValues = body;
 
   const response = await fetch(
-    `${process.env.IDONATE_BASE_URL}/api/v1/users/user-registration`,
+    `${process.env.IDONATE_BASE_URL}/api/v1/users/user-registration?isSocialLogin=false`,
     {
       method: "POST",
       headers: { "Content-Type": "application/json" },

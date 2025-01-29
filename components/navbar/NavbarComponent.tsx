@@ -31,6 +31,8 @@ import AvartarPlaceHolder from "@/public/images/user-idonate.png";
 import { useGetUserProfileQuery } from "@/redux/services/user-profile";
 import toast from "react-hot-toast";
 import { getUuidFromToken } from "@/lib/uuid";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+
 
 export default function NavbarComponent() {
   const [menuList] = useState<NavMenuType[]>(NavMenulist);
@@ -59,15 +61,16 @@ export default function NavbarComponent() {
   //   router.push("/");
   // }
 
-  const handleRoutes = (): void => {
-    if (session || accessTokenValue) {
-      handleLogout();
-    } else {
-      router.push("/login");
-    }
-  };
+  // const handleRoutes = (): void => {
+  //   if (session || accessTokenValue) {
+  //     handleLogout();
+  //   } else {
+  //     router.push("/login");
+  //   }
+  // };
 
   const handleLogout = () => {
+    //  alert("Logout successful");
     if (accessTokenValue) {
       fetch(`http://localhost:3000/api/logout`, {
         method: "POST",
@@ -77,23 +80,23 @@ export default function NavbarComponent() {
         body: JSON.stringify({}),
       }).then((res) => {
         if (res.ok) {
+          alert("Logout successful");
           toast.success("Logout successful", {
             position: "top-right",
             duration: 3000,
-            // onClose: () => {
-            //   route.refresh();
-            // },
+
           });
+          router.refresh();
+          router.push("/")
         } else {
           console.log("Error ");
         }
       });
-    } else {
-      // handleLogoutAuth();
     }
   };
 
   const handleSignOut = () => {
+    console.log("Access Token:", accessTokenValue); // Debugging
     if (accessTokenValue) {
       fetch(`http://localhost:3000/api/logout`, {
         method: "POST",
@@ -107,14 +110,18 @@ export default function NavbarComponent() {
             position: "top-right",
             duration: 3000,
           });
+          router.refresh();
+          router.push("/");
         } else {
           console.log("Error ");
         }
       });
+    } else {
+      console.error("Access token is missing."); // Debugging
     }
   };
-
-  useEffect(() => {}, [accessTokenValue, session]);
+  
+  useEffect(() => {},[accessTokenValue,session])
   // console.log("User Profile: ",userProfile);
 
   if (
@@ -122,13 +129,14 @@ export default function NavbarComponent() {
     pathname === "/sign-up" ||
     pathname === "/verification" ||
     pathname === "/forgot-password" ||
-    pathname === "/reset-password"
+    pathname === "/reset-password" ||
+    pathname === "/waiting-verification"
   ) {
     return null;
   }
 
   if (isMobileMenuOpen) {
-    return activeSubmenu ? (
+    return activeSubmenu ? ( 
       <MobileSubmenu
         activeSubmenu={activeSubmenu}
         submenuItems={submenuItems}
@@ -197,21 +205,28 @@ export default function NavbarComponent() {
             </div>
           </div>
 
+
           <div className="flex items-center">
             {session || accessTokenValue ? (
               <DropdownMenu>
                 <DropdownMenuTrigger>
-                  {userProfile ? (
-                    <Image
-                      src={
-                        AvartarPlaceHolder ||
-                        `https://idonateapi.kangtido.life/media/${userProfile?.avatar}`
-                      }
-                      alt={`${userProfile?.username ?? "user"}'s avatar`}
-                      width={50}
-                      height={50}
-                      className="rounded-full border-2 border-iDonate-navy-secondary"
-                    />
+                  {userProfile? (
+               <Avatar className="w-14 h-14">
+               {userProfile?.avatar ? (
+                 <AvatarImage
+                   width={5000}
+                   height={5000}
+                   src={`${process.env.NEXT_PUBLIC_IDONATE_API_URL}/media/${userProfile?.avatar}`}
+                   className="object-cover w-full rounded-full ring-2 h-full ring-iDonate-navy-primary"
+                   alt={`${userProfile?.username ?? "-full h-user"}'s avatar`}
+                 />
+               ) : (
+                 <AvatarFallback className="text-gray-700">
+                   {userProfile?.username?.[0]?.toUpperCase() || "?"}
+                 </AvatarFallback>
+               )}
+             </Avatar>
+             
                   ) : (
                     <div className="w-10 h-10 rounded-full bg-iDonate-navy-primary flex items-center justify-center">
                       <User className="text-white" size={20} />
@@ -222,18 +237,24 @@ export default function NavbarComponent() {
                 <DropdownMenuContent className="w-72 p-2">
                   {/* User Info */}
                   <div className="p-3">
-                    <div className="flex items-center space-x-3">
-                      {userProfile ? (
-                        <Image
-                          src={
-                            AvartarPlaceHolder ||
-                            `https://idonateapi.kangtido.life/media/${userProfile?.avatar}`
-                          }
-                          alt={`${userProfile?.username ?? "User"}'s avatar`}
-                          width={50}
-                          height={50}
-                          className="rounded-full border-2 border-iDonate-navy-secondary"
+                    <div className="flex items-center space-x-3">   
+                      {userProfile? (
+                      <Avatar className="w-14 h-14">
+                      {userProfile?.avatar ? (
+                        <AvatarImage
+                          width={5000}
+                          height={5000}
+                          src={`${process.env.NEXT_PUBLIC_IDONATE_API_URL}/media/${userProfile?.avatar}`}
+                          className="object-cover w-full rounded-full ring-2 h-full ring-iDonate-navy-primary"
+                          alt={`${userProfile?.username ?? "-full h-user"}'s avatar`}
                         />
+                      ) : (
+                        <AvatarFallback className="text-gray-700">
+                          {userProfile?.username?.[0]?.toUpperCase() || "?"}
+                        </AvatarFallback>
+                      )}
+                    </Avatar>
+                    
                       ) : (
                         <div className="w-10 h-10 rounded-full bg-iDonate-navy-primary flex items-center justify-center">
                           <User className="text-white" size={20} />
@@ -267,9 +288,10 @@ export default function NavbarComponent() {
                     </Link>
                   </DropdownMenuItem>
 
+          
                   {/* Sign Out */}
                   <DropdownMenuItem
-                    onClick={handleSignOut} // Use handleSignOut instead of signOut directly
+                    onClick={handleLogout} // Use handleSignOut instead of signOut directly
                     className="text-red-600 hover:text-red-700 hover:bg-red-50"
                   >
                     <LogOut className="mr-2 h-4 w-4" />

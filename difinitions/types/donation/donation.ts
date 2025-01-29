@@ -6,7 +6,7 @@ export type DonationType = {
   acquiringBank: string;
   currency: string;
   city: string;
-  timezone: string
+  timezone: string;
   // visibily: boolean;
 };
 

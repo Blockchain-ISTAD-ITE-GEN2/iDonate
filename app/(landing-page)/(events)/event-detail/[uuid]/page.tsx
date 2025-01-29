@@ -1,6 +1,5 @@
-import { EventDetail } from "@/components/events/even-detail/[uuid]/event-detail";
-
 import { Metadata } from "next";
+import EventDetail from "@/components/events/even-detail/[uuid]/event-detail";
 
 export const metadata: Metadata = {
   title: "Event Detail - iDonate",
@@ -52,18 +51,19 @@ export const metadata: Metadata = {
   },
 };
 
-type PropsParams = {
-
+type EventDetailProps = {
   params: {
     uuid: string;
   };
 };
 
-export default function EvenDetailPage(props: PropsParams) {
-
+export default function EvenDetailPage({ params }: EventDetailProps) {
   return (
     <section className="flex flex-col p-9">
-      <EventDetail params={props.params}/>
+      <EventDetail/>
     </section>
   );
 }
+
+
+

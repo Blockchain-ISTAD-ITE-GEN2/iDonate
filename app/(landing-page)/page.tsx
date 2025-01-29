@@ -95,7 +95,7 @@ export default function Homepage() {
       </section>
 
       {/* Total Organization */}
-      <TotalOrganizationComponent />
+     <TotalOrganizationComponent />
 
       {/* Bar and Line Chart */}
       <section className="w-full">

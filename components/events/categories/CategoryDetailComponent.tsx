@@ -1,23 +1,22 @@
 "use client"
+
 import Image from "next/image";
 import { CommonEventCard } from "@/components/events/organization-event/CommonEventCard";
 import { Button } from "@/components/ui/button";
+
 import { EventType } from "@/difinitions/dto/EventType";
+import { useGetEventsQuery } from "@/redux/services/event-service";
 import { AccordionCategory } from "./AccordionCategory";
 import { AllCategoriesButton } from "./AllCategoriesAccordion";
-import { useGetEventsQuery } from "@/redux/services/event-service";
-import { useGetCategoriesQuery } from "@/redux/services/category-service";
 
-export default function CategoryDetailComponent(props: { params: { uuid: string } }) {
+export default function CategoryDetailComponent() {
 
-  const uuid = props.params.uuid;
-
-  console.log("UUID: ", uuid);
-
-  const {data:categories } = useGetCategoriesQuery({});
-
-  const {data: events} = useGetEventsQuery({});
-  const typedEvents: EventType[] = events?.content?.slice(0,4) || [];
+  // const typedEvents: EventType[] = events.slice(0, 4);
+    const { data: eventsApiResponse = { content: [] }, isLoading: isEventsLoading } = useGetEventsQuery({});
+   
+    const events: EventType[] = eventsApiResponse.content || [];
+    
+    const typedEvents: EventType[] = events.slice(0, 4); 
 
   return (
     <section className=" flex flex-col md:flex-row gap-9 px-9">
@@ -56,12 +55,25 @@ export default function CategoryDetailComponent(props: { params: { uuid: string 
         {/* Event Cards */}
         <div className="flex flex-col gap-6">
           <div className="grid gap-6 grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
-            {typedEvents?.map((event, eventIndex) => (
-              <CommonEventCard
-                key={eventIndex}
-                event={typedEvents[eventIndex]}
-              />
-            ))}
+          {isEventsLoading ? (
+           <p>Loading events...</p>
+            ) : (
+           typedEvents.map((event, eventIndex) => (
+            <CommonEventCard
+              key={eventIndex}
+              event={{
+                uuid: event.uuid,
+                images: event.images,
+                name: event.name,
+                description: event.description,
+                total_donor: event.total_donor,
+                total_amount: event.total_amount,
+                startDate: event.startDate,
+                endDate: event.endDate,
+              }}
+            />
+          ))
+        )}
           </div>
 
           <div className="flex justify-end">

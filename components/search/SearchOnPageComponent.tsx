@@ -50,7 +50,7 @@ export function SearchPage() {
   ];
 
   useEffect(() => {
-    setFilteredEvents(typedEvents); // Sync filtered events whenever typedEvents updates
+    setFilteredEvents(typedEvents); 
   }, [typedEvents]);
 
 

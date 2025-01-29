@@ -1,51 +1,35 @@
-"use client";
-import { ChangeEvent, useEffect, useState } from "react";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { z } from "zod";
-import { organizationRegistrationSchema } from "../schema/schema";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useCreateOrganizationMutation } from "@/redux/services/organization-service";
-import { useToast } from "@/hooks/use-toast";
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "../ui/input";
-import { Button } from "../ui/button";
-import { useGetUserProfileQuery } from "@/redux/services/user-profile";
-import { useRouter } from "next/navigation";
+"use client"
+import { type ChangeEvent, useEffect, useState } from "react"
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import type { z } from "zod"
+import { organizationRegistrationSchema } from "../schema/schema"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useCreateOrganizationMutation } from "@/redux/services/organization-service"
+import { useToast } from "@/hooks/use-toast"
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
+import { Input } from "../ui/input"
+import { Button } from "../ui/button"
+import { useGetUserProfileQuery } from "@/redux/services/user-profile"
+import { useRouter } from "next/navigation"
 
-import Image from "next/image";
-import { Upload } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { Textarea } from "../ui/textarea";
-import { FileUploader } from "../fileupload/file-uploader";
+import Image from "next/image"
+import { Upload } from "lucide-react"
+import { cn } from "@/lib/utils"
+import { Textarea } from "../ui/textarea"
+import { FileUploader } from "../fileupload/file-uploader"
 
-type RegistrationFormValues = z.infer<typeof organizationRegistrationSchema>;
+type RegistrationFormValues = z.infer<typeof organizationRegistrationSchema>
 
 export default function OrganizationRegistration() {
-  const { data: userProfile } = useGetUserProfileQuery({});
-  const { toast } = useToast();
-  const router = useRouter();
+  const { data: userProfile } = useGetUserProfileQuery({})
+  const { toast } = useToast()
+  const router = useRouter()
 
   // 1. State to toggle between view and edit mode
-  const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
-  const [uploadProgresses, setUploadProgresses] = useState<
-    Record<string, number>
-  >({});
-  const [previewImage, setPreviewImage] = useState<string | null>(null);
+  const [uploadedFiles, setUploadedFiles] = useState<File[]>([])
+  const [uploadProgresses, setUploadProgresses] = useState<Record<string, number>>({})
+  const [previewImage, setPreviewImage] = useState<string | null>(null)
 
   //  console.log("The value of Token: ",userProfile);
 
@@ -62,15 +46,14 @@ export default function OrganizationRegistration() {
       purpose: "",
       referenceInformation: [],
     },
-  });
+  })
 
-  const [createOrganization, { isLoading, error }] =
-    useCreateOrganizationMutation();
+  const [createOrganization, { isLoading, error }] = useCreateOrganizationMutation()
 
-  const { watch, handleSubmit, reset, control, formState } = form;
+  const { watch, handleSubmit, reset, control, formState } = form
 
   function handleErrorWithToast(error: any, toast: any, context: string) {
-    console.error(`Error during ${context}:`, error);
+    console.error(`Error during ${context}:`, error)
 
     if (error?.status === 409 && error?.data?.error?.description) {
       if (error.data.error.description.includes("already exists")) {
@@ -78,21 +61,19 @@ export default function OrganizationRegistration() {
           title: "Error",
           description: `An organization with the name "${error}" already exists.`,
           variant: "destructive",
-        });
+        })
       }
     } else {
       toast({
         title: "Error",
         description: `Failed to ${context}. Please try again.`,
         variant: "destructive",
-      });
+      })
     }
   }
 
-  async function onSubmit(
-    values: z.infer<typeof organizationRegistrationSchema>,
-  ) {
-    console.log("Form submitted with values:", values); // Debug log
+  async function onSubmit(values: z.infer<typeof organizationRegistrationSchema>) {
+    console.log("Form submitted with values:", values) // Debug log
 
     try {
       const newOrganization = {
@@ -104,26 +85,23 @@ export default function OrganizationRegistration() {
         image: values.image,
         bio: values.bio,
         purpose: values.purpose,
-      };
+      }
 
       await createOrganization({
         newOrganization: newOrganization,
         uuid: userProfile?.uuid,
-      }).unwrap();
-
-      // router.push(`/organization-dashboard/dashboard`);
+      }).unwrap()
 
       toast({
         title: "Success",
         description: "Organization created successfully!",
         variant: "default",
-      });
+      })
+
+      // Route to the organization dashboard after successful submission
+      router.push("/waiting-verification")
     } catch (error: any) {
-      handleErrorWithToast(
-        error,
-        toast,
-        `create organization "${values.name}"`,
-      );
+      handleErrorWithToast(error, toast, `create organization "${values.name}"`)
     }
   }
 
@@ -133,53 +111,46 @@ export default function OrganizationRegistration() {
       new Promise((resolve, reject) => {
         const progressInterval = setInterval(() => {
           setUploadProgresses((prev) => {
-            const newProgress = Math.min((prev[file.name] || 0) + 10, 100);
-            return { ...prev, [file.name]: newProgress };
-          });
+            const newProgress = Math.min((prev[file.name] || 0) + 10, 100)
+            return { ...prev, [file.name]: newProgress }
+          })
 
           if (uploadProgresses[file.name] >= 100) {
-            clearInterval(progressInterval);
-            resolve(file);
+            clearInterval(progressInterval)
+            resolve(file)
           }
-        }, 200);
-      });
+        }, 200)
+      })
 
-    await Promise.all(files.map(simulateUpload));
+    await Promise.all(files.map(simulateUpload))
     // toast.success(`${files.length} file(s) uploaded successfully!`);
-  };
+  }
 
-  function handleFileChange(
-    event: ChangeEvent<HTMLInputElement>,
-    onChange: (value: string) => void,
-  ) {
-    const file = event.target.files?.[0];
+  function handleFileChange(event: ChangeEvent<HTMLInputElement>, onChange: (value: string) => void) {
+    const file = event.target.files?.[0]
     if (file) {
       // if (!file.name.match(/\.(jpg|jpeg|png)$/i)) {
       //   alert("Only JPG or PNG files are allowed.");
       //   return;
       // }
-      const previewURL = URL.createObjectURL(file);
-      setPreviewImage(previewURL);
-      onChange(previewURL); // Notify form of the new value
+      const previewURL = URL.createObjectURL(file)
+      setPreviewImage(previewURL)
+      onChange(previewURL) // Notify form of the new value
     }
   }
 
-  const name = watch("name");
-  const email = watch("email");
-  const phone = watch("phone");
-  const address = watch("address");
-  const description = watch("description");
+  const name = watch("name")
+  const email = watch("email")
+  const phone = watch("phone")
+  const address = watch("address")
+  const description = watch("description")
   // const image = watch("image");
-  const bio = watch("bio");
-  const purpose = watch("purpose");
+  const bio = watch("bio")
+  const purpose = watch("purpose")
 
   // Track if the form is filled
   const isFormFilled =
-    !!email?.trim() ||
-    !!phone?.trim() ||
-    !!address?.trim() ||
-    !!description?.trim() ||
-    !!name?.trim();
+    !!email?.trim() || !!phone?.trim() || !!address?.trim() || !!description?.trim() || !!name?.trim()
   // !!image?.trim() || !!bio?.trim() || !!purpose?.trim();
 
   // Add beforeunload event listener
@@ -204,12 +175,8 @@ export default function OrganizationRegistration() {
       <div className="flex gap-6">
         <div className="w-4 bg-iDonate-green-primary rounded-sm"></div>
         <div className="flex flex-col gap-4">
-          <h1 className="text-2xl md:text-4xl font-semibold text-iDonate-green-primary">
-            ការចុះឈ្មោះអង្គការ
-          </h1>
-          <p className="text-base md:text-lg text-iDonate-gray">
-            សូមបំពេញព័ត៌មានរបស់អ្នកដើម្បីចុះឈ្មោះអង្គការ
-          </p>
+          <h1 className="text-2xl md:text-4xl font-semibold text-iDonate-green-primary">ការចុះឈ្មោះអង្គការ</h1>
+          <p className="text-base md:text-lg text-iDonate-gray">សូមបំពេញព័ត៌មានរបស់អ្នកដើម្បីចុះឈ្មោះអង្គការ</p>
         </div>
       </div>
 
@@ -218,9 +185,7 @@ export default function OrganizationRegistration() {
           <h2 className="text-xl md:text-2xl font-semibold text-iDonate-navy-primary">
             Connecting Many Hearts of Kindness Together
           </h2>
-          <p className="text-iDonate-navy-secondary">
-            Rise Together, Share Together
-          </p>
+          <p className="text-iDonate-navy-secondary">Rise Together, Share Together</p>
         </div>
 
         <Form {...form}>
@@ -239,15 +204,9 @@ export default function OrganizationRegistration() {
                   name="name"
                   render={({ field }) => (
                     <FormItem className="flex flex-col">
-                      <FormLabel className="text-sm lg:text-lg text-iDonate-navy-secondary">
-                        ឈ្មោះអង្គការ
-                      </FormLabel>
+                      <FormLabel className="text-sm lg:text-lg text-iDonate-navy-secondary">ឈ្មោះអង្គការ</FormLabel>
                       <FormControl>
-                        <Input
-                          placeholder="kanpheakbopha hospital"
-                          className="w-full"
-                          {...field}
-                        />
+                        <Input placeholder="kanpheakbopha hospital" className="w-full" {...field} />
                       </FormControl>
                       <FormMessage />
                       <FormDescription className="text-xs lg:text-sm text-iDonate-gray">
@@ -263,15 +222,9 @@ export default function OrganizationRegistration() {
                   name="email"
                   render={({ field }) => (
                     <FormItem className="flex flex-col">
-                      <FormLabel className="text-sm lg:text-lg text-iDonate-navy-secondary">
-                        អ៊ីម៉ែល
-                      </FormLabel>
+                      <FormLabel className="text-sm lg:text-lg text-iDonate-navy-secondary">អ៊ីម៉ែល</FormLabel>
                       <FormControl>
-                        <Input
-                          placeholder="kanpheakbopha.hospital@gmail.com"
-                          className="w-full"
-                          {...field}
-                        />
+                        <Input placeholder="kanpheakbopha.hospital@gmail.com" className="w-full" {...field} />
                       </FormControl>
                       <FormMessage />
                       <FormDescription className="text-xs lg:text-sm text-iDonate-gray">
@@ -287,15 +240,9 @@ export default function OrganizationRegistration() {
                   name="phone"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-sm lg:text-lg text-iDonate-navy-secondary">
-                        លេខទំនាក់ទំនង
-                      </FormLabel>
+                      <FormLabel className="text-sm lg:text-lg text-iDonate-navy-secondary">លេខទំនាក់ទំនង</FormLabel>
                       <FormControl>
-                        <Input
-                          placeholder="070 ********"
-                          className="w-full"
-                          {...field}
-                        />
+                        <Input placeholder="070 ********" className="w-full" {...field} />
                       </FormControl>
                       <FormMessage />
                       <FormDescription className="text-xs lg:text-sm text-iDonate-gray">
@@ -311,15 +258,9 @@ export default function OrganizationRegistration() {
                   name="address"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-sm lg:text-lg text-iDonate-navy-secondary">
-                        អាសយដ្ឋាន
-                      </FormLabel>
+                      <FormLabel className="text-sm lg:text-lg text-iDonate-navy-secondary">អាសយដ្ឋាន</FormLabel>
                       <FormControl>
-                        <Input
-                          placeholder="Phnom Penh, Cambodia"
-                          className="w-full"
-                          {...field}
-                        />
+                        <Input placeholder="Phnom Penh, Cambodia" className="w-full" {...field} />
                       </FormControl>
                       <FormMessage />
                       <FormDescription className="text-xs lg:text-sm text-iDonate-gray">
@@ -335,9 +276,7 @@ export default function OrganizationRegistration() {
                   name="description"
                   render={({ field }) => (
                     <FormItem className="row-span-2 h-full flex flex-col justify-between">
-                      <FormLabel className="text-sm lg:text-lg text-iDonate-navy-secondary">
-                        ការពិពណ៌នា
-                      </FormLabel>
+                      <FormLabel className="text-sm lg:text-lg text-iDonate-navy-secondary">ការពិពណ៌នា</FormLabel>
                       <FormControl className=" flex-grow min-h-[100px]">
                         <Textarea
                           placeholder="Brief description"
@@ -360,9 +299,7 @@ export default function OrganizationRegistration() {
                   name="bio"
                   render={({ field }) => (
                     <FormItem className="row-span-2 h-full flex flex-col justify-between">
-                      <FormLabel className="text-sm lg:text-lg text-iDonate-navy-secondary">
-                        Bio
-                      </FormLabel>
+                      <FormLabel className="text-sm lg:text-lg text-iDonate-navy-secondary">Bio</FormLabel>
                       <FormControl className=" flex-grow min-h-[100px]">
                         <Textarea
                           placeholder="Brief bio of the organization"
@@ -385,9 +322,7 @@ export default function OrganizationRegistration() {
                   name="purpose"
                   render={({ field }) => (
                     <FormItem className="row-span-2 h-full flex flex-col justify-between">
-                      <FormLabel className="text-sm lg:text-lg text-iDonate-navy-secondary">
-                        គោលបំណង
-                      </FormLabel>
+                      <FormLabel className="text-sm lg:text-lg text-iDonate-navy-secondary">គោលបំណង</FormLabel>
                       <FormControl className=" flex-grow min-h-[100px]">
                         <Textarea
                           placeholder="Purpose of the organization "
@@ -410,14 +345,12 @@ export default function OrganizationRegistration() {
                   name="image"
                   render={({ field }) => (
                     <FormItem className="row-span-2 h-full flex flex-col justify-between">
-                      <FormLabel className="text-sm lg:text-lg text-iDonate-navy-secondary">
-                        រូបភាពអង្គការ
-                      </FormLabel>
+                      <FormLabel className="text-sm lg:text-lg text-iDonate-navy-secondary">រូបភាពអង្គការ</FormLabel>
                       <FormControl className="relative flex-grow min-h-[100px]">
                         {previewImage ? (
                           <div className="h-full  w-full group  cursor-pointer flex items-center justify-center rounded-lg border-2 border-dashed border-muted-foreground/25 text-center transition ">
                             <Image
-                              src={previewImage}
+                              src={previewImage || "/placeholder.svg"}
                               alt="Preview"
                               fill
                               className="rounded-md object-contain h-full w-full"
@@ -430,21 +363,14 @@ export default function OrganizationRegistration() {
                               type="file"
                               accept=".jpg, .jpeg, .png"
                               className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
-                              onChange={(e) =>
-                                handleFileChange(e, field.onChange)
-                              }
+                              onChange={(e) => handleFileChange(e, field.onChange)}
                               ref={field.ref}
                             />
                             <div className="flex flex-col items-center justify-center gap-1">
                               <div className="rounded-full border border-dashed p-3">
-                                <Upload
-                                  className="size-5 text-muted-foreground"
-                                  aria-hidden="true"
-                                />
+                                <Upload className="size-5 text-muted-foreground" aria-hidden="true" />
                               </div>
-                              <p className="font-medium text-muted-foreground">
-                                Upload an organization image
-                              </p>
+                              <p className="font-medium text-muted-foreground">Upload an organization image</p>
                             </div>
                           </div>
                         )}
@@ -472,9 +398,7 @@ export default function OrganizationRegistration() {
                   name="referenceInformation"
                   render={({ field }) => (
                     <FormItem className="w-full">
-                      <FormLabel className="text-sm text-iDonate-navy-secondary">
-                      ព័ត៌មានលំអិតរបស់អង្គភាព
-                      </FormLabel>
+                      <FormLabel className="text-sm text-iDonate-navy-secondary">ព័ត៌មានលំអិតរបស់អង្គភាព</FormLabel>
                       <FormControl>
                         <FileUploader
                           className=" border-iDonate-gray"
@@ -510,5 +434,6 @@ export default function OrganizationRegistration() {
         </Form>
       </div>
     </section>
-  );
+  )
 }
+

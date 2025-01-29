@@ -73,14 +73,24 @@ export type ChangePasswordType = {
 };
 // Edit Profile Type
 export type EditprofileType = {
-  username: string;
+  username: string ;
   firstName: string;
   lastName: string;
   gender: string;
   avatar: string;
   phoneNumber: string;
   dateOfBirth: string;
+  address: string;
+  bio: string;
 };
+
+export type EditUserAddressType ={
+  address: string;
+}
+
+export type EditUserBioType ={
+  bio: string;
+}
 export type userProfileinfoType = {
   gender: string;
   dateOfBirth: string;
@@ -124,7 +134,7 @@ export type UploadFileType = {
 };
 
 export type UpdateProfileImageType = {
-  image: string;
+  file: any;
 };
 
 // user data type

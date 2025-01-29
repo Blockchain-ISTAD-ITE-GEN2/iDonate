@@ -60,7 +60,7 @@ export function MobileMenu({
 
   const handleSignOut = () => {
     if (accessTokenValue) {
-      fetch(`http://localhost:3000/api/logout`, {
+      fetch(`${process.env.NEXT_PUBLIC_URL}/api/logout`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -130,8 +130,9 @@ export function MobileMenu({
                     {userProfile ? (
                       <Image
                         src={
-                          AvartarPlaceHolder ||
-                          `https://idonateapi.kangtido.life/media/${userProfile?.avatar || ""}`
+                         
+                        `https://idonateapi.kangtido.life/media/${userProfile?.avatar}`
+                        ||  AvartarPlaceHolder 
                         }
                         alt={`${userProfile?.username ?? "user"}'s avatar`}
                         width={40}
@@ -151,8 +152,8 @@ export function MobileMenu({
                         {userProfile ? (
                           <Image
                             src={
-                              AvartarPlaceHolder ||
-                              `https://idonateapi.kangtido.life/media/${userProfile?.avatar || ""}`
+                              `https://idonateapi.kangtido.life/media/${userProfile?.avatar}`
+                              ||   AvartarPlaceHolder 
                             }
                             alt={`${userProfile?.username ?? "User"}'s avatar`}
                             width={50}
