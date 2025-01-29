@@ -19,9 +19,9 @@ export default function OrganizationOnPageComponent() {
     data: apiResponse,
     isLoading:isLoadingOrg,
     isError,
-  } = useGetOrganizationsQuery(undefined);
+  } = useGetOrganizationsQuery({});
 
-  console.log("API Response Data :", apiResponse);
+  // console.log("API Response Data :", apiResponse);
 
 
 
@@ -99,7 +99,7 @@ export default function OrganizationOnPageComponent() {
         </h2>
 
         <Toolbar
-          events={organizationData}
+          events={filteredOrganizations}
           filtersFace={filtersFace}
           searchKey={"name"}
           onFilterChange={handleFilterChange}
