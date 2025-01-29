@@ -24,30 +24,25 @@ function formatDate(dateString: string | undefined): string {
 
 export function CommonEventCard({ event }: { event: EventType }) {
 
-
   const router = useRouter();
-
 
   return (
     <Card
-      onClick={() => router.push(`/event-detail/${event?.uuid}`)}
+      onClick={() => router.push(`/event-detail`)}
       className=" w-full rounded-[10px] bg-iDonate-light-gray border-0 cursor-pointer shadow-md transition-transform hover:scale-[1.02] dark:bg-iDonate-dark-mode "
     >
       {/* Header with Image */}
       <CardHeader className="w-full h-[180px] p-0 rounded-t-[10px] overflow-hidden">
         {event?.images? (
-   
           <Image
             className="w-full h-full object-cover"
             width={1000}
             height={1000}
             src={
               event?.images[0] ||
-              event?.images[0] ||
               "https://i.pinimg.com/736x/2a/86/a5/2a86a560f0559704310d98fc32bd3d32.jpg"
             }
             alt={event?.name || "Media"}
-           
           />
         ) : (
           <div className="w-full h-full bg-gray-200 flex items-center justify-center">
@@ -67,12 +62,10 @@ export function CommonEventCard({ event }: { event: EventType }) {
               </span>
               <p className="text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
                 Start date
-                Start date
               </p>
             </div>
 
             <p className="text-iDonate-green-primary dark:text-iDonate-green-secondary">
-              {formatDate(event?.startDate) || "12 Dec 2024"}
               {formatDate(event?.startDate) || "12 Dec 2024"}
             </p>
           </div>
@@ -88,7 +81,6 @@ export function CommonEventCard({ event }: { event: EventType }) {
 
             <p className="text-iDonate-green-primary dark:text-iDonate-green-secondary">
               {formatDate(event?.endDate )|| "12 Dec 2025"}
-              {formatDate(event?.endDate )|| "12 Dec 2025"}
             </p>
           </div>
         </div>
@@ -100,7 +92,6 @@ export function CommonEventCard({ event }: { event: EventType }) {
             className="font-bold text-medium-khmer text-iDonate-navy-primary line-clamp-1 dark:text-iDonate-navy-accent "
           >
             {event?.name || "Untitled Event"}
-            {event?.name || "Untitled Event"}
           </h3>
           <p
             lang="km"
@@ -109,6 +100,7 @@ export function CommonEventCard({ event }: { event: EventType }) {
             {event?.description || "No description available"}
           </p>
         </div>
+
 
         {/* Donor and Amount Information */}
         <div className="flex flex-col gap-2">
