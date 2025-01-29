@@ -40,7 +40,7 @@ jobs:
         run: |
           echo "TAG=${GITHUB_SHA::8}" >> $GITHUB_ENV
       - name: Stop the container
-        run: sudo docker compose down
+        run: sudo docker-compose down
       - name: Update Docker Compose
         run: |
           yq eval ".services.reactjs-srv.image=\"kevintido/${{ env.IMAGE_NAME }}:$TAG\"" -i docker-compose.yaml
