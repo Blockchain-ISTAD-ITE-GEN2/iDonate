@@ -52,7 +52,15 @@ export default function CategoryWithEventComponent({ category }: { category: Cat
           typedEvents.map((event, eventIndex) => (
             <CommonEventCard
               key={eventIndex}
-              event={event}
+              event={{
+                images: event.images,
+                name: event.name,
+                description: event.description,
+                total_donor: event.total_donor,
+                total_amount: event.total_amount,
+                startDate: event.startDate,
+                endDate: event.endDate,
+              }}
             />
           ))
         )}

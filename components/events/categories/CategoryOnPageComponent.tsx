@@ -1,6 +1,5 @@
 "use client";
 
-
 import OrganizationDetailHeroSection from "@/components/herosection/OrganizationDetailHeroSection";
 import { CategoryType } from "@/difinitions/types/components-type/CategoryType";
 import CategoryCardComponent from "./CategoryCardComponent";
@@ -9,18 +8,17 @@ import CategoryWithEventComponent from "./CategoryWithEventComponent";
 
 export default function CategoryOnPageComponent() {
   const {
-    data: apiReponseCategory = { content: [] }, // Default value to ensure `content` exists
+    data: apiReponseCategory = { content: [] }, 
     isLoading: isLoadingCategory,
   } = useGetCategoriesQuery({});
 
   // Extract the array of categories from the response
-  const categories: CategoryType[] = apiReponseCategory?.content || [];
+  const categories: CategoryType[] = apiReponseCategory.content || [];
 
   // Debugging logs
   console.log(" =====> Categories Data : ", categories);
 
   return (
-
     <section className="flex flex-col gap-9 mb-5">
       {/* Hero Section Start */}
       <OrganizationDetailHeroSection />
@@ -34,9 +32,9 @@ export default function CategoryOnPageComponent() {
 
       {/* List Card Events */}
       {isLoadingCategory ? (
-        <p>Loading categories...</p>
+        <p></p>
       ) : (
-        categories?.map((category:any) => (
+        apiReponseCategory.map((category:any) => (
           <CategoryWithEventComponent key={category.uuid} category={category} />
         ))
       )}
