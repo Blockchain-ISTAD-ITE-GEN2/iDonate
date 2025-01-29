@@ -42,10 +42,10 @@ export default function SuccessDialog({
         <div className="mt-6 bg-gray-50 p-4 rounded-lg">
           <h3 className="text-md font-semibold text-gray-700 mb-3">Transaction Details</h3>
           <div className="flex flex-col gap-2 text-sm text-gray-600">
-            <div className="flex justify-between">
+            {/* <div className="flex justify-between">
               <span className="font-medium text-gray-700">Transaction ID:</span>
               <span className="text-gray-900 font-mono">{transactionData?.data?.hash}</span>
-            </div>
+            </div> */}
             <div className="flex justify-between">
               <span className="font-medium text-gray-700">From Account:</span>
               <span>{transactionData?.data?.fromAccountId}</span>
