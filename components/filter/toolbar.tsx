@@ -5,7 +5,7 @@ import { DateRangePicker } from "./date-range-picker";
 import { DateRange } from "react-day-picker";
 
 type ToolbarProps = {
-  events: { [key: string]:any}[];
+  events: { [key: string]: string | number | Date }[];
   // events: { [key: string]: string | number | Date }[];
   searchKey: string;
   filtersFace: {
