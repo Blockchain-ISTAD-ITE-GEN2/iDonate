@@ -2,11 +2,8 @@
 import HeroSectionCategoryComponent from "@/components/events/categories/HeroSectionCategoryComponent";
 import CategoryDetailComponent from "@/components/events/categories/CategoryDetailComponent";
 
-
-
-
 export default function Page(props: { params: { uuid: string } }) {
-
+     
 
   return (
     <section className="flex flex-col gap-9 justify-center">

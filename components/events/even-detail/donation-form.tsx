@@ -22,7 +22,7 @@
   } from "@/components/ui/card";
   import { Input } from "@/components/ui/input";
   import { useGetEventsQuery } from "@/redux/services/event-service";
-  import {  useMakeDonationMutation } from "@/redux/services/donation-service";
+  import {  useGenerateQrCodeMutation, useMakeDonationMutation } from "@/redux/services/donation-service";
   import { EventType } from "@/difinitions/dto/EventType";
   import { DonationType, TransactionDataType } from "@/difinitions/types/donation/donation";
   import { useToast } from "@/hooks/use-toast";
@@ -41,14 +41,12 @@ import SuccessDialog from "./Success-dialog";
     const { data: events } = useGetEventsQuery({});
     const { toast } = useToast();
     const [donate] = useMakeDonationMutation();
-    // const [generateQrCode] = useGenerateQrCodeMutation();
+    const [generateQrCode] = useGenerateQrCodeMutation();
     const { data: userProfile, error } = useGetUserProfileQuery({});
     const typedEvents: EventType[] = events?.content || [];
 
     const firstEvent = typedEvents[0];
 
-   
-    
   
     const form = useForm<z.infer<typeof donationSchema>>({
       resolver: zodResolver(donationSchema),

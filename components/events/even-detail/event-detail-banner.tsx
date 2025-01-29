@@ -15,7 +15,7 @@ import { useState, useEffect } from "react";
 import { TransactionType } from "@/difinitions/types/table-type/transaction";
 
 type EventDetailBannerProps = {
-  uuid: string; // Accept UUID as a prop
+  uuid: string;
 };
 
 export function EventDetailBanner({ uuid }: EventDetailBannerProps) {
