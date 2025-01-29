@@ -7,6 +7,7 @@ import { DonorAddressForm } from "@/components/donor/donor-setting/donor-address
 import { DonorBioForm } from "@/components/donor/donor-setting/donor-bio-form";
 import { DonorMediaForm } from "./donor-media-form";
 
+
 export function DonorProfileComponent() {
   const [imagePercentage, setImagePercentage] = useState(0);
   const [addressPercentage, setAddressPercentage] = useState(0);

@@ -8,6 +8,7 @@ import FacebookIcon from "@/public/images/facebook.png";
 import Image from "next/image";
 import Link from "next/link";
 import { UseDispatch } from "react-redux";
+import  SignUpIllustration from "@/public/landing/Donation-SignUp.jpg";
 
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -58,7 +59,7 @@ const SignUpForm = () => {
     username: "",
     firstName: "",
     lastName: "",
-    gender: "Male",
+    gender: "",
     dateOfBirth: undefined,
     address: "",
     phoneNumber: "",
@@ -129,7 +130,7 @@ const SignUpForm = () => {
       };
 
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_IDONATE_API_URL}/api/v1/users/user-registration`,
+        `${process.env.NEXT_PUBLIC_URL}/api/register`,
         {
           method: "POST",
           headers: {
@@ -255,17 +256,31 @@ const SignUpForm = () => {
         className="w-full max-w-4xl bg-white rounded-2xl shadow-2xl overflow-hidden"
       >
         <div className="flex flex-col md:flex-row">
-          <div className="bg-green-600 text-white p-8 md:w-1/3 flex flex-col justify-center items-center">
+          {/* <div className="bg-green-600 text-white p-8 md:w-1/3 flex flex-col justify-center items-center">
             <h2 className="text-3xl font-bold mb-4">ស្វាគមន៍</h2>
             <p className="text-center mb-4">ចូលរួមជាមួយយើងដើម្បីជួយសហគមន៍</p>
-            {/* <Image
-              src={Illustration || "/placeholder.svg"}
+            <Image
+              src={SignUpIllustration}
               alt="Donation Illustration"
-              width={200}
-              height={200}
-              className="mb-4"
-            /> */}
-          </div>
+              width={1000}
+              height={1000}
+              className="mb-4 h-full w-full object-cover"
+              unoptimized
+            />
+          </div> */}
+          <div
+  className="bg-green-600 text-white p-8 md:w-1/3 flex flex-col justify-center items-center"
+  style={{
+    backgroundImage: `url(${SignUpIllustration.src})`, // Use the image source for the background
+    backgroundSize: 'cover', // Ensure the image covers the entire div
+    backgroundPosition: 'center', // Center the image
+    backgroundRepeat: 'no-repeat', // Avoid repeating the image
+  }}
+>
+  {/* <h2 className="text-3xl font-bold mb-4">ស្វាគមន៍</h2>
+  <p className="text-center mb-4">ចូលរួមជាមួយយើងដើម្បីជួយសហគមន៍</p> */}
+</div>
+
           <div className="p-8 md:w-2/3 bg-white bg-opacity-90">
             <div className="text-center mb-8">
               <h2 className="text-3xl font-semibold text-green-600">

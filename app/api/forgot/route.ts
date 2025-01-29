@@ -8,7 +8,7 @@ export async function POST(req: NextRequest) {
 
   // console.log("email from forgot password", body)
   const response = await fetch(
-    `${process.env.IDONATE_BASE_URL}/api/v1/users/forgot-password`,
+    `${process.env.IDONATE_BASE_URL}/api/v1/users/forget-password`,
     {
       method: "POST",
       headers: { "Content-Type": "application/json" },

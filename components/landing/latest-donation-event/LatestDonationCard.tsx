@@ -4,6 +4,49 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import Image from "next/image";
 import FamilyImage from "@/public/landing/LateDonation.jpg";
+import FamilyOne from "@/public/images/Group 4630.png";
+import FamilyTwo from "@/public/images/image (7).png";
+import FamilyThree from "@/public/images/image (8).png";
+
+interface DonationCard {
+  id: string;
+  image: string;
+  title: string;
+  description: string;
+  donors: number;
+  amount: number;
+  isCurrent?: boolean;
+}
+
+const donationCards: DonationCard[] = [
+  {
+    id: "1",
+    image: FamilyTwo.src,
+    title: "ប្រាក់សំរាប់កុមារ",
+    description: "ផ្តល់ការអប់រំពេលចេញពីសាលាដល់កុមារនៅក្នុងតំបន់ដាច់ស្រយាល",
+    donors: 1.2,
+    amount: 1000,
+    isCurrent: true,
+  },
+  {
+    id: "2",
+    image: FamilyOne.src,
+    title: "ជួយខ្ញុំផង",
+    description: "កុមារនឹងទទួលបានអាហារពេលចូលនិងថ្នាំពេទ្យពេលឈឺទៀតផង",
+    donors: 1.2,
+    amount: 1000,
+    isCurrent: true,
+  },
+  {
+    id: "3",
+    image: FamilyThree.src,
+    title: "សុខភាពសហគមន៍បច្ចុប្បន្ន",
+    description: "ផ្តល់ឱកាសដល់សិស្សក្រីក្រឱ្យកូនៗពួកគេទៅសាលារៀន",
+    donors: 1.2,
+    amount: 1000,
+    isCurrent: true,
+  },
+];
 import { useGetEventsQuery } from "@/redux/services/event-service";
 import { EventType } from "@/difinitions/dto/EventType";
 

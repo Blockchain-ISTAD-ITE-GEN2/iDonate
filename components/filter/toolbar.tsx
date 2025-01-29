@@ -85,6 +85,9 @@ export function Toolbar({
     onFilterChange(filteredEvents);
   }, [filteredEvents, onFilterChange]);
 
+
+  
+
   return (
     <div className="flex items-center justify-between">
       <div className="flex flex-wrap lg:flex-nowrap items-center gap-2 ">

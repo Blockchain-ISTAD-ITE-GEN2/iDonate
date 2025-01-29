@@ -82,8 +82,10 @@ export function CommonEventCard({ event }: { event: EventType }) {
             height={1000}
             src={
               event?.images[0] ||
+              event?.images[0] ||
               "https://i.pinimg.com/736x/2a/86/a5/2a86a560f0559704310d98fc32bd3d32.jpg"
             }
+            alt={event?.name || "Media"}
             alt={event?.name || "Media"}
           />
         ) : (
@@ -104,10 +106,12 @@ export function CommonEventCard({ event }: { event: EventType }) {
               </span>
               <p className="text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
                 Start date
+                Start date
               </p>
             </div>
 
             <p className="text-iDonate-green-primary dark:text-iDonate-green-secondary">
+              {formatDate(event?.startDate) || "12 Dec 2024"}
               {formatDate(event?.startDate) || "12 Dec 2024"}
             </p>
           </div>
@@ -133,6 +137,7 @@ export function CommonEventCard({ event }: { event: EventType }) {
             lang="km"
             className="font-bold text-medium-khmer text-iDonate-navy-primary line-clamp-1 dark:text-iDonate-navy-accent"
           >
+            {event?.name || "Untitled Event"}
             {event?.name || "Untitled Event"}
           </h3>
           <p

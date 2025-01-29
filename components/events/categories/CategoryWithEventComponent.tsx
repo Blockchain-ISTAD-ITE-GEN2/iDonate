@@ -5,30 +5,23 @@ import { EventType } from "@/difinitions/dto/EventType";
 import { CommonEventCard } from "@/components/events/organization-event/CommonEventCard";
 import { useGetCategoriesQuery } from "@/redux/services/category-service";
 import { useGetEventByCategoryQuery } from "@/redux/services/event-service";
-import { useState } from "react";
-import { CategoryPlaceholder } from "./CategoryPlaceholder";
 
 
 
 export default function CategoryWithEventComponent({ category }: { category: CategoryType }) {
-  
-  // Handle to controll pagniattion 
-  const [page,setPage] = useState(4);
 
-  // Fetch all categories uuid 
+  // Fetch all categories
+
   const {uuid} = category;
 
 
   const { data: eventsApiResponse = { content: [] }, isLoading: isEventsLoading } = useGetEventByCategoryQuery({ uuid:uuid });
-
+ 
   const events: EventType[] = eventsApiResponse.content || [];
   
-  // show only page 
-  const typedEvents: EventType[] = events.slice(0, page); 
+  const typedEvents: EventType[] = events.slice(0, 4); 
 
-  const hanldeShowPage = () => {
-    setPage((prevCountPage) => prevCountPage + 4 );
-  }
+
   // show evnet with cate .........
   console.log("==========> Event data with Category: ",events)
 
@@ -45,14 +38,20 @@ export default function CategoryWithEventComponent({ category }: { category: Cat
       {/* Events */}
       <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {isEventsLoading ? (
-          <>
-            <CategoryPlaceholder/>
-          </>
+          <p>Loading events...</p>
         ) : (
           typedEvents.map((event, eventIndex) => (
             <CommonEventCard
               key={eventIndex}
-              event={typedEvents[eventIndex]}
+              event={{
+                images: event.images,
+                name: event.name,
+                description: event.description,
+                total_donor: event.total_donor,
+                total_amount: event.total_amount,
+                startDate: event.startDate,
+                endDate: event.endDate,
+              }}
             />
           ))
         )}
@@ -60,10 +59,7 @@ export default function CategoryWithEventComponent({ category }: { category: Cat
 
       {/* Show More Button */}
       <div className="flex justify-end">
-        <Button
-        onClick={hanldeShowPage}
-        className="text-medium-eng text-iDonate-navy-primary bg-iDonate-white-space border-2 border-iDonate-navy-accent hover:bg-iDonate-navy-accent dark:bg-iDonate-dark-mode dark:text-iDonate-navy-accent dark:hover:text-iDonate-navy-secondary dark:hover:border-iDonate-navy-secondary
-        ">
+        <Button className="text-medium-eng text-iDonate-navy-primary bg-iDonate-white-space border-2 border-iDonate-navy-accent hover:bg-iDonate-navy-accent dark:bg-iDonate-dark-mode dark:text-iDonate-navy-accent dark:hover:text-iDonate-navy-secondary dark:hover:border-iDonate-navy-secondary">
           Show more
         </Button>
       </div>

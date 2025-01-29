@@ -3,15 +3,29 @@
 import { sendPasswordResetEmail } from "@/lib/email";
 import { updateUserPassword } from "@/lib/auth";
 
-export async function resetPassword(newPassword: string) {
-  // In a real application, you would:
-  // 1. Verify the reset token
-  // 2. Find the user associated with the token
-  // 3. Update the user's password
-  // 4. Invalidate the reset token
+// actions.ts
+export async function resetPassword(newPassword: string, confirmPassword: string, email: string, token: string): Promise<void> {
 
-  // For this example, we'll just simulate updating the password
-  await updateUserPassword(newPassword);
+  console.log("Reset password token: ",token)
+  const endpoint = `${process.env.IDONATE_BASE_URL}/api/v1/users/password-reset?token=${token}`;
+  const requestBody = {
+    email,
+    newPassword,
+    confirmPassword,
+  };
+
+  const response = await fetch(endpoint, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(requestBody),
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.message || "Failed to reset password.");
+  }
 }
 
 export async function requestPasswordReset(email: string) {

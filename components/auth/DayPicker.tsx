@@ -77,10 +77,10 @@ export function DatePicker({
             >
               <CalendarIcon className="mr-2 h-4 w-4" />
               {selectedDate ? (
-                format(selectedDate, "MMM d, yyyy")
-              ) : (
-                <span>Pick a date</span>
-              )}
+              format(selectedDate, "yyyy-MM-dd")
+            ) : (
+              <span>Pick a date</span>
+            )}
             </Button>
           </PopoverTrigger>
           <PopoverContent className="w-auto p-0" align="start">

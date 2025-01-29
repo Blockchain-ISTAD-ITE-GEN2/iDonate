@@ -31,7 +31,6 @@ export type EventResponse = {
 
 
 export type EventType = {
-  uuid?:string;
   name: string;
   description: string;
   startDate:string;
