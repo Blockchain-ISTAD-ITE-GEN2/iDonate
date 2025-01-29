@@ -1,52 +1,31 @@
-# Use an official Node.js runtime as a parent image
-FROM node:18-alpine AS builder
-
-# Install libc6-compat for better compatibility
-RUN apk add --no-cache libc6-compat
-
-# Set the working directory to /app
+# Build stage
+FROM node:lts as build
 WORKDIR /app
 
-# Copy package files first for better caching
+# Copy package.json and package-lock.json
 COPY package*.json ./
 
-# Install dependencies with force and allow some potential peer dependency mismatches
+# Install dependencies
 RUN npm install --force
 
-# Copy all project files
+# Copy the rest of the application code
 COPY . .
 
-# Install sharp with force if needed for image processing
-RUN npm i sharp --force
-
-# Run the next build process and generate the artifacts
+# Build the Next.js application
 RUN npm run build
 
-# Multi-stage build process for final image
-FROM node:18-alpine
-
-# Update, upgrade, and add dumb-init for proper signal handling
-RUN apk update && apk upgrade && apk add --no-cache dumb-init && \
-    adduser -D nextuser
-
-# Set work dir as app
+# Production stage
+FROM node:lts
 WORKDIR /app
 
-# Copy build artifacts with proper ownership
-COPY --chown=nextuser:nextuser --from=builder /app/public ./public
-COPY --chown=nextuser:nextuser --from=builder /app/.next/standalone ./
-COPY --chown=nextuser:nextuser --from=builder /app/.next/static ./.next/static
+# Copy the build artifacts and necessary files from the build stage
+COPY --from=build /app ./
 
-# Set non-root user
-USER nextuser
+# Install only production dependencies, forcefully
+RUN npm install --only=production --force
 
-# Expose the application port
+# Expose the port the app runs ondd
 EXPOSE 3000
 
-# Set environment variables
-ENV HOST=0.0.0.0 \
-    PORT=3000 \
-    NODE_ENV=production
-
-# Use dumb-init to handle signal forwarding and process management
-CMD ["dumb-init", "node", "server.js"]
+# Start the application using 'next start' to serve the built Next.js application
+CMD ["npm", "start"]
