@@ -4,13 +4,16 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args: 
+         NEXT_PUBLIC_API_URL: "http://localhost:3000/api"
     container_name: idata-frontend-container
     restart: always
     ports:
       - "3000:3000"
     environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:3000/api
       - NODE_ENV=production
-      - GENERATE_SOURCEMAP=false
+      # - GENERATE_SOURCEMAP=false
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.idonate.rule=Host(`idonate.kangtido.life`)"
