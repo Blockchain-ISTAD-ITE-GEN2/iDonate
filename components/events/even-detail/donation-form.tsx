@@ -21,7 +21,7 @@
     CardTitle,
   } from "@/components/ui/card";
   import { Input } from "@/components/ui/input";
-  import { useGetEventsQuery } from "@/redux/services/event-service";
+  import { useGetEventByUuidQuery } from "@/redux/services/event-service";
   import {  useMakeDonationMutation } from "@/redux/services/donation-service";
   import { EventType } from "@/difinitions/dto/EventType";
   import { DonationType, TransactionDataType } from "@/difinitions/types/donation/donation";
@@ -29,70 +29,118 @@
   import { useGetUserProfileQuery } from "@/redux/services/user-profile";
   import { use, useEffect, useState } from "react";
   import EventQrDialog from "@/components/events/even-detail/event-qr-dialog";
+import { useParams } from "next/navigation";
 import SuccessDialog from "./Success-dialog";
 
-  export function DonationForm() {
 
+
+
+export function DonationForm() {
+
+  const uuid = useParams();
+
+  console.log("UUID", uuid)
     const [isOpened, setIsOpened] = useState(false);
     const [isSuccessDialogOpen, setIsSuccessDialogOpen] = useState(false); // State to control the success dialog
     const [qrcode, setQrCode] = useState<string | null>(null);
     const [paymentData, setPaymentData] = useState<DonationType | undefined>(undefined);
     const [transactionData, setTransactionData] = useState<TransactionDataType | undefined>(undefined);
-    const { data: events } = useGetEventsQuery({});
+    const {data: events} = useGetEventByUuidQuery(uuid?.uuid)
     const { toast } = useToast();
     const [donate] = useMakeDonationMutation();
-    // const [generateQrCode] = useGenerateQrCodeMutation();
-    const { data: userProfile, error } = useGetUserProfileQuery({});
-    const typedEvents: EventType[] = events?.content || [];
-
-    const firstEvent = typedEvents[0];
-
-   
-    
+    const { data: userProfile} = useGetUserProfileQuery({});
+    const typedEvents: EventType = events ;
+    const [md5, setMd5] = useState();
+  
+    console.log("md5", md5)
   
     const form = useForm<z.infer<typeof donationSchema>>({
       resolver: zodResolver(donationSchema),
       defaultValues: {
-        donationEventID: firstEvent?.uuid || "",
+        donationEventID: typedEvents.uuid || "",
         donor: userProfile?.uuid || "",
         amount: 0,
-        recipient: firstEvent?.organization.uuid || "",
+        recipient: typedEvents?.organization?.uuid || "",
         acquiringBank: "aba",
         currency: "USD",
         city: "Phnom Penh",
+        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone
       },
     });
 
     console.log("Transaction Data: ", transactionData);
 
     const { handleSubmit, control, formState: { isSubmitting } } = form;
-    
 
+    useEffect(() => {
+      if (md5) {
+        const checkTransaction = async () => {
+          try {
+            const response = await fetch(
+              `https://api-bakong.nbc.gov.kh/v1/check_transaction_by_md5`,
+              {
+                method: "POST",
+                headers: {
+                  Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjoiYzIwOWMwNDYzNjBlNDEwMSJ9LCJpYXQiOjE3Mzc0NDA1MTQsImV4cCI6MTc0NTIxNjUxNH0.frEDXCd_iGyhM3NvM-aNzpOpQaBCWWjE7UqxWwri1-U`, // Replace with valid token
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ md5 }),
+              }
+            );
+    
+            if (!response.ok) {
+              throw new Error("Failed to check transaction status.");
+            }
+    
+            const successData = await response.json();
+            setTransactionData(successData); // Save transaction data
+    
+            if (successData.responseCode === 0) {
+              setIsOpened(false)
+              setIsSuccessDialogOpen(true); // Open success dialog
+            }
+          } catch (error) {
+            console.error("Error checking transaction:", error);
+            toast({
+              title: "Error",
+              description: "Failed to check transaction status.",
+              variant: "destructive",
+            });
+          }
+        };
+    
+        checkTransaction();
+      }
+    }); // Trigger when md5 changes
+
+    
    // Submit handler for the donation form
    async function onSubmit(values: z.infer<typeof donationSchema>) {
     try {
       // Build the donation object
       const donation: DonationType = {
-        donationEventID: firstEvent?.uuid,
+        donationEventID: typedEvents?.uuid,
         donor: userProfile?.uuid,
         amount: values.amount,
-        recipient: firstEvent?.organization.uuid,
+        recipient: typedEvents?.organization.uuid,
         acquiringBank: values.acquiringBank,
         currency: values.currency,
         city: values.city,
+        timezone: values.timezone || "",
       };
-
+  
       // Save payment data for QR dialog
       setPaymentData({
-        donationEventID: firstEvent?.name,
+        donationEventID: typedEvents?.name,
         donor: userProfile?.username,
         amount: values.amount,
-        recipient: firstEvent?.organization?.name,
+        recipient: typedEvents?.organization?.name,
         acquiringBank: values.acquiringBank,
         currency: values.currency,
         city: values.city,
+        timezone: values.timezone || "",
       });
-
+  
       // Validate required fields
       if (!donation.donationEventID || !donation.donor || !donation.recipient) {
         toast({
@@ -102,7 +150,7 @@ import SuccessDialog from "./Success-dialog";
         });
         return;
       }
-
+  
       // Validate donation amount
       if (values.amount <= 0) {
         toast({
@@ -112,11 +160,18 @@ import SuccessDialog from "./Success-dialog";
         });
         return;
       }
-
+  
       // Make donation API call
       const donateResponse = await donate(donation).unwrap();
       console.log("Donation API Response:", donateResponse);
-
+  
+      const md5Value = donateResponse?.dataKHQRResponse?.data?.md5;
+      if (md5Value) {
+        setMd5(md5Value); // Set md5 value
+      } else {
+        throw new Error("MD5 value missing in donation response.");
+      }
+  
       // Fetch the QR code manually
       const qrResponse = await fetch(
         `${process.env.NEXT_PUBLIC_IDONATE_API_URL}/api/qr/generate`,
@@ -130,35 +185,16 @@ import SuccessDialog from "./Success-dialog";
           }),
         }
       );
-
+  
       if (!qrResponse.ok) {
         throw new Error("Failed to generate QR Code");
       }
-
+  
       const qrData = await qrResponse.json();
       setQrCode(qrData?.base64QRCode); // Save QR code
       setIsOpened(true); // Open QR dialog
-
-      // Success dialog - check transaction
-      const successResponse = await fetch(
-        `https://api-bakong.nbc.gov.kh/v1/check_transaction_by_md5`,
-        {
-          method: "POST",
-          headers: {
-            "Authorization": `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjoiYzIwOWMwNDYzNjBlNDEwMSJ9LCJpYXQiOjE3MzczNTg3NTcsImV4cCI6MTc0NTEzNDc1N30.8CdSi4fVh_b1bT-pjEN0peTi_ws4K4AOKGCxrrH0EYE`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            md5: donateResponse?.dataKHQRResponse?.data?.md5,
-          }),
-        }
-      );
-      
-
-      const successData = await successResponse.json();
-      setTransactionData(successData); // Save transaction data
-
-      
+  
+      // Success dialog logic is handled via useEffect on md5
     } catch (error: any) {
       console.error("Error during submission:", error);
       toast({
@@ -168,6 +204,7 @@ import SuccessDialog from "./Success-dialog";
       });
     }
   }
+  
 
 
     return (
@@ -213,62 +250,6 @@ import SuccessDialog from "./Success-dialog";
                     </FormItem>
                   )}
                 />
-
-                {/* <FormField
-                  control={control}
-                  name="visibily"
-                  render={({ field }) => (
-                    <FormItem className="w-full h-full">
-                      <FormLabel
-                        className="text-iDonate-navy-secondary text-sm"
-                        htmlFor="visibility"
-                      >
-                        Visibility
-                      </FormLabel>
-                      <FormControl className="w-full h-full">
-                        <RadioGroup
-                          onValueChange={(value) =>
-                            field.onChange(value === "you")
-                          }
-                          value={field.value ? "you" : "anonymous"}
-                          className="flex"
-                        >
-                          <div className="flex items-center space-x-2">
-                            <RadioGroupItem
-                              className="rounded-md text-iDonate-navy-primary border-iDonate-navy-primary"
-                              value="you"
-                              id="r1"
-                            />
-                            <Label
-                              className="text-lg text-iDonate-navy-primary"
-                              htmlFor="r1"
-                            >
-                              Elizabeth Joe
-                            </Label>
-                          </div>
-
-                          <div className="flex items-center space-x-2">
-                            <RadioGroupItem
-                              className="rounded-md text-iDonate-navy-primary border-iDonate-navy-primary"
-                              value="anonymous"
-                              id="r2"
-                            />
-                            <Label
-                              className="text-lg text-iDonate-navy-primary"
-                              htmlFor="r2"
-                            >
-                              Anonymous
-                            </Label>
-                          </div>
-                        </RadioGroup>
-                      </FormControl>
-                      <FormMessage />
-                      <FormDescription className="text-iDonate-gray text-sm">
-                        This is visibily of your donation.
-                      </FormDescription>
-                    </FormItem>
-                  )}
-                /> */}
               </CardContent>
             </div>
 
@@ -301,26 +282,13 @@ import SuccessDialog from "./Success-dialog";
 />
 
 
-{/* {transactionData && isSuccessDialogOpen && (
+{transactionData?.responseCode===0 && isSuccessDialogOpen && (
   <SuccessDialog
     isOpen={true}
     onClose={() => setTransactionData(undefined)}
-    transactionData={{
-      responseCode: 0,
-      esponseMessage: "Transaction successful.",
-      data: {
-        hash: "abc123hash", // Static hash
-        fromAccountId: "Sanh Panha", // Static sender account ID
-        toAccountId: "Education Cambodia Kids news", // Static receiver account ID
-        currency: "USD", // Static currency
-        amount: 1.00, // Static amount
-        description: "Donation for charity.", // Static description
-        createdDateMs: Date.now(), // Current timestamp
-        acknowledgedDateMs: Date.now(), // Current timestamp
-      },
-    }}
+    transactionData={transactionData}
   />
-)}  */}
+)} 
 
       </Form>
     );

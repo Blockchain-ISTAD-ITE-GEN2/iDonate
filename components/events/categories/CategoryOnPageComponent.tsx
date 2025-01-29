@@ -8,12 +8,12 @@ import CategoryWithEventComponent from "./CategoryWithEventComponent";
 
 export default function CategoryOnPageComponent() {
   const {
-    data: apiReponseCategory = { content: [] },
+    data: apiReponseCategory,
     isLoading: isLoadingCategory,
   } = useGetCategoriesQuery({});
 
   // Extract the array of categories from the response
-  const categories: CategoryType[] = apiReponseCategory.content || [];
+  const categories: CategoryType[] = apiReponseCategory?.content || [];
 
   // Debugging logs
   console.log(" =====> Categories Data : ", categories);
@@ -34,7 +34,7 @@ export default function CategoryOnPageComponent() {
       {isLoadingCategory ? (
         <p></p>
       ) : (
-        apiReponseCategory.map((category:any) => (
+        categories?.map((category:any) => (
           <CategoryWithEventComponent key={category.uuid} category={category} />
         ))
       )}

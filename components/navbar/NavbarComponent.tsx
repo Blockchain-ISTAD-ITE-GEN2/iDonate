@@ -149,7 +149,7 @@ export default function NavbarComponent() {
         onClose={() => setIsMobileMenuOpen(false)}
         menuItems={menuList}
         eventMenulist={EventMenulist}
-        contributorMenulist={ContributorMenulist(uuid as string)}
+        contributorMenulist={ContributorMenulist()}
         aboutMenulist={AboutMenulist}
       />
     );
@@ -184,7 +184,7 @@ export default function NavbarComponent() {
       <DesktopNavbar
         menuItems={menuList}
         eventMenulist={EventMenulist}
-        contributorMenulist={ContributorMenulist(uuid as string)}
+        contributorMenulist={ContributorMenulist()}
         aboutMenulist={AboutMenulist}
       />
 

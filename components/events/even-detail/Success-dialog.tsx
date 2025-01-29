@@ -3,8 +3,7 @@
 import {
   Dialog,
   DialogContent,
-  DialogHeader,
-  DialogTitle,
+
 } from "@/components/ui/dialog";
 import { X, CheckCircle, Share2Icon } from "lucide-react";
 import * as DialogPrimitive from "@radix-ui/react-dialog";

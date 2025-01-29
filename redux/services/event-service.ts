@@ -14,6 +14,10 @@ export const eventApi = idonateApi.injectEndpoints({
       query: ({uuid}) => `/events/get-event-by-category/${uuid}`,
       providesTags: [{ type: "event", id: "LIST" }],
     }),
+    getEventByUser: builder.query({
+      query: ({uuid}) => `/events/get-event-by-category/${uuid}`,
+      providesTags: [{ type: "event", id: "LIST" }],
+    }),
     createEvents: builder.mutation({
       query: (newEvent) => ({
         url: "/events",
@@ -36,10 +40,6 @@ export const eventApi = idonateApi.injectEndpoints({
         method: "DELETE",
       }),
       invalidatesTags: [{ type: "event", id: "LIST" }],
-    }),
-    getEventsByCategory: builder.query({
-      query: (categoryUuid:string) => `/events/get-event-by-category/${categoryUuid}`,
-      providesTags: [{ type: "event", id: "LIST" }],
     }),
   }),
 });

@@ -3,13 +3,13 @@ import { Toolbar } from "@/components/filter/toolbar";
 import { OrganizationEventType } from "@/difinitions/dto/Organization-event";
 import { use, useEffect, useState } from "react";
 import { OrganizationEventCard } from "@/components/organization/card/event-organization-card";
-import events from "@/data/organizaation-event-data.json";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { useGetEventsQuery } from "@/redux/services/event-service";
 
 export function OrganizationEventPage() {
   const router = useRouter();
+
 
   const {data: events} = useGetEventsQuery({});
   const typedEvents: OrganizationEventType[] = events?.content || [];
@@ -31,8 +31,8 @@ export function OrganizationEventPage() {
       options: Array.from(
         new Set(typedEvents.map((event) => event.total_raised)),
       ).map((amount) => ({
-        label: amount.toString(),
-        value: amount.toString(),
+        label: amount?.toString(),
+        value: amount?.toString(),
       })),
     },
   ];
