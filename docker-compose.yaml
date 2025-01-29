@@ -1,9 +1,11 @@
 
 services:
-  idata_frontend:
-    build:
-      context: .
-      dockerfile: Dockerfile
+  reactjs-srv:
+    image: kevintido/idonate-image:451f397e
+  # idata_frontend:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
       # args: 
       #   #  NEXT_PUBLIC_API_URL: "http://localhost:3000/api"
       #    NEXT_PUBLIC_API_URL: "https://idonateapi.kangtido.life/api"
