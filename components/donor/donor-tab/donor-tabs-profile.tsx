@@ -13,7 +13,7 @@ export function TabsDonorProfile() {
           className="border-2 w-full sm:w-auto rounded-lg px-6 md:px-9 border-iDonate-navy-accent data-[state=active]:bg-iDonate-navy-accent data-[state=active]:text-iDonate-navy-secondary data-[state=active]:shadow-none"
           value="transaction-history"
         >
-          Transaction History
+          Transaction History 
         </TabsTrigger>
         <TabsTrigger
           className="border-2 w-full sm:w-auto rounded-lg px-6 md:px-9 border-iDonate-navy-accent data-[state=active]:bg-iDonate-navy-accent data-[state=active]:text-iDonate-navy-secondary data-[state=active]:shadow-none"

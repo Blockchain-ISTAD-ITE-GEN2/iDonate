@@ -43,6 +43,8 @@ export function BarAndLineChartLanding() {
         }
         const data = await response.json();
 
+        console.log("Data transactions: ", data)
+
         // Map the API response to TransactionType format
         const formattedTransactions = data.content.map((transaction: any) => ({
           avatar: transaction.avatar || "",
@@ -75,7 +77,7 @@ export function BarAndLineChartLanding() {
       <div className="flex flex-col gap-4">
         {/* Cards for metrics */}
         <CardsMetric data={averageDate} />
-        {/* <Card className="w-full bg-iDonate-light-gray rounded-lg border border-iDonate-navy-accent dark:bg-iDonate-dark-mode dark:text-iDonate-navy-accent">
+        <Card className="w-full bg-iDonate-light-gray rounded-lg border border-iDonate-navy-accent dark:bg-iDonate-dark-mode dark:text-iDonate-navy-accent">
           <CardHeader>
             <CardTitle className="text-medium-eng font-normal text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
               Comparison this week
@@ -84,7 +86,7 @@ export function BarAndLineChartLanding() {
           <CardContent className="pl-2">
             <Overview data={barchartdata} />
           </CardContent>
-        </Card> */}
+        </Card>
       </div>
 
       {/* Recent Transactions Card */}
@@ -93,12 +95,10 @@ export function BarAndLineChartLanding() {
           <CardTitle className="text-medium-eng font-normal text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
             Recent Transactions
           </CardTitle>
-
           <CardDescription className="text-sub-description-eng text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
             You received {recentTransactions.length} donations this week.
           </CardDescription>
         </CardHeader>
-
         <CardContent>
           <ReacentTransacctions transactions={recentTransactions} />
         </CardContent>

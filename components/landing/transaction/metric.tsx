@@ -32,6 +32,8 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 export function CardsMetric({ data }: AverageProps) {
+  console.log("Chart Data:", data); // Debugging line
+
   return (
     <Card className="w-full bg-iDonate-light-gray rounded-lg border border-iDonate-navy-accent dark:bg-iDonate-dark-mode">
       <CardHeader>
@@ -39,7 +41,7 @@ export function CardsMetric({ data }: AverageProps) {
           Overall Transaction
         </CardTitle>
         <CardDescription className="text-sub-description-eng text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
-          Total transactions caculated daily
+          Total transactions calculated daily
         </CardDescription>
       </CardHeader>
       <CardContent className="pb-4">
