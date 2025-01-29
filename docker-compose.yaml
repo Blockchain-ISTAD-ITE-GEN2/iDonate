@@ -10,7 +10,7 @@ services:
       - "3000:3000"
     environment:
       - NODE_ENV=production
-      - GENERATE_SOURCEMAP=false
+      # - GENERATE_SOURCEMAP=false
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.idonate.rule=Host(`idonate.kangtido.life`)"
