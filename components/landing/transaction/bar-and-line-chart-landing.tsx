@@ -75,7 +75,7 @@ export function BarAndLineChartLanding() {
       <div className="flex flex-col gap-4">
         {/* Cards for metrics */}
         <CardsMetric data={averageDate} />
-        <Card className="w-full bg-iDonate-light-gray rounded-lg border border-iDonate-navy-accent dark:bg-iDonate-dark-mode dark:text-iDonate-navy-accent">
+        {/* <Card className="w-full bg-iDonate-light-gray rounded-lg border border-iDonate-navy-accent dark:bg-iDonate-dark-mode dark:text-iDonate-navy-accent">
           <CardHeader>
             <CardTitle className="text-medium-eng font-normal text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
               Comparison this week
@@ -84,7 +84,7 @@ export function BarAndLineChartLanding() {
           <CardContent className="pl-2">
             <Overview data={barchartdata} />
           </CardContent>
-        </Card>
+        </Card> */}
       </div>
 
       {/* Recent Transactions Card */}
