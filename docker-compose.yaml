@@ -4,18 +4,18 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      args: 
-        #  NEXT_PUBLIC_API_URL: "http://localhost:3000/api"
-         NEXT_PUBLIC_API_URL: "https://idonateapi.kangtido.life/api"
-         NEXT_PUBLIC_IDONATE_API_URL: "https://idonateapi.kangtido.life"
+      # args: 
+      #   #  NEXT_PUBLIC_API_URL: "http://localhost:3000/api"
+      #    NEXT_PUBLIC_API_URL: "https://idonateapi.kangtido.life/api"
+      #    NEXT_PUBLIC_IDONATE_API_URL: "https://idonateapi.kangtido.life"
     container_name: idata-frontend-container
     restart: always
     ports:
       - "3000:3000"
     environment:
-      - NEXT_PUBLIC_IDONATE_API_URL=https://idonateapi.kangtido.life
-      # - NEXT_PUBLIC_API_URL=http://localhost:3000/api
-      - NEXT_PUBLIC_API_URL=https://idonateapi.kangtido.life/api
+      # - NEXT_PUBLIC_IDONATE_API_URL=https://idonateapi.kangtido.life
+      # # - NEXT_PUBLIC_API_URL=http://localhost:3000/api
+      # - NEXT_PUBLIC_API_URL=https://idonateapi.kangtido.life/api
       - NODE_ENV=production
       # - GENERATE_SOURCEMAP=false
     labels:
