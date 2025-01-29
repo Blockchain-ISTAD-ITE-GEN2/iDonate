@@ -16,18 +16,44 @@ export type EventResponse = {
   isVisible: boolean;
   organization: OrganizationResponse;
 };
+
+
+// export type EventType = {
+//   image: string;
+//   title: string;
+//   description: string;
+//   total_amount: number;
+//   total_donor: number;
+//   date?: string;
+//   key?: number;
+//   category?: string;
+// };
+
+
 export type EventType = {
-  uuid: string;
+  uuid?:string;
   name: string;
   description: string;
   startDate:string;
-  endDate:string;
-  organization: OrganizationEventType;
+  endDate:string; 
   total_amount: number;
   total_donor: number;
+  // date?: string;
+  key?: number;
   category?: {
     name:string;
   };
+  organization?:OrganizationEventType;
   images: string[];
-  [key: string]: any; // Add index signature
 };
+
+interface EventTTT {
+  id: number;
+  name: string;
+  description?: string;
+  startDate: string;
+  category: {
+    name: string;
+  };
+  images: string[];
+}

@@ -51,7 +51,7 @@ export function DonationForm() {
     const { data: userProfile} = useGetUserProfileQuery({});
     const typedEvents: EventType = events ;
     const [md5, setMd5] = useState();
-  
+
     console.log("md5", md5)
   
     const form = useForm<z.infer<typeof donationSchema>>({
@@ -87,14 +87,14 @@ export function DonationForm() {
                 body: JSON.stringify({ md5 }),
               }
             );
-    
+
             if (!response.ok) {
               throw new Error("Failed to check transaction status.");
             }
-    
+
             const successData = await response.json();
             setTransactionData(successData); // Save transaction data
-    
+
             if (successData.responseCode === 0) {
               setIsOpened(false)
               setIsSuccessDialogOpen(true); // Open success dialog
@@ -108,39 +108,39 @@ export function DonationForm() {
             });
           }
         };
-    
+
         checkTransaction();
       }
     }); // Trigger when md5 changes
 
-    
+
    // Submit handler for the donation form
    async function onSubmit(values: z.infer<typeof donationSchema>) {
     try {
       // Build the donation object
       const donation: DonationType = {
-        donationEventID: typedEvents?.uuid,
+        donationEventID: typedEvents?.uuid || '',
         donor: userProfile?.uuid,
         amount: values.amount,
-        recipient: typedEvents?.organization.uuid,
+        recipient: typedEvents?.organization?.uuid || '',
         acquiringBank: values.acquiringBank,
         currency: values.currency,
         city: values.city,
         timezone: values.timezone || "",
       };
-  
+
       // Save payment data for QR dialog
       setPaymentData({
         donationEventID: typedEvents?.name,
         donor: userProfile?.username,
         amount: values.amount,
-        recipient: typedEvents?.organization?.name,
+        recipient: typedEvents?.organization?.name || '',
         acquiringBank: values.acquiringBank,
         currency: values.currency,
         city: values.city,
         timezone: values.timezone || "",
       });
-  
+
       // Validate required fields
       if (!donation.donationEventID || !donation.donor || !donation.recipient) {
         toast({
@@ -150,7 +150,7 @@ export function DonationForm() {
         });
         return;
       }
-  
+
       // Validate donation amount
       if (values.amount <= 0) {
         toast({
@@ -160,18 +160,18 @@ export function DonationForm() {
         });
         return;
       }
-  
+
       // Make donation API call
       const donateResponse = await donate(donation).unwrap();
       console.log("Donation API Response:", donateResponse);
-  
+
       const md5Value = donateResponse?.dataKHQRResponse?.data?.md5;
       if (md5Value) {
         setMd5(md5Value); // Set md5 value
       } else {
         throw new Error("MD5 value missing in donation response.");
       }
-  
+
       // Fetch the QR code manually
       const qrResponse = await fetch(
         `${process.env.NEXT_PUBLIC_IDONATE_API_URL}/api/qr/generate`,
@@ -185,16 +185,35 @@ export function DonationForm() {
           }),
         }
       );
-  
+
       if (!qrResponse.ok) {
         throw new Error("Failed to generate QR Code");
       }
-  
+
       const qrData = await qrResponse.json();
       setQrCode(qrData?.base64QRCode); // Save QR code
       setIsOpened(true); // Open QR dialog
-  
-      // Success dialog logic is handled via useEffect on md5
+
+      // Success dialog - check transaction
+      const successResponse = await fetch(
+        `https://api-bakong.nbc.gov.kh/v1/check_transaction_by_md5`,
+        {
+          method: "POST",
+          headers: {
+            "Authorization": `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjoiYzIwOWMwNDYzNjBlNDEwMSJ9LCJpYXQiOjE3MzczNTg3NTcsImV4cCI6MTc0NTEzNDc1N30.8CdSi4fVh_b1bT-pjEN0peTi_ws4K4AOKGCxrrH0EYE`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            md5: donateResponse?.dataKHQRResponse?.data?.md5,
+          }),
+        }
+      );
+      
+
+      const successData = await successResponse.json();
+      setTransactionData(successData); // Save transaction data
+
+      
     } catch (error: any) {
       console.error("Error during submission:", error);
       toast({
@@ -204,7 +223,7 @@ export function DonationForm() {
       });
     }
   }
-  
+
 
 
     return (
@@ -288,7 +307,7 @@ export function DonationForm() {
     onClose={() => setTransactionData(undefined)}
     transactionData={transactionData}
   />
-)} 
+)}
 
       </Form>
     );
