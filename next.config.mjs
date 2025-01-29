@@ -120,8 +120,8 @@ const nextConfig = {
     return [
       {
         source: "/api/v1/:path*",
-        // destination: "https://idonateapi.kangtido.life/api/v1/:path*",
-        destination: `${process.env.NEXT_PUBLIC_IDONATE_API_URL}/api/v1/:path*`,
+        destination: "https://idonateapi.kangtido.life/api/v1/:path*",
+        // destination: `${process.env.NEXT_PUBLIC_IDONATE_API_URL}/api/v1/:path*`,
       },
     ];
   },
