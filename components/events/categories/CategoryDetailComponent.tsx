@@ -3,8 +3,8 @@
 import Image from "next/image";
 import { CommonEventCard } from "@/components/events/organization-event/CommonEventCard";
 import { Button } from "@/components/ui/button";
-import { AccordionCategory } from "@/components/events/categories/categorydetail/AccordionCategory";
-import { AllCategoriesButton } from "@/components/events/categories/categorydetail/AllCategoriesAccordion";
+import { AccordionCategory } from "@/components/events/categories/AccordionCategory";
+import { AllCategoriesButton } from "@/components/events/categories/AllCategoriesAccordion";
 import { EventType } from "@/difinitions/dto/EventType";
 import { useGetEventsQuery } from "@/redux/services/event-service";
 
@@ -62,6 +62,7 @@ export default function CategoryDetailComponent() {
               key={eventIndex}
               event={{
                 images: event.images,
+                uuid: event.uuid,
                 name: event.name,
                 description: event.description,
                 total_donor: event.total_donor,

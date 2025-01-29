@@ -21,8 +21,6 @@ const CounterAnimation = ({ target }: { target: number }) => {
     triggerOnce: true,
     threshold: 0.1,
   });
-
-  useEffect(() => {
   useEffect(() => {
     if (inView) {
       let start = 0;

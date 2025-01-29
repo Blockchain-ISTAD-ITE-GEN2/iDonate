@@ -21,7 +21,6 @@ export default function CategoryOnPageComponent() {
 
   return (
     <section className="flex flex-col gap-9 mb-5">
-    <section className="flex flex-col gap-9 mb-5">
       {/* Hero Section Start */}
       <OrganizationDetailHeroSection />
 
