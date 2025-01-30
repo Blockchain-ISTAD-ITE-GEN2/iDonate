@@ -37,7 +37,7 @@ export function OrganizationDetail() {
       key: "total_donor",
       title: "Donor Range",
       options: Array.from(
-        new Set(typedEvents.map((event) => event.total_donor)),
+        new Set(typedEvents.map((event) => event.total_donor).filter((donor) => donor !== undefined && donor !== null)),
       ).map((donor) => ({
         label: donor.toString(),
         value: donor.toString(),
@@ -47,12 +47,12 @@ export function OrganizationDetail() {
       key: "total_amount",
       title: "Amount Range",
       options: Array.from(
-        new Set(typedEvents.map((event) => event.total_amount)),
+        new Set(typedEvents.map((event) => event.total_amount).filter((amount) => amount !== undefined && amount !== null)),
       ).map((amount) => ({
         label: amount.toString(),
-        value: amount.toString(), 
+        value: amount.toString(),
       })),
-    },
+    },    
   ];
 
   useEffect(() => {

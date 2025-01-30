@@ -1,7 +1,7 @@
 import {OrganizationEventType} from "@/difinitions/dto/Organization-event";
 
 export type EventType = {
-  uuid?:string;
+  uuid? :string;
   name: string;
   description: string;
   startDate:string;
