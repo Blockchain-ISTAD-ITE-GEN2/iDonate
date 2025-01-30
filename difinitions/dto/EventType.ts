@@ -4,10 +4,9 @@ export type EventType = {
   uuid?:string;
   name: string;
   description: string;
+  location: string;
   startDate:string;
   endDate:string;
-  total_amount: number;
-  total_donor: number;
   // date?: string;
   key?: number;
   category?: {
@@ -15,6 +14,10 @@ export type EventType = {
   };
   organization?:OrganizationEventType;
   images: string[];
+  currentRaised?: number;
+  totalDonors?: number;
+  isDraft: boolean;
+  timezone?: string
 };
 
 

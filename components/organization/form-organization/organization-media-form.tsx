@@ -15,18 +15,23 @@ import { useForm } from "react-hook-form";
 import { ChangeEvent, useState } from "react";
 import { Upload } from "lucide-react";
 import Image from "next/image";
-import organization from "@/public/images/Cambodia-Kantha-Bopha-Foundation.jpeg";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { organizationMediaSchema } from "@/components/schema/schema";
 import { AlertComfirmDialog } from "@/components/Alert/Alert-Dialog";
+import { OrganizationType } from "@/difinitions/dto/OrganizationType";
+import { useGetOrganizationByuuidQuery } from "@/redux/services/organization-service";
 
-export function OrganizationMediaForm() {
+export function OrganizationMediaForm({uuid}:{uuid:string}) {
+
+  const {data : organization} = useGetOrganizationByuuidQuery(uuid);
+
+  const typeOrganization : OrganizationType = organization || {};
   const [previewImage, setPreviewImage] = useState<string | null>(null);
 
   const form = useForm<z.infer<typeof organizationMediaSchema>>({
     resolver: zodResolver(organizationMediaSchema),
     defaultValues: {
-      image: "",
+      image:typeOrganization?.image,
     },
   });
 

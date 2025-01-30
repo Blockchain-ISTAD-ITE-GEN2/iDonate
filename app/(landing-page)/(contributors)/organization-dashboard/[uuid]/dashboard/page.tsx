@@ -48,7 +48,7 @@ export default function OrganizationDashboard({
               <span className="flex gap-2 items-center">
                 <Avatar className="h-16 w-16 rounded-lg">
                   <AvatarImage src={organization?.image || "/placeholder-avatar.png"} alt={organization?.name || "Organization Avatar"} />
-                  <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                  {/* <AvatarFallback className="rounded-lg">CN</AvatarFallback> */}
                 </Avatar>
 
                 <div className="flex flex-col flex-1 text-left text-sm leading-tight">

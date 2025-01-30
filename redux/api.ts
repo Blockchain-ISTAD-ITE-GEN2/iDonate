@@ -63,6 +63,7 @@ export const idonateApi = createApi({
     "event",
     "organization",
     "testimonial",
+    "donation"
   ],
   reducerPath: "idonateApi",
   baseQuery: baseQueryWithReAuth,

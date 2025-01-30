@@ -1,3 +1,4 @@
+import { AlertComfirmDialog } from "@/components/Alert/Alert-Dialog";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -6,101 +7,166 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { OrganizationEventType } from "@/difinitions/dto/Organization-event";
+import { EventType } from "@/difinitions/dto/EventType";
+import { useToast } from "@/hooks/use-toast";
+import { useDeleteEventsMutation } from "@/redux/services/event-service";
 import { Share2, Trash2 } from "lucide-react";
 import Image from "next/image";
+import { useParams, useRouter } from "next/navigation";
 
 export function OrganizationEventCard({
   event,
 }: {
-  event: OrganizationEventType;
+  event: EventType;
 }) {
-  return (
-    <>
-      <Card className="w-full h-[440px] bg-iDonate-white-space rounded-lg shadow-[1px_1px_1px_3px_rgba(0,0,0,0.03)] border p-7 flex flex-col gap-6 border-iDonate-navy-accent dark:bg-iDonate-dark-mode">
-        <CardContent
-          lang="en"
-          className="p-0 pb-4 font-inter flex flex-row items-center justify-between border-b-[2px] border-dashed border-b-iDonate-navy-primary dark:border-b-iDonate-navy-accent"
-        >
-          <Button className="text-xl font-normal bg-transparent hover:bg-iDonate-navy-accent text-iDonate-error rounded-lg">
-            <Trash2
-              className="fill-iDonate-error w-9 h-9"
-              style={{ width: "25px", height: "25px" }}
-            />
-            Delete Event
-          </Button>
 
-          <Button className="text-xl font-normal bg-transparent hover:bg-iDonate-navy-accent text-iDonate-navy-primary rounded-lg dark:text-iDonate-navy-accent ">
-            <Share2
-              className="fill-iDonate-navy-primary"
-              style={{ width: "25px", height: "25px" }}
+  const params = useParams();
+  const orgUuid = String(params.uuid); // Ensures `uuid` is a string
+  const [deleteEvent] = useDeleteEventsMutation();
+  const {toast} = useToast();
+  const router = useRouter();
+
+
+  const handleDeleteEvent = async () => {
+    try {
+      // Call the delete event mutation
+      await deleteEvent(event?.uuid).unwrap();
+      toast({
+        title: "Event Deleted",
+        description: `The event "${event.name}" has been successfully deleted.`,
+        variant: "default", // You can choose the type as "success", "error", etc.
+      });
+    } catch (error) {
+      toast({
+        title: "Error Deleting Event",
+        description: "Something went wrong while trying to delete the event.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleCancel = () => {
+    console.log("Action canceled"); // Handle cancel logic (if needed)
+  };
+
+  return (
+    <Card onClick={()=>{router.push(`/organization-dashboard/${orgUuid}/event-edition/${event?.uuid}`)}} className="w-full h-[440px] bg-iDonate-white-space rounded-lg shadow-[1px_1px_1px_3px_rgba(0,0,0,0.03)] cursor-pointer transition-transform hover:scale-[1.01] border p-7 flex flex-col gap-6 border-iDonate-navy-accent dark:bg-iDonate-dark-mode">
+      <CardContent
+        lang="en"
+        className="p-0 pb-4 font-inter flex flex-row items-center justify-between border-b-[2px] border-dashed border-b-iDonate-navy-primary dark:border-b-iDonate-navy-accent"
+      >
+        {/* AlertConfirmDialog wrapping the Delete Button */}
+        <AlertComfirmDialog
+          trigger={
+            <Button
+              type="button"
+              className="text-xl font-normal bg-transparent hover:bg-iDonate-navy-accent text-iDonate-error rounded-lg"
+            >
+              <Trash2
+                className="fill-iDonate-error w-9 h-9"
+                style={{ width: "25px", height: "25px" }}
+              />
+              Delete Event
+            </Button>
+          }
+          title="Are you sure you want to delete this event?"
+          description="This action cannot be undone. Do you want to proceed?"
+          actionText="Yes, Delete"
+          cancelText="No, Keep Event"
+          onAction={handleDeleteEvent} // Call handleDeleteEvent on confirmation
+          // Handle cancel logic
+        />
+
+        <Button className="text-xl font-normal bg-transparent hover:bg-iDonate-navy-accent text-iDonate-navy-primary rounded-lg dark:text-iDonate-navy-accent ">
+          <Share2
+            className="fill-iDonate-navy-primary"
+            style={{ width: "25px", height: "25px" }}
+          />
+          Share Event
+        </Button>
+      </CardContent>
+
+      <div className="flex gap-6">
+        <CardContent className="p-0 w-[300px] h-[300px] rounded-lg">
+          {event?.images[0] ? (
+            <Image
+              width={300}
+              height={300}
+              src={event?.images[0]}
+              alt={event?.name || "Media"}
+              className="w-full h-full object-cover rounded-lg"
             />
-            Share Event
-          </Button>
+          ) : (
+            <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+              <span>No Image</span>
+            </div>
+          )}
         </CardContent>
 
-        <div className="flex gap-6">
-          <CardContent className="p-0 w-[300px] h-[300px] rounded-lg">
-            {event?.image ? (
-              <Image
-                width={300}
-                height={300}
-                src={event?.image}
-                alt={event?.name || "Media"}
-                className="w-full h-full object-cover rounded-lg"
-              />
-            ) : (
-              <div className="w-full h-full bg-gray-200 flex items-center justify-center">
-                <span>No Image</span>
-              </div>
-            )}
+        <div className="flex flex-col flex-1 justify-between h-full min-h-0">
+          <CardContent className="p-0 flex flex-col gap-4 flex-grow">
+            <CardTitle className="text-3xl font-medium text-iDonate-navy-secondary p-0 dark:text-iDonate-navy-accent ">
+              {event?.name || "Untitled Event"}
+            </CardTitle>
+
+            <CardDescription className="text-xl leading-loose text-iDonate-navy-secondary p-0 overflow-hidden dark:text-iDonate-navy-accent">
+              {event?.description || "No description available"}
+            </CardDescription>
           </CardContent>
 
-          <div className="flex flex-col flex-1 justify-between h-full min-h-0">
-            <CardContent className="p-0 flex flex-col gap-4 flex-grow">
-              <CardTitle className="text-3xl font-medium text-iDonate-navy-secondary p-0 dark:text-iDonate-navy-accent ">
-                {event?.name || "Untitled Event"}
+          <CardContent
+            lang="en"
+            className="p-0 flex gap-9 items-end flex-grow"
+          >
+            <div className="flex flex-col gap-2">
+              <CardTitle lang="km" className="text-lg font-inter font-normal text-iDonate-green-primary p-0 dark:text-iDonate-green-secondary">
+                ថ្ងៃចាប់ផ្តើម
               </CardTitle>
-
-              <CardDescription className="text-xl leading-loose text-iDonate-navy-secondary p-0 overflow-hidden dark:text-iDonate-navy-accent">
-                {event?.description || "No description available"}
+              <CardDescription className="text-xl font-inter text-iDonate-navy-primary p-0 dark:text-iDonate-navy-accent">
+                {event?.startDate
+                  ? new Intl.DateTimeFormat("en-US", {
+                      day: "2-digit",
+                      month: "long",
+                      year: "numeric",
+                    }).format(new Date(event.startDate))
+                  : ""}
               </CardDescription>
-            </CardContent>
+            </div>
 
-            <CardContent
-              lang="en"
-              className="p-0 flex gap-9 items-end flex-grow"
-            >
-              <div className="flex flex-col gap-2">
-                <CardTitle className="text-lg font-inter font-normal text-iDonate-green-primary p-0 dark:text-iDonate-green-secondary">
-                  Order Date
-                </CardTitle>
-                <CardDescription className="text-xl font-inter text-iDonate-navy-primary p-0 dark:text-iDonate-navy-accent">
-                  {event?.order_date || "12 September 2024"}
-                </CardDescription>
-              </div>
+            <div className="flex flex-col gap-2">
+              <CardTitle lang="km" className="text-lg font-inter font-normal text-iDonate-green-primary p-0 dark:text-iDonate-green-secondary">
+                ថ្ងៃបញ្ចប់
+              </CardTitle>
+              <CardDescription className="text-xl font-inter text-iDonate-navy-primary p-0 dark:text-iDonate-navy-accent">
+                {event?.endDate ? new Intl.DateTimeFormat("en-US", {
+                  day: "2-digit",
+                  month: "long",
+                  year: "numeric",
+                }).format(new Date(event.endDate))
+                : ""}
+              </CardDescription>
+            </div>
 
-              <div className="flex flex-col gap-2">
-                <CardTitle className="text-lg font-inter font-normal text-iDonate-green-primary p-0 dark:text-iDonate-green-secondary">
-                  End Date
-                </CardTitle>
-                <CardDescription className="text-xl font-inter text-iDonate-navy-primary p-0 dark:text-iDonate-navy-accent">
-                  {event?.end_date || "12 September 2025"}
-                </CardDescription>
-              </div>
+            <div className="flex flex-col gap-2">
+              <CardTitle lang="km" className="text-lg font-inter font-normal text-iDonate-green-primary p-0 dark:text-iDonate-green-secondary">
+                ចំនួនទឹកប្រាក់
+              </CardTitle>
+              <CardDescription className="text-xl font-inter text-iDonate-navy-primary p-0 dark:text-iDonate-navy-accent">
+                {event?.currentRaised || "មិនទាន់មានការបរិច្ចាគ"}
+              </CardDescription>
+            </div>
 
-              <div className="flex flex-col gap-2">
-                <CardTitle className="text-lg font-inter font-normal text-iDonate-green-primary p-0 dark:text-iDonate-green-secondary">
-                  Raised
-                </CardTitle>
-                <CardDescription className="text-xl font-inter text-iDonate-navy-primary p-0 dark:text-iDonate-navy-accent">
-                  ${event?.total_raised || "No amount collected"}
-                </CardDescription>
-              </div>
-            </CardContent>
-          </div>
+            <div className="flex flex-col gap-2">
+              <CardTitle lang="km" className="text-lg font-inter font-normal text-iDonate-green-primary p-0 dark:text-iDonate-green-secondary">
+                ចំនួនអ្នកបរិច្ចាគ
+              </CardTitle>
+              <CardDescription className="text-xl font-inter text-iDonate-navy-primary p-0 dark:text-iDonate-navy-accent">
+                {event?.totalDonors || "មិនទាន់មានអ្នកបរិច្ចាគ"}
+              </CardDescription>
+            </div>
+          </CardContent>
         </div>
-      </Card>
-    </>
+      </div>
+    </Card>
   );
 }

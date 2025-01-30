@@ -40,7 +40,7 @@ export function DateRangePicker({ filters, onChange }: DateRangeType) {
         return (
           <Popover key={key}>
             <PopoverTrigger asChild>
-              <Button variant="outline" size="sm" className="h-8 border-dashed">
+              <Button variant="outline" size="sm" className="h-10 border-dashed">
                 <CalendarIcon className="mr-2 h-4 w-4" />
                 {title}
                 {range?.from && range?.to ? (

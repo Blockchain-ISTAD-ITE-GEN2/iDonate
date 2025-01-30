@@ -42,7 +42,7 @@ export default function OrganizationSidebarComponent() {
     return null;
   else
     return (
-      <section className="flex flex-col h-full border-r-2 border-iDonate-navy-accent px-6 py-4 gap-y-3 ">
+      <section className="flex flex-col min-h-[calc(100vh-72px)] h-full border-r-2 border-iDonate-navy-accent px-6 py-4 gap-y-3 ">
         {/* Profile of Organization */}
 
         {/* Menu */}
@@ -83,7 +83,7 @@ export default function OrganizationSidebarComponent() {
                   {item.title}
                 </Button>
               )}
-              {index === menuList.length - 3 && <Separator className="m-2" />}
+              {index === menuList.length -2 && <Separator className="m-2" />}
             </Fragment>
           );
         })}

@@ -108,15 +108,14 @@ export const eventSchema = z.object({
 });
 
 export const eventInfoSchema = z.object({
-  title: z.string().min(1, { message: "Title is required" }),
+  name: z.string().min(1, { message: "Name is required" }),
   description: z.string().min(10, { message: "Description is required" }),
+  location: z.string().min(1, { message: "Location is required" }),
   startDate: z.string(),
   endDate: z.string(),
   category: z.string().min(1, { message: "Category is required" }),
-  contact: z.string().regex(/^\+?\d{10,15}$/, {
-    message: "Contact must be a valid phone number with 10-15 digits",
-  }),
-  image: z.array(z.instanceof(File)),
+  timezone: z.string(),
+  images: z.any(),
 });
 
 export const organizationRegistrationSchema = z.object({

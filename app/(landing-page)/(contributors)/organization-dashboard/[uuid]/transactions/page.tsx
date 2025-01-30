@@ -1,31 +1,41 @@
+"use client"
 import { TransactionType } from "@/difinitions/types/table-type/transaction";
-import transactions from "@/data/transactions.json";
 import { DataTable } from "@/components/table/data-table";
 import { transactionColumns } from "@/components/table/columns";
+import { useGetOrgTransactionsQuery } from "@/redux/services/donation-service";
+import { useParams } from "next/navigation";
 
 export default function Contributor() {
-  const typedTransactions: TransactionType[] = transactions;
+
+  const params = useParams();
+  const orgUuid = String(params.uuid); // Ensures `uuid` is a string
+
+  const {data: orgTransaction} =useGetOrgTransactionsQuery(orgUuid)
+
+  const typedTransactions: TransactionType[] = orgTransaction?.content || [];
+
+  console.log("typedTransactions", typedTransactions)
 
   const filters = [
     {
-      columnKey: "event",
-      title: "Events",
+      columnKey: "username",
+      title: "Donor",
       options: Array.from(
-        new Set(typedTransactions.map((transaction) => transaction.event)),
-      ).map((event) => ({
-        label: event,
-        value: event,
+        new Set(typedTransactions?.map((transaction) => transaction.username)),
+      ).filter((event) => event !== undefined).map((event) => ({
+        label: event as string,
+        value: event as string,
       })),
     },
 
     {
-      columnKey: "amount",
+      columnKey: "donationAmount",
       title: "Amount Range",
       options: Array.from(
-        new Set(typedTransactions.map((transaction) => transaction.amount)),
-      ).map((amount) => ({
-        label: amount.toString(),
-        value: amount.toString(),
+        new Set(typedTransactions?.map((transaction) => transaction.donationAmount)),
+      ).filter((amount) => amount !== undefined).map((amount) => ({
+        label: amount as string,
+        value: amount as string,
       })),
     },
   ];
@@ -33,10 +43,10 @@ export default function Contributor() {
   return (
     <section className="flex flex-col flex-1 p-9">
       <DataTable
-        searchColumns="donor"
+        searchColumns="username"
         columns={transactionColumns}
         data={typedTransactions}
-        dateField="date"
+        dateField="timestamp"
         filters={filters}
       />
     </section>

@@ -78,12 +78,12 @@ export default function LatestDonationCard() {
               >
                 <div className="flex items-center gap-2 p-1">
                   <span className=" text-iDonate-navy-primary p-1">
-                    អ្នកបរិច្ចាគ: {item?.total_donor || "0"} ពាន់នាក់
+                    អ្នកបរិច្ចាគ: {item?.totalDonors || "0"} ពាន់នាក់
                   </span>
                 </div>
 
                 <div className="text-iDonate-navy-primary">
-                  ​​ទឹកប្រាក់ទទួលបាន: ${item?.total_amount || "0"}
+                  ​​ទឹកប្រាក់ទទួលបាន: ${item?.currentRaised || "0"}
                 </div>
               </div>
 
@@ -140,13 +140,13 @@ export default function LatestDonationCard() {
                     <div className="flex items-center gap-2 font-light text-iDonate-navy-secondary line-clamp-2 dark:text-iDonate-navy-accent h-12 ">
                       <Users className="h-4 w-4 text-iDonate-navy-primary" />
                       <span className="khmer-font">
-                        អ្នកបរិច្ចាគ៖ {item?.total_donor || "0"} ពាន់នាក់
+                        អ្នកបរិច្ចាគ៖ {item?.totalDonors || "0"} ពាន់នាក់
                       </span>
                     </div>
                     <span className="flex items-center gap-1 font-light text-iDonate-navy-secondary line-clamp-2 dark:text-iDonate-navy-accent h-12 ">
                       <CircleDollarSign size={16} />
                       <span className="khmer-font">
-                        ទឹកប្រាក់ទទួលបាន៖​​ ${item.total_amount ||  " 0 "}
+                        ទឹកប្រាក់ទទួលបាន៖​​ ${item.currentRaised ||  " 0 "}
                       </span>
                     </span>
                   </div>

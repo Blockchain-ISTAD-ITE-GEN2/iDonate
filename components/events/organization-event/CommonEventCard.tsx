@@ -107,8 +107,8 @@ export function CommonEventCard({ event }: { event: EventType }) {
           <div className="flex items-center gap-2">
             <Users className="h-5 w-5 text-iDonate-navy-primary dark:text-iDonate-navy-accent" />
             <h3 className="text-description-khmer text-iDonate-navy-primary line-clamp-1 dark:text-iDonate-navy-accent">
-              {event?.total_donor
-                ? `${event?.total_donor} នាក់បរិច្ចាគ`
+              {event?.totalDonors
+                ? `${event?.totalDonors} នាក់បរិច្ចាគ`
                 : "No donors yet"}
             </h3>
           </div>
@@ -116,8 +116,8 @@ export function CommonEventCard({ event }: { event: EventType }) {
           <div className="flex items-center gap-2">
             <CircleDollarSign className="h-5 w-5 text-iDonate-green-primary dark:text-iDonate-green-secondary" />
             <p className="text-medium-khmer text-iDonate-green-primary line-clamp-1 dark:text-iDonate-green-secondary">
-              {event?.total_amount
-                ? `$ ${event?.total_amount}`
+              {event?.currentRaised
+                ? `$ ${event?.currentRaised}`
                 : "No amount collected"}
             </p>
           </div>

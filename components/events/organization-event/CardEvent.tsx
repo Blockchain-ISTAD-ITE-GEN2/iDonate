@@ -44,11 +44,11 @@ export function CardEvent({ events }: { events: EventType[] }) {
             <div className="flex flex-col gap-1 mt-2">
               <div className="flex items-center gap-2 text-gray-700">
                 <Users className="h-5 w-5 text-blue-600" />
-                <span className="text-sm">{item.total_donor} នាក់បរិច្ចាគ</span>
+                <span className="text-sm">{item.totalDonors} នាក់បរិច្ចាគ</span>
               </div>
               <div className="flex items-center gap-2 text-gray-700">
                 <CircleDollarSign className="h-5 w-5 text-blue-600" />
-                <span className="text-sm">{item.total_amount}</span>
+                <span className="text-sm">{item.currentRaised}</span>
               </div>
             </div>
           </CardContent>

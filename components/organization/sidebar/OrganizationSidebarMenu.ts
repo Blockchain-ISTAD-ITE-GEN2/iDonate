@@ -27,10 +27,10 @@ export const OrganizationSidebarMenuList = (uuid: string)=>[
     title: "Setting",
     active: false,
   },
-  {
-    path: "",
-    icon: icons.LogOut,
-    title: "Log out",
-    active: false,
-  },
+  // {
+  //   path: "",
+  //   icon: icons.LogOut,
+  //   title: "Log out",
+  //   active: false,
+  // },
 ];

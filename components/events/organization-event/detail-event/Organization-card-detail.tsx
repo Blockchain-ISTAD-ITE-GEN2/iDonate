@@ -37,20 +37,20 @@ export function OrganizationDetail() {
       key: "total_donor",
       title: "Donor Range",
       options: Array.from(
-        new Set(typedEvents.map((event) => event.total_donor)),
+        new Set(typedEvents.map((event) => event.totalDonors)),
       ).map((donor) => ({
-        label: donor.toString(),
-        value: donor.toString(),
+        label: (donor ?? '').toString(),
+        value: (donor ?? '').toString(),
       })),
     },
     {
       key: "total_amount",
       title: "Amount Range",
       options: Array.from(
-        new Set(typedEvents.map((event) => event.total_amount)),
+        new Set(typedEvents.map((event) => event.currentRaised)),
       ).map((amount) => ({
-        label: amount.toString(),
-        value: amount.toString(), 
+        label: (amount ?? '').toString(),
+        value: (amount ?? '').toString(), 
       })),
     },
   ];

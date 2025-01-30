@@ -80,3 +80,20 @@ export type UserDetailResponse = {
   lastLoginAt: Date;
   role: RoleResponse[];
 };
+
+
+export type UserType = {
+  uuid: string;
+  firstName: string;
+  lastName: string;
+  gender: string;
+  username: string;
+  password: string;
+  phoneNumber: string;
+  email: string;
+  avatar: string;
+  dateOfBirth: string;
+  address: string;
+  isProfiledVisibility: boolean;
+  isEmailVerified: boolean;
+};

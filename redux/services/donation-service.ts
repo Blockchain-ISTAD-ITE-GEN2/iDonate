@@ -9,7 +9,7 @@ export const donationApi = idonateApi.injectEndpoints({
         method: "POST",
         body: donation,
       }),
-      invalidatesTags: [{ type: "event", id: "LIST" }],
+      invalidatesTags: [{ type: "donation", id: "LIST" }],
     }),
     generateQrCode: builder.mutation({
       query: (qr: string) => ({
@@ -18,8 +18,15 @@ export const donationApi = idonateApi.injectEndpoints({
         body: qr,
       }),
     }),
-    
+    getOrgTransactions: builder.query({
+      query: (orgUuid:string) => `/donation/org-transactions/${orgUuid}`,
+      providesTags: [{ type: "donation", id: "LIST" }],
+    })
   }),
 });
 
-export const { useMakeDonationMutation, useGenerateQrCodeMutation } = donationApi;
+export const { 
+  useMakeDonationMutation, 
+  useGenerateQrCodeMutation,
+  useGetOrgTransactionsQuery
+} = donationApi;

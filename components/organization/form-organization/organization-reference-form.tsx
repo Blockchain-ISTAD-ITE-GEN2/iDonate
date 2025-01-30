@@ -20,10 +20,15 @@ import { UploadedFilesCard } from "@/components/fileupload/uploaded-files-card";
 import { AlertComfirmDialog } from "@/components/Alert/Alert-Dialog";
 import { FileUploader } from "@/components/fileupload/file-uploader";
 import { organizationReferenceSchema } from "@/components/schema/schema";
+import { OrganizationType } from "@/difinitions/dto/OrganizationType";
+import { useGetOrganizationByuuidQuery } from "@/redux/services/organization-service";
 
 type FormValues = z.infer<typeof organizationReferenceSchema>;
 
-export function OrganizationReferenceForm() {
+export function OrganizationReferenceForm({uuid}:{uuid:string}) {
+  const {data : organization} = useGetOrganizationByuuidQuery(uuid);
+
+  const typeOrganization : OrganizationType = organization || {};
   const [isEditing, setIsEditing] = useState(false);
   const [uploadedFiles, setUploadedFiles] = useState<UploadedFile[]>([]);
   const [progresses, setProgresses] = useState<{ [key: string]: number }>({});

@@ -38,6 +38,8 @@ import { cn } from "@/lib/utils";
 import { UploadedFile } from "@/difinitions/types/fileupload";
 import { FileUploader } from "@/components/fileupload/file-uploader";
 import { UploadedFilesCard } from "@/components/fileupload/uploaded-files-card";
+import { useGetEventByUuidQuery } from "@/redux/services/event-service";
+import { EventType } from "@/difinitions/dto/EventType";
 
 type EventInfoFormProps = {
   onTitlePercentageUpdate: (fullnamePercentage: number) => void;
@@ -46,6 +48,7 @@ type EventInfoFormProps = {
   onEndDatePercentageUpdate: (addressPercentage: number) => void;
   onContactPercentageUpdate: (bioPercentage: number) => void;
   onImagePercentageUpdate: (imagePercentage: number) => void;
+  uuid: string
 };
 
 export function EventInfoFormEdition({
@@ -55,42 +58,45 @@ export function EventInfoFormEdition({
   onEndDatePercentageUpdate,
   onContactPercentageUpdate,
   onImagePercentageUpdate,
+  uuid
 }: EventInfoFormProps) {
   // 1. State to toggle between view and edit mode
   const [isEditing, setIsEditing] = useState(false);
   const [uploadedFiles, setUploadedFiles] = useState<UploadedFile[]>([]);
   const [progresses, setProgresses] = useState<{ [key: string]: number }>({});
   const [isUploading, setIsUploading] = useState(false);
+  
+  const {data: event} = useGetEventByUuidQuery(uuid)
+
+  const typedEvent: EventType = event || {}
 
   // 2. Define your
   const form = useForm<z.infer<typeof eventInfoSchema>>({
     resolver: zodResolver(eventInfoSchema),
     defaultValues: {
-      title: "",
-      contact: "",
-      description: "",
-      // orderDate: "",
-      endDate: "",
-      image: [],
-      startDate: "",
+      name: typedEvent?.name,
+      description: typedEvent?.description,
+      location: typedEvent?.location,
+      startDate: typedEvent?.startDate,
+      endDate:typedEvent?.endDate,
+      timezone: typedEvent?.timezone,
+      images:typedEvent?.images,
     },
   });
 
   const { watch, handleSubmit, reset, control, formState } = form;
 
-  const title = watch("title");
+  const title = watch("name");
   const description = watch("description");
   const orderDate = watch("startDate");
   const endDate = watch("endDate");
-  const contact = watch("contact");
-  const image = watch("image");
+  const image = watch("images");
 
   const isFormFilled = {
     title: !!title.trim(),
     description: !!description.trim(),
     orderDate: !!orderDate,
     endDate: !!endDate,
-    contact: !!contact.trim(),
     image: image.length > 0,
   };
 
@@ -102,7 +108,6 @@ export function EventInfoFormEdition({
       const descriptionPercentage = description.trim() ? 10 : 0;
       const orderDatePercentage = orderDate ? 10 : 0;
       const endDatePercentage = endDate ? 10 : 0;
-      const contactPercentage = contact.trim() ? 10 : 0;
       const imagePercentage = image.length ? 20 : 0;
 
       // Call individual percentage update functions for each field
@@ -110,7 +115,6 @@ export function EventInfoFormEdition({
       onDescriptionPercentageUpdate(descriptionPercentage);
       onOrderDatePercentageUpdate(orderDatePercentage);
       onEndDatePercentageUpdate(endDatePercentage);
-      onContactPercentageUpdate(contactPercentage);
       onImagePercentageUpdate(imagePercentage);
     };
 
@@ -120,7 +124,6 @@ export function EventInfoFormEdition({
     description,
     orderDate,
     endDate,
-    contact,
     image,
     onTitlePercentageUpdate,
     onDescriptionPercentageUpdate,
@@ -139,7 +142,6 @@ export function EventInfoFormEdition({
         isFormFilled.description ||
         isFormFilled.orderDate ||
         isFormFilled.endDate ||
-        isFormFilled.contact ||
         isFormFilled.image
       ) {
         event.preventDefault();
@@ -365,7 +367,7 @@ export function EventInfoFormEdition({
               <CardContent className="flex relative flex-1 p-0 m-0">
                 <FormField
                   control={control}
-                  name="image"
+                  name="images"
                   render={({ field }) => (
                     <FormItem className="w-full">
                       <FormLabel className="text-sm text-iDonate-navy-secondary">
@@ -392,7 +394,7 @@ export function EventInfoFormEdition({
               <CardContent className="flex-1 flex flex-col gap-6 p-0 m-0">
                 <FormField
                   control={control}
-                  name="title"
+                  name="name"
                   render={({ field }) => (
                     <FormItem className="flex-1">
                       <FormLabel className="text-sm text-iDonate-navy-secondary">
@@ -540,28 +542,7 @@ export function EventInfoFormEdition({
                     )}
                   />
 
-                  <FormField
-                    control={control}
-                    name="contact"
-                    render={({ field }) => (
-                      <FormItem className="flex-1">
-                        <FormLabel className="text-sm text-iDonate-navy-secondary">
-                          Contact
-                        </FormLabel>
-                        <FormControl>
-                          <Input
-                            placeholder="+855 12345678"
-                            className="w-full"
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                        <FormDescription className="text-iDonate-gray text-sm">
-                          This is your organization's contact number.
-                        </FormDescription>
-                      </FormItem>
-                    )}
-                  />
+
                 </div>
               </CardContent>
             </div>

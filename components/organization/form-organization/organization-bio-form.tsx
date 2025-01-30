@@ -24,8 +24,14 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { organizationBioSchema } from "@/components/schema/schema";
 import { AlertComfirmDialog } from "@/components/Alert/Alert-Dialog";
+import { OrganizationType } from "@/difinitions/dto/OrganizationType";
+import { useGetOrganizationByuuidQuery } from "@/redux/services/organization-service";
 
-export function OrganizationBioForm() {
+export function OrganizationBioForm({uuid}:{uuid:string}) {
+
+  const {data : organization} = useGetOrganizationByuuidQuery(uuid);
+
+  const typeOrganization : OrganizationType = organization || {};
   // 1. State to toggle between view and edit mode
   const [isEditing, setIsEditing] = useState(false);
 
@@ -33,7 +39,7 @@ export function OrganizationBioForm() {
   const form = useForm<z.infer<typeof organizationBioSchema>>({
     resolver: zodResolver(organizationBioSchema),
     defaultValues: {
-      bio: "Elizabeth Joe គឺជាអ្នកសកម្មក្នុងវិស័យឧស្សាហកម្មស្រ្តីដែលបង្កើតរបស់ជាច្រើនគាត់ជាអ្នកផ្តល់ជំនួយដល់ជំនួយដ៏ធំដល់អ្នកដទៃគាត់គឺជាមនុស្សម្ន ាក់ ដែលស្រឡាញវិជ្ជាសាស្រ្ត ពិភពលោក ផងដែរ🌍។គាត់គឺជាស្ថាបត្យករ GreenFuture Innovations ដែលពេញនិយមសម្រាប់ការបង្កើតដំណោះស្រាយមិត្តភាពដូចជា គ្រឿងពិនិត្យការពុលអាកាសដែលប្រើថាមពលព្រះអាទិត្យ។ គាត់ក៏ជាកម្មសិក្ខារ EmpowerHer Foundation ដែលគាំទ្រស្រ្តីក្នុងវិស័យ STEM តាមរយៈទទួល​អាហារូបករណ៍ និងការបណ្ដុះបណ្ដាលផ្សេង 💡។ គាត់ក៏បានសរសេរសៀវភៅ Sustainability Starts With You ដែលជាសៀវភៅបង្ហាញបុគ្គលភាពទៅកាន់ការរស់នៅ ក្នុងរបរិស្ថានតែមួយ។ ក្នុងពេលសំរាករបស់នាង Elizabeth មានការចូលរួមក្នុងការឆ្លងកាត់ភ្នំ គំនូរ និងចំណាយពេលជាមួយឆ្មារបស់នាង ​🐾 តែពេលនេះគាត់ពិតត្រូវការ  ជួយពីអ្នកទាំងអស់យ៉ាងក្រៃឡេង ដោយសារគាត់បានជួបជាមួយ និងឧបទ្ទវហេតុក្នុងគ្រោះថ្នាក់ចរាចរណ៍ពេលនេះគាត់កំពុងត្រូវអ្នកទាំងអស់គ្នាដើ់ម្បីបន្តនិងសេចក្តីសង្ឈឹមនូវជិវិតរបស់គាត់។",
+      bio: typeOrganization?.bio,
     },
   });
 
@@ -72,21 +78,7 @@ export function OrganizationBioForm() {
             <CardContent className="flex w-fle gap-9 p-0 m-0">
               <div className="flex flex-col space-y-3">
                 <CardDescription className="font-siemreap text-xl text-iDonate-navy-primary leading-8 dark:text-iDonate-navy-accent">
-                  Elizabeth Joe
-                  គឺជាអ្នកសកម្មក្នុងវិស័យឧស្សាហកម្មស្រ្តីដែលបង្កើតរបស់ជាច្រើនគាត់ជាអ្នកផ្តល់ជំនួយដល់ជំនួយដ៏ធំដល់អ្នកដទៃគាត់គឺជាមនុស្សម្នាក់
-                  ដែលស្រឡាញវិជ្ជាសាស្រ្ត ពិភពលោក ផងដែរ🌍។គាត់គឺជាស្ថាបត្យករ
-                  GreenFuture Innovations
-                  ដែលពេញនិយមសម្រាប់ការបង្កើតដំណោះស្រាយមិត្តភាពដូចជា
-                  គ្រឿងពិនិត្យការពុលអាកាសដែលប្រើថាមពលព្រះអាទិត្យ។
-                  គាត់ក៏ជាកម្មសិក្ខារ EmpowerHer Foundation
-                  ដែលគាំទ្រស្រ្តីក្នុងវិស័យ STEM តាមរយៈទទួល​អាហារូបករណ៍
-                  និងការបណ្ដុះបណ្ដាលផ្សេង 💡។ គាត់ក៏បានសរសេរសៀវភៅ Sustainability
-                  Starts With You ដែលជាសៀវភៅបង្ហាញបុគ្គលភាពទៅកាន់ការរស់នៅ
-                  ក្នុងរបរិស្ថានតែមួយ។ ក្នុងពេលសំរាករបស់នាង Elizabeth
-                  មានការចូលរួមក្នុងការឆ្លងកាត់ភ្នំ គំនូរ
-                  និងចំណាយពេលជាមួយឆ្មារបស់នាង ​🐾 តែពេលនេះគាត់ពិតត្រូវការ
-                  ជួយពីអ្នកទាំងអស់យ៉ាងក្រៃឡេង ដោយសារគាត់បានជួបជាមួយ
-                  និងឧបទ្ទវហេតុក្នុងគ្រោះថ្នាក់ចរាចរណ៍ពេលនេះគាត់កំពុងត្រូវអ្នកទាំងអស់គ្នាដើ់ម្បីបន្តនិងសេចក្តីសង្ឈឹមនូវជិវិតរបស់គាត់។
+                 {typeOrganization?.bio || ""}
                 </CardDescription>
               </div>
             </CardContent>

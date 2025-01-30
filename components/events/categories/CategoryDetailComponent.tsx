@@ -66,10 +66,12 @@ export default function CategoryDetailComponent() {
                 images: event.images,
                 name: event.name,
                 description: event.description,
-                total_donor: event.total_donor,
-                total_amount: event.total_amount,
+                totalDonors: event.totalDonors,
+                currentRaised: event.currentRaised,
                 startDate: event.startDate,
                 endDate: event.endDate,
+                location: event.location,
+                isDraft: event.isDraft,
               }}
             />
           ))

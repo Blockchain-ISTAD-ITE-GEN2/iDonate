@@ -22,8 +22,8 @@ export default function TransactionCardHistory() {
       options: Array.from(
         new Set(typedTransactions.map((transaction) => transaction.event)),
       ).map((transaction) => ({
-        label: transaction,
-        value: transaction,
+        label: transaction ?? "",
+        value: transaction ?? "",
       })),
     },
 
@@ -33,8 +33,8 @@ export default function TransactionCardHistory() {
       options: Array.from(
         new Set(typedTransactions.map((transaction) => transaction.amount)),
       ).map((amount) => ({
-        label: amount.toString(),
-        value: amount.toString(),
+        label: amount?.toString() ?? "",
+        value: amount?.toString() ?? "",
       })),
     },
   ];
