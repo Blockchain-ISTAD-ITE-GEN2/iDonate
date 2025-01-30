@@ -24,7 +24,7 @@ export default function CategoryWithEventComponent({ category }: { category: Cat
   const events: EventType[] = eventsApiResponse.content || [];
   
   // show only page 
-  const typedEvents: EventType[] = events.slice(0, page); 
+  const typedEvents: EventType[] = events.slice(0, page) || []; 
 
   const hanldeShowPage = () => {
     setPage((prevCountPage) => prevCountPage + 4 );
@@ -52,15 +52,7 @@ export default function CategoryWithEventComponent({ category }: { category: Cat
           typedEvents.map((event, eventIndex) => (
             <CommonEventCard
               key={eventIndex}
-              event={{
-                images: event.images,
-                name: event.name,
-                description: event.description,
-                total_donor: event.total_donor,
-                total_amount: event.total_amount,
-                startDate: event.startDate,
-                endDate: event.endDate,
-              }}
+              event={event}
             />
           ))
         )}

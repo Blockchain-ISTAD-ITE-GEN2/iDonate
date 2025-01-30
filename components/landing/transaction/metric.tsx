@@ -14,10 +14,10 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { AverageType } from "@/difinitions/types/chart/barchart";
+import { TransactionType } from "@/difinitions/types/table-type/transaction";
 
-type AverageProps = {
-  data: AverageType[];
+type TransactionProps = {
+  data: TransactionType[];
 };
 
 const chartConfig = {
@@ -31,7 +31,9 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export function CardsMetric({ data }: AverageProps) {
+export function CardsMetric({ data }: TransactionProps) {
+  console.log("Chart Data:", data); // Debugging line
+
   return (
     <Card className="w-full bg-iDonate-light-gray rounded-lg border border-iDonate-navy-accent dark:bg-iDonate-dark-mode">
       <CardHeader>
@@ -39,7 +41,7 @@ export function CardsMetric({ data }: AverageProps) {
           Overall Transaction
         </CardTitle>
         <CardDescription className="text-sub-description-eng text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
-          Total transactions caculated daily
+          Total transactions calculated daily
         </CardDescription>
       </CardHeader>
       <CardContent className="pb-4">

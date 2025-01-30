@@ -54,20 +54,20 @@ export function SearchPage() {
           key: "total_donor",
           title: "Donor Range",
           options: Array.from(
-              new Set(typedEvents?.filter(event => event?.total_donor != null).map(event => event.total_donor))
+              new Set(typedEvents?.filter(event => event?.totalDonors != null).map(event => event.totalDonors))
           ).map(donor => ({
-              label: donor.toString(),
-              value: donor.toString(),
+              label:  (donor ?? "")?.toString(),
+              value: (donor ?? "").toString(),
           })),
       },
       {
           key: "total_amount",
           title: "Amount Range",
           options: Array.from(
-              new Set(typedEvents?.filter(event => event?.total_amount != null).map(event => event.total_amount))
+              new Set(typedEvents?.filter(event => event?.currentRaised != null).map(event => event.currentRaised))
           ).map(amount => ({
-              label: amount.toString(),
-              value: amount.toString(),
+              label: (amount ?? "").toString(),
+              value: (amount ?? "").toString(),
           })),
       },
     ];

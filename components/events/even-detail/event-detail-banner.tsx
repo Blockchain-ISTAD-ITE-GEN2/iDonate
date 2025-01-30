@@ -13,6 +13,7 @@ import {
 import { HandCoins, Share2Icon, Users } from "lucide-react";
 import { useState, useEffect } from "react";
 import { TransactionType } from "@/difinitions/types/table-type/transaction";
+import { useGetEventByUuidQuery } from "@/redux/services/event-service"; // Adjust the import path as needed
 
 type EventDetailBannerProps = {
   uuid: string; // Accept UUID as a prop
@@ -22,6 +23,14 @@ export function EventDetailBanner({ uuid }: EventDetailBannerProps) {
   const [recentTransactions, setRecentTransactions] = useState<TransactionType[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<null | string>(null);
+
+  // Fetch event details using the useGetEventByUuidQuery hook
+  const {
+    data: event,
+    isLoading: isEventLoading,
+    isError: isEventError,
+    error: eventError,
+  } = useGetEventByUuidQuery(uuid);
 
   useEffect(() => {
     const fetchTransactions = async () => {
@@ -52,6 +61,11 @@ export function EventDetailBanner({ uuid }: EventDetailBannerProps) {
     fetchTransactions();
   }, [uuid]); // Depend on `uuid` to fetch data when it changes
 
+  // Format the currentRaised amount as $100,000
+  const formattedCurrentRaised = event?.currentRaised
+    ? `$${event.currentRaised.toLocaleString()}`
+    : "$0";
+
   return (
     <Card className="w-[440px] h-full border-2 border-iDonate-navy-accent shadow-light">
       <CardHeader className="flex flex-col gap-6">
@@ -61,7 +75,7 @@ export function EventDetailBanner({ uuid }: EventDetailBannerProps) {
             Total Donors
           </CardTitle>
           <CardDescription className="text-iDonate-navy-primary text-2xl font-medium">
-            1000 Donors
+            {isEventLoading ? "Loading..." : event?.totalDonors || 0} Donors
           </CardDescription>
         </div>
         <div className="flex flex-col gap-1">
@@ -70,7 +84,7 @@ export function EventDetailBanner({ uuid }: EventDetailBannerProps) {
             Total Donations
           </CardTitle>
           <CardDescription className="text-iDonate-navy-primary text-2xl font-medium">
-            $100,000
+            {isEventLoading ? "Loading..." : formattedCurrentRaised}
           </CardDescription>
         </div>
       </CardHeader>
