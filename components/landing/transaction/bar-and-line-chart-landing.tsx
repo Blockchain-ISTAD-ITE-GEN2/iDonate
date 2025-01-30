@@ -76,7 +76,7 @@ export function BarAndLineChartLanding() {
     <div className="container mx-auto px-4 md:w-full grid gap-4 lg:grid-cols-[1fr_480px] grid-cols-1">
       <div className="flex flex-col gap-4">
         {/* Cards for metrics */}
-        <CardsMetric data={averageDate} />
+        <CardsMetric data={recentTransactions} />
         <Card className="w-full bg-iDonate-light-gray rounded-lg border border-iDonate-navy-accent dark:bg-iDonate-dark-mode dark:text-iDonate-navy-accent">
           <CardHeader>
             <CardTitle className="text-medium-eng font-normal text-iDonate-navy-secondary dark:text-iDonate-navy-accent">

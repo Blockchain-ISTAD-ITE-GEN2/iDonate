@@ -14,10 +14,10 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { AverageType } from "@/difinitions/types/chart/barchart";
+import { TransactionType } from "@/difinitions/types/table-type/transaction";
 
-type AverageProps = {
-  data: AverageType[];
+type TransactionProps = {
+  data: TransactionType[];
 };
 
 const chartConfig = {
@@ -31,7 +31,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export function CardsMetric({ data }: AverageProps) {
+export function CardsMetric({ data }: TransactionProps) {
   console.log("Chart Data:", data); // Debugging line
 
   return (
