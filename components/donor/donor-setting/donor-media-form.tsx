@@ -19,7 +19,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { AlertComfirmDialog } from "@/components/Alert/Alert-Dialog";
 import { useGetUserProfileQuery, useUpdateAvatarMutation } from "@/redux/services/user-profile";
 import { useParams } from "next/navigation";
-import AvartarPlaceHolder from '@/public/logo/logodesign no background.png';
+import AvartarPlaceHolder from '@/public/images/placeholder.png';
 import { toast } from "react-hot-toast";
 import { UpdateProfileImageType } from "@/lib/definition";
 import { zodResolver } from "@hookform/resolvers/zod";

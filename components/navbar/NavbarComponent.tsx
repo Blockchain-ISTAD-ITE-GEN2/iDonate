@@ -27,7 +27,7 @@ import ThemeSwitch from "../theme/ThemeSwitches";
 import { signOut, useSession } from "next-auth/react";
 import { useAppSelector } from "@/redux/hooks";
 import { selectToken } from "@/redux/features/auth/authSlice";
-import AvartarPlaceHolder from "@/public/images/user-idonate.png";
+import AvartarPlaceHolder from "@/public/images/placeholder.png";
 import { useGetUserProfileQuery } from "@/redux/services/user-profile";
 import toast from "react-hot-toast";
 import { getUuidFromToken } from "@/lib/uuid";
@@ -72,7 +72,7 @@ export default function NavbarComponent() {
   const handleLogout = () => {
     //  alert("Logout successful");
     if (accessTokenValue) {
-      fetch(`http://localhost:3000/api/logout`, {
+      fetch(`${process.env.NEXT_PUBLIC_URL}/api/logout`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -80,7 +80,7 @@ export default function NavbarComponent() {
         body: JSON.stringify({}),
       }).then((res) => {
         if (res.ok) {
-          alert("Logout successful");
+          // alert("Logout successful");
           toast.success("Logout successful", {
             position: "top-right",
             duration: 3000,
@@ -92,32 +92,6 @@ export default function NavbarComponent() {
           console.log("Error ");
         }
       });
-    }
-  };
-
-  const handleSignOut = () => {
-    console.log("Access Token:", accessTokenValue); // Debugging
-    if (accessTokenValue) {
-      fetch(`http://localhost:3000/api/logout`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({}),
-      }).then((res) => {
-        if (res.ok) {
-          toast.success("Logout successful", {
-            position: "top-right",
-            duration: 3000,
-          });
-          router.refresh();
-          router.push("/");
-        } else {
-          console.log("Error ");
-        }
-      });
-    } else {
-      console.error("Access token is missing."); // Debugging
     }
   };
   
@@ -213,13 +187,13 @@ export default function NavbarComponent() {
                   {userProfile? (
                <Avatar className="w-14 h-14">
                {userProfile?.avatar ? (
-                 <AvatarImage
-                   width={5000}
-                   height={5000}
-                   src={`${process.env.NEXT_PUBLIC_IDONATE_API_URL}/media/${userProfile?.avatar}`}
-                   className="object-cover w-full rounded-full ring-2 h-full ring-iDonate-navy-primary"
-                   alt={`${userProfile?.username ?? "-full h-user"}'s avatar`}
-                 />
+                <AvatarImage
+                  width={5000}
+                  height={5000}
+                  src={userProfile?.avatar ? `${process.env.NEXT_PUBLIC_IDONATE_API_URL}/media/${userProfile.avatar}` : AvartarPlaceHolder.toString()}
+                  className="object-cover w-full rounded-full ring-2 h-full ring-iDonate-navy-primary"
+                  alt={`${userProfile?.username ?? "-full h-user"}'s avatar`}
+                />
                ) : (
                  <AvatarFallback className="text-gray-700">
                    {userProfile?.username?.[0]?.toUpperCase() || "?"}
@@ -241,10 +215,10 @@ export default function NavbarComponent() {
                       {userProfile? (
                       <Avatar className="w-14 h-14">
                       {userProfile?.avatar ? (
-                        <AvatarImage
+                          <AvatarImage
                           width={5000}
                           height={5000}
-                          src={`${process.env.NEXT_PUBLIC_IDONATE_API_URL}/media/${userProfile?.avatar}`}
+                          src={userProfile?.avatar ? `${process.env.NEXT_PUBLIC_IDONATE_API_URL}/media/${userProfile.avatar}` : AvartarPlaceHolder.toString()}
                           className="object-cover w-full rounded-full ring-2 h-full ring-iDonate-navy-primary"
                           alt={`${userProfile?.username ?? "-full h-user"}'s avatar`}
                         />
