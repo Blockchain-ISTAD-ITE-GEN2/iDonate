@@ -70,15 +70,13 @@ export function DonorAddressForm({
       await updateUserProfile({
         uuid: donorProfile.uuid,
         updatedUserProfile: {
-          address: values?.address,
           username: "",
           firstName: "",
           lastName: "",
           gender: "",
-          avatar: "",
           phoneNumber: "",
           dateOfBirth: "",
-          bio: ""
+         
         },
       }).unwrap();
 

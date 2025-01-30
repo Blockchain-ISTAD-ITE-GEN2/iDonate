@@ -33,29 +33,36 @@ const chartConfig = {
     color: "hsl(var(--chart-1))",
   },
 
-  fullName: {
-    label: "Full Name",
+  firstName: {
+    label: "First Name",
     color: "hsl(var(--chart-2))",
   },
 
-  email: {
-    label: "Email",
+  lastName: {
+    label: "Last Name",
     color: "hsl(var(--chart-3))",
   },
 
-  contact: {
-    label: "Contact",
+  
+  Username: {
+    label: "Username",
     color: "hsl(var(--chart-4))",
   },
 
-  address: {
-    label: "Address",
+  
+  Gender: {
+    label: "Gender",
     color: "hsl(var(--chart-5))",
   },
 
-  bio: {
-    label: "Bio",
+  DateOfBirth: {
+    label: "Date Of Birth",
     color: "hsl(var(--chart-6))",
+  },
+
+  PhoneNumber: {
+    label: "Phone Number",
+    color: "hsl(var(--chart-7))",
   },
 } satisfies ChartConfig;
 

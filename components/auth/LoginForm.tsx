@@ -1,6 +1,6 @@
 "use client"
 
-import { signIn } from "next-auth/react"
+import { signIn, useSession } from "next-auth/react"
 import { type SubmitHandler, useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
@@ -37,6 +37,7 @@ export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false)
   const [loading, setLoading] = useState(false)
   const router = useRouter()
+  const { data: session } = useSession();
   const { toast } = useToast()
 
   const {
@@ -110,6 +111,72 @@ export default function LoginForm() {
       setLoading(false)
     }
   }
+
+  // Handle social login
+  const handleSocialLogin = async (provider: string) => {
+    setLoading(true);
+
+    try {
+      const result = await signIn(provider, {
+        redirect: false,
+        callbackUrl: "/",
+      });
+
+      if (result?.error) {
+        throw new Error(result.error);
+      }
+
+      // Wait for the session to be available
+      if (session) {
+        // Assuming the session object contains the necessary user data
+        const { user } = session; // Access the user data from the session
+        const userData = {
+          firstName: user?.name || "", // For Google
+          lastName: user?.name || "", // For Google
+          gender: "", // Optional, you can set a default value or leave empty
+          phoneNumber: "", // Optional
+          dateOfBirth: "", // Optional
+          address: "", // Optional
+          email: user?.email || "",
+          username: user?.email.split("@")[0] || "", // Use email as username
+          password: "", // Not required for social login
+        };
+
+        // Send the user data to your API
+        const response = await fetch(`${process.env.NEXT_PUBLIC_IDONATE_API_URL}/api/v1/users/user-registration?isSocialLogin=true`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(userData),
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to register user via social login");
+        }
+
+        // Redirect to the home page after successful registration/login
+        toast({
+          variant: "success",
+          title: "Login Successful",
+          description: `Welcome back, ${user?.name || "User"}`,
+        });
+
+        router.push("/");
+      }
+    } catch (error) {
+      console.error("Social login error:", error);
+      toast({
+        variant: "destructive",
+        title: "Login Failed",
+        description: "There was an issue with the social login. Please try again.",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+
 
   return (
     <div className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
@@ -235,7 +302,7 @@ export default function LoginForm() {
               <Button
                 variant="outline"
                 className="w-20 h-20 rounded-full bg-transparent border-none hover:bg-transparent transition-colors duration-200"
-                onClick={() => signIn("google", { callbackUrl: "/" })}
+                onClick={() => handleSocialLogin("google")}
               >
                 <Image
                   src={GoogleIcon || "/placeholder.svg"}
@@ -251,7 +318,7 @@ export default function LoginForm() {
               <Button
                 variant="outline"
                 className="w-20 h-20 rounded-full bg-transparent border-none hover:bg-transparent transition-colors duration-200"
-                onClick={() => signIn("facebook", { callbackUrl: "/" })}
+                onClick={() => handleSocialLogin("facebook")}
               >
                 <Image
                   src={FacebookIcon || "/placeholder.svg"}
