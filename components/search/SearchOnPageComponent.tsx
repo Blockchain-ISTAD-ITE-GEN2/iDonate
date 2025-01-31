@@ -29,13 +29,6 @@ export function SearchPage() {
      // logs the data after fetch
      console.log("====> On Page Event Data RTK: ",typedEvents)
 
-
-    //  const transformedEvents = typedEvents.map(({ images, ...event }) => ({
-    //   ...event,
-    //   category: event.category?.name || "",
-    // }));
-
-
     const [filteredEvents, setFilteredEvents] = useState<EventType[]>(typedEvents);
 
 
@@ -79,14 +72,6 @@ export function SearchPage() {
   },[typedEvents])
 
 
-
-    // if (isLoading) {
-    //   return (
-    //     <div className="flex flex-col gap-6 container mx-auto">
-    //           <SearchOnPagePlaceholder/>
-    //     </div>
-    //   );
-    //   } 
 
   return (
     <section className="flex flex-col gap-6 container mx-auto">
