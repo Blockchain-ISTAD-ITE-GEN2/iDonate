@@ -60,9 +60,12 @@ export const metadata: Metadata = {
 };
 
 export default function Homepage() {
-  // update thsi for debugging 
-  
-  console.log("NEXT_PUBLIC_IDONATE_API_URL:", process.env.NEXT_PUBLIC_IDONATE_API_URL);
+  // update thsi for debugging
+
+  console.log(
+    "NEXT_PUBLIC_IDONATE_API_URL:",
+    process.env.NEXT_PUBLIC_IDONATE_API_URL,
+  );
 
   // const typedCategory: CategoryType[] = categories;
   return (
@@ -91,11 +94,10 @@ export default function Homepage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6 lg:gap-9">
           <CategoryCardComponent />
         </div>
-        
       </section>
 
       {/* Total Organization */}
-     <TotalOrganizationComponent />
+      <TotalOrganizationComponent />
 
       {/* Bar and Line Chart */}
       <section className="w-full">

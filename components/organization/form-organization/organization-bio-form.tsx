@@ -24,14 +24,13 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { organizationBioSchema } from "@/components/schema/schema";
 import { AlertComfirmDialog } from "@/components/Alert/Alert-Dialog";
-import { OrganizationType } from "@/difinitions/dto/OrganizationType";
+import { OrganizationType } from "@/difinitions/types/organization/OrganizationType";
 import { useGetOrganizationByuuidQuery } from "@/redux/services/organization-service";
 
-export function OrganizationBioForm({uuid}:{uuid:string}) {
+export function OrganizationBioForm({ uuid }: { uuid: string }) {
+  const { data: organization } = useGetOrganizationByuuidQuery(uuid);
 
-  const {data : organization} = useGetOrganizationByuuidQuery(uuid);
-
-  const typeOrganization : OrganizationType = organization || {};
+  const typeOrganization: OrganizationType = organization || {};
   // 1. State to toggle between view and edit mode
   const [isEditing, setIsEditing] = useState(false);
 
@@ -78,7 +77,7 @@ export function OrganizationBioForm({uuid}:{uuid:string}) {
             <CardContent className="flex w-fle gap-9 p-0 m-0">
               <div className="flex flex-col space-y-3">
                 <CardDescription className="font-siemreap text-xl text-iDonate-navy-primary leading-8 dark:text-iDonate-navy-accent">
-                 {typeOrganization?.bio || ""}
+                  {typeOrganization?.bio || ""}
                 </CardDescription>
               </div>
             </CardContent>

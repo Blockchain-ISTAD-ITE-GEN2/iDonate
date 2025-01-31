@@ -18,20 +18,19 @@ import Image from "next/image";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { organizationMediaSchema } from "@/components/schema/schema";
 import { AlertComfirmDialog } from "@/components/Alert/Alert-Dialog";
-import { OrganizationType } from "@/difinitions/dto/OrganizationType";
+import { OrganizationType } from "@/difinitions/types/organization/OrganizationType";
 import { useGetOrganizationByuuidQuery } from "@/redux/services/organization-service";
 
-export function OrganizationMediaForm({uuid}:{uuid:string}) {
+export function OrganizationMediaForm({ uuid }: { uuid: string }) {
+  const { data: organization } = useGetOrganizationByuuidQuery(uuid);
 
-  const {data : organization} = useGetOrganizationByuuidQuery(uuid);
-
-  const typeOrganization : OrganizationType = organization || {};
+  const typeOrganization: OrganizationType = organization || {};
   const [previewImage, setPreviewImage] = useState<string | null>(null);
 
   const form = useForm<z.infer<typeof organizationMediaSchema>>({
     resolver: zodResolver(organizationMediaSchema),
     defaultValues: {
-      image:typeOrganization?.image,
+      image: typeOrganization?.image,
     },
   });
 

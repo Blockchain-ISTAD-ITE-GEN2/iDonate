@@ -6,7 +6,7 @@ import { useState } from "react";
 import { TabEventDetail } from "@/components/events/even-detail/tab-event-detail";
 import { EventDetailBanner } from "@/components/events/even-detail/event-detail-banner";
 import { useGetEventByUuidQuery } from "@/redux/services/event-service";
-import { EventType } from "@/difinitions/dto/EventType";
+import { EventType } from "@/difinitions/types/event/EventType";
 
 const placeholderImage = "https://i.pinimg.com/736x/2a/86/a5/2a86a560f0559704310d98fc32bd3d32.jpg";
 
@@ -28,7 +28,7 @@ export default function EventDetail() {
   // Ensure at least 5 images, replacing missing ones with the placeholder
   const eventImages = Array.isArray(typedEvent?.images) ? typedEvent.images : [];
   const filledImages = [...eventImages, ...Array(Math.max(0, 5 - eventImages.length)).fill(placeholderImage)].slice(0, 5);
-  
+
 
   return (
     <section className="w-full items-center flex flex-col gap-6 justify-center container mx-auto">
@@ -55,6 +55,7 @@ export default function EventDetail() {
       <div className="flex gap-9 w-full h-full">
         <TabEventDetail />
         {uuid && <EventDetailBanner uuid={uuid} />}
+
       </div>
     </section>
   );

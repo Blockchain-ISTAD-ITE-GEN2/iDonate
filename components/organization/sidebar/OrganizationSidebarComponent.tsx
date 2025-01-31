@@ -10,11 +10,12 @@ import { SidebarGroupLabel } from "@/components/ui/sidebar";
 import { useGetUserProfileQuery } from "@/redux/services/user-profile";
 
 export default function OrganizationSidebarComponent() {
-
   const params = useParams();
   const uuid = String(params.uuid); // Ensures `uuid` is a string
 
-  const [menuList] = useState<SubNavbarMenuType[]>(OrganizationSidebarMenuList(uuid));
+  const [menuList] = useState<SubNavbarMenuType[]>(
+    OrganizationSidebarMenuList(uuid),
+  );
   const pathname = usePathname();
 
   const navActiveClass = (isActive: boolean) =>
@@ -83,7 +84,7 @@ export default function OrganizationSidebarComponent() {
                   {item.title}
                 </Button>
               )}
-              {index === menuList.length -2 && <Separator className="m-2" />}
+              {index === menuList.length - 2 && <Separator className="m-2" />}
             </Fragment>
           );
         })}

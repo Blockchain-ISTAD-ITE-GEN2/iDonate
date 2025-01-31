@@ -1,23 +1,21 @@
-import {OrganizationEventType} from "@/difinitions/dto/Organization-event";
+import { OrganizationType } from "../organization/OrganizationType";
 
 export type EventType = {
-  uuid? :string;
+  uuid?: string;
   name: string;
   description: string;
   location: string;
-  startDate:string;
-  endDate:string;
+  startDate: string;
+  endDate: string;
   // date?: string;
   key?: number;
   category?: {
-    name:string;
+    name: string;
   };
-  organization?:OrganizationEventType;
+  organization?: OrganizationType;
   images: string[];
   currentRaised?: number;
   totalDonors?: number;
   isDraft: boolean;
-  timezone?: string
+  timezone?: string;
 };
-
-

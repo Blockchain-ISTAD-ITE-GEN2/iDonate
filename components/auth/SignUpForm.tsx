@@ -8,7 +8,7 @@ import FacebookIcon from "@/public/images/facebook.png";
 import Image from "next/image";
 import Link from "next/link";
 import { UseDispatch } from "react-redux";
-import  SignUpIllustration from "@/public/landing/Donation-SignUp.jpg";
+import SignUpIllustration from "@/public/landing/Donation-SignUp.jpg";
 
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -269,17 +269,17 @@ const SignUpForm = () => {
             />
           </div> */}
           <div
-  className="bg-green-600 text-white p-8 md:w-1/3 flex flex-col justify-center items-center"
-  style={{
-    backgroundImage: `url(${SignUpIllustration.src})`, // Use the image source for the background
-    backgroundSize: 'cover', // Ensure the image covers the entire div
-    backgroundPosition: 'center', // Center the image
-    backgroundRepeat: 'no-repeat', // Avoid repeating the image
-  }}
->
-  {/* <h2 className="text-3xl font-bold mb-4">ស្វាគមន៍</h2>
+            className="bg-green-600 text-white p-8 md:w-1/3 flex flex-col justify-center items-center"
+            style={{
+              backgroundImage: `url(${SignUpIllustration.src})`, // Use the image source for the background
+              backgroundSize: "cover", // Ensure the image covers the entire div
+              backgroundPosition: "center", // Center the image
+              backgroundRepeat: "no-repeat", // Avoid repeating the image
+            }}
+          >
+            {/* <h2 className="text-3xl font-bold mb-4">ស្វាគមន៍</h2>
   <p className="text-center mb-4">ចូលរួមជាមួយយើងដើម្បីជួយសហគមន៍</p> */}
-</div>
+          </div>
 
           <div className="p-8 md:w-2/3 bg-white bg-opacity-90">
             <div className="text-center mb-8">

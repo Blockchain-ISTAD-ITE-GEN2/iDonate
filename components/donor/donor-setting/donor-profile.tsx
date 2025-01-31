@@ -5,7 +5,6 @@ import { DonorProfilePercentage } from "@/components/donor/donor-setting/doner-p
 import { DonorInfoForm } from "@/components/donor/donor-setting/donor-info-form";
 import { DonorMediaForm } from "./donor-media-form";
 
-
 export function DonorProfileComponent() {
   const [imagePercentage, setImagePercentage] = useState(0);
   const [firstNamePercentage, setFirstNamePercentage] = useState(0);
@@ -46,7 +45,7 @@ export function DonorProfileComponent() {
           usernamePercentage,
           dateOfBirthPercentage,
           genderPercentage,
-          phoneNumberPercentage
+          phoneNumberPercentage,
         ]}
       />
     </section>

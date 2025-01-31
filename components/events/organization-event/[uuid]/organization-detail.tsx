@@ -1,12 +1,12 @@
 "use client";
 import { useEffect, useState } from "react";
 import { Toolbar } from "@/components/filter/toolbar";
-import { EventType } from "@/difinitions/dto/EventType";
 import { CommonEventCard } from "@/components/events/organization-event/CommonEventCard";
 import { Button } from "@/components/ui/button";
 import { useGetEventByOrganizationQuery, useGetEventsQuery } from "@/redux/services/event-service";
 import { useParams } from "next/navigation";
 import { SearchOnPagePlaceholder } from "@/components/search/SearchOnPagePlaceholder";
+import { EventType } from "@/difinitions/types/event/EventType";
 
 type OrganizationDetailProps = {
   uuid: string;

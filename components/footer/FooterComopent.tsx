@@ -13,19 +13,18 @@ import { motion } from "framer-motion";
 import { usePathname } from "next/navigation";
 import logo from "@/public/logo/logodesign no background.png";
 
-
 const links = [
   { name: "Home", href: "/" },
   { name: "About Us", href: "/about-us" },
   { name: "Contributors", href: "/donor-dashboard" },
   { name: "Events", href: "/organizations" },
 ];
-const links_suppoort  = [
+const links_suppoort = [
   { name: "How It Works", href: "/how-it-works" },
   { name: "Mission & Vision", href: "/mission-vision" },
   { name: "Donor", href: "/donor-dashboard" },
-  { name: "Organization", href:"/organization-dashboard/dashboard"},
-  { name: "Categories", href: "/categories"}
+  { name: "Organization", href: "/organization-dashboard/dashboard" },
+  { name: "Categories", href: "/categories" },
 ];
 export default function FooterComponent() {
   const pathname = usePathname();
@@ -151,17 +150,17 @@ export default function FooterComponent() {
               Quick Link
             </h3>
             <ul className="space-y-2">
-        {links.map((link) => (
-          <li key={link.name}>
-            <Link
-              href={link.href}
-              className="text-iDonate-navy-primary hover:text-iDonate-green-primary transition-colors dark:text-iDonate-navy-accent"
-            >
-              {link.name}
-            </Link>
-          </li>
-        ))}
-      </ul>
+              {links.map((link) => (
+                <li key={link.name}>
+                  <Link
+                    href={link.href}
+                    className="text-iDonate-navy-primary hover:text-iDonate-green-primary transition-colors dark:text-iDonate-navy-accent"
+                  >
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
 
           {/* Support */}

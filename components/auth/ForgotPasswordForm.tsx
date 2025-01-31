@@ -41,13 +41,16 @@ export default function ForgotPasswordForm() {
 
     try {
       // Update the endpoint to match your API
-      const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/v1/users/forget-password`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_URL}/api/v1/users/forget-password`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email: values.email }),
         },
-        body: JSON.stringify({ email: values.email }),
-      });
+      );
 
       // Always get the response data first
       const data = await res.json();
@@ -56,12 +59,12 @@ export default function ForgotPasswordForm() {
       if (res.ok) {
         // Make sure we're checking for token in the correct path based on your API response
         const token = data?.token;
-        
+
         if (token) {
           // Store both token and email in Redux
           dispatch(setForgotToken(token));
           dispatch(setEmail(values.email));
-          
+
           setSuccess(true);
           toast.success("Password reset link sent to your email!", {
             duration: 2000,
@@ -83,7 +86,9 @@ export default function ForgotPasswordForm() {
         }
       } else {
         // Handle error response
-        setError(data.message || "Failed to send reset link. Please try again.");
+        setError(
+          data.message || "Failed to send reset link. Please try again.",
+        );
         toast.error(data.message || "Failed to send reset link.", {
           duration: 2000,
           position: "top-center",

@@ -11,8 +11,18 @@ import {
 import { CalendarDays, School } from "lucide-react";
 import { useGetEventsQuery } from "@/redux/services/event-service";
 import UpcommingEventPlaceholderComponent from "./UpcommingEventPlaceholderComponent";
-import { EventType } from "@/difinitions/dto/EventType";
+import { EventType } from "@/difinitions/types/event/EventType";
 
+interface Event {
+  id: number;
+  name: string;
+  description?: string;
+  startDate: string;
+  category: {
+    name: string;
+  };
+  images: string[];
+}
 
 export default function UpcomingEvents() {
   const {
@@ -108,7 +118,7 @@ export default function UpcomingEvents() {
         )}
 
         {/* Grid of Smaller Events */}
-        
+
         <div className="grid sm:grid-cols-2 gap-4">
           {events.slice(1, 5).map((event: any) => (
             <Card

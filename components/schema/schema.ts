@@ -75,10 +75,8 @@ export const donationSchema = z.object({
     .string()
     .uuid("Invalid donation event ID. Must be a valid UUID."),
   donor: z.string().uuid("Invalid donor ID. Must be a valid UUID."),
-  amount: z
-    .number()
-    .positive("Amount must be greater than zero."),                 
-    // .min(0.01, "Minimum amount is 0.01."),
+  amount: z.number().positive("Amount must be greater than zero."),
+  // .min(0.01, "Minimum amount is 0.01."),
   recipient: z.string().uuid("Invalid recipient ID. Must be a valid UUID."),
   acquiringBank: z
     .string()
@@ -130,15 +128,13 @@ export const organizationRegistrationSchema = z.object({
     .max(100, {
       message: "Organization name must not exceed 100 characters.",
     }),
-  description: z
-    .string()
-    .nullable(),
-    // .min(20, {
-    //   message: "Description must be at least 20 characters long.",
-    // })
-    // .max(500, {
-    //   message: "Description must not exceed 500 characters.",
-    // }),
+  description: z.string().nullable(),
+  // .min(20, {
+  //   message: "Description must be at least 20 characters long.",
+  // })
+  // .max(500, {
+  //   message: "Description must not exceed 500 characters.",
+  // }),
   phone: z.string().regex(/^(0\d{8,9}|\+855\d{8,9})$/, {
     message: "Phone number must be in the format 0123456789 or +855123456789.",
   }),
@@ -150,35 +146,29 @@ export const organizationRegistrationSchema = z.object({
     .max(200, {
       message: "Address must not exceed 200 characters.",
     }),
-  image: z
-    .any()
-    // .refine(
-    //   (file) =>
-    //     file instanceof File &&
-    //     ["image/png", "image/jpeg", "image/jpg"].includes(file.type),
-    //   {
-    //     message: "Please upload a valid image file (JPEG or PNG).",
-    //   },
-    // ),
-    ,
-  bio: z
-    .string()
-    .nullable(),
-    // .min(20, {
-    //   message: "Bio must be at least 20 characters long.",
-    // })
-    // .max(300, {
-    //   message: "Bio must not exceed 300 characters.",
-    // }),
-  purpose: z
-    .string()
-    .nullable(),
-    // .min(20, {
-    //   message: "Purpose must be at least 20 characters long.",
-    // })
-    // .max(300, {
-    //   message: "Purpose must not exceed 300 characters.",
-    // }),
+  image: z.any(),
+  // .refine(
+  //   (file) =>
+  //     file instanceof File &&
+  //     ["image/png", "image/jpeg", "image/jpg"].includes(file.type),
+  //   {
+  //     message: "Please upload a valid image file (JPEG or PNG).",
+  //   },
+  // ),
+  bio: z.string().nullable(),
+  // .min(20, {
+  //   message: "Bio must be at least 20 characters long.",
+  // })
+  // .max(300, {
+  //   message: "Bio must not exceed 300 characters.",
+  // }),
+  purpose: z.string().nullable(),
+  // .min(20, {
+  //   message: "Purpose must be at least 20 characters long.",
+  // })
+  // .max(300, {
+  //   message: "Purpose must not exceed 300 characters.",
+  // }),
   referenceInformation: z
     .array(
       z
@@ -199,7 +189,7 @@ export const organizationRegistrationSchema = z.object({
           },
         ),
     )
-    .nullable()
-    // .min(1, { message: "Please upload at least one reference file." })
-    // .max(5, { message: "You can upload up to 5 reference files." }),
+    .nullable(),
+  // .min(1, { message: "Please upload at least one reference file." })
+  // .max(5, { message: "You can upload up to 5 reference files." }),
 });

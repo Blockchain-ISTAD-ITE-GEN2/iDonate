@@ -80,13 +80,13 @@ export default function HowItWorks() {
                 {
                   number: "១",
                   title: "ជ្រើសរើស Event ណាមួយដែលចង់បរិច្ចាគ",
-                  description: "ជ្រើសរើសពីការបរិច្ឆេទដែលអ្នកចង់បរិច្ឆេទដោយមានភាពទំនាក់ទំនងច្បាស់លាស់។",
+                  description:
+                    "ជ្រើសរើសពីការបរិច្ឆេទដែលអ្នកចង់បរិច្ឆេទដោយមានភាពទំនាក់ទំនងច្បាស់លាស់។",
                 },
                 {
                   number: "២",
                   title: "បញ្ចូលចំនួនទឹកប្រាក់ដែលចង់បរិច្ចាគ",
-                  description:
-                    "ប្រើប្រាស់គណនីធនាគារណាមួយដើម្បីធ្វើការបរិច្ចាគ",
+                  description: "ប្រើប្រាស់គណនីធនាគារណាមួយដើម្បីធ្វើការបរិច្ចាគ",
                 },
                 {
                   number: "៣",
@@ -123,7 +123,10 @@ export default function HowItWorks() {
               className="order-first md:order-last"
             >
               <div className="w-full h-auto max-w-[300px] sm:max-w-[350px] mx-auto">
-                <Lottie className="w-full h-auto max-h-[400px] md:mb-[200px] md:w-[500px] md:h-[500px]" animationData={HowItWork1} />
+                <Lottie
+                  className="w-full h-auto max-h-[400px] md:mb-[200px] md:w-[500px] md:h-[500px]"
+                  animationData={HowItWork1}
+                />
               </div>
             </motion.div>
           </div>
@@ -151,7 +154,8 @@ export default function HowItWorks() {
               transition={{ delay: 0.2 }}
               className="text-base sm:text-lg md:text-xl mb-8 font-siemreap px-4 text-white"
             >
-              ចាប់ផ្តើមដំណើររបស់អ្នកជាអ្នកបរិច្ចាគ ហើយធ្វើឱ្យមានអត្ថិភាពពិតប្រាកដលើសហគមន៍។
+              ចាប់ផ្តើមដំណើររបស់អ្នកជាអ្នកបរិច្ចាគ
+              ហើយធ្វើឱ្យមានអត្ថិភាពពិតប្រាកដលើសហគមន៍។
             </motion.p>
             <Button className="bg-green-500 hover:bg-green-600 w-full sm:w-auto px-6 py-3">
               ចាប់ផ្តើមបរិច្ចាគ
@@ -177,7 +181,10 @@ export default function HowItWorks() {
               className="order-last md:order-first"
             >
               <div className="w-full h-auto max-w-[300px] sm:max-w-[350px] mx-auto md:ml-[200px]">
-                <Lottie animationData={HowItWork2} className="w-full h-auto max-h-[400px]" />
+                <Lottie
+                  animationData={HowItWork2}
+                  className="w-full h-auto max-h-[400px]"
+                />
               </div>
             </motion.div>
             <div className="space-y-6 md:space-y-8">
@@ -224,8 +231,7 @@ export default function HowItWorks() {
             </div>
           </div>
         </div>
-       
-        </section>
+      </section>
     </div>
   );
 }

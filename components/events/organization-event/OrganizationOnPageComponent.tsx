@@ -15,15 +15,15 @@ export default function OrganizationOnPageComponent() {
 
   const router = useRouter();
 
- // Add  state 
+ // Add  state
   const [visibleCount, setVisibleCount] = useState(6);
 
   // navigate  to detail org
 
-  // fetch all data 
+  // fetch all data
   const {
     data: apiResponse,
-    isLoading:isLoadingOrg,
+    isLoading: isLoadingOrg,
     isError,
   } = useGetOrganizationsQuery({});
 
@@ -36,38 +36,41 @@ export default function OrganizationOnPageComponent() {
     {
       key: "name",
       title: "Organizations",
-      options: Array.from(new Set(organizationData.map((org) => org.name || "Untitled"))).map((name) => ({
-        label: name,                               
+      options: Array.from(
+        new Set(organizationData.map((org) => org.name || "Untitled")),
+      ).map((name) => ({
+        label: name,
         value: name,
       })),
     },
   ];
 
-  // add all  to the filter state  
+  // add all  to the filter state
   useEffect(() => {
-    setFilteredOrganizations(organizationData); 
+    setFilteredOrganizations(organizationData);
   }, [organizationData]);
-  
-  // filter
-  const handleFilterChange = useCallback((filteredData: OrganizationParam[]) => {
-    setFilteredOrganizations(filteredData.slice(0, visibleCount)); 
-  }, [visibleCount]);
 
+  const handleFilterChange = useCallback(
+    (filteredData: OrganizationParam[]) => {
+      setFilteredOrganizations(filteredData.slice(0, visibleCount));
+    },
+    [visibleCount],
+  );
 
- // show by count add 
+  // show by count add
   useEffect(() => {
-    setFilteredOrganizations(organizationData.slice(0, visibleCount)); 
+    setFilteredOrganizations(organizationData.slice(0, visibleCount));
   }, [organizationData, visibleCount]);
 
-
-  // handle show Organization 
+  // handle show Organization
   const handleShowMore = () => {
     setVisibleCount((prev) => prev + 3);
   };
 
-  // handle the error 
+  // handle the error
   if (isError) {
-     console.error("Error fetching organizations");
+    console.error("Error fetching organizations");
+    // return <div className="text-center m-12">Something went Wrong!</div>;
   }
 
   // const handleClick = (uuid?:any) => {
@@ -87,8 +90,8 @@ export default function OrganizationOnPageComponent() {
     console.log("Navigating to:", `/organizations/${uuid}`);
     window.location.href = `/organizations/${uuid}`; // Instead of router.push()
   };
-  
-  
+
+
   return (
     <section className="flex flex-col py-9 gap-9 items-center">
       {/* Hero */}
@@ -110,7 +113,7 @@ export default function OrganizationOnPageComponent() {
 
       <div className="grid gap-6 grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
         {isLoadingOrg
-          ? Array(visibleCount)   // 06 as the defualt 
+          ? Array(visibleCount)   // 06 as the defualt
               .fill(null)
               .map((_, index) => (
                 <OrganizationPlaceholderComponent key={index} />
@@ -119,7 +122,7 @@ export default function OrganizationOnPageComponent() {
                 <OrganizationCardComponent
                  onClick={() => handleClick(org?.uuid)}
                   key={index}
-                  uuid={org.uuid} 
+                  uuid={org.uuid}
                   image={org.image || ""}
                   name={org.name}
                   description={org.description}
@@ -142,4 +145,4 @@ export default function OrganizationOnPageComponent() {
 }
 
 
-// new code 
+// new code

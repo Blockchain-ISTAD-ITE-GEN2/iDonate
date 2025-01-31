@@ -6,11 +6,6 @@ export const ContributorMenulist = () => {
   const router = useRouter();
   const { data: user, isLoading, error } = useGetUserProfileQuery({});
 
-  // if(!user){
-  //   router.push(`/login`)
-  // }
-
- 
   return [
     {
       path: `/donor-dashboard/${user?.uuid}`,

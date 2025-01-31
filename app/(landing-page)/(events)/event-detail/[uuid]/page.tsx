@@ -60,10 +60,7 @@ type EventDetailProps = {
 export default function EvenDetailPage({ params }: EventDetailProps) {
   return (
     <section className="flex flex-col p-9">
-      <EventDetail/>
+      <EventDetail />
     </section>
   );
 }
-
-
-
