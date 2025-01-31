@@ -11,6 +11,7 @@ import {
 import { CalendarDays, School } from "lucide-react";
 import { useGetEventsQuery } from "@/redux/services/event-service";
 import UpcommingEventPlaceholderComponent from "./UpcommingEventPlaceholderComponent";
+import { EventType } from "@/difinitions/types/event/EventType";
 
 interface Event {
   id: number;
@@ -28,11 +29,11 @@ export default function UpcomingEvents() {
     data: upCommingApiReponse = { content: [] },
     isLoading,
     isError,
-  } = useGetEventsQuery(undefined);
+  } = useGetEventsQuery({});
 
   // Filter to get events with `isDraft: true`
-  const events: Event[] = upCommingApiReponse?.content?.filter(
-    (event: any) => event.isDraft,
+  const events: EventType[] = upCommingApiReponse?.content?.filter(
+    (event: any) => event.isDraft
   );
 
   console.log("====> UP Comming Data RTK: ", events);
@@ -117,6 +118,7 @@ export default function UpcomingEvents() {
         )}
 
         {/* Grid of Smaller Events */}
+
         <div className="grid sm:grid-cols-2 gap-4">
           {events.slice(1, 5).map((event: any) => (
             <Card

@@ -3,11 +3,14 @@ import { Users, CircleDollarSign, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import Image from "next/image";
-import FamilyImage from "@/public/landing/LateDonation.jpg";
 import { useGetEventsQuery } from "@/redux/services/event-service";
+import { useRouter } from "next/navigation";
 import { EventType } from "@/difinitions/types/event/EventType";
 
 export default function LatestDonationCard() {
+
+  const router = useRouter();
+
   // fetch data from RTK
   // Get the latest event
   const {
@@ -16,23 +19,24 @@ export default function LatestDonationCard() {
     isError,
   } = useGetEventsQuery({});
 
-  // const typedEvents: EventType[] = apiEventReponse?.content || [];
-  // Query the lastest  evnet
+  const typedEvents: EventType[] = apiEventReponse?.content?.toSorted(
 
-  const typedEvents: EventType[] =
-    apiEventReponse?.content
-      ?.toSorted(
-        (a: any, b: any) =>
-          new Date(b.startDate).getTime() - new Date(a.startDate).getTime(),
-      )
-      ?.slice(0, 4) || [];
+    (a: any, b: any) => new Date(b.startDate).getTime() - new Date(a.startDate).getTime()
 
-  console.log("========> Get Latest Event: ", typedEvents);
+  )?.slice(0, 4) || [];
+
+
+  console.log("========> Get Latest Event: ",typedEvents);
+  
 
   return (
     <div className="w-full h-auto bg-transparent flex flex-col gap-6  lg:pb-[500px]">
       {typedEvents.slice(3, 4).map((item, key) => (
         <Card
+         onClick={(e) => {
+          e.stopPropagation();
+          router.push(`/event-detail/${item?.uuid}`);
+        }}
           key={item.uuid}
           className="w-full h-auto lg:h-[660px] z-2 p-0 m-0 border-none grid lg:grid-cols-2 item-center lg:z-0 lg:relative"
         >
@@ -84,7 +88,12 @@ export default function LatestDonationCard() {
                 </div>
               </div>
 
-              <Button className="w-full my-[36px] bg-iDonate-green-secondary hover:bg-iDonate-green-primary text-iDonate-navy-primary font-semibold">
+              <Button
+                 onClick={(e) => {
+                  e.stopPropagation();
+                  router.push(`/event-detail/${item?.uuid}`);
+                }}
+               className="w-full my-[36px] bg-iDonate-green-secondary hover:bg-iDonate-green-primary text-iDonate-navy-primary font-semibold">
                 <Heart
                   style={{ width: "25px", height: "25px" }}
                   className="bg-iDonate-navy-primary rounded-full p-1 fill-white group-hover:fill-iDonate-navy-primary group-hover:text-iDonate-navy-primary hover:bg-iDonate-green-secondary group-hover:bg-iDonate-green-secondary dark:bg-iDonate-green-secondary  dark:text-iDonate-navy-primary dark:fill-iDonate-navy-primary"
@@ -103,6 +112,7 @@ export default function LatestDonationCard() {
           <div className="grid grid-cols-1 sm:grid-cols-2 items-center justify-center mx-auto lg:grid-cols-3 gap-6 p-2 lg:mt-[500px]">
             {typedEvents.slice(0, 3).map((item, key) => (
               <Card
+                 onClick={() => router.push(`/event-detail/${item?.uuid}`)}
                 key={item.uuid}
                 className="h-auto lg:h-[653px] lg:w-[400px] rounded-[10px] bg-iDonate-light-gray border-0 cursor-pointer shadow-md transition-transform hover:scale-[1.02] dark:bg-iDonate-dark-mode  "
               >
@@ -145,13 +155,16 @@ export default function LatestDonationCard() {
                     </span>
                   </div>
 
-                  <Button className="w-full bg-iDonate-green-secondary hover:bg-[#22c55e] text-[#1e2c49] font-semibold">
+                  <Button
+                  onClick={() => router.push(`/event-detail/${item?.uuid}`)}
+                  className="w-full bg-iDonate-green-secondary hover:bg-[#22c55e] text-[#1e2c49] font-semibold">
                     <Heart
                       style={{ width: "25px", height: "25px" }}
                       className="bg-iDonate-navy-primary rounded-full p-1 fill-white group-hover:fill-iDonate-navy-primary group-hover:text-iDonate-navy-primary hover:bg-iDonate-green-secondary group-hover:bg-iDonate-green-secondary dark:bg-iDonate-green-secondary  dark:text-iDonate-navy-primary dark:fill-iDonate-navy-primary"
                     />
                     Donate Now
                   </Button>
+
                 </div>
               </Card>
             ))}
@@ -163,6 +176,7 @@ export default function LatestDonationCard() {
               className="text-medium-khmer font-medium  text-iDonate-navy-primary khmer-font dark:text-iDonate-green-secondary"
             >
               បច្ចុប្បន្នមិនមានព្រឹត្តិការណ៍បរិច្ចាគទេ
+
             </h3>
             <p
               lang="km"
