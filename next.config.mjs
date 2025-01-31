@@ -45,11 +45,11 @@
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-
   output: "standalone",
-  // upddate this for runtime 
+  // upddate this for runtime
   env: {
-    NEXT_PUBLIC_IDONATE_API_URL: process.env.NEXT_PUBLIC_IDONATE_API_URL || "http://localhost:3000",
+    NEXT_PUBLIC_IDONATE_API_URL:
+      process.env.NEXT_PUBLIC_IDONATE_API_URL || "http://localhost:3000",
     NEXT_PUBLIC_URL: process.env.NEXT_PUBLIC_URL || "http://localhost:3000",
   },
   images: {

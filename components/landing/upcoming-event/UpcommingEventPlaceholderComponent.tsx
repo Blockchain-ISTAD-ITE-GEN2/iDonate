@@ -1,12 +1,7 @@
 "use client";
 
-import {
-  Card,
-  CardContent,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-
 
 export default function UpcommingEventPlaceholderComponent() {
   return (
@@ -30,7 +25,10 @@ export default function UpcommingEventPlaceholderComponent() {
           <div className="flex-1 aspect-video relative">
             <Skeleton className="w-full h-full rounded-lg" />
           </div>
-          <CardContent lang="km" className="flex-grow p-6 flex flex-col justify-between">
+          <CardContent
+            lang="km"
+            className="flex-grow p-6 flex flex-col justify-between"
+          >
             <div>
               <CardTitle className="text-title-khmer mb-2 font-semibold text-iDonate-navy-primary dark:text-iDonate-navy-accent">
                 <Skeleton className="h-6 w-3/4" />
@@ -41,7 +39,6 @@ export default function UpcommingEventPlaceholderComponent() {
                 <Skeleton className="h-4 w-full mb-2" />
                 <Skeleton className="h-4 w-full mb-2" />
                 <Skeleton className="h-4 w-full mb-2" />
-                
               </p>
             </div>
             <div className="flex flex-wrap justify-between gap-4 pt-4">
@@ -64,7 +61,6 @@ export default function UpcommingEventPlaceholderComponent() {
               key={index}
               className="overflow-hidden transition-transform hover:scale-[1.02] cursor-pointer dark:text-iDonate-navy-accent"
             >
-
               <div className="aspect-video relative">
                 <Skeleton className="w-full h-full rounded-lg" />
               </div>

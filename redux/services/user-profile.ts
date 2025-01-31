@@ -13,14 +13,13 @@ export type User = {
 };
 
 export const userProfileSettingApi = idonateApi.injectEndpoints({
-
-    endpoints: (builder) => ({
-      getUserProfile: builder.query({
-        query: () => ({
-            url: `/users/me`
-        }),
-        providesTags: ["userProfile"]
-      }),    
+  endpoints: (builder) => ({
+    getUserProfile: builder.query({
+      query: () => ({
+        url: `/users/me`,
+      }),
+      providesTags: ["userProfile"],
+    }),
 
     // Update user profile
     updateUserProfile: builder.mutation<
@@ -47,17 +46,18 @@ export const userProfileSettingApi = idonateApi.injectEndpoints({
     //   }),
     //   invalidatesTags: ["userProfile"],
     // }),
-        updateAvatar: builder.mutation<
-        void,  // Response type (assuming server returns nothing)
-        { file: FormData; uuid: string }  // Request type
-      >({
-        query: ({ uuid, file }) => ({  // Destructure both parameters correctly
-          url: `/users/${uuid}/upload-image`,
-          method: "PUT",
-          body: file,
-        }),
-        invalidatesTags: ["userProfile"],
+    updateAvatar: builder.mutation<
+      void, // Response type (assuming server returns nothing)
+      { file: FormData; uuid: string } // Request type
+    >({
+      query: ({ uuid, file }) => ({
+        // Destructure both parameters correctly
+        url: `/users/${uuid}/upload-image`,
+        method: "PUT",
+        body: file,
       }),
+      invalidatesTags: ["userProfile"],
+    }),
 
     // Update user password
     updatePassWords: builder.mutation<
@@ -87,5 +87,5 @@ export const {
   useUpdateUserProfileMutation,
   useUpdatePassWordsMutation,
   useUpdateAvatarMutation,
-  useGetUserByUuidQuery
+  useGetUserByUuidQuery,
 } = userProfileSettingApi;

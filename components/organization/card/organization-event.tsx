@@ -1,19 +1,18 @@
 "use client";
 import { Toolbar } from "@/components/filter/toolbar";
-import { OrganizationEventType } from "@/difinitions/dto/Organization-event";
 import { use, useEffect, useState } from "react";
 import { OrganizationEventCard } from "@/components/organization/card/event-organization-card";
 import { Button } from "@/components/ui/button";
 import { useParams, useRouter } from "next/navigation";
-import { useGetEventByOrganizationQuery, } from "@/redux/services/event-service";
-import { EventType } from "@/difinitions/dto/EventType";
+import { useGetEventByOrganizationQuery } from "@/redux/services/event-service";
+import { EventType } from "@/difinitions/types/event/EventType";
 
 export function OrganizationEventPage() {
   const router = useRouter();
   const params = useParams();
   const orgUuid = String(params.uuid); // Ensures `uuid` is a string
 
-  const {data: events} = useGetEventByOrganizationQuery(orgUuid);
+  const { data: events } = useGetEventByOrganizationQuery(orgUuid);
   const typedEvents: EventType[] = events?.content || [];
 
   const filtersFace = [
@@ -42,9 +41,7 @@ export function OrganizationEventPage() {
     {
       key: "isDraft",
       title: "Draft Event",
-      options: Array.from(
-        new Set(typedEvents.map((event) => event.isDraft)),
-      )
+      options: Array.from(new Set(typedEvents.map((event) => event.isDraft)))
         .filter((amount): amount is boolean => amount !== undefined)
         .map((amount) => ({
           label: amount.toString(),

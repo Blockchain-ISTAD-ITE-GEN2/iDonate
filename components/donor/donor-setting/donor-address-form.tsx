@@ -24,7 +24,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { useGetUserProfileQuery, useUpdateUserProfileMutation } from "@/redux/services/user-profile";
+import {
+  useGetUserProfileQuery,
+  useUpdateUserProfileMutation,
+} from "@/redux/services/user-profile";
 
 export function DonorAddressForm({
   onPercentageUpdate,
@@ -62,7 +65,9 @@ export function DonorAddressForm({
   }, [isFormFilled, onPercentageUpdate]);
 
   // Handle form submission
-  const onSubmit = async (values: z.infer<typeof organizationAddressSchema>) => {
+  const onSubmit = async (
+    values: z.infer<typeof organizationAddressSchema>,
+  ) => {
     try {
       if (!donorProfile?.uuid) return;
 
@@ -76,7 +81,6 @@ export function DonorAddressForm({
           gender: "",
           phoneNumber: "",
           dateOfBirth: "",
-         
         },
       }).unwrap();
 

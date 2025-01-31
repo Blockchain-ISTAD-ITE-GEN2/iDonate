@@ -447,7 +447,6 @@ export function EventInfoFormCreation({
                     </FormItem>
                   )}
                 />
-
               </div>
             </CardContent>
 

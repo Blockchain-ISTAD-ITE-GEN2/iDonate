@@ -2,6 +2,8 @@ import WaitingForVerification from "@/components/organization/waiting-verificati
 
 export default function WairingVerification() {
   return (
-    <div><WaitingForVerification/></div>
-  )
+    <div>
+      <WaitingForVerification />
+    </div>
+  );
 }

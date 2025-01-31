@@ -12,7 +12,6 @@ export function OrganizationCardComponent({
   description,
   address,
 }: OrganizationParam) {
-  
   const router = useRouter();
 
   return (

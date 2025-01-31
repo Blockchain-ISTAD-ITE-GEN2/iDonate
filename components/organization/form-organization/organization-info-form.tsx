@@ -26,15 +26,12 @@ import {
 import { organizationInfomationSchema } from "@/components/schema/schema";
 import { AlertComfirmDialog } from "@/components/Alert/Alert-Dialog";
 import { useGetOrganizationByuuidQuery } from "@/redux/services/organization-service";
-import { OrganizationEventType } from "@/difinitions/dto/Organization-event";
-import { OrganizationType } from "@/difinitions/dto/OrganizationType";
+import { OrganizationType } from "@/difinitions/types/organization/OrganizationType";
 
-export function OrganizationInfoForm({uuid}:{uuid:string}) {
+export function OrganizationInfoForm({ uuid }: { uuid: string }) {
+  const { data: organization } = useGetOrganizationByuuidQuery(uuid);
 
-  const {data : organization} = useGetOrganizationByuuidQuery(uuid);
-
-  const typeOrganization : OrganizationType = organization || {};
-
+  const typeOrganization: OrganizationType = organization || {};
 
   // 1. State to toggle between view and edit mode
   const [isEditing, setIsEditing] = useState(false);
@@ -87,7 +84,7 @@ export function OrganizationInfoForm({uuid}:{uuid:string}) {
                   Full Name
                 </CardDescription>
                 <CardDescription className="text-xl text-iDonate-navy-primary dark:text-iDonate-navy-accent">
-                {typeOrganization?.name}
+                  {typeOrganization?.name}
                 </CardDescription>
               </div>
 

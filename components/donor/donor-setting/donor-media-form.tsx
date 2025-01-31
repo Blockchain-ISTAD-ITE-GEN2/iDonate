@@ -17,9 +17,12 @@ import Image from "next/image";
 import { organizationMediaSchema } from "@/components/schema/schema";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { AlertComfirmDialog } from "@/components/Alert/Alert-Dialog";
-import { useGetUserProfileQuery, useUpdateAvatarMutation } from "@/redux/services/user-profile";
+import {
+  useGetUserProfileQuery,
+  useUpdateAvatarMutation,
+} from "@/redux/services/user-profile";
 import { useParams } from "next/navigation";
-import AvartarPlaceHolder from '@/public/images/placeholder.png';
+import AvartarPlaceHolder from "@/public/images/placeholder.png";
 import { toast } from "react-hot-toast";
 import { UpdateProfileImageType } from "@/lib/definition";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -83,29 +86,29 @@ export function DonorMediaForm({
     if (!selectedFile || !uuid) return;
 
     try {
-      if(selectedFile instanceof File){
-        console.log("file")
-      // Upload the file using RTK Query
-      const formData = new FormData();
-      formData.append("file", selectedFile);
+      if (selectedFile instanceof File) {
+        console.log("file");
+        // Upload the file using RTK Query
+        const formData = new FormData();
+        formData.append("file", selectedFile);
 
-      console.log("Form Data value : ", formData);
+        console.log("Form Data value : ", formData);
 
-      const uploadResponse = await uploadMedia(formData).unwrap();
+        const uploadResponse = await uploadMedia(formData).unwrap();
 
-      // Update the user's avatar
-      const imageUri: UpdateProfileImageType = {
-        file: uploadResponse?.name,
-      };
+        // Update the user's avatar
+        const imageUri: UpdateProfileImageType = {
+          file: uploadResponse?.name,
+        };
 
-      await updateAvatar({
-        uuid: uuid as string,
-        file: formData
-      }).unwrap();
+        await updateAvatar({
+          uuid: uuid as string,
+          file: formData,
+        }).unwrap();
 
-      toast.success("Avatar updated successfully");
-      handleCancel();
-    }
+        toast.success("Avatar updated successfully");
+        handleCancel();
+      }
     } catch (error) {
       console.error("Error while uploading avatar:", error);
       toast.error("Error while uploading avatar");

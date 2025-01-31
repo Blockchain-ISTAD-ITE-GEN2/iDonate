@@ -1,6 +1,6 @@
 export type OrganizationParam = {
-  image: string | ""; 
-  name: string; 
+  image: string | "";
+  name: string;
   description: string;
   key?: number | string;
   address?: string;

@@ -10,65 +10,57 @@ import { useGetOrganizationsQuery } from "@/redux/services/organization-service"
 import { OrganizationPlaceholderComponent } from "./OrganizationPlaceholerComponent";
 
 export default function OrganizationOnPageComponent() {
-
- // add state 
+  // add state
   const [visibleCount, setVisibleCount] = useState(6);
-
 
   const {
     data: apiResponse,
-    isLoading:isLoadingOrg,
+    isLoading: isLoadingOrg,
     isError,
   } = useGetOrganizationsQuery({});
 
   // console.log("API Response Data :", apiResponse);
 
-
-
   const organizationData: OrganizationParam[] = apiResponse?.content || [];
 
-
-  const [filteredOrganizations, setFilteredOrganizations] = useState<OrganizationParam[]>(organizationData);
+  const [filteredOrganizations, setFilteredOrganizations] =
+    useState<OrganizationParam[]>(organizationData);
 
   const filtersFace = [
     {
       key: "name",
       title: "Organizations",
-      options: Array.from(new Set(organizationData.map((org) => org.name || "Untitled"))).map((name) => ({
-        label: name,                               
+      options: Array.from(
+        new Set(organizationData.map((org) => org.name || "Untitled")),
+      ).map((name) => ({
+        label: name,
         value: name,
       })),
     },
   ];
- 
- 
 
-
-  // add all  to the filter state 
-  // add all  to the filter state 
+  // add all  to the filter state
+  // add all  to the filter state
   useEffect(() => {
-    setFilteredOrganizations(organizationData); 
+    setFilteredOrganizations(organizationData);
   }, [organizationData]);
-  
 
-  const handleFilterChange = useCallback((filteredData: OrganizationParam[]) => {
-    setFilteredOrganizations(filteredData.slice(0, visibleCount)); 
-  }, [visibleCount]);
+  const handleFilterChange = useCallback(
+    (filteredData: OrganizationParam[]) => {
+      setFilteredOrganizations(filteredData.slice(0, visibleCount));
+    },
+    [visibleCount],
+  );
 
-
- // show by count add 
+  // show by count add
   useEffect(() => {
-    setFilteredOrganizations(organizationData.slice(0, visibleCount)); 
+    setFilteredOrganizations(organizationData.slice(0, visibleCount));
   }, [organizationData, visibleCount]);
 
-
-
-
-  // handle show Organization 
+  // handle show Organization
   const handleShowMore = () => {
     setVisibleCount((prev) => prev + 3);
   };
-
 
   // if (isLoadingOrg) {
   //   return (
@@ -83,7 +75,6 @@ export default function OrganizationOnPageComponent() {
   // }
 
   if (isError) {
-
     console.error("Error fetching organizations");
     // return <div className="text-center m-12">Something went Wrong!</div>;
   }
@@ -105,25 +96,27 @@ export default function OrganizationOnPageComponent() {
           onFilterChange={handleFilterChange}
         />
 
-      <div className="grid gap-6 grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
-        {isLoadingOrg
-          ? Array(visibleCount)   // 06 
-              .fill(null)
-              .map((_, index) => (
-                <OrganizationPlaceholderComponent key={index} />
-              ))
-          : filteredOrganizations.map((org: OrganizationParam, index: number) => (
-              <OrganizationCardComponent
-                key={index}
-                image={org.image || ""}
-                name={org.name}
-                description={org.description}
-                address={org.address}
-              />
-            ))}
-      </div>
+        <div className="grid gap-6 grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
+          {isLoadingOrg
+            ? Array(visibleCount) // 06
+                .fill(null)
+                .map((_, index) => (
+                  <OrganizationPlaceholderComponent key={index} />
+                ))
+            : filteredOrganizations.map(
+                (org: OrganizationParam, index: number) => (
+                  <OrganizationCardComponent
+                    key={index}
+                    image={org.image || ""}
+                    name={org.name}
+                    description={org.description}
+                    address={org.address}
+                  />
+                ),
+              )}
+        </div>
 
-{/* 
+        {/* 
         <div className="grid gap-6 grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
           {filteredOrganizations.map((org: OrganizationParam, index: number) => (
             <OrganizationCardComponent
@@ -138,10 +131,9 @@ export default function OrganizationOnPageComponent() {
 
         <div className="flex justify-end">
           <Button
-           className="text-medium-eng text-iDonate-navy-primary bg-iDonate-white-space border-2 border-iDonate-navy-accent hover:bg-iDonate-navy-accent"
-           onClick={handleShowMore}
-         
-           >
+            className="text-medium-eng text-iDonate-navy-primary bg-iDonate-white-space border-2 border-iDonate-navy-accent hover:bg-iDonate-navy-accent"
+            onClick={handleShowMore}
+          >
             Show more
           </Button>
         </div>
@@ -149,5 +141,3 @@ export default function OrganizationOnPageComponent() {
     </section>
   );
 }
-
-

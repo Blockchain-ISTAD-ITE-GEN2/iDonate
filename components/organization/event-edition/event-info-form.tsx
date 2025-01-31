@@ -39,7 +39,7 @@ import { UploadedFile } from "@/difinitions/types/fileupload";
 import { FileUploader } from "@/components/fileupload/file-uploader";
 import { UploadedFilesCard } from "@/components/fileupload/uploaded-files-card";
 import { useGetEventByUuidQuery } from "@/redux/services/event-service";
-import { EventType } from "@/difinitions/dto/EventType";
+import { EventType } from "@/difinitions/types/event/EventType";
 
 type EventInfoFormProps = {
   onTitlePercentageUpdate: (fullnamePercentage: number) => void;
@@ -48,7 +48,7 @@ type EventInfoFormProps = {
   onEndDatePercentageUpdate: (addressPercentage: number) => void;
   onContactPercentageUpdate: (bioPercentage: number) => void;
   onImagePercentageUpdate: (imagePercentage: number) => void;
-  uuid: string
+  uuid: string;
 };
 
 export function EventInfoFormEdition({
@@ -58,17 +58,17 @@ export function EventInfoFormEdition({
   onEndDatePercentageUpdate,
   onContactPercentageUpdate,
   onImagePercentageUpdate,
-  uuid
+  uuid,
 }: EventInfoFormProps) {
   // 1. State to toggle between view and edit mode
   const [isEditing, setIsEditing] = useState(false);
   const [uploadedFiles, setUploadedFiles] = useState<UploadedFile[]>([]);
   const [progresses, setProgresses] = useState<{ [key: string]: number }>({});
   const [isUploading, setIsUploading] = useState(false);
-  
-  const {data: event} = useGetEventByUuidQuery(uuid)
 
-  const typedEvent: EventType = event || {}
+  const { data: event } = useGetEventByUuidQuery(uuid);
+
+  const typedEvent: EventType = event || {};
 
   // 2. Define your
   const form = useForm<z.infer<typeof eventInfoSchema>>({
@@ -78,9 +78,9 @@ export function EventInfoFormEdition({
       description: typedEvent?.description,
       location: typedEvent?.location,
       startDate: typedEvent?.startDate,
-      endDate:typedEvent?.endDate,
+      endDate: typedEvent?.endDate,
       timezone: typedEvent?.timezone,
-      images:typedEvent?.images,
+      images: typedEvent?.images,
     },
   });
 
@@ -541,8 +541,6 @@ export function EventInfoFormEdition({
                       </FormItem>
                     )}
                   />
-
-
                 </div>
               </CardContent>
             </div>

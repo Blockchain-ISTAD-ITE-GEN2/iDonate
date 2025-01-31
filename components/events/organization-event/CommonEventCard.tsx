@@ -6,12 +6,11 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import { FaRegCalendarAlt } from "react-icons/fa";
 import { HiCalendarDateRange } from "react-icons/hi2";
-import { EventType } from "@/difinitions/dto/EventType";
+import { EventType } from "@/difinitions/types/event/EventType";
 // import { EventType } from "next-auth";
 // import { EventTypes } from "@/difinitions/dto/EventType";
 
-
-// function to covert format 
+// function to covert format
 function formatDate(dateString: string | undefined): string {
   if (!dateString) return "N/A";
   const date = new Date(dateString);
@@ -23,7 +22,6 @@ function formatDate(dateString: string | undefined): string {
 }
 
 export function CommonEventCard({ event }: { event: EventType }) {
-
   const router = useRouter();
 
   return (
@@ -33,7 +31,7 @@ export function CommonEventCard({ event }: { event: EventType }) {
     >
       {/* Header with Image */}
       <CardHeader className="w-full h-[180px] p-0 rounded-t-[10px] overflow-hidden">
-        {event?.images? (
+        {event?.images ? (
           <Image
             className="w-full h-full object-cover"
             width={1000}
@@ -80,7 +78,7 @@ export function CommonEventCard({ event }: { event: EventType }) {
             </div>
 
             <p className="text-iDonate-green-primary dark:text-iDonate-green-secondary">
-              {formatDate(event?.endDate )|| "12 Dec 2025"}
+              {formatDate(event?.endDate) || "12 Dec 2025"}
             </p>
           </div>
         </div>
@@ -100,7 +98,6 @@ export function CommonEventCard({ event }: { event: EventType }) {
             {event?.description || "No description available"}
           </p>
         </div>
-
 
         {/* Donor and Amount Information */}
         <div className="flex flex-col gap-2">

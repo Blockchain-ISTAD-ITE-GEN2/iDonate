@@ -43,13 +43,11 @@ const chartConfig = {
     color: "hsl(var(--chart-3))",
   },
 
-  
   Username: {
     label: "Username",
     color: "hsl(var(--chart-4))",
   },
 
-  
   Gender: {
     label: "Gender",
     color: "hsl(var(--chart-5))",

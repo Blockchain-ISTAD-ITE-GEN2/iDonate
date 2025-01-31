@@ -15,10 +15,16 @@ export default function OrganizationDashboard({
   const uuid = params.uuid;
 
   const router = useRouter();
-  const { data: organization, isLoading, error } = useGetOrganizationByuuidQuery(uuid);
+  const {
+    data: organization,
+    isLoading,
+    error,
+  } = useGetOrganizationByuuidQuery(uuid);
 
   if (isLoading) {
-    return <p className="text-center text-gray-500">Loading organization data...</p>;
+    return (
+      <p className="text-center text-gray-500">Loading organization data...</p>
+    );
   }
 
   if (error || !organization) {
@@ -47,7 +53,10 @@ export default function OrganizationDashboard({
             <div className="flex items-center space-x-2">
               <span className="flex gap-2 items-center">
                 <Avatar className="h-16 w-16 rounded-lg">
-                  <AvatarImage src={organization?.image || "/placeholder-avatar.png"} alt={organization?.name || "Organization Avatar"} />
+                  <AvatarImage
+                    src={organization?.image || "/placeholder-avatar.png"}
+                    alt={organization?.name || "Organization Avatar"}
+                  />
                   {/* <AvatarFallback className="rounded-lg">CN</AvatarFallback> */}
                 </Avatar>
 

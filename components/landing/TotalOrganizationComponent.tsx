@@ -47,7 +47,13 @@ const CounterAnimation = ({ target }: { target: number }) => {
 };
 
 // Organization Stat Card Component
-const StatCard = ({ item, index }: { item: typeof organizationData[0]; index: number }) => {
+const StatCard = ({
+  item,
+  index,
+}: {
+  item: (typeof organizationData)[0];
+  index: number;
+}) => {
   return (
     <motion.div
       key={index}

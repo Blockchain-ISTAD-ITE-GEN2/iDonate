@@ -1,5 +1,4 @@
-import { UserResponse, UserType } from "@/difinitions/dto/UserType";
-
+import { UserResponse, UserType } from "@/difinitions/types/user/UserType";
 
 export type OrganizationRequest = {
   name: string;
@@ -20,7 +19,6 @@ export type OrganizationResponse = {
   user: UserResponse;
 };
 
-
 export type OrganizationType = {
   uuid: string;
   name: string;
@@ -32,5 +30,5 @@ export type OrganizationType = {
   isApproved: boolean;
   fileReferences: string | null;
   user: UserType;
-  bio:string
-}
+  bio: string;
+};

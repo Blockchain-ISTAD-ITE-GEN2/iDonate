@@ -32,7 +32,7 @@ export default function UpcomingEvents() {
 
   // Filter to get events with `isDraft: true`
   const events: Event[] = upCommingApiReponse?.content?.filter(
-    (event: any) => event.isDraft
+    (event: any) => event.isDraft,
   );
 
   console.log("====> UP Comming Data RTK: ", events);

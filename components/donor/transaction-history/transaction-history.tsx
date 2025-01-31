@@ -14,7 +14,11 @@ import {
 import { TransactionType } from "@/difinitions/types/table-type/transaction"; // Ensure this import is correct
 
 export default function TransactionHistory() {
-  const { data: userProfile, isLoading: isUserLoading, isError: isUserError } = useGetUserProfileQuery(undefined);
+  const {
+    data: userProfile,
+    isLoading: isUserLoading,
+    isError: isUserError,
+  } = useGetUserProfileQuery(undefined);
   const donorUuid = userProfile?.uuid;
 
   const [transactions, setTransactions] = useState<TransactionType[]>([]);
@@ -26,24 +30,28 @@ export default function TransactionHistory() {
 
     const fetchTransactions = async () => {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/donation/${donorUuid}`);
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/donation/${donorUuid}`,
+        );
         if (!response.ok) {
           throw new Error("Failed to fetch transactions");
         }
         const data = await response.json();
 
-        console.log("User Transaction Data: ", data)
+        console.log("User Transaction Data: ", data);
 
         // Transform API response to match `TransactionType`
-        const formattedTransactions: TransactionType[] = data.content.map((txn: any) => ({
-          id: crypto.randomUUID(), // Generate a unique ID
-          donor: txn.username,
-          email: "", // No email in API response, so provide a default
-          event: "Donation", // Default value
-          date: txn.timestamp,
-          amount: txn.donationAmount,
-          avatar: txn.avatar || null,
-        }));
+        const formattedTransactions: TransactionType[] = data.content.map(
+          (txn: any) => ({
+            id: crypto.randomUUID(), // Generate a unique ID
+            donor: txn.username,
+            email: "", // No email in API response, so provide a default
+            event: "Donation", // Default value
+            date: txn.timestamp,
+            amount: txn.donationAmount,
+            avatar: txn.avatar || null,
+          }),
+        );
 
         setTransactions(formattedTransactions);
       } catch (err: any) {

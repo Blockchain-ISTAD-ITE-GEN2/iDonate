@@ -104,7 +104,6 @@ declare type AccountTypes =
   | "investment"
   | "other";
 
-
 declare type CategoryCount = {
   name: string;
   count: number;

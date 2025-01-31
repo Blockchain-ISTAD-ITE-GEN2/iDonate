@@ -73,7 +73,7 @@ export type ChangePasswordType = {
 };
 // Edit Profile Type
 export type EditprofileType = {
-  username: string ;
+  username: string;
   firstName: string;
   lastName: string;
   gender: string;
@@ -81,13 +81,13 @@ export type EditprofileType = {
   dateOfBirth: string;
 };
 
-export type EditUserAddressType ={
+export type EditUserAddressType = {
   address: string;
-}
+};
 
-export type EditUserBioType ={
+export type EditUserBioType = {
   bio: string;
-}
+};
 export type userProfileinfoType = {
   gender: string;
   dateOfBirth: string;

@@ -24,7 +24,10 @@ import {
 } from "@/components/ui/card";
 import { AlertComfirmDialog } from "@/components/Alert/Alert-Dialog";
 import { Textarea } from "@/components/ui/textarea";
-import { useGetUserProfileQuery, useUpdateUserProfileMutation } from "@/redux/services/user-profile";
+import {
+  useGetUserProfileQuery,
+  useUpdateUserProfileMutation,
+} from "@/redux/services/user-profile";
 import { EditprofileType, EditUserBioType } from "@/lib/definition";
 
 export function DonorBioForm({
@@ -63,13 +66,13 @@ export function DonorBioForm({
   const onSubmit = async (values: z.infer<typeof organizationBioSchema>) => {
     try {
       if (!donorProfile?.uuid) return;
-  
+
       // Update the profile using RTK Mutation
       await updateUserProfile({
         uuid: donorProfile.uuid,
-        updatedUserProfile: values?.bio as unknown as EditprofileType
+        updatedUserProfile: values?.bio as unknown as EditprofileType,
       }).unwrap();
-  
+
       console.log("Bio updated successfully!");
       setIsEditing(false);
     } catch (error) {

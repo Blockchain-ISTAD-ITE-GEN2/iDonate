@@ -20,16 +20,14 @@ import { CategoryType } from "@/difinitions/types/components-type/CategoryType";
 import categories from "@/data/category.json";
 import { useGetCategoriesQuery } from "@/redux/services/category-service";
 
-
 type EventCategoryFormProps = {
   onPercentageUpdate: (percentage: number) => void;
-  uuid: string
+  uuid: string;
 };
-
 
 export function EventCategoryFormEdition({
   onPercentageUpdate,
-  uuid
+  uuid,
 }: EventCategoryFormProps) {
   const categories = useGetCategoriesQuery({});
 

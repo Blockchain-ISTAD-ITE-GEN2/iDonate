@@ -26,8 +26,8 @@ export default function ResetPasswordForm() {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
-  const token = searchParams.get("token"); 
-  console.log(token)
+  const token = searchParams.get("token");
+  console.log(token);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -167,7 +167,7 @@ export default function ResetPasswordForm() {
           {success && (
             <Alert variant="default">
               <AlertDescription>
-                ពាក្យសម្ងាត់របស់អ្នកត្រូវបានកំណត់ថ្មីដោយជោគជ័យ! 
+                ពាក្យសម្ងាត់របស់អ្នកត្រូវបានកំណត់ថ្មីដោយជោគជ័យ!
                 អ្នកនឹងត្រូវបានផ្លាស់ប្តូរទៅទំព័រចូលក្នុង 2 វិនាទី។
               </AlertDescription>
             </Alert>
