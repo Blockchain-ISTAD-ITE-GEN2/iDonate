@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { AverageType, BarchartType } from "@/difinitions/types/chart/barchart";
 import {
   Card,
   CardContent,
@@ -15,6 +14,7 @@ import { TransactionType } from "@/difinitions/types/table-type/transaction";
 import barchart from "@/data/barchart.json";
 import averages from "@/data/average-data.json";
 import { ReacentTransacctions } from "@/components/organization/dashboard/ReacentTransacctions";
+import { AverageType, BarchartType } from "@/difinitions/types/chart/barchart";
 
 export function BarAndLineChartLanding() {
   const [recentTransactions, setRecentTransactions] = useState<
