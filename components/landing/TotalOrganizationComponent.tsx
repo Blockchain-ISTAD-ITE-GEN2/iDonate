@@ -2,19 +2,20 @@
 
 import React, { useState, useEffect } from "react";
 //import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { frame, motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import { Building2, Gift, Users, CalendarDays } from "lucide-react";
+import { Building2, Gift, Users, HandHeartIcon } from "lucide-react";
+import SockJS from "sockjs-client";
+import {Client } from "@stomp/stompjs"
 
 // Data for the organization statistics
-const organizationData = [
-  { amount: 27, desc: "ចំនួនសរុប", title: "អង្គការភាព", icon: Building2 },
-  { amount: 18, desc: "ចំនួនសរុប", title: "កម្មវិធីបរិច្ចាគ", icon: Gift },
-  { amount: 99, desc: "ចំនួនសរុប", title: "អ្នកស្ម័គ្រចិត្ត", icon: Users },
-  { amount: 1, desc: "ឆ្នាំ", title: "នៃការបង្កើត", icon: CalendarDays },
+const initialOrganizationData = [
+  { amount: 0, desc: "ចំនួនសរុប", title: "អង្គការភាព", icon: Building2 },
+  { amount: 0, desc: "ចំនួនសរុប", title: "កម្មវិធីបរិច្ចាគ", icon: Gift },
+  { amount: 0, desc: "ចំនួនសរុប", title: "អ្នកស្ម័គ្រចិត្ត", icon: Users },
+  { amount: 0, desc: "ចំនួនថវិការ", title: "ដែលបានបរិច្ចាគ", icon: HandHeartIcon },
 ];
 
-// Counter Animation Component
 const CounterAnimation = ({ target }: { target: number }) => {
   const [count, setCount] = useState(0);
   const [ref, inView] = useInView({
@@ -24,30 +25,39 @@ const CounterAnimation = ({ target }: { target: number }) => {
 
   useEffect(() => {
     if (inView) {
-      let start = 0;
-      const end = target;
-      const duration = 2000; // Animation duration in milliseconds
-      const increment = end / (duration / 16); // Increment value for smooth animation
+      if (!isNaN(target)) {
+        let start = 0;
+        const end = target;
+        const duration = 500;
+        const increment = end / (duration / 16);
 
-      const timer = setInterval(() => {
-        start += increment;
-        if (start > end) {
-          clearInterval(timer);
-          setCount(end);
-        } else {
-          setCount(Math.floor(start));
-        }
-      }, 16);
+        const timer = setInterval(() => {
+          start += increment;
+          if (start > end) {
+            clearInterval(timer);
+            setCount(end);
+          } else {
+            setCount(Math.floor(start));
+          }
+        }, 16);
 
-      return () => clearInterval(timer);
+        return () => clearInterval(timer);
+      }
     }
   }, [inView, target]);
 
-  return <span ref={ref}>{count}</span>;
+  return <span ref={ref}>{new Intl.NumberFormat("en-US", { maximumFractionDigits: 2 }).format(count)}</span>;
+};
+
+const formatAmount = (amount: number) => {
+  return new Intl.NumberFormat("en-US", {
+    style: "decimal",
+    maximumFractionDigits: 2,
+  }).format(amount);
 };
 
 // Organization Stat Card Component
-const StatCard = ({ item, index }: { item: typeof organizationData[0]; index: number }) => {
+const StatCard = ({ item, index }: { item: typeof initialOrganizationData[0]; index: number }) => {
   return (
     <motion.div
       key={index}
@@ -71,6 +81,7 @@ const StatCard = ({ item, index }: { item: typeof organizationData[0]; index: nu
 
         {/* Counter */}
         <span className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-iDonate-green-primary dark:text-iDonate-green-secondary">
+          {/* {formatAmount(item.amount)} */}
           <CounterAnimation target={item.amount} />
         </span>
 
@@ -88,8 +99,84 @@ const StatCard = ({ item, index }: { item: typeof organizationData[0]; index: nu
   );
 };
 
+
+
 // Main Component
 export default function TotalOrganizationComponent() {
+
+  const [organizationData, setOrganizationData] = useState(initialOrganizationData);
+
+  useEffect(() => {
+    // Initialize WebSocket connection
+    const socket = new SockJS(`${process.env.NEXT_PUBLIC_IDONATE_API_URL}/websocket`)
+    // const socket = new SockJS("http://localhost:9999/websocket")
+    
+    const stompClient = new Client({
+      webSocketFactory: () => socket,
+      debug: (str) => console.log(str),
+      reconnectDelay: 5000,
+      heartbeatIncoming: 4000,
+      heartbeatOutgoing: 4000,
+    });
+
+    stompClient.onWebSocketClose = () => {
+      console.warn("WebSocket connection closed. Attempting to reconnect...");
+      setTimeout(() => stompClient.activate(), 5000);
+    };
+
+    stompClient.onConnect = (frame) => {
+
+      console.log("Connected: " + frame);
+      
+      stompClient.subscribe("/topic/totalDonors", (message) => {
+        const totalDonors = JSON.parse(message.body);
+        setOrganizationData((prevData) => prevData.map((item, i) => 
+          i === 2 ? {...item, amount: totalDonors } : item
+        ))
+      });
+
+      stompClient.subscribe("/topic/totalOrganizations", (message) => {
+        const totalOrganizations = JSON.parse(message.body);
+        setOrganizationData((prevData) => prevData.map((item, i) => 
+          i === 0 ? {...item, amount: totalOrganizations } : item
+        ))
+      });
+
+      stompClient.subscribe("/topic/totalEvents", (message) => {
+        const totalEvents = JSON.parse(message.body);
+        setOrganizationData((prevData) => prevData.map((item, i) => 
+          i === 1 ? {...item, amount: totalEvents } : item
+        ))
+      });
+
+      stompClient.subscribe("/topic/totalDonationAmount", (message) => {
+        let totalDonationAmount = JSON.parse(message.body);
+      
+        // Ensure it's a valid number and format it properly
+        if (typeof totalDonationAmount === "string") {
+          totalDonationAmount = parseFloat(totalDonationAmount);
+        }
+      
+        console.log("Received total donation amount", totalDonationAmount);
+        
+        setOrganizationData((prevData) =>
+          prevData.map((item, i) =>
+            i === 3 ? { ...item, amount: totalDonationAmount } : item
+          )
+        );
+      });
+      
+    };
+
+      stompClient.activate();
+
+      // Cleanup on unmount
+      return () => {
+        stompClient.deactivate();
+      };
+
+    }, []);
+
   return (
     <motion.div
       lang="km"

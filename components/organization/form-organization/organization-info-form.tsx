@@ -25,8 +25,14 @@ import {
 } from "@/components/ui/card";
 import { organizationInfomationSchema } from "@/components/schema/schema";
 import { AlertComfirmDialog } from "@/components/Alert/Alert-Dialog";
+import { useGetOrganizationByuuidQuery } from "@/redux/services/organization-service";
+import { OrganizationType } from "@/difinitions/types/organization/OrganizationType";
 
-export function OrganizationInfoForm() {
+export function OrganizationInfoForm({ uuid }: { uuid: string }) {
+  const { data: organization } = useGetOrganizationByuuidQuery(uuid);
+
+  const typeOrganization: OrganizationType = organization || {};
+
   // 1. State to toggle between view and edit mode
   const [isEditing, setIsEditing] = useState(false);
 
@@ -34,9 +40,9 @@ export function OrganizationInfoForm() {
   const form = useForm<z.infer<typeof organizationInfomationSchema>>({
     resolver: zodResolver(organizationInfomationSchema),
     defaultValues: {
-      fullName: "",
-      email: "",
-      contact: "",
+      fullName: typeOrganization?.name,
+      email: typeOrganization?.email,
+      contact: typeOrganization?.phone,
     },
   });
 
@@ -78,7 +84,7 @@ export function OrganizationInfoForm() {
                   Full Name
                 </CardDescription>
                 <CardDescription className="text-xl text-iDonate-navy-primary dark:text-iDonate-navy-accent">
-                  Elizabeth Joe
+                  {typeOrganization?.name}
                 </CardDescription>
               </div>
 
@@ -87,7 +93,7 @@ export function OrganizationInfoForm() {
                   Email
                 </CardDescription>
                 <CardDescription className="text-xl text-iDonate-navy-primary dark:text-iDonate-navy-accent">
-                  ElizabethJoe@gmail.com
+                  {typeOrganization?.email}
                 </CardDescription>
               </div>
 
@@ -96,7 +102,7 @@ export function OrganizationInfoForm() {
                   Contact
                 </CardDescription>
                 <CardDescription className="text-xl text-iDonate-navy-primary dark:text-iDonate-navy-accent">
-                  +855 12345678
+                  {typeOrganization?.phone}
                 </CardDescription>
               </div>
             </CardContent>

@@ -1,7 +1,6 @@
-
 import Image from "next/image";
 import { CircleDollarSign, Users } from "lucide-react";
-import { EventType } from "@/difinitions/dto/EventType";
+import { EventType } from "@/difinitions/types/event/EventType";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 
 export function GetMostDonationCardComponent({
@@ -71,18 +70,18 @@ export function GetMostDonationCardComponent({
             <div className="flex flex-col gap-1 mt-auto">
               <div className="flex items-center gap-4">
                 <Users className="fill-iDonate-navy-primary h-6 w-6" />
-                {item.total_donor && (
+                {item.totalDonors && (
                   <h3 className="text-description-khmer line-clamp-1 text-center text-iDonate-navy-primary">
-                    {item.total_donor} នាក់បរិច្ចាគ
+                    {item.totalDonors} នាក់បរិច្ចាគ
                   </h3>
                 )}
               </div>
 
               <div className="flex items-center gap-4">
                 <CircleDollarSign className="fill-iDonate-navy-primary text-iDonate-white-space h-6 w-6" />
-                {item.total_amount && (
+                {item.currentRaised && (
                   <p className="text-medium-khmer line-clamp-2 text-center text-iDonate-navy-primary">
-                    {item.total_amount}
+                    {item.currentRaised}
                   </p>
                 )}
               </div>

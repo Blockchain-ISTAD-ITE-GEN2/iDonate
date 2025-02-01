@@ -1,8 +1,6 @@
 import { icons } from "lucide-react";
 
-
-export const OrganizationSidebarMenuList = (uuid?: string)=>[
-
+export const OrganizationSidebarMenuList = (uuid: string) => [
   {
     path: `/organization-dashboard/${uuid}/dashboard`,
     icon: icons.LayoutDashboard,
@@ -27,10 +25,10 @@ export const OrganizationSidebarMenuList = (uuid?: string)=>[
     title: "Setting",
     active: false,
   },
-  {
-    path: "",
-    icon: icons.LogOut,
-    title: "Log out",
-    active: false,
-  },
+  // {
+  //   path: "",
+  //   icon: icons.LogOut,
+  //   title: "Log out",
+  //   active: false,
+  // },
 ];

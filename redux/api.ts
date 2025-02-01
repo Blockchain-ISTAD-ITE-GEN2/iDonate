@@ -8,9 +8,8 @@ const baseQuery = fetchBaseQuery({
   prepareHeaders: (headers, { getState, endpoint }) => {
     const token = (getState() as RootState).auth.token;
 
-
-     // Skip auth for specific endpoints
-     if (endpoint === "generateQrCode") {
+    // Skip auth for specific endpoints
+    if (endpoint === "generateQrCode") {
       return headers; // Don't add Authorization header
     }
 
@@ -63,6 +62,7 @@ export const idonateApi = createApi({
     "event",
     "organization",
     "testimonial",
+    "donation",
   ],
   reducerPath: "idonateApi",
   baseQuery: baseQueryWithReAuth,

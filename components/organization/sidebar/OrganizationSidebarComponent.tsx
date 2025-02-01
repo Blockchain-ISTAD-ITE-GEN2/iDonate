@@ -1,7 +1,7 @@
 "use client";
 import React, { Fragment, useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 import { OrganizationSidebarMenuList } from "@/components/organization/sidebar/OrganizationSidebarMenu";
 import { SubNavbarMenuType } from "@/difinitions/types/components-type/SubNavbarMenuType";
 import { Button } from "@/components/ui/button";
@@ -10,14 +10,12 @@ import { SidebarGroupLabel } from "@/components/ui/sidebar";
 import { useGetUserProfileQuery } from "@/redux/services/user-profile";
 
 export default function OrganizationSidebarComponent() {
+  const params = useParams();
+  const uuid = String(params.uuid); // Ensures `uuid` is a string
 
-  const {data: userProfile} = useGetUserProfileQuery({});
-
-  console.log("User Profile: ", userProfile);   
-
-  const uuid = userProfile?.uuid;
-
-  const [menuList] = useState<SubNavbarMenuType[]>(OrganizationSidebarMenuList(uuid));
+  const [menuList] = useState<SubNavbarMenuType[]>(
+    OrganizationSidebarMenuList(uuid),
+  );
   const pathname = usePathname();
 
   const navActiveClass = (isActive: boolean) =>
@@ -45,7 +43,7 @@ export default function OrganizationSidebarComponent() {
     return null;
   else
     return (
-      <section className="flex flex-col h-full border-r-2 border-iDonate-navy-accent px-6 py-4 gap-y-3 ">
+      <section className="flex flex-col min-h-[calc(100vh-72px)] h-full border-r-2 border-iDonate-navy-accent px-6 py-4 gap-y-3 ">
         {/* Profile of Organization */}
 
         {/* Menu */}
@@ -86,7 +84,7 @@ export default function OrganizationSidebarComponent() {
                   {item.title}
                 </Button>
               )}
-              {index === menuList.length - 3 && <Separator className="m-2" />}
+              {index === menuList.length - 2 && <Separator className="m-2" />}
             </Fragment>
           );
         })}

@@ -48,7 +48,7 @@ export function TransactionHistoryCard({
                   transaction?.image ||
                   "https://i.pinimg.com/236x/a9/9e/ff/a99eff25eb1ba71647fcd884c15c035a.jpg"
                 }
-                alt={transaction?.event}
+                alt={transaction?.event || ""}
                 className="w-full h-full object-cover rounded-lg"
               />
             ) : (
@@ -61,7 +61,7 @@ export function TransactionHistoryCard({
                 src={
                   "https://i.pinimg.com/236x/a9/9e/ff/a99eff25eb1ba71647fcd884c15c035a.jpg"
                 }
-                alt={transaction?.event}
+                alt={transaction?.donor || ""}
                 className="w-full h-full object-cover rounded-lg"
               />
             )}
@@ -106,7 +106,7 @@ export function TransactionHistoryCard({
                   Raised
                 </CardTitle>
                 <CardDescription className="text-xl font-inter text-iDonate-navy-primary p-0">
-                  ${transaction?.amount}
+                  ${transaction?.donationAmount}
                 </CardDescription>
               </div>
             </CardContent>

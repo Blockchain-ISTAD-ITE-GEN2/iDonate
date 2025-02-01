@@ -1,9 +1,11 @@
 export type OrganizationParam = {
-  image: string | ""; 
+  uuid?:string | undefined | null;
+  image: string | "";
   name: string; 
   description: string;
-  key?: number;
+  key?: number | string;
   address?: string;
+  onClick: () => void;
 };
 
 export type EventTypeParam = {

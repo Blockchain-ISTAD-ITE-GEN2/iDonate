@@ -19,8 +19,14 @@ import payment from "@/public/images/payment.jpg";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { organizationPaymentSchema } from "@/components/schema/schema";
 import { AlertComfirmDialog } from "@/components/Alert/Alert-Dialog";
+import { OrganizationType } from "@/difinitions/types/organization/OrganizationType";
+import { useGetOrganizationByuuidQuery } from "@/redux/services/organization-service";
 
-export function OrganizationPaymentForm() {
+export function OrganizationPaymentForm({ uuid }: { uuid: string }) {
+  const { data: organization } = useGetOrganizationByuuidQuery(uuid);
+
+  const typeOrganization: OrganizationType = organization || {};
+
   const [isEditing, setIsEditing] = useState(false);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
 

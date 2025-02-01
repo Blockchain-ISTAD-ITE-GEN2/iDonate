@@ -2,53 +2,49 @@
 
 import { BannerComponent } from "@/components/organization/card/banner";
 import { BarAndLineChart } from "@/components/organization/dashboard/bar-and-line-chart";
+import WaitingForVerification from "@/components/organization/waiting-verification/waiting-verification";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useGetOrganizationByuuidQuery } from "@/redux/services/organization-service";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 
 export default function OrganizationDashboard({
   params,
 }: {
   params: { uuid: string };
 }) {
- 
   const uuid = params.uuid;
-
-  console.log("UUID", uuid)
-
 
   const router = useRouter();
   const {
-    data: organization
+    data: organization,
+    isLoading,
+    error,
   } = useGetOrganizationByuuidQuery(uuid);
 
-  console.log("UUID: ", uuid);
+  if (isLoading) {
+    return (
+      <p className="text-center text-gray-500">Loading organization data...</p>
+    );
+  }
 
-  console.log("Data of Organization", organization);
-  // Extract the first organization from the array (with error handling)
+  if (error || !organization) {
+    return (
+      <p className="text-center text-red-500">
+        Unable to fetch organization data. Please try again later.
+      </p>
+    );
+  }
 
-  // // // Redirect logic
-  // useEffect(() => {
-  //     if (!organization) {
-  //       // If no organization data is found, redirect to create organization page
-  //       console.log("No organization found. Redirecting to /create-organization...");
-  //       router.push("/organization-registration");
-  //     }
-  // }, [organization,  router]);
+  // Conditional Rendering
+  if (organization?.isApproved === false) {
+    return <WaitingForVerification />;
+  }
 
-
-  // console.log("Approve check : ", organization?.isApproved);
-
-  // if (!organization) {
-  //   router.push("/organization-registration");
-  // }
-
-  // else if(organization?.isApproved == true){
   return (
     <section className="flex flex-col h-full">
       <div className="hidden flex-col md:flex gap-9">
         <div className="flex-1 space-y-4 p-8">
+          {/* Header Section */}
           <div className="flex items-center justify-between space-y-2">
             <h1 className="text-medium-eng tracking-tight text-iDonate-navy-primary dark:text-iDonate-navy-accent">
               Welcome back!
@@ -57,8 +53,11 @@ export default function OrganizationDashboard({
             <div className="flex items-center space-x-2">
               <span className="flex gap-2 items-center">
                 <Avatar className="h-16 w-16 rounded-lg">
-                  <AvatarImage src={organization} alt={""} />
-                  <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                  <AvatarImage
+                    src={organization?.image || "/placeholder-avatar.png"}
+                    alt={organization?.name || "Organization Avatar"}
+                  />
+                  {/* <AvatarFallback className="rounded-lg">CN</AvatarFallback> */}
                 </Avatar>
 
                 <div className="flex flex-col flex-1 text-left text-sm leading-tight">
@@ -73,12 +72,11 @@ export default function OrganizationDashboard({
             </div>
           </div>
 
+          {/* Components */}
           <BannerComponent />
-
           <BarAndLineChart />
         </div>
       </div>
     </section>
   );
 }
-// }

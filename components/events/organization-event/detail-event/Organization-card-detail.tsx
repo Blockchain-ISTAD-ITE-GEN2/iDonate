@@ -1,26 +1,28 @@
 "use client";
 import { useEffect, useState } from "react";
 import { Toolbar } from "@/components/filter/toolbar";
-import { EventType } from "@/difinitions/dto/EventType";
+import { EventType } from "@/difinitions/types/event/EventType";
 import { CommonEventCard } from "@/components/events/organization-event/CommonEventCard";
 import { Button } from "@/components/ui/button";
 import { useGetEventsQuery } from "@/redux/services/event-service";
 
 export function OrganizationDetail() {
-
   // use static for testing
 
   // const typedEvents: EventType[] = events.slice(0, 4);
-  const { data: eventsApiResponse = { content: [] }, isLoading: isEventsLoading } = useGetEventsQuery({});
-     
+  const {
+    data: eventsApiResponse = { content: [] },
+    isLoading: isEventsLoading,
+  } = useGetEventsQuery({});
+
   const events: EventType[] = eventsApiResponse.content || [];
-      
-  // const typedEvents: EventType[] = events.slice(0, 4); 
+
+  // const typedEvents: EventType[] = events.slice(0, 4);
 
   const typedEvents: EventType[] = events.slice(0, 8);
 
-
-  const [filteredEvents, setFilteredEvents] = useState<EventType[]>(typedEvents);
+  const [filteredEvents, setFilteredEvents] =
+    useState<EventType[]>(typedEvents);
 
   const filtersFace = [
     {
@@ -37,22 +39,22 @@ export function OrganizationDetail() {
       key: "total_donor",
       title: "Donor Range",
       options: Array.from(
-        new Set(typedEvents.map((event) => event.total_donor).filter((donor) => donor !== undefined && donor !== null)),
+        new Set(typedEvents.map((event) => event.totalDonors)),
       ).map((donor) => ({
-        label: donor.toString(),
-        value: donor.toString(),
+        label: (donor ?? "").toString(),
+        value: (donor ?? "").toString(),
       })),
     },
     {
       key: "total_amount",
       title: "Amount Range",
       options: Array.from(
-        new Set(typedEvents.map((event) => event.total_amount).filter((amount) => amount !== undefined && amount !== null)),
+        new Set(typedEvents.map((event) => event.currentRaised)),
       ).map((amount) => ({
-        label: amount.toString(),
-        value: amount.toString(),
+        label: (amount ?? "").toString(),
+        value: (amount ?? "").toString(),
       })),
-    },    
+    },
   ];
 
   useEffect(() => {

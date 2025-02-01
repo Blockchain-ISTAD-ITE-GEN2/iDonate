@@ -72,12 +72,11 @@ export function EventInfoFormCreation({
   const form = useForm<z.infer<typeof eventInfoSchema>>({
     resolver: zodResolver(eventInfoSchema),
     defaultValues: {
-      title: "",
-      contact: "",
+      name: "",
       description: "",
       // orderDate: "",
       endDate: "",
-      image: [],
+      images: [],
       startDate: "",
       category: "",
     },
@@ -85,12 +84,11 @@ export function EventInfoFormCreation({
 
   const { watch, handleSubmit, reset, control, formState } = form;
 
-  const title = watch("title");
+  const title = watch("name");
   const description = watch("description");
   const orderDate = watch("startDate");
   const endDate = watch("endDate");
-  const contact = watch("contact");
-  const image = watch("image");
+  const image = watch("images");
   const category = watch("category");
 
   const isFormFilled = {
@@ -98,7 +96,6 @@ export function EventInfoFormCreation({
     description: !!description.trim(),
     orderDate: !!orderDate,
     endDate: !!endDate,
-    contact: !!contact.trim(),
     image: image.length > 0,
     category: !!category.trim(),
   };
@@ -111,7 +108,6 @@ export function EventInfoFormCreation({
       const descriptionPercentage = description.trim() ? 10 : 0;
       const orderDatePercentage = orderDate ? 10 : 0;
       const endDatePercentage = endDate ? 10 : 0;
-      const contactPercentage = contact.trim() ? 10 : 0;
       const imagePercentage = image.length ? 20 : 0;
       const categoryPercentage = category.trim() ? 20 : 0;
 
@@ -120,7 +116,6 @@ export function EventInfoFormCreation({
       onDescriptionPercentageUpdate(descriptionPercentage);
       onOrderDatePercentageUpdate(orderDatePercentage);
       onEndDatePercentageUpdate(endDatePercentage);
-      onContactPercentageUpdate(contactPercentage);
       onImagePercentageUpdate(imagePercentage);
       onCategoryPercentageUpdate(categoryPercentage);
     };
@@ -131,7 +126,6 @@ export function EventInfoFormCreation({
     description,
     orderDate,
     endDate,
-    contact,
     image,
     category,
     onTitlePercentageUpdate,
@@ -152,7 +146,6 @@ export function EventInfoFormCreation({
         isFormFilled.description ||
         isFormFilled.orderDate ||
         isFormFilled.endDate ||
-        isFormFilled.contact ||
         isFormFilled.image ||
         isFormFilled.category
       ) {
@@ -309,7 +302,7 @@ export function EventInfoFormCreation({
             <CardContent className="flex-1 flex flex-col gap-6 p-0 m-0">
               <FormField
                 control={control}
-                name="title"
+                name="name"
                 render={({ field }) => (
                   <FormItem className="flex-1">
                     <FormLabel className="text-sm text-iDonate-navy-secondary">
@@ -454,36 +447,13 @@ export function EventInfoFormCreation({
                     </FormItem>
                   )}
                 />
-
-                <FormField
-                  control={control}
-                  name="contact"
-                  render={({ field }) => (
-                    <FormItem className="flex-1">
-                      <FormLabel className="text-sm text-iDonate-navy-secondary">
-                        Contact
-                      </FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="+855 12345678"
-                          className="w-full"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                      <FormDescription className="text-iDonate-gray text-sm">
-                        This is your organization's contact number.
-                      </FormDescription>
-                    </FormItem>
-                  )}
-                />
               </div>
             </CardContent>
 
             <CardContent className="flex relative flex-1 p-0 m-0">
               <FormField
                 control={control}
-                name="image"
+                name="images"
                 render={({ field }) => (
                   <FormItem className="w-full">
                     <FormLabel className="text-sm text-iDonate-navy-secondary">

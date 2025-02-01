@@ -23,16 +23,13 @@ import Image from "next/image";
 import logo from "@/public/logo/logodesign no background.png";
 import { Button } from "../ui/button";
 import ThemeSwitch from "../theme/ThemeSwitches";
-// import { ProfileDropdown } from "./profile/profile-dropdown";
 import { signOut, useSession } from "next-auth/react";
 import { useAppSelector } from "@/redux/hooks";
 import { selectToken } from "@/redux/features/auth/authSlice";
-import AvartarPlaceHolder from "@/public/images/placeholder.png";
+import AvartarPlaceHolder from "@/public/images/user-idonate.png";
 import { useGetUserProfileQuery } from "@/redux/services/user-profile";
-import toast from "react-hot-toast";
 import { getUuidFromToken } from "@/lib/uuid";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-
+import toast from "react-hot-toast";
 
 export default function NavbarComponent() {
   const [menuList] = useState<NavMenuType[]>(NavMenulist);
@@ -40,34 +37,26 @@ export default function NavbarComponent() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSubmenu, setActiveSubmenu] = useState<string | null>(null);
   const [submenuItems, setSubmenuItems] = useState<NavMenuType[]>([]);
-
   const router = useRouter();
   const { data: session, status } = useSession();
   const accessTokenValue = useAppSelector(selectToken);
-  // const {data:userProfile} = useGetUserProfileQuery({});
-  // console.log("acessToken value : ",accessTokenValue);
-  //the result:acessToken value :  (state)=>state.auth.token
   const { data: userProfile, error, isLoading } = useGetUserProfileQuery({});
-  console.log("User Profile: ", userProfile);
+
   useEffect(() => {}, [accessTokenValue, session]);
+
+  // useEffect(() => {},[accessTokenValue,session])
   const uuid = getUuidFromToken(accessTokenValue as string);
-  // console.log("image of user : ", userProfile?.avatar);
 
-  //  console.log("The value of Token: ",userProfile.email);
-
-  // const handleSignOut = () => {
-  //   signOut();
-
-  //   router.push("/");
-  // }
-
-  // const handleRoutes = (): void => {
-  //   if (session || accessTokenValue) {
-  //     handleLogout();
-  //   } else {
-  //     router.push("/login");
-  //   }
-  // };
+  if (
+    pathname === "/login" ||
+    pathname === "/sign-up" ||
+    pathname === "/verification" ||
+    pathname === "/forgot-password" ||
+    pathname === "/reset-password" ||
+    pathname === "/waiting-verification"
+  ) {
+    return null;
+  }
 
   const handleLogout = () => {
     //  alert("Logout successful");
@@ -84,33 +73,18 @@ export default function NavbarComponent() {
           toast.success("Logout successful", {
             position: "top-right",
             duration: 3000,
-
           });
           router.refresh();
-          router.push("/")
+          router.push("/");
         } else {
           console.log("Error ");
         }
       });
     }
   };
-  
-  useEffect(() => {},[accessTokenValue,session])
-  // console.log("User Profile: ",userProfile);
-
-  if (
-    pathname === "/login" ||
-    pathname === "/sign-up" ||
-    pathname === "/verification" ||
-    pathname === "/forgot-password" ||
-    pathname === "/reset-password" ||
-    pathname === "/waiting-verification"
-  ) {
-    return null;
-  }
 
   if (isMobileMenuOpen) {
-    return activeSubmenu ? ( 
+    return activeSubmenu ? (
       <MobileSubmenu
         activeSubmenu={activeSubmenu}
         submenuItems={submenuItems}
@@ -131,7 +105,7 @@ export default function NavbarComponent() {
         onClose={() => setIsMobileMenuOpen(false)}
         menuItems={menuList}
         eventMenulist={EventMenulist}
-        contributorMenulist={ContributorMenulist()}
+        contributorMenulist={ContributorMenulist() || []}
         aboutMenulist={AboutMenulist}
       />
     );
@@ -166,7 +140,7 @@ export default function NavbarComponent() {
       <DesktopNavbar
         menuItems={menuList}
         eventMenulist={EventMenulist}
-        contributorMenulist={ContributorMenulist()}
+        contributorMenulist={ContributorMenulist() || []}
         aboutMenulist={AboutMenulist}
       />
 
@@ -179,28 +153,22 @@ export default function NavbarComponent() {
             </div>
           </div>
 
-
           <div className="flex items-center">
             {session || accessTokenValue ? (
               <DropdownMenu>
                 <DropdownMenuTrigger>
-                  {userProfile? (
-               <Avatar className="w-14 h-14">
-               {userProfile?.avatar ? (
-                <AvatarImage
-                  width={5000}
-                  height={5000}
-                  src={userProfile?.avatar ? `${process.env.NEXT_PUBLIC_IDONATE_API_URL}/media/${userProfile.avatar}` : AvartarPlaceHolder.toString()}
-                  className="object-cover w-full rounded-full ring-2 h-full ring-iDonate-navy-primary"
-                  alt={`${userProfile?.username ?? "-full h-user"}'s avatar`}
-                />
-               ) : (
-                 <AvatarFallback className="text-gray-700">
-                   {userProfile?.username?.[0]?.toUpperCase() || "?"}
-                 </AvatarFallback>
-               )}
-             </Avatar>
-             
+                  {session?.user?.image ? (
+                    <Image
+                      src={
+                        session.user.image ||
+                        AvartarPlaceHolder ||
+                        userProfile?.avatar
+                      }
+                      alt={`${session.user.name ?? "user"}'s avatar`}
+                      width={40}
+                      height={40}
+                      className="rounded-full border-2 border-iDonate-navy-primary"
+                    />
                   ) : (
                     <div className="w-10 h-10 rounded-full bg-iDonate-navy-primary flex items-center justify-center">
                       <User className="text-white" size={20} />
@@ -211,24 +179,19 @@ export default function NavbarComponent() {
                 <DropdownMenuContent className="w-72 p-2">
                   {/* User Info */}
                   <div className="p-3">
-                    <div className="flex items-center space-x-3">   
-                      {userProfile? (
-                      <Avatar className="w-14 h-14">
-                      {userProfile?.avatar ? (
-                          <AvatarImage
-                          width={5000}
-                          height={5000}
-                          src={userProfile?.avatar ? `${process.env.NEXT_PUBLIC_IDONATE_API_URL}/media/${userProfile.avatar}` : AvartarPlaceHolder.toString()}
-                          className="object-cover w-full rounded-full ring-2 h-full ring-iDonate-navy-primary"
-                          alt={`${userProfile?.username ?? "-full h-user"}'s avatar`}
+                    <div className="flex items-center space-x-3">
+                      {session?.user?.image ? (
+                        <Image
+                          src={
+                            session.user.image ||
+                            AvartarPlaceHolder ||
+                            userProfile?.avatar
+                          }
+                          alt={`${session.user.name ?? "User"}'s avatar`}
+                          width={40}
+                          height={40}
+                          className="rounded-full border-2 border-iDonate-navy-primary"
                         />
-                      ) : (
-                        <AvatarFallback className="text-gray-700">
-                          {userProfile?.username?.[0]?.toUpperCase() || "?"}
-                        </AvatarFallback>
-                      )}
-                    </Avatar>
-                    
                       ) : (
                         <div className="w-10 h-10 rounded-full bg-iDonate-navy-primary flex items-center justify-center">
                           <User className="text-white" size={20} />
@@ -254,7 +217,7 @@ export default function NavbarComponent() {
                   {/* Menu Items */}
                   <DropdownMenuItem asChild>
                     <Link
-                      href={`/donor-dashboard/${uuid}`}
+                      href="/profile"
                       className="flex items-center space-x-2 cursor-pointer"
                     >
                       <User className="text-iDonate-navy-primary" size={20} />
@@ -262,7 +225,41 @@ export default function NavbarComponent() {
                     </Link>
                   </DropdownMenuItem>
 
-          
+                  <DropdownMenuItem asChild>
+                    <Link
+                      href="/donations"
+                      className="flex items-center space-x-2 cursor-pointer"
+                    >
+                      <Heart className="text-iDonate-navy-primary" size={20} />
+                      <span>My Donations</span>
+                    </Link>
+                  </DropdownMenuItem>
+
+                  <DropdownMenuItem asChild>
+                    <Link
+                      href="/search"
+                      className="flex items-center space-x-2 cursor-pointer"
+                    >
+                      <Search className="text-iDonate-navy-primary" size={20} />
+                      <span>Search</span>
+                    </Link>
+                  </DropdownMenuItem>
+
+                  <DropdownMenuSeparator />
+
+                  {/* Donate Button */}
+                  <div className="p-2">
+                    <Button className="w-full group bg-iDonate-white-space border-2 border-iDonate-navy-primary px-2 text-iDonate-navy-primary hover:bg-iDonate-navy-primary hover:text-white hover:border-iDonate-navy-primary rounded-[12px]">
+                      <Heart
+                        style={{ width: "25px", height: "25px" }}
+                        className="bg-iDonate-navy-primary rounded-full p-1 fill-white group-hover:fill-iDonate-navy-primary group-hover:text-iDonate-navy-primary group-hover:bg-iDonate-green-secondary"
+                      />
+                      <span className="text-lg">Donate Now</span>
+                    </Button>
+                  </div>
+
+                  <DropdownMenuSeparator />
+
                   {/* Sign Out */}
                   <DropdownMenuItem
                     onClick={handleLogout} // Use handleSignOut instead of signOut directly

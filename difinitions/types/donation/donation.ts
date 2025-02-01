@@ -10,11 +10,10 @@ export type DonationType = {
   // visibily: boolean;
 };
 
-
 export type TransactionDataType = {
   responseCode: number;
   esponseMessage: string;
-  data:{
+  data: {
     hash: string;
     fromAccountId: string;
     toAccountId: string;
@@ -23,5 +22,5 @@ export type TransactionDataType = {
     description: string;
     createdDateMs: number;
     acknowledgedDateMs: number;
-  }
+  };
 };

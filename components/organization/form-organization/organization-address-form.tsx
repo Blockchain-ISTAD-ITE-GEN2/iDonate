@@ -24,8 +24,13 @@ import { useState } from "react";
 import { SquarePen } from "lucide-react";
 import { organizationAddressSchema } from "@/components/schema/schema";
 import { AlertComfirmDialog } from "@/components/Alert/Alert-Dialog";
+import { OrganizationType } from "@/difinitions/types/organization/OrganizationType";
+import { useGetOrganizationByuuidQuery } from "@/redux/services/organization-service";
 
-export function OrganizationAddressForm() {
+export function OrganizationAddressForm({ uuid }: { uuid: string }) {
+  const { data: organization } = useGetOrganizationByuuidQuery(uuid);
+
+  const typeOrganization: OrganizationType = organization || {};
   // 1. State to toggle between view and edit mode
   const [isEditing, setIsEditing] = useState(false);
 
@@ -33,7 +38,7 @@ export function OrganizationAddressForm() {
   const form = useForm<z.infer<typeof organizationAddressSchema>>({
     resolver: zodResolver(organizationAddressSchema),
     defaultValues: {
-      address: "",
+      address: typeOrganization?.address,
     },
   });
 
@@ -72,7 +77,7 @@ export function OrganizationAddressForm() {
             <CardContent className="flex w-fle gap-9 p-0 m-0">
               <div className="flex flex-col space-y-3">
                 <CardDescription className="text-xl text-iDonate-navy-primary dark:text-iDonate-navy-accent">
-                  Norodom Blvd, 41, Phnom Penh
+                  {typeOrganization?.address}
                 </CardDescription>
               </div>
             </CardContent>

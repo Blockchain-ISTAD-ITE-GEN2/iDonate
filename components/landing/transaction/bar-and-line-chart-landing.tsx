@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { AverageType, BarchartType } from "@/difinitions/types/chart/barchart";
 import {
   Card,
   CardContent,
@@ -15,9 +14,12 @@ import { TransactionType } from "@/difinitions/types/table-type/transaction";
 import barchart from "@/data/barchart.json";
 import averages from "@/data/average-data.json";
 import { ReacentTransacctions } from "@/components/organization/dashboard/ReacentTransacctions";
+import { AverageType, BarchartType } from "@/difinitions/types/chart/barchart";
 
 export function BarAndLineChartLanding() {
-  const [recentTransactions, setRecentTransactions] = useState<TransactionType[]>([]);
+  const [recentTransactions, setRecentTransactions] = useState<
+    TransactionType[]
+  >([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<null | string>(null);
 
@@ -37,13 +39,15 @@ export function BarAndLineChartLanding() {
   useEffect(() => {
     const fetchTransactions = async () => {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/donation`);
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/v1/donation`,
+        );
         if (!response.ok) {
           throw new Error("Failed to fetch transactions");
         }
         const data = await response.json();
 
-        console.log("Data transactions: ", data)
+        console.log("Data transactions: ", data);
 
         // Map the API response to TransactionType format
         const formattedTransactions = data.content.map((transaction: any) => ({
@@ -77,7 +81,7 @@ export function BarAndLineChartLanding() {
       <div className="flex flex-col gap-4">
         {/* Cards for metrics */}
         <CardsMetric data={recentTransactions} />
-        <Card className="w-full bg-iDonate-light-gray rounded-lg border border-iDonate-navy-accent dark:bg-iDonate-dark-mode dark:text-iDonate-navy-accent">
+        {/* <Card className="w-full bg-iDonate-light-gray rounded-lg border border-iDonate-navy-accent dark:bg-iDonate-dark-mode dark:text-iDonate-navy-accent">
           <CardHeader>
             <CardTitle className="text-medium-eng font-normal text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
               Comparison this week
@@ -86,7 +90,7 @@ export function BarAndLineChartLanding() {
           <CardContent className="pl-2">
             <Overview data={barchartdata} />
           </CardContent>
-        </Card>
+        </Card> */}
       </div>
 
       {/* Recent Transactions Card */}

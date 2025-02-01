@@ -1,14 +1,16 @@
 "use client";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { Card, CardContent, CardHeader } from "../../ui/card";
 import { CircleDollarSign, Users } from "lucide-react";
 import { useRouter } from "next/navigation";
-import React from "react";
 import { FaRegCalendarAlt } from "react-icons/fa";
 import { HiCalendarDateRange } from "react-icons/hi2";
-import { useGetEventByUuidQuery } from "@/redux/services/event-service";
-import { EventType } from "@/difinitions/dto/EventType";
+import { EventType } from "@/difinitions/types/event/EventType";
+import SockJS from "sockjs-client";
+import { Client } from "@stomp/stompjs";
 
+// Function to format the date
 function formatDate(dateString: string | undefined): string {
   if (!dateString) return "N/A";
   const date = new Date(dateString);
@@ -22,14 +24,59 @@ function formatDate(dateString: string | undefined): string {
 export function CommonEventCard({ event }: { event: EventType }) {
   const router = useRouter();
   
-  // Fetch event details using RTK Query
-  const { data: updatedEvent, isLoading } = useGetEventByUuidQuery(event?.uuid, {
-    pollingInterval: 5000, // Auto-refresh every 5 seconds
-  });
+  // State for real-time updates
+  const [totalDonors, setTotalDonors] = useState<number>(event.totalDonors ?? 0);
+  const [currentRaised, setCurrentRaised] = useState<number>(event.currentRaised ?? 0); 
 
-  // Use fetched data if available, otherwise fallback to initial event props
-  const totalDonors = updatedEvent?.totalDonors ?? event?.total_donor ?? 0;
-  const totalAmount = updatedEvent?.totalAmount ?? event?.total_amount ?? 0;
+  useEffect(() => {
+    if (!event?.uuid) return;
+  
+    const socket = new SockJS(`${process.env.NEXT_PUBLIC_API_BASE_URL}/websocket`);
+    const stompClient = new Client({
+      webSocketFactory: () => socket,
+      reconnectDelay: 5000,
+    });
+  
+    stompClient.onConnect = () => {
+      console.log(`Connected to WebSocket for event: ${event.uuid}`);
+  
+      stompClient.subscribe(`/topic/totalAmountOfEvent`, (message) => {
+        const updatedData = JSON.parse(message.body);
+        if (updatedData.uuid === event.uuid) {
+          setCurrentRaised(updatedData.amount);
+        }
+      });
+  
+      stompClient.subscribe(`/topic/totalDonorsByEachEvent`, (message) => {
+        const updatedData = JSON.parse(message.body);
+        if (updatedData.uuid === event.uuid) {
+          setTotalDonors(updatedData.totalDonors);
+        }
+      });
+  
+      stompClient.publish({
+        destination: "/app/chat.sendTotalAmountOfEvent",
+        body: JSON.stringify({ uuid: event.uuid }),
+      });
+  
+      stompClient.publish({
+        destination: "/app/chat.sendTotalDonorsByEachEvent",
+        body: JSON.stringify({ uuid: event.uuid }),
+      });
+    };
+  
+    stompClient.onWebSocketError = (error) => {
+      console.error("WebSocket Error:", error);
+    };
+  
+    stompClient.activate();
+  
+    return () => {
+      console.log(`Disconnecting WebSocket for event: ${event.uuid}`);
+      stompClient.deactivate();
+    };
+  }, [event?.uuid]); // ✅ Cleanup runs when event.uuid changes
+  
 
   return (
     <Card
@@ -69,7 +116,6 @@ export function CommonEventCard({ event }: { event: EventType }) {
                 Start date
               </p>
             </div>
-
             <p className="text-iDonate-green-primary dark:text-iDonate-green-secondary">
               {formatDate(event?.startDate) || "12 Dec 2024"}
             </p>
@@ -83,11 +129,26 @@ export function CommonEventCard({ event }: { event: EventType }) {
                 End date
               </p>
             </div>
-
             <p className="text-iDonate-green-primary dark:text-iDonate-green-secondary">
               {formatDate(event?.endDate) || "12 Dec 2025"}
             </p>
           </div>
+        </div>
+
+        {/* Title and Description */}
+        <div className="flex flex-col flex-1">
+          <h3
+            lang="km"
+            className="font-bold text-medium-khmer text-iDonate-navy-primary line-clamp-1 dark:text-iDonate-navy-accent"
+          >
+            {event?.name || "Untitled Event"}
+          </h3>
+          <p
+            lang="km"
+            className="font-light text-iDonate-navy-secondary line-clamp-2 dark:text-iDonate-navy-accent h-12"
+          >
+            {event?.description || "No description available"}
+          </p>
         </div>
 
         {/* Donor and Amount Information */}
@@ -95,14 +156,18 @@ export function CommonEventCard({ event }: { event: EventType }) {
           <div className="flex items-center gap-2">
             <Users className="h-5 w-5 text-iDonate-navy-primary dark:text-iDonate-navy-accent" />
             <h3 className="text-description-khmer text-iDonate-navy-primary line-clamp-1 dark:text-iDonate-navy-accent">
-              {isLoading ? "Loading..." : totalDonors ? `${totalDonors} នាក់បរិច្ចាគ` : "No donors yet"}
+            {event?.totalDonors
+            ? `${event.totalDonors} នាក់បរិច្ចាគ`
+            : "No donors yet"}
             </h3>
           </div>
 
           <div className="flex items-center gap-2">
             <CircleDollarSign className="h-5 w-5 text-iDonate-green-primary dark:text-iDonate-green-secondary" />
             <p className="text-medium-khmer text-iDonate-green-primary line-clamp-1 dark:text-iDonate-green-secondary">
-              {isLoading ? "Loading..." : totalAmount ? `$ ${totalAmount}` : "No amount collected"}
+              {currentRaised
+                ? `$ ${currentRaised}`
+                : "No amount collected"}
             </p>
           </div>
         </div>

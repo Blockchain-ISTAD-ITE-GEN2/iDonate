@@ -25,14 +25,14 @@ export function DonorReacentTransacctions({
                 width={40}
                 height={40}
                 src={donateIcon}
-                alt={`${transaction.donor} Avatar`}
+                alt={`${transaction?.username} Avatar`}
               />
             </Avatar>
             <div className="space-y-1">
               <p className="text-sm line-clamp-1 lg:text-description-eng  sm:line-clamp-none lg:line-clamp-1 font-normal text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
                 Donated to{" "}
                 <span className="font-medium text-iDonate-navy-primarydark:text-iDonate-navy-accent">
-                  {transaction.event}
+                  {transaction?.username}
                 </span>
               </p>
               <p className="text-xs line-clamp-1 sm:text-sub-description-eng sm:line-clamp-none lg:line-clamp-1 text-iDonate-gray">
@@ -43,7 +43,7 @@ export function DonorReacentTransacctions({
 
           {/* Amount */}
           <span className="ml-auto text-iDonate-green-primary text-sm sm:text-medium-eng text-text-start dark:text-iDonate-green-secondary">
-            ${transaction.amount}
+            ${transaction?.donationAmount}
           </span>
         </div>
       ))}

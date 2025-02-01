@@ -30,7 +30,15 @@ export default function EventQrDialog({
     ? qrcode
     : `data:image/png;base64,${qrcode}`;
 
-  const { donationEventID, donor, amount, recipient, acquiringBank, currency, city } = paymentData;
+  const {
+    donationEventID,
+    donor,
+    amount,
+    recipient,
+    acquiringBank,
+    currency,
+    city,
+  } = paymentData;
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose} modal>
@@ -66,7 +74,9 @@ export default function EventQrDialog({
           {/* Payment Data Section */}
           <div className="flex flex-col gap-4 text-sm text-gray-700 w-full max-w-sm">
             <div className="flex justify-between items-center">
-              <span className="font-semibold text-start">Donation Event ID:</span>
+              <span className="font-semibold text-start">
+                Donation Event ID:
+              </span>
               <span className="text-gray-600 text-end">{donationEventID}</span>
             </div>
             <div className="flex justify-between items-center">
@@ -85,7 +95,9 @@ export default function EventQrDialog({
             </div>
             <div className="flex justify-between items-center">
               <span className="font-semibold text-start">Acquiring Bank:</span>
-              <span className="text-gray-600 text-end">{acquiringBank.toUpperCase()}</span>
+              <span className="text-gray-600 text-end">
+                {acquiringBank.toUpperCase()}
+              </span>
             </div>
             <div className="flex justify-between items-center">
               <span className="font-semibold text-start">City:</span>

@@ -30,11 +30,11 @@ export const transactionColumns: ColumnDef<TransactionType>[] = [
   },
 
   {
-    accessorKey: "date",
+    accessorKey: "timestamp",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Date" />
+      <DataTableColumnHeader column={column} title="Timestamp" />
     ),
-    cell: ({ row }) => <span>{row.getValue("date")}</span>,
+    cell: ({ row }) => <span>{row.getValue("timestamp")}</span>,
     filterFn: (row, columnId, filterValue) => {
       if (!filterValue) return true; // No filter applied
 
@@ -66,42 +66,42 @@ export const transactionColumns: ColumnDef<TransactionType>[] = [
   },
 
   {
-    accessorKey: "donor",
+    accessorKey: "username",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Donor" />
     ),
-    cell: ({ row }) => <div>{row.getValue("donor")}</div>,
+    cell: ({ row }) => <div>{row.getValue("username")}</div>,
     enableSorting: true,
     enableHiding: true,
   },
 
-  {
-    accessorKey: "email",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Email" />
-    ),
-    cell: ({ row }) => <div>{row.getValue("email")}</div>,
-    enableSorting: true,
-    enableHiding: true,
-  },
+  // {
+  //   accessorKey: "email",
+  //   header: ({ column }) => (
+  //     <DataTableColumnHeader column={column} title="Email" />
+  //   ),
+  //   cell: ({ row }) => <div>{row.getValue("email")}</div>,
+  //   enableSorting: true,
+  //   enableHiding: true,
+  // },
+
+  // {
+  //   accessorKey: "event",
+  //   header: ({ column }) => (
+  //     <DataTableColumnHeader column={column} title="Event" />
+  //   ),
+  //   cell: ({ row }) => <div>{row.getValue("event")}</div>,
+  //   enableSorting: true,
+  //   enableHiding: true,
+  // },
 
   {
-    accessorKey: "event",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Event" />
-    ),
-    cell: ({ row }) => <div>{row.getValue("event")}</div>,
-    enableSorting: true,
-    enableHiding: true,
-  },
-
-  {
-    accessorKey: "amount",
+    accessorKey: "donationAmount",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Amount" />
     ),
     cell: ({ row }) => {
-      const amount = parseFloat(row.getValue("amount"));
+      const amount = parseFloat(row.getValue("donationAmount"));
       const formatted = new Intl.NumberFormat("en-US", {
         style: "currency",
         currency: "USD",
@@ -118,8 +118,8 @@ export const transactionColumns: ColumnDef<TransactionType>[] = [
     enableHiding: true,
   },
 
-  {
-    id: "actions",
-    cell: ({ row }) => <DataTableRowActions row={row} />,
-  },
+  // {
+  //   id: "actions",
+  //   cell: ({ row }) => <DataTableRowActions row={row} />,
+  // },
 ];

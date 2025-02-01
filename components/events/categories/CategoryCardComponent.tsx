@@ -6,9 +6,8 @@ import { useRouter } from "next/navigation";
 import { useGetCategoriesQuery } from "@/redux/services/category-service";
 
 export default function CategoryCardComponent() {
-
   const router = useRouter();
-  
+
   const category = useGetCategoriesQuery({});
 
   const typeCategories: CategoryType[] = category?.currentData || [];
@@ -30,17 +29,17 @@ export default function CategoryCardComponent() {
           whileHover={{ scale: 1.03 }} // Hover effect: scale and shadow
         >
           <div className="w-[70px] h-[70px] sm:w-[100px] sm:h-[100px] bg-iDonate-navy-accent rounded-full border border-iDonate-light-gray flex items-center justify-center ">
-              <Image
-                width={60}
-                height={60}
-                src={
-                  item.media && item.media.trim() !== ""
+            <Image
+              width={60}
+              height={60}
+              src={
+                item.media && item.media.trim() !== ""
                   ? item.media
                   : "https://charius-next.netlify.app/_next/static/media/1.f81fd7b6.svg"
-                }
-                alt={item.name || "Media"}
-                className="w-10 h-10 sm:w-[60px] sm:h-[60px]"
-              />
+              }
+              alt={item.name || "Media"}
+              className="w-10 h-10 sm:w-[60px] sm:h-[60px]"
+            />
           </div>
 
           {item.name && (
@@ -54,7 +53,6 @@ export default function CategoryCardComponent() {
               {item.description}
             </p>
           )}
-          
         </motion.div>
       ))}
     </>

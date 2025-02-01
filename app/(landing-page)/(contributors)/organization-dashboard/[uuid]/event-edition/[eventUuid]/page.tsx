@@ -1,3 +1,4 @@
+"use client";
 import { EventFormEdition } from "@/components/organization/event-edition/event-form";
 import {
   Breadcrumb,
@@ -7,8 +8,12 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import { useParams } from "next/navigation";
 
 export default function EventEdition() {
+  const params = useParams();
+  const orgUuid = String(params.uuid);
+
   return (
     <section className="flex flex-col p-9 gap-9">
       <Breadcrumb>
@@ -16,7 +21,7 @@ export default function EventEdition() {
           <BreadcrumbItem>
             <BreadcrumbLink
               className="text-lg font-medium text-iDonate-navy-secondary hover:text-iDonate-navy-primary"
-              href="/organization-dashboard/events"
+              href={`/organization-dashboard/${orgUuid}/events`}
             >
               Events
             </BreadcrumbLink>
