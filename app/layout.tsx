@@ -8,6 +8,7 @@ import StoreProvider from "./StoreProvider";
 import { ThemeProviders } from "./providers";
 import { Toaster } from "@/components/ui/toaster";
 import { Metadata } from "next";
+import GoogleAnalytics from "@/components/google/GoogleAnalytics";
 
 export const metadata: Metadata = {
   title: {
@@ -72,6 +73,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
       className={`min-h-screen w-full overflow-auto scrollbar-hide ${suwannaphum.variable} ${inter.variable}`}
     >
       <body className="flex flex-col h-full bg-background text-foreground">
+        <GoogleAnalytics/>
         <StoreProvider>
           {/* <CheckConnection> */}
           <SessionWrapper>
