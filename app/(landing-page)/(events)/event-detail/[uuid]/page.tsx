@@ -1,61 +1,52 @@
 import { Metadata } from "next";
 import EventDetail from "@/components/events/even-detail/[uuid]/event-detail";
 
-export const metadata: Metadata = {
-  title: "Event Detail - iDonate",
-  description:
-    "Learn more about the iDonate event, its purpose, and how you can get involved to make a difference.",
-  keywords: [
-    "iDonate",
-    "Event Detail",
-    "Fundraising Event",
-    "Charity Event",
-    "Get Involved",
-  ],
-  openGraph: {
-    title: "Event Detail - iDonate",
-    description:
-      "Discover all the details about the iDonate event. Join us and contribute to the cause.",
-    url: "https://yourwebsite.com/events/event-detail",
-    images: [
-      {
-        url: "https://yourwebsite.com/static/event-detail-banner.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Event Detail Banner",
-      },
-    ],
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Event Detail - iDonate",
-    description:
-      "Get all the details on the iDonate event, including how to participate and donate.",
-    images: ["https://yourwebsite.com/static/event-detail-banner.jpg"],
-  },
-  icons: {
-    icon: "/favicon.ico",
-    apple: "/apple-touch-icon.png",
-  },
-  robots: {
-    index: true,
-    follow: true,
-  },
-  alternates: {
-    canonical: "https://yourwebsite.com/events/event-detail",
-    languages: {
-      en: "https://yourwebsite.com/events/event-detail",
-      km: "https://yourwebsite.com/kh/events/event-detail",
-    },
-  },
-};
-
 type EventDetailProps = {
   params: {
     uuid: string;
   };
 };
+// get Event  Detail 
+async function getEventDetails(uuid: string) {
+
+  const response = await fetch(`https://idonateapi.kangtido.life//api/v1/events/get-event-by-uuid/${uuid}`);
+  
+  const data = await response.json();
+
+  return {
+    name: data.name || `Event ${uuid}`,
+    description: data.description || `Details about Event ${uuid}`,
+  };
+}
+// Generate metadata dynamically
+export async function generateMetadata({ params }: EventDetailProps): Promise<Metadata> {
+
+  const event = await getEventDetails(params.uuid);
+
+  return {
+    title: `${event.name} - Event Details`,
+    description: event.description,
+    keywords: [
+      "IDONATE",
+      "event detail",
+      "idonate",
+      "idonate istad",
+      "idonate.istad.co",
+      "donation",
+      "idonate cambodia",
+      "charity",
+      "Charity",
+    ],
+    openGraph: {
+      title: event.name,
+      description: event.description,
+      url: `/get-event-by-uuid/${params.uuid}`,
+      type: "website",
+    },
+  };
+}
+
+
 
 export default function EvenDetailPage({ params }: EventDetailProps) {
   return (
