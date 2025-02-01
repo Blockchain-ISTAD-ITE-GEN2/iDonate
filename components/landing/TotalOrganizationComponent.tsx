@@ -108,8 +108,8 @@ export default function TotalOrganizationComponent() {
 
   useEffect(() => {
     // Initialize WebSocket connection
-    // const socket = new SockJS(`${process.env.NEXT_PUBLIC_API_BASE_URL}/websocket`)
-    const socket = new SockJS("http://localhost:9999/websocket")
+    const socket = new SockJS(`${process.env.NEXT_PUBLIC_API_BASE_URL}/websocket`)
+    // const socket = new SockJS("http://localhost:9999/websocket")
     
     const stompClient = new Client({
       webSocketFactory: () => socket,
