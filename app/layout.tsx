@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   keywords: [
       "IDONATE",
       "iDonate",
-      "idonate",
+      "idonate istad",
       "idonate.istad",
       "idonate.istad.co",
       "donation",
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
           template: "%s - iDATA",
           default: "iDATA",
       },
-      description: "iDATA dashboard for managing user data.",
+      description: "iDonate is a blockchain-based donation platform designed to enhance transparency, accountability, and efficiency in charitable giving",
       url: "https://idata.istad.co",
       type: "website",
       locale: "kh_KH",
