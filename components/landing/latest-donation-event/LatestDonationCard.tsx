@@ -206,7 +206,6 @@ export default function LatestDonationCard() {
                       className="bg-iDonate-navy-primary rounded-full p-1 fill-white group-hover:fill-iDonate-navy-primary group-hover:text-iDonate-navy-primary hover:bg-iDonate-green-secondary group-hover:bg-iDonate-green-secondary dark:bg-iDonate-green-secondary  dark:text-iDonate-navy-primary dark:fill-iDonate-navy-primary"
                     />
                     Donate Now
-                    Donate Now
                   </Button>
                 </div>
               </Card>
