@@ -38,7 +38,7 @@ export function EventDetailBanner({ uuid }: EventDetailBannerProps) {
     const fetchTransactions = async () => {
       try {
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/donation/event-transactions/${uuid}`,
+          `${process.env.NEXT_PUBLIC_IDONATE_API_URL}/api/v1/donation/event-transactions/${uuid}`,
         );
         if (!response.ok) {
           throw new Error("Failed to fetch transactions");

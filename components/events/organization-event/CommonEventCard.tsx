@@ -156,9 +156,9 @@ export function CommonEventCard({ event }: { event: EventType }) {
           <div className="flex items-center gap-2">
             <Users className="h-5 w-5 text-iDonate-navy-primary dark:text-iDonate-navy-accent" />
             <h3 className="text-description-khmer text-iDonate-navy-primary line-clamp-1 dark:text-iDonate-navy-accent">
-              {totalDonors
-                ? `${totalDonors} នាក់បរិច្ចាគ`
-                : "No donors yet"}
+            {event?.totalDonors
+            ? `${event.totalDonors} នាក់បរិច្ចាគ`
+            : "No donors yet"}
             </h3>
           </div>
 
