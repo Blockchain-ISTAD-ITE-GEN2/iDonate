@@ -4,12 +4,15 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import Image from "next/image";
 import { useGetEventsQuery } from "@/redux/services/event-service";
-import { EventType } from "@/difinitions/dto/EventType";
+import { EventType } from "@/difinitions/types/event/EventType";
 import { useEffect, useState } from "react";
 import SockJS from "sockjs-client";
 import { Client } from "@stomp/stompjs";
+import { useRouter } from "next/navigation";
 
 export default function LatestDonationCard() {
+
+  const router = useRouter();
   const [typedEvents, setTypedEvents] = useState<EventType[]>([]);
 
   // Fetch data from RTK
