@@ -3,6 +3,7 @@ import { OrganizationType } from "../organization/OrganizationType";
 export type EventType = {
   uuid?: string;
   name: string;
+  media: string;
   description: string;
   location: string;
   startDate: string;
