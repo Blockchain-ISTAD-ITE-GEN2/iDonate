@@ -17,10 +17,10 @@ export const metadata: Metadata = {
     title: "How It Works - iDonate",
     description:
       "Learn the steps behind the iDonate platform, ensuring transparency and credibility in every donation.",
-    url: "https://yourwebsite.com/how-it-works",
+    url: "https://idonate.istad.co/how-it-works",
     images: [
       {
-        url: "https://yourwebsite.com/static/how-it-works-banner.jpg",
+        url: "https://idonateapi.kangtido.life/media/0b967dfd-0897-4197-b631-c24affbd812b.png",
         width: 1200,
         height: 630,
         alt: "How It Works - iDonate",
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     title: "How It Works - iDonate",
     description:
       "Explore the process behind iDonate, from submitting donations to the verification process.",
-    images: ["https://yourwebsite.com/static/how-it-works-banner.jpg"],
+    images: ["https://idonateapi.kangtido.life/media/0b967dfd-0897-4197-b631-c24affbd812b.png"],
   },
   icons: {
     icon: "/favicon.ico",
@@ -44,10 +44,10 @@ export const metadata: Metadata = {
     follow: true,
   },
   alternates: {
-    canonical: "https://yourwebsite.com/how-it-works",
+    canonical: "https://idonate.istad.co/how-it-works",
     languages: {
-      en: "https://yourwebsite.com/how-it-works",
-      km: "https://yourwebsite.com/kh/how-it-works",
+      en: "https://idonate.istad.co/how-it-works",
+      km: "https://idonate.istad.co/how-it-works",
     },
   },
 };

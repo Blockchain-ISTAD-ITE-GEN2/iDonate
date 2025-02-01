@@ -7,6 +7,37 @@ import OrganizationSidebarComponent from "@/components/organization/sidebar/Orga
 import FooterComponent from "@/components/footer/FooterComopent";
 import { usePathname } from "next/navigation";
 import Loader from "../loading";
+// import { Metadata } from "next";
+
+// export const metadata: Metadata = {
+//   title: {
+//       template: "%s - iDonate",
+//       default: "iDonate",
+//   },
+//   description: "iDonate ",
+//   keywords: [
+//       "IDONATE",
+//       "iDonate",
+//       "idonate",
+//       "idonate.istad",
+//       "idonate.istad.co",
+//       "donation",
+//       "donation cambodia",
+//       "charity",
+//       "Charity",
+//   ],
+//   openGraph: {
+//       title: {
+//           template: "%s - iDATA",
+//           default: "iDATA",
+//       },
+//       description: "iDATA dashboard for managing user data.",
+//       url: "https://idata.istad.co",
+//       type: "website",
+//       locale: "kh_KH",
+//       images: "https://idonateapi.kangtido.life/media/a1108ea2-b140-4a4c-b07d-21aa141853f5.png",
+//   }
+// };
 
 type RootLayoutProps = {
   children: ReactNode;

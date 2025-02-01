@@ -16,7 +16,7 @@ export function EventFormEdition() {
   const params = useParams();
   const eventUuid = String(params.eventUuid); // Ensures `uuid` is a string
 
-  console.log("eventUuid", eventUuid)
+  console.log("eventUuid", eventUuid);
 
   return (
     <section className="w-full flex flex-col gap-6 rounded-lg border-2 border-iDonate-navy-accent shadow-light p-6">
@@ -31,8 +31,8 @@ export function EventFormEdition() {
       />
 
       <div className="w-full flex flex-col gap-6 border-iDonate-navy-accent">
-        <EventCategoryFormEdition 
-          onPercentageUpdate={setCategoryPercentage} 
+        <EventCategoryFormEdition
+          onPercentageUpdate={setCategoryPercentage}
           uuid={eventUuid}
         />
       </div>

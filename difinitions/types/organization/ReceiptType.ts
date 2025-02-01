@@ -1,4 +1,4 @@
-import { BigDecimal } from "./../../node_modules/effect/dist/dts/BigDecimal.d";
+import { BigDecimal } from "effect/BigDecimal";
 export type ReceiptResponse = {
   receiptId: string;
   donorName: string;

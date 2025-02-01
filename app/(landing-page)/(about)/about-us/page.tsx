@@ -10,10 +10,10 @@ export const metadata: Metadata = {
     title: "About Us - iDonate",
     description:
       "Meet the passionate team and mentors who ensure transparency and credibility on iDonate.",
-    url: "https://yourwebsite.com/about",
+    url: "https://idonate.istad.co/about-us",
     images: [
       {
-        url: "https://yourwebsite.com/static/team-photo.jpg",
+        url: "https://idonateapi.kangtido.life/media/0b967dfd-0897-4197-b631-c24affbd812b.png",
         width: 1200,
         height: 630,
         alt: "iDonate Team Photo",
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     title: "About Us - iDonate",
     description:
       "Discover the team and mentors behind iDonate, ensuring trust and credibility in donations.",
-    images: ["https://yourwebsite.com/static/team-photo.jpg"],
+    images: ["https://idonateapi.kangtido.life/media/0b967dfd-0897-4197-b631-c24affbd812b.png"],
   },
   icons: {
     icon: "/favicon.ico",
@@ -37,10 +37,10 @@ export const metadata: Metadata = {
     follow: true,
   },
   alternates: {
-    canonical: "https://yourwebsite.com/about",
+    canonical: "https://idonate.istad.co/about-us",
     languages: {
-      en: "https://yourwebsite.com/about",
-      km: "https://yourwebsite.com/kh/about",
+      en: "https://idonate.istad.co/about-us",
+      km: "https://idonate.istad.co/about-us",
     },
   },
 };

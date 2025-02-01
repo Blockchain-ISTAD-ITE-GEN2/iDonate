@@ -1,22 +1,24 @@
-"use client"
+"use client";
 
 import Image from "next/image";
 import { CommonEventCard } from "@/components/events/organization-event/CommonEventCard";
 import { Button } from "@/components/ui/button";
 
-import { EventType } from "@/difinitions/dto/EventType";
+import { EventType } from "@/difinitions/types/event/EventType";
 import { useGetEventsQuery } from "@/redux/services/event-service";
 import { AccordionCategory } from "./AccordionCategory";
 import { AllCategoriesButton } from "./AllCategoriesAccordion";
 
 export default function CategoryDetailComponent() {
-
   // const typedEvents: EventType[] = events.slice(0, 4);
-    const { data: eventsApiResponse = { content: [] }, isLoading: isEventsLoading } = useGetEventsQuery({});
-   
-    const events: EventType[] = eventsApiResponse.content || [];
-    
-    const typedEvents: EventType[] = events.slice(0, 4); 
+  const {
+    data: eventsApiResponse = { content: [] },
+    isLoading: isEventsLoading,
+  } = useGetEventsQuery({});
+
+  const events: EventType[] = eventsApiResponse.content || [];
+
+  const typedEvents: EventType[] = events.slice(0, 4);
 
   return (
     <section className=" flex flex-col md:flex-row gap-9 px-9">
@@ -55,27 +57,27 @@ export default function CategoryDetailComponent() {
         {/* Event Cards */}
         <div className="flex flex-col gap-6">
           <div className="grid gap-6 grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
-          {isEventsLoading ? (
-           <p>Loading events...</p>
+            {isEventsLoading ? (
+              <p>Loading events...</p>
             ) : (
-           typedEvents.map((event, eventIndex) => (
-            <CommonEventCard
-              key={eventIndex}
-              event={{
-                uuid: event.uuid,
-                images: event.images,
-                name: event.name,
-                description: event.description,
-                totalDonors: event.totalDonors,
-                currentRaised: event.currentRaised,
-                startDate: event.startDate,
-                endDate: event.endDate,
-                location: event.location,
-                isDraft: event.isDraft,
-              }}
-            />
-          ))
-        )}
+              typedEvents.map((event, eventIndex) => (
+                <CommonEventCard
+                  key={eventIndex}
+                  event={{
+                    uuid: event.uuid,
+                    images: event.images,
+                    name: event.name,
+                    description: event.description,
+                    totalDonors: event.totalDonors,
+                    currentRaised: event.currentRaised,
+                    startDate: event.startDate,
+                    endDate: event.endDate,
+                    location: event.location,
+                    isDraft: event.isDraft,
+                  }}
+                />
+              ))
+            )}
           </div>
 
           <div className="flex justify-end">

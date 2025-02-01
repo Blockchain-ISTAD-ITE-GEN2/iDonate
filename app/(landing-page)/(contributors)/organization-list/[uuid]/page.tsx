@@ -2,12 +2,12 @@
 
 import { useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import { OrganizationEventType } from "@/difinitions/dto/Organization-event";
 import { useGetOrganizationByUserQuery } from "@/redux/services/organization-service";
 import { useGetUserProfileQuery } from "@/redux/services/user-profile";
 import { MapPinned } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { OrganizationType } from "@/difinitions/types/organization/OrganizationType";
 
 export default function OrganizationDashboard({
   params,
@@ -18,21 +18,19 @@ export default function OrganizationDashboard({
   const router = useRouter();
   const { data: organizations } = useGetOrganizationByUserQuery(userUuid);
   const { data: user, isLoading, error } = useGetUserProfileQuery({});
-  const typeOrganizations: OrganizationEventType[] = organizations?.content || [];
+  const typeOrganizations: OrganizationType[] = organizations?.content || [];
 
   // Check if user has the ORGANIZER role
-  const isOrganizer = user?.role?.some((role: { name: string }) => role.name === "ORGANIZER");
-
-
+  const isOrganizer = user?.role?.some(
+    (role: { name: string }) => role.name === "ORGANIZER",
+  );
 
   // Redirect non-organizers to the registration page
   useEffect(() => {
     if (!isLoading && !error && !isOrganizer) {
       router.push("/organization-registration");
     }
-    if(!user)(
-      router.push("/login")
-    )
+    if (!user) router.push("/login");
   }, [isLoading, error, isOrganizer, router, user]);
 
   // Show loading state
@@ -47,13 +45,17 @@ export default function OrganizationDashboard({
 
   return (
     <section className="flex flex-1 flex-col h-full items-center justify-center p-9 gap-9">
-      <h1 className="text-2xl font-bold text-iDonate-navy-primary">Organizations</h1>
+      <h1 className="text-2xl font-bold text-iDonate-navy-primary">
+        Organizations
+      </h1>
 
       <div className="flex flex-col gap-6 border-2 border-iDonate-navy-accent p-16 rounded-lg bg-iDonate-light-gray">
         {typeOrganizations.map((org) => (
           <Card
             key={org.uuid}
-            onClick={() => router.push(`/organization-dashboard/${org.uuid}/dashboard`)}
+            onClick={() =>
+              router.push(`/organization-dashboard/${org.uuid}/dashboard`)
+            }
             className="w-full rounded-[10px] bg-iDonate-white-space border-0 cursor-pointer shadow-md transition-transform hover:scale-[1.02] dark:bg-iDonate-dark-mode"
           >
             <CardContent className="flex flex-col sm:flex-row items-center justify-center p-4 gap-4">
@@ -86,7 +88,9 @@ export default function OrganizationDashboard({
                 {/* Location */}
                 <div className="flex gap-2 text-iDonate-gray dark:text-iDonate-green-secondary">
                   <MapPinned className="w-5" />
-                  <p className="line-clamp-1 flex gap-2 items-center">{org?.address}</p>
+                  <p className="line-clamp-1 flex gap-2 items-center">
+                    {org?.address}
+                  </p>
                 </div>
               </div>
             </CardContent>

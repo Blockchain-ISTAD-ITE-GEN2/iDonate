@@ -22,9 +22,12 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { useGetEventByUuidQuery } from "@/redux/services/event-service";
-import {  useMakeDonationMutation } from "@/redux/services/donation-service";
-import { EventType } from "@/difinitions/dto/EventType";
-import { DonationType, TransactionDataType } from "@/difinitions/types/donation/donation";
+import { useMakeDonationMutation } from "@/redux/services/donation-service";
+import { EventType } from "@/difinitions/types/event/EventType";
+import {
+  DonationType,
+  TransactionDataType,
+} from "@/difinitions/types/donation/donation";
 import { useToast } from "@/hooks/use-toast";
 import { useGetUserProfileQuery } from "@/redux/services/user-profile";
 import { use, useEffect, useState } from "react";
@@ -32,27 +35,27 @@ import EventQrDialog from "@/components/events/even-detail/event-qr-dialog";
 import { useParams } from "next/navigation";
 import SuccessDialog from "./Success-dialog";
 
-
-
-
 export function DonationForm() {
+  const uuid = useParams();
 
-const uuid = useParams();
-
-console.log("UUID", uuid)
+  console.log("UUID", uuid);
   const [isOpened, setIsOpened] = useState(false);
   const [isSuccessDialogOpen, setIsSuccessDialogOpen] = useState(false); // State to control the success dialog
   const [qrcode, setQrCode] = useState<string | null>(null);
-  const [paymentData, setPaymentData] = useState<DonationType | undefined>(undefined);
-  const [transactionData, setTransactionData] = useState<TransactionDataType | undefined>(undefined);
-  const {data: events} = useGetEventByUuidQuery(uuid?.uuid)
+  const [paymentData, setPaymentData] = useState<DonationType | undefined>(
+    undefined,
+  );
+  const [transactionData, setTransactionData] = useState<
+    TransactionDataType | undefined
+  >(undefined);
+  const { data: events } = useGetEventByUuidQuery(uuid?.uuid);
   const { toast } = useToast();
   const [donate] = useMakeDonationMutation();
-  const { data: userProfile} = useGetUserProfileQuery({});
-  const typedEvents: EventType = events ;
+  const { data: userProfile } = useGetUserProfileQuery({});
+  const typedEvents: EventType = events;
   const [md5, setMd5] = useState();
 
-  console.log("md5", md5)
+  console.log("md5", md5);
 
   const form = useForm<z.infer<typeof donationSchema>>({
     resolver: zodResolver(donationSchema),
@@ -64,13 +67,17 @@ console.log("UUID", uuid)
       acquiringBank: "aba",
       currency: "USD",
       city: "Phnom Penh",
-      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone
+      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
     },
   });
 
   console.log("Transaction Data: ", transactionData);
 
-  const { handleSubmit, control, formState: { isSubmitting } } = form;
+  const {
+    handleSubmit,
+    control,
+    formState: { isSubmitting },
+  } = form;
 
   // useEffect(() => {
   //   if (md5) {
@@ -128,7 +135,7 @@ console.log("UUID", uuid)
                 "Content-Type": "application/json",
               },
               body: JSON.stringify({ md5 }),
-            }
+            },
           );
 
           if (!response.ok) {
@@ -148,7 +155,8 @@ console.log("UUID", uuid)
         }
 
         elapsedTime += 3000;
-        if (elapsedTime >= 300000) { // 5 minutes
+        if (elapsedTime >= 300000) {
+          // 5 minutes
           setIsOpened(false);
           if (interval) clearInterval(interval);
         }
@@ -160,113 +168,108 @@ console.log("UUID", uuid)
     };
   }, [md5]);
 
- // Submit handler for the donation form
- async function onSubmit(values: z.infer<typeof donationSchema>) {
-  try {
-    // Build the donation object
-    const donation: DonationType = {
-      donationEventID: typedEvents?.uuid || '',
-      donor: userProfile?.uuid,
-      amount: values.amount,
-      recipient: typedEvents?.organization?.uuid || '',
-      acquiringBank: values.acquiringBank,
-      currency: values.currency,
-      city: values.city,
-      timezone: values.timezone || "",
-    };
+  // Submit handler for the donation form
+  async function onSubmit(values: z.infer<typeof donationSchema>) {
+    try {
+      // Build the donation object
+      const donation: DonationType = {
+        donationEventID: typedEvents?.uuid || "",
+        donor: userProfile?.uuid,
+        amount: values.amount,
+        recipient: typedEvents?.organization?.uuid || "",
+        acquiringBank: values.acquiringBank,
+        currency: values.currency,
+        city: values.city,
+        timezone: values.timezone || "",
+      };
 
-    // Save payment data for QR dialog
-    setPaymentData({
-      donationEventID: typedEvents?.name,
-      donor: userProfile?.username,
-      amount: values.amount,
-      recipient: typedEvents?.organization?.name || '',
-      acquiringBank: values.acquiringBank,
-      currency: values.currency,
-      city: values.city,
-      timezone: values.timezone || "",
-    });
-
-    // Validate required fields
-    if (!donation.donationEventID || !donation.donor || !donation.recipient) {
-      toast({
-        title: "Error",
-        description: "Missing required fields. Please check your inputs.",
-        variant: "default",
+      // Save payment data for QR dialog
+      setPaymentData({
+        donationEventID: typedEvents?.name,
+        donor: userProfile?.username,
+        amount: values.amount,
+        recipient: typedEvents?.organization?.name || "",
+        acquiringBank: values.acquiringBank,
+        currency: values.currency,
+        city: values.city,
+        timezone: values.timezone || "",
       });
-      return;
-    }
 
-    // Validate donation amount
-    if (values.amount <= 0) {
+      // Validate required fields
+      if (!donation.donationEventID || !donation.donor || !donation.recipient) {
+        toast({
+          title: "Error",
+          description: "Missing required fields. Please check your inputs.",
+          variant: "default",
+        });
+        return;
+      }
+
+      // Validate donation amount
+      if (values.amount <= 0) {
+        toast({
+          title: "Error",
+          description: "Donation amount must be greater than 0.",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      // Make donation API call
+      const donateResponse = await donate(donation).unwrap();
+      console.log("Donation API Response:", donateResponse);
+
+      const md5Value = donateResponse?.dataKHQRResponse?.data?.md5;
+      if (md5Value) {
+        setMd5(md5Value); // Set md5 value
+      } else {
+        throw new Error("MD5 value missing in donation response.");
+      }
+
+      // Fetch the QR code manually
+      const qrResponse = await fetch(
+        `${process.env.NEXT_PUBLIC_IDONATE_API_URL}/api/qr/generate`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            qr: donateResponse?.dataKHQRResponse?.data?.qr,
+          }),
+        },
+      );
+
+      const qrData = await qrResponse.json();
+      setQrCode(qrData?.base64QRCode); // Save QR code
+      setIsOpened(true); // Open QR dialog
+
+      // Success dialog - check transaction
+      const successResponse = await fetch(
+        `https://api-bakong.nbc.gov.kh/v1/check_transaction_by_md5`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjoiYzIwOWMwNDYzNjBlNDEwMSJ9LCJpYXQiOjE3MzczNTg3NTcsImV4cCI6MTc0NTEzNDc1N30.8CdSi4fVh_b1bT-pjEN0peTi_ws4K4AOKGCxrrH0EYE`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            md5: donateResponse?.dataKHQRResponse?.data?.md5,
+          }),
+        },
+      );
+
+      const successData = await successResponse.json();
+      setTransactionData(successData); // Save transaction data
+    } catch (error: any) {
+      console.error("Error during submission:", error);
       toast({
         title: "Error",
-        description: "Donation amount must be greater than 0.",
+        description: error.message || "An unexpected error occurred.",
         variant: "destructive",
       });
-      return;
     }
-
-    // Make donation API call
-    const donateResponse = await donate(donation).unwrap();
-    console.log("Donation API Response:", donateResponse);
-
-    const md5Value = donateResponse?.dataKHQRResponse?.data?.md5;
-    if (md5Value) {
-      setMd5(md5Value); // Set md5 value
-    } else {
-      throw new Error("MD5 value missing in donation response.");
-    }
-
-    // Fetch the QR code manually
-    const qrResponse = await fetch(
-      `${process.env.NEXT_PUBLIC_IDONATE_API_URL}/api/qr/generate`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          qr: donateResponse?.dataKHQRResponse?.data?.qr,
-        }),
-      }
-    );
-
-    const qrData = await qrResponse.json();
-    setQrCode(qrData?.base64QRCode); // Save QR code
-    setIsOpened(true); // Open QR dialog
-
-    // Success dialog - check transaction
-    const successResponse = await fetch(
-      `https://api-bakong.nbc.gov.kh/v1/check_transaction_by_md5`,
-      {
-        method: "POST",
-        headers: {
-          "Authorization": `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjoiYzIwOWMwNDYzNjBlNDEwMSJ9LCJpYXQiOjE3MzczNTg3NTcsImV4cCI6MTc0NTEzNDc1N30.8CdSi4fVh_b1bT-pjEN0peTi_ws4K4AOKGCxrrH0EYE`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          md5: donateResponse?.dataKHQRResponse?.data?.md5,
-        }),
-      }
-    );
-
-
-    const successData = await successResponse.json();
-    setTransactionData(successData); // Save transaction data
-
-
-  } catch (error: any) {
-    console.error("Error during submission:", error);
-    toast({
-      title: "Error",
-      description: error.message || "An unexpected error occurred.",
-      variant: "destructive",
-    });
   }
-}
-
-
 
   return (
     <Form {...form}>
@@ -323,7 +326,6 @@ console.log("UUID", uuid)
             >
               {isSubmitting ? "Processing..." : "Donate Now"}
             </Button>
-
           </CardFooter>
         </Card>
       </form>
@@ -342,15 +344,13 @@ console.log("UUID", uuid)
         paymentData={paymentData}
         /> */}
 
-
-        {transactionData?.responseCode===0 && isSuccessDialogOpen && (
+      {transactionData?.responseCode === 0 && isSuccessDialogOpen && (
         <SuccessDialog
           isOpen={true}
           onClose={() => setTransactionData(undefined)}
           transactionData={transactionData}
         />
-        )}
-
+      )}
     </Form>
   );
 }

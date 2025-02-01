@@ -15,6 +15,8 @@ export const metadata: Metadata = {
     "iDonate is a trusted platform connecting donors with verified organizations to ensure transparency and credibility in donations.",
   keywords: [
     "iDonate",
+    "idonate",
+    "idonate istad",
     "Donation Platform",
     "Transparent Donations",
     "Charity",
@@ -24,10 +26,10 @@ export const metadata: Metadata = {
     title: "iDonate - Empowering Transparent Donations",
     description:
       "Join iDonate to make impactful and transparent donations. Explore verified organizations and trusted causes.",
-    url: "https://yourwebsite.com",
+    url: "https://idonate.istad.co",
     images: [
       {
-        url: "https://yourwebsite.com/static/home-banner.jpg",
+        url: "https://idonateapi.kangtido.life/media/a1108ea2-b140-4a4c-b07d-21aa141853f5.png",
         width: 1200,
         height: 630,
         alt: "iDonate Home Banner",
@@ -40,7 +42,7 @@ export const metadata: Metadata = {
     title: "iDonate - Empowering Transparent Donations",
     description:
       "Make donations you can trust with iDonate. Explore verified organizations and causes.",
-    images: ["https://yourwebsite.com/static/home-banner.jpg"],
+    images: ["https://idonateapi.kangtido.life/media/a1108ea2-b140-4a4c-b07d-21aa141853f5.png"],
   },
   icons: {
     icon: "/favicon.ico",
@@ -51,18 +53,21 @@ export const metadata: Metadata = {
     follow: true,
   },
   alternates: {
-    canonical: "https://yourwebsite.com",
+    canonical: "https://idonate.istad.co",
     languages: {
-      en: "https://yourwebsite.com",
-      km: "https://yourwebsite.com/kh",
+      en: "https://idonate.istad.co",
+      km: "https://idonate.istad.co",
     },
   },
 };
 
 export default function Homepage() {
-  // update thsi for debugging 
-  
-  console.log("NEXT_PUBLIC_IDONATE_API_URL:", process.env.NEXT_PUBLIC_IDONATE_API_URL);
+  // update thsi for debugging
+
+  console.log(
+    "NEXT_PUBLIC_IDONATE_API_URL:",
+    process.env.NEXT_PUBLIC_IDONATE_API_URL,
+  );
 
   // const typedCategory: CategoryType[] = categories;
   return (
@@ -91,11 +96,10 @@ export default function Homepage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6 lg:gap-9">
           <CategoryCardComponent />
         </div>
-        
       </section>
 
       {/* Total Organization */}
-     <TotalOrganizationComponent />
+      <TotalOrganizationComponent />
 
       {/* Bar and Line Chart */}
       <section className="w-full">

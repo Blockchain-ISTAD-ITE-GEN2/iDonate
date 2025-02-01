@@ -7,25 +7,19 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { EventType } from "@/difinitions/dto/EventType";
+import { EventType } from "@/difinitions/types/event/EventType";
 import { useToast } from "@/hooks/use-toast";
 import { useDeleteEventsMutation } from "@/redux/services/event-service";
 import { Share2, Trash2 } from "lucide-react";
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 
-export function OrganizationEventCard({
-  event,
-}: {
-  event: EventType;
-}) {
-
+export function OrganizationEventCard({ event }: { event: EventType }) {
   const params = useParams();
   const orgUuid = String(params.uuid); // Ensures `uuid` is a string
   const [deleteEvent] = useDeleteEventsMutation();
-  const {toast} = useToast();
+  const { toast } = useToast();
   const router = useRouter();
-
 
   const handleDeleteEvent = async () => {
     try {
@@ -50,7 +44,14 @@ export function OrganizationEventCard({
   };
 
   return (
-    <Card onClick={()=>{router.push(`/organization-dashboard/${orgUuid}/event-edition/${event?.uuid}`)}} className="w-full h-[440px] bg-iDonate-white-space rounded-lg shadow-[1px_1px_1px_3px_rgba(0,0,0,0.03)] cursor-pointer transition-transform hover:scale-[1.01] border p-7 flex flex-col gap-6 border-iDonate-navy-accent dark:bg-iDonate-dark-mode">
+    <Card
+      onClick={() => {
+        router.push(
+          `/organization-dashboard/${orgUuid}/event-edition/${event?.uuid}`,
+        );
+      }}
+      className="w-full h-[440px] bg-iDonate-white-space rounded-lg shadow-[1px_1px_1px_3px_rgba(0,0,0,0.03)] cursor-pointer transition-transform hover:scale-[1.01] border p-7 flex flex-col gap-6 border-iDonate-navy-accent dark:bg-iDonate-dark-mode"
+    >
       <CardContent
         lang="en"
         className="p-0 pb-4 font-inter flex flex-row items-center justify-between border-b-[2px] border-dashed border-b-iDonate-navy-primary dark:border-b-iDonate-navy-accent"
@@ -114,12 +115,12 @@ export function OrganizationEventCard({
             </CardDescription>
           </CardContent>
 
-          <CardContent
-            lang="en"
-            className="p-0 flex gap-9 items-end flex-grow"
-          >
+          <CardContent lang="en" className="p-0 flex gap-9 items-end flex-grow">
             <div className="flex flex-col gap-2">
-              <CardTitle lang="km" className="text-lg font-inter font-normal text-iDonate-green-primary p-0 dark:text-iDonate-green-secondary">
+              <CardTitle
+                lang="km"
+                className="text-lg font-inter font-normal text-iDonate-green-primary p-0 dark:text-iDonate-green-secondary"
+              >
                 ថ្ងៃចាប់ផ្តើម
               </CardTitle>
               <CardDescription className="text-xl font-inter text-iDonate-navy-primary p-0 dark:text-iDonate-navy-accent">
@@ -134,21 +135,28 @@ export function OrganizationEventCard({
             </div>
 
             <div className="flex flex-col gap-2">
-              <CardTitle lang="km" className="text-lg font-inter font-normal text-iDonate-green-primary p-0 dark:text-iDonate-green-secondary">
+              <CardTitle
+                lang="km"
+                className="text-lg font-inter font-normal text-iDonate-green-primary p-0 dark:text-iDonate-green-secondary"
+              >
                 ថ្ងៃបញ្ចប់
               </CardTitle>
               <CardDescription className="text-xl font-inter text-iDonate-navy-primary p-0 dark:text-iDonate-navy-accent">
-                {event?.endDate ? new Intl.DateTimeFormat("en-US", {
-                  day: "2-digit",
-                  month: "long",
-                  year: "numeric",
-                }).format(new Date(event.endDate))
-                : ""}
+                {event?.endDate
+                  ? new Intl.DateTimeFormat("en-US", {
+                      day: "2-digit",
+                      month: "long",
+                      year: "numeric",
+                    }).format(new Date(event.endDate))
+                  : ""}
               </CardDescription>
             </div>
 
             <div className="flex flex-col gap-2">
-              <CardTitle lang="km" className="text-lg font-inter font-normal text-iDonate-green-primary p-0 dark:text-iDonate-green-secondary">
+              <CardTitle
+                lang="km"
+                className="text-lg font-inter font-normal text-iDonate-green-primary p-0 dark:text-iDonate-green-secondary"
+              >
                 ចំនួនទឹកប្រាក់
               </CardTitle>
               <CardDescription className="text-xl font-inter text-iDonate-navy-primary p-0 dark:text-iDonate-navy-accent">
@@ -157,7 +165,10 @@ export function OrganizationEventCard({
             </div>
 
             <div className="flex flex-col gap-2">
-              <CardTitle lang="km" className="text-lg font-inter font-normal text-iDonate-green-primary p-0 dark:text-iDonate-green-secondary">
+              <CardTitle
+                lang="km"
+                className="text-lg font-inter font-normal text-iDonate-green-primary p-0 dark:text-iDonate-green-secondary"
+              >
                 ចំនួនអ្នកបរិច្ចាគ
               </CardTitle>
               <CardDescription className="text-xl font-inter text-iDonate-navy-primary p-0 dark:text-iDonate-navy-accent">

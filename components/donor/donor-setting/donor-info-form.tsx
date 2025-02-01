@@ -38,7 +38,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useGetUserProfileQuery, useUpdateUserProfileMutation } from "@/redux/services/user-profile";
+import {
+  useGetUserProfileQuery,
+  useUpdateUserProfileMutation,
+} from "@/redux/services/user-profile";
 import { useToast } from "@/hooks/use-toast"; // Import the useToast hook from shadcn/ui
 
 const donorSchema = z.object({
@@ -49,11 +52,13 @@ const donorSchema = z.object({
     required_error: "សូមជ្រើសរើសភេទ",
   }),
   username: z.string().min(3, "ឈ្មោះអ្នកប្រើត្រូវតែមានយ៉ាងហោចណាស់ ៣ តួអក្សរ"),
-  dateOfBirth: z.date({
-    required_error: "កាលបរិច្ឆេទកំណើតត្រូវបំពេញ",
-  }).refine((date) => date <= new Date(), {
-    message: "កាលបរិច្ឆេទកំណើតមិនអាចនៅអនាគតបានទេ",
-  }),
+  dateOfBirth: z
+    .date({
+      required_error: "កាលបរិច្ឆេទកំណើតត្រូវបំពេញ",
+    })
+    .refine((date) => date <= new Date(), {
+      message: "កាលបរិច្ឆេទកំណើតមិនអាចនៅអនាគតបានទេ",
+    }),
 });
 
 type DonorFormData = z.infer<typeof donorSchema>;
@@ -100,11 +105,15 @@ export function DonorInfoForm({
   onDateOfBirthPercentageUpdate,
   onGenderPercentagePercentageUpdate,
   onPhoneNumberPercentageUpdate,
-}:DonorInfoFormProps ) {
+}: DonorInfoFormProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast(); // Initialize the toast hook
-  const { data: profile, isLoading, error: fetchError } = useGetUserProfileQuery({});
+  const {
+    data: profile,
+    isLoading,
+    error: fetchError,
+  } = useGetUserProfileQuery({});
   const [updateProfile] = useUpdateUserProfileMutation();
 
   const form = useForm<DonorFormData>({
@@ -113,9 +122,12 @@ export function DonorInfoForm({
       phoneNumber: profile?.phoneNumber || "",
       firstName: profile?.firstName || "",
       lastName: profile?.lastName || "",
-      gender: (profile?.gender?.toLowerCase() as DonorFormData["gender"]) || "other",
+      gender:
+        (profile?.gender?.toLowerCase() as DonorFormData["gender"]) || "other",
       username: profile?.username || "",
-      dateOfBirth: profile?.dateOfBirth ? new Date(profile.dateOfBirth) : undefined,
+      dateOfBirth: profile?.dateOfBirth
+        ? new Date(profile.dateOfBirth)
+        : undefined,
     },
   });
 
@@ -127,7 +139,6 @@ export function DonorInfoForm({
   const dateOfBirth = watch("dateOfBirth");
   const gender = watch("gender");
   const phoneNumber = watch("phoneNumber");
-  
 
   // Update percentages based on input
   useEffect(() => {
@@ -145,7 +156,6 @@ export function DonorInfoForm({
       onDateOfBirthPercentageUpdate(dateOfBirthPercentage);
       onGenderPercentagePercentageUpdate(genderPercentage);
       onPhoneNumberPercentageUpdate(phoneNumberPercentage);
-
     };
 
     calculateCompletionPercentage();
@@ -162,17 +172,16 @@ export function DonorInfoForm({
     onDateOfBirthPercentageUpdate,
     onGenderPercentagePercentageUpdate,
     onPhoneNumberPercentageUpdate,
-
   ]);
 
   const onSubmit = async (data: DonorFormData) => {
     try {
       setIsSubmitting(true);
-  
+
       if (!profile?.uuid) {
         throw new Error("រកមិនឃើញ UUID របស់អ្នកប្រើ");
       }
-  
+
       await updateProfile({
         uuid: profile.uuid,
         updatedUserProfile: {
@@ -181,8 +190,7 @@ export function DonorInfoForm({
           dateOfBirth: format(data.dateOfBirth, "dd-MM-yyyy"),
         },
       }).unwrap();
-      
-  
+
       console.log("Profile updated successfully"); // Add this line
       toast({
         title: "ជោគជ័យ",
@@ -190,7 +198,7 @@ export function DonorInfoForm({
         duration: 3000,
         variant: "default",
       });
-  
+
       setIsEditing(false);
     } catch (error: any) {
       console.error("កែប្រែព័ត៌មានបរាជ័យ:", error);
@@ -259,7 +267,8 @@ export function DonorInfoForm({
                       {field.label}
                     </CardDescription>
                     <p className="text-base p-2 border-1 border rounded-md bg-iDonate-navy-accent">
-                      {profile?.[field.name as keyof typeof profile] || "មិនមាន"}
+                      {profile?.[field.name as keyof typeof profile] ||
+                        "មិនមាន"}
                     </p>
                   </div>
                 ))}
@@ -289,13 +298,19 @@ export function DonorInfoForm({
                     name={field.name as keyof DonorFormData}
                     render={({ field: formField }) => (
                       <FormItem>
-                        <FormLabel className="text-md text-iDonate-navy-secondary">{field.label}</FormLabel>
+                        <FormLabel className="text-md text-iDonate-navy-secondary">
+                          {field.label}
+                        </FormLabel>
                         <FormControl>
                           <Input
                             {...formField}
                             placeholder={field.placeholder}
                             className="text-iDonate-navy-primary p-2 border-1 border rounded-md bg-iDonate-navy-accent text-md"
-                            value={formField.value instanceof Date ? formField.value.toISOString() : formField.value}
+                            value={
+                              formField.value instanceof Date
+                                ? formField.value.toISOString()
+                                : formField.value
+                            }
                           />
                         </FormControl>
                         <FormDescription>{field.description}</FormDescription>
@@ -310,7 +325,9 @@ export function DonorInfoForm({
                   name="dateOfBirth"
                   render={({ field }) => (
                     <FormItem className="flex flex-col">
-                      <FormLabel className="text-md text-iDonate-navy-secondary">កាលបរិច្ឆេទកំណើត</FormLabel>
+                      <FormLabel className="text-md text-iDonate-navy-secondary">
+                        កាលបរិច្ឆេទកំណើត
+                      </FormLabel>
                       <Popover>
                         <PopoverTrigger asChild>
                           <FormControl>
@@ -318,7 +335,7 @@ export function DonorInfoForm({
                               variant="outline"
                               className={cn(
                                 "w-full pl-3 text-left font-normal",
-                                !field.value && "text-muted-foreground"
+                                !field.value && "text-muted-foreground",
                               )}
                             >
                               {field.value ? (
@@ -342,18 +359,22 @@ export function DonorInfoForm({
                           />
                         </PopoverContent>
                       </Popover>
-                      <FormDescription>កាលបរិច្ឆេទកំណើតរបស់អ្នក</FormDescription>
+                      <FormDescription>
+                        កាលបរិច្ឆេទកំណើតរបស់អ្នក
+                      </FormDescription>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
-                
+
                 <FormField
                   control={form.control}
                   name="gender"
                   render={({ field: formField }) => (
                     <FormItem>
-                      <FormLabel className="text-md text-iDonate-navy-secondary">ភេទ</FormLabel>
+                      <FormLabel className="text-md text-iDonate-navy-secondary">
+                        ភេទ
+                      </FormLabel>
                       <Select
                         onValueChange={formField.onChange}
                         defaultValue={formField.value}
@@ -384,7 +405,11 @@ export function DonorInfoForm({
                   >
                     បោះបង់
                   </Button>
-                  <Button type="submit" className="bg-iDonate-navy-primary hover:bg-iDonate-navy-secondary" disabled={isSubmitting}>
+                  <Button
+                    type="submit"
+                    className="bg-iDonate-navy-primary hover:bg-iDonate-navy-secondary"
+                    disabled={isSubmitting}
+                  >
                     {isSubmitting ? "កំពុងរក្សាទុក..." : "រក្សាទុក"}
                   </Button>
                 </div>

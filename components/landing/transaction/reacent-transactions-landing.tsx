@@ -19,13 +19,15 @@ export function RecentTransactionsLanding() {
   useEffect(() => {
     const fetchTransactions = async () => {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/donation`);
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/donation`,
+        );
         if (!response.ok) {
           throw new Error("Failed to fetch transactions");
         }
         const data = await response.json();
 
-        console.log("User transaction data", data.json())
+        console.log("User transaction data", data.json());
         setTransactions(data.content); // Extracting the `content` array from the response
       } catch (err: any) {
         setError(err.message || "Something went wrong");

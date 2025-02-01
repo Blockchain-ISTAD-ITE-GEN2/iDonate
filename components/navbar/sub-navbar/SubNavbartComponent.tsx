@@ -21,7 +21,7 @@ export default function SubNavbarComponent({
 
   return (
     <section className="flex flex-row ">
-      {menuList?.map((item, index) => {
+      {menuList.map((item, index) => {
         const isActive = pathname === item.path;
 
         return (

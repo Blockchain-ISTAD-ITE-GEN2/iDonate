@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     url: "https://yourwebsite.com/donor-dashboard",
     images: [
       {
-        url: "https://yourwebsite.com/static/donor-dashboard-banner.jpg",
+        url: "https://idonateapi.kangtido.life/media/0b967dfd-0897-4197-b631-c24affbd812b.png",
         width: 1200,
         height: 630,
         alt: "Donor Dashboard Preview",

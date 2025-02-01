@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { EventFormCreation } from "@/components/organization/event-creation/event-form";
 import {
   Breadcrumb,
@@ -11,7 +11,6 @@ import {
 import { useParams } from "next/navigation";
 
 export default function EventCreation() {
-
   const params = useParams();
   const orgUuid = String(params.uuid);
 

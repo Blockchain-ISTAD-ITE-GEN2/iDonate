@@ -19,14 +19,14 @@ export const donationApi = idonateApi.injectEndpoints({
       }),
     }),
     getOrgTransactions: builder.query({
-      query: (orgUuid:string) => `/donation/org-transactions/${orgUuid}`,
+      query: (orgUuid: string) => `/donation/org-transactions/${orgUuid}`,
       providesTags: [{ type: "donation", id: "LIST" }],
-    })
+    }),
   }),
 });
 
-export const { 
-  useMakeDonationMutation, 
+export const {
+  useMakeDonationMutation,
   useGenerateQrCodeMutation,
-  useGetOrgTransactionsQuery
+  useGetOrgTransactionsQuery,
 } = donationApi;

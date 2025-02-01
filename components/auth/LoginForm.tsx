@@ -1,44 +1,47 @@
-"use client"
+"use client";
 
-import { signIn, useSession } from "next-auth/react"
-import { type SubmitHandler, useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { z } from "zod"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Card } from "@/components/ui/card"
-import { Loader2, Eye, EyeOff, Mail, Lock } from "lucide-react"
-import Image from "next/image"
-import Link from "next/link"
-import { useState } from "react"
-import { motion } from "framer-motion"
-import BackgroundImage from "@/public/images/donation-login.jpg"
-import GoogleIcon from "@/public/images/google.png"
-import FacebookIcon from "@/public/images/facebook.png"
-import SampleLogo from "@/public/logo/logodesign no background.png"
-import { useDispatch } from "react-redux"
-import { setToken } from "@/redux/features/auth/authSlice"
-import { useRouter } from "next/navigation"
-import AnimatedText from "@/components/auth/AnimationText"
-import { LoginSchema } from "../schema/schema"
-import { useToast } from "@/hooks/use-toast"
-import { Toaster } from "@/components/ui/toaster"
+import { signIn, useSession } from "next-auth/react";
+import { type SubmitHandler, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Card } from "@/components/ui/card";
+import { Loader2, Eye, EyeOff, Mail, Lock } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { useState } from "react";
+import { motion } from "framer-motion";
+import BackgroundImage from "@/public/images/donation-login.jpg";
+import GoogleIcon from "@/public/images/google.png";
+import FacebookIcon from "@/public/images/facebook.png";
+import SampleLogo from "@/public/logo/logodesign no background.png";
+import { useDispatch } from "react-redux";
+import { setToken } from "@/redux/features/auth/authSlice";
+import { useRouter } from "next/navigation";
+import AnimatedText from "@/components/auth/AnimationText";
+import { LoginSchema } from "../schema/schema";
+import { useToast } from "@/hooks/use-toast";
+import { Toaster } from "@/components/ui/toaster";
 
 // Zod schema for form validation
 const loginSchema = z.object({
-  email: z.string().email("គណនីអ៊ីមែលមិនត្រឹមត្រូវ").nonempty("អ៊ីមែលត្រូវបានទាមទារឲ្យស្នើ"),
+  email: z
+    .string()
+    .email("គណនីអ៊ីមែលមិនត្រឹមត្រូវ")
+    .nonempty("អ៊ីមែលត្រូវបានទាមទារឲ្យស្នើ"),
   password: z.string().nonempty("ពាក្យសម្ងាត់ត្រូវបានទាមទារឲ្យស្នើ"),
-})
+});
 
-type LoginFormValues = z.infer<typeof loginSchema>
+type LoginFormValues = z.infer<typeof loginSchema>;
 
 export default function LoginForm() {
-  const dispatch = useDispatch()
-  const [showPassword, setShowPassword] = useState(false)
-  const [loading, setLoading] = useState(false)
-  const router = useRouter()
+  const dispatch = useDispatch();
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
   const { data: session } = useSession();
-  const { toast } = useToast()
+  const { toast } = useToast();
 
   const {
     register,
@@ -48,69 +51,73 @@ export default function LoginForm() {
   } = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
     defaultValues: { email: "", password: "" },
-  })
+  });
 
   const onSubmit: SubmitHandler<LoginFormValues> = async (data) => {
-    setLoading(true)
+    setLoading(true);
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_IDONATE_API_URL}/api/v1/auth/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-        credentials: "include",
-      })
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_IDONATE_API_URL}/api/v1/auth/login`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+          credentials: "include",
+        },
+      );
 
-      const result = await response.json()
+      const result = await response.json();
 
       if (!response.ok) {
         if (response.status === 401) {
           setError("password", {
             type: "manual",
             message: "ពាក្យសម្ងាត់មិនត្រឹមត្រូវ",
-          })
+          });
           toast({
             variant: "destructive",
             title: "ការចូលប្រើបរាជ័យ",
             description: "ពាក្យសម្ងាត់មិនត្រឹមត្រូវ សូមព្យាយាមម្តងទៀត។",
-          })
+          });
         } else if (response.status === 404) {
           setError("email", {
             type: "manual",
             message: "រកមិនឃើញគណនីអ៊ីមែលនេះទេ",
-          })
+          });
           toast({
             variant: "destructive",
             title: "ការចូលប្រើបរាជ័យ",
-            description: "រកមិនឃើញគណនីអ៊ីមែលនេះទេ សូមពិនិត្យមើលអាសយដ្ឋានអ៊ីមែលរបស់អ្នកម្តងទៀត។",
-          })
+            description:
+              "រកមិនឃើញគណនីអ៊ីមែលនេះទេ សូមពិនិត្យមើលអាសយដ្ឋានអ៊ីមែលរបស់អ្នកម្តងទៀត។",
+          });
         } else {
-          throw new Error("ការចូលប្រើបរាជ័យ")
+          throw new Error("ការចូលប្រើបរាជ័យ");
         }
-        return
+        return;
       }
 
-      console.log("Login Response:", result)
-      document.cookie = `idonate-refresh-token=${result.refreshToken};path=/;max-age=3600;SameSite=Lax;Secure`
-      dispatch(setToken(result.accessToken))
-      console.log("Redirecting to home page...")
-      router.push("/")
+      console.log("Login Response:", result);
+      document.cookie = `idonate-refresh-token=${result.refreshToken};path=/;max-age=3600;SameSite=Lax;Secure`;
+      dispatch(setToken(result.accessToken));
+      console.log("Redirecting to home page...");
+      router.push("/");
       toast({
         variant: "success",
         title: "ជោគជ័យ",
         description: "សូមស្វាគមន៍មកកាន់ iDonate",
-      })
+      });
     } catch (error) {
-      console.error("Login error:", error)
+      console.error("Login error:", error);
       toast({
         variant: "destructive",
         title: "ការចូលប្រើបរាជ័យ",
         description: "មានបញ្ហាក្នុងការភ្ជាប់ទៅកាន់ប្រព័ន្ធ សូមព្យាយាមម្តងទៀត។",
-      })
+      });
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   // Handle social login
   const handleSocialLogin = async (provider: string) => {
@@ -143,13 +150,16 @@ export default function LoginForm() {
         };
 
         // Send the user data to your API
-        const response = await fetch(`${process.env.NEXT_PUBLIC_IDONATE_API_URL}/api/v1/users/user-registration?isSocialLogin=true`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_IDONATE_API_URL}/api/v1/users/user-registration?isSocialLogin=true`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(userData),
           },
-          body: JSON.stringify(userData),
-        });
+        );
 
         if (!response.ok) {
           throw new Error("Failed to register user via social login");
@@ -169,14 +179,13 @@ export default function LoginForm() {
       toast({
         variant: "destructive",
         title: "Login Failed",
-        description: "There was an issue with the social login. Please try again.",
+        description:
+          "There was an issue with the social login. Please try again.",
       });
     } finally {
       setLoading(false);
     }
   };
-
-
 
   return (
     <div className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
@@ -189,7 +198,7 @@ export default function LoginForm() {
         quality={100}
         priority
       />
-      
+
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -202,13 +211,25 @@ export default function LoginForm() {
             whileTap={{ scale: 0.95, rotate: -5 }}
             className="flex justify-center mb-6 xl:mb-4 md:mb-0"
           >
-            <Image src={SampleLogo || "/placeholder.svg"} alt="iDonate Logo" width={160} height={160} unoptimized />
+            <Image
+              src={SampleLogo || "/placeholder.svg"}
+              alt="iDonate Logo"
+              width={160}
+              height={160}
+              unoptimized
+            />
           </motion.div>
           <AnimatedText />
 
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 sm:space-y-6">
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="space-y-4 sm:space-y-6"
+          >
             <div>
-              <label htmlFor="email" className="flex items-center space-x-2 text-sm font-medium text-gray-700 mb-1">
+              <label
+                htmlFor="email"
+                className="flex items-center space-x-2 text-sm font-medium text-gray-700 mb-1"
+              >
                 <Mail className="w-4 h-4 text-iDonate-navy-primary" />
                 <span>
                   អ៉ីមែល <span className="text-red-500">*</span>
@@ -233,7 +254,10 @@ export default function LoginForm() {
             </div>
 
             <div className="relative">
-              <label htmlFor="password" className="flex items-center space-x-2 text-sm font-medium text-gray-700 mb-1">
+              <label
+                htmlFor="password"
+                className="flex items-center space-x-2 text-sm font-medium text-gray-700 mb-1"
+              >
                 <Lock className="w-4 h-4 text-iDonate-navy-primary" />
                 <span>
                   បញ្ចូលពាក្យសម្ងាត់ <span className="text-red-500">*</span>
@@ -251,7 +275,11 @@ export default function LoginForm() {
                 onClick={() => setShowPassword(!showPassword)}
                 className="absolute right-3 top-8 text-gray-400 hover:text-gray-600 focus:outline-none items-center"
               >
-                {showPassword ? <Eye size={18} className="mt-1" /> : <EyeOff size={18} className="mt-1" />}
+                {showPassword ? (
+                  <Eye size={18} className="mt-1" />
+                ) : (
+                  <EyeOff size={18} className="mt-1" />
+                )}
               </button>
               {errors.password && (
                 <motion.p
@@ -280,20 +308,30 @@ export default function LoginForm() {
               </Link>
             </div>
 
-            <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="mt-6 sm:mt-8">
+            <motion.div
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              className="mt-6 sm:mt-8"
+            >
               <Button
                 type="submit"
                 className="w-full h-10 sm:h-11 bg-iDonate-navy-primary hover:bg-iDonate-navy-primary/90 text-white font-medium rounded-md transition-all duration-200 shadow-md hover:shadow-lg"
                 disabled={loading}
               >
-                {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : "ចូលប្រើ"}
+                {loading ? (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                ) : (
+                  "ចូលប្រើ"
+                )}
               </Button>
             </motion.div>
           </form>
 
           <div className="flex items-center my-4 mb-0">
             <span className="flex-grow border-t border-gray-400"></span>
-            <span className="mx-4 text-sm text-gray-500 font-medium">បន្តជាមួយគណនី</span>
+            <span className="mx-4 text-sm text-gray-500 font-medium">
+              បន្តជាមួយគណនី
+            </span>
             <span className="flex-grow border-t border-gray-400"></span>
           </div>
 
@@ -345,6 +383,5 @@ export default function LoginForm() {
       </motion.div>
       <Toaster />
     </div>
-  )
+  );
 }
-

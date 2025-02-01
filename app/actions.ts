@@ -4,9 +4,13 @@ import { sendPasswordResetEmail } from "@/lib/email";
 import { updateUserPassword } from "@/lib/auth";
 
 // actions.ts
-export async function resetPassword(newPassword: string, confirmPassword: string, email: string, token: string): Promise<void> {
-
-  console.log("Reset password token: ",token)
+export async function resetPassword(
+  newPassword: string,
+  confirmPassword: string,
+  email: string,
+  token: string,
+): Promise<void> {
+  console.log("Reset password token: ", token);
   const endpoint = `${process.env.IDONATE_BASE_URL}/api/v1/users/password-reset?token=${token}`;
   const requestBody = {
     email,
