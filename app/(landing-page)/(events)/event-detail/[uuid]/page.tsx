@@ -9,7 +9,7 @@ type EventDetailProps = {
 // get Event  Detail 
 async function getEventDetails(uuid: string) {
 
-  const response = await fetch(`https://idonateapi.kangtido.life//api/v1/events/get-event-by-uuid/${uuid}`);
+  const response = await fetch(`https://idonateapi.kangtido.life/api/v1/events/get-event-by-uuid/${uuid}`);
   
   const data = await response.json();
 

@@ -13,7 +13,7 @@ type OrganizationDetail = {
 // get Event  Detail 
 async function getOrganizationDetails(uuid: string) {
 
-  const response = await fetch(`https://idonateapi.kangtido.life//api/v1/events/get-event-by-organization/${uuid}`);
+  const response = await fetch(`https://idonateapi.kangtido.life/api/v1/events/get-event-by-organization/${uuid}`);
   
   const data = await response.json();
 

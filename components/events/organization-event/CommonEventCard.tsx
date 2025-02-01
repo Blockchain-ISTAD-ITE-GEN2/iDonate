@@ -1,16 +1,16 @@
 "use client";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { Card, CardContent, CardHeader } from "../../ui/card";
 import { CircleDollarSign, Users } from "lucide-react";
 import { useRouter } from "next/navigation";
-import React from "react";
 import { FaRegCalendarAlt } from "react-icons/fa";
 import { HiCalendarDateRange } from "react-icons/hi2";
 import { EventType } from "@/difinitions/types/event/EventType";
-// import { EventType } from "next-auth";
-// import { EventTypes } from "@/difinitions/dto/EventType";
+import SockJS from "sockjs-client";
+import { Client } from "@stomp/stompjs";
 
-// function to covert format
+// Function to format the date
 function formatDate(dateString: string | undefined): string {
   if (!dateString) return "N/A";
   const date = new Date(dateString);
@@ -23,11 +23,52 @@ function formatDate(dateString: string | undefined): string {
 
 export function CommonEventCard({ event }: { event: EventType }) {
   const router = useRouter();
+  
+  // State for real-time updates
+  const [totalDonors, setTotalDonors] = useState(event.totalDonors || 0);
+  const [currentRaised, setCurrentRaised] = useState(event.currentRaised || 0);
+
+  useEffect(() => {
+    // WebSocket connection
+    const socket = new SockJS(`${process.env.NEXT_PUBLIC_API_BASE_URL}/websocket`);
+    const stompClient = new Client({
+      webSocketFactory: () => socket,
+      reconnectDelay: 5000, // Auto-reconnect every 5s if connection is lost
+    });
+
+    stompClient.onConnect = () => {
+      console.log("Connected to WebSocket");
+
+      // Subscribe to donation amount updates
+      stompClient.subscribe("/topic/totalAmountOfEvent", (message) => {
+        const updatedAmount = JSON.parse(message.body);
+        console.log("Updated Donation Amount:", updatedAmount);
+        setCurrentRaised(updatedAmount);
+      });
+
+      // Subscribe to total donors count
+      stompClient.subscribe(`/topic/totalDonorsByEachEvent`, (message) => {
+        const updatedDonors = JSON.parse(message.body);
+        console.log("Updated Donor Count:", updatedDonors);
+        setTotalDonors(updatedDonors);
+      });
+    };
+
+    stompClient.onWebSocketError = (error) => {
+      console.error("WebSocket Error:", error);
+    };
+
+    stompClient.activate();
+
+    return () => {
+      stompClient.deactivate();
+    };
+  }, []);
 
   return (
     <Card
       onClick={() => router.push(`/event-detail/${event?.uuid}`)}
-      className=" w-full rounded-[10px] bg-iDonate-light-gray border-0 cursor-pointer shadow-md transition-transform hover:scale-[1.02] dark:bg-iDonate-dark-mode "
+      className="w-full rounded-[10px] bg-iDonate-light-gray border-0 cursor-pointer shadow-md transition-transform hover:scale-[1.02] dark:bg-iDonate-dark-mode"
     >
       {/* Header with Image */}
       <CardHeader className="w-full h-[180px] p-0 rounded-t-[10px] overflow-hidden">
@@ -50,7 +91,7 @@ export function CommonEventCard({ event }: { event: EventType }) {
       </CardHeader>
 
       {/* Content */}
-      <CardContent className="px-4 py-4 flex flex-col gap-4 ">
+      <CardContent className="px-4 py-4 flex flex-col gap-4">
         {/* Dates */}
         <div className="flex justify-between text-sm">
           <div className="flex flex-col">
@@ -62,7 +103,6 @@ export function CommonEventCard({ event }: { event: EventType }) {
                 Start date
               </p>
             </div>
-
             <p className="text-iDonate-green-primary dark:text-iDonate-green-secondary">
               {formatDate(event?.startDate) || "12 Dec 2024"}
             </p>
@@ -73,10 +113,9 @@ export function CommonEventCard({ event }: { event: EventType }) {
                 <HiCalendarDateRange />
               </span>
               <p className="text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
-                Order date
+                End date
               </p>
             </div>
-
             <p className="text-iDonate-green-primary dark:text-iDonate-green-secondary">
               {formatDate(event?.endDate) || "12 Dec 2025"}
             </p>
@@ -84,16 +123,16 @@ export function CommonEventCard({ event }: { event: EventType }) {
         </div>
 
         {/* Title and Description */}
-        <div className="flex flex-col flex-1 ">
+        <div className="flex flex-col flex-1">
           <h3
             lang="km"
-            className="font-bold text-medium-khmer text-iDonate-navy-primary line-clamp-1 dark:text-iDonate-navy-accent "
+            className="font-bold text-medium-khmer text-iDonate-navy-primary line-clamp-1 dark:text-iDonate-navy-accent"
           >
             {event?.name || "Untitled Event"}
           </h3>
           <p
             lang="km"
-            className="font-light text-iDonate-navy-secondary line-clamp-2 dark:text-iDonate-navy-accent h-12 "
+            className="font-light text-iDonate-navy-secondary line-clamp-2 dark:text-iDonate-navy-accent h-12"
           >
             {event?.description || "No description available"}
           </p>
@@ -104,8 +143,8 @@ export function CommonEventCard({ event }: { event: EventType }) {
           <div className="flex items-center gap-2">
             <Users className="h-5 w-5 text-iDonate-navy-primary dark:text-iDonate-navy-accent" />
             <h3 className="text-description-khmer text-iDonate-navy-primary line-clamp-1 dark:text-iDonate-navy-accent">
-              {event?.totalDonors
-                ? `${event?.totalDonors} នាក់បរិច្ចាគ`
+              {totalDonors
+                ? `${totalDonors} នាក់បរិច្ចាគ`
                 : "No donors yet"}
             </h3>
           </div>
@@ -113,8 +152,8 @@ export function CommonEventCard({ event }: { event: EventType }) {
           <div className="flex items-center gap-2">
             <CircleDollarSign className="h-5 w-5 text-iDonate-green-primary dark:text-iDonate-green-secondary" />
             <p className="text-medium-khmer text-iDonate-green-primary line-clamp-1 dark:text-iDonate-green-secondary">
-              {event?.currentRaised
-                ? `$ ${event?.currentRaised}`
+              {currentRaised
+                ? `$ ${currentRaised}`
                 : "No amount collected"}
             </p>
           </div>
