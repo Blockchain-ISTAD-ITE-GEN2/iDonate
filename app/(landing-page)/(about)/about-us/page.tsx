@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "About Us - iDonate",
     description:
-      "Meet the passionate team and mentors who ensure transparency and credibility on iDonate.",
+      "Meet the passionate  team and mentors who ensure transparency and credibility on iDonate.",
     url: "https://idonate.istad.co/about-us",
     images: [
       {
