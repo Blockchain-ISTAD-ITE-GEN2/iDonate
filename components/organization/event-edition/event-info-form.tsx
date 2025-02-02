@@ -74,13 +74,13 @@ export function EventInfoFormEdition({
   const form = useForm<z.infer<typeof eventInfoSchema>>({
     resolver: zodResolver(eventInfoSchema),
     defaultValues: {
-      name: typedEvent?.name,
-      description: typedEvent?.description,
-      location: typedEvent?.location,
-      startDate: typedEvent?.startDate,
-      endDate: typedEvent?.endDate,
-      timezone: typedEvent?.timezone,
-      images: typedEvent?.images,
+      name: typedEvent?.name || "",
+      description: typedEvent?.description || "",
+      location: typedEvent?.location || "",
+      startDate: typedEvent?.startDate || "",
+      endDate: typedEvent?.endDate || "",
+      timezone: typedEvent?.timezone || "",
+      images: typedEvent?.images || [],
     },
   });
 
