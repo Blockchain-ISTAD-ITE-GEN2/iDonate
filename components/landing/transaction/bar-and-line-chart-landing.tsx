@@ -15,11 +15,11 @@ import barchart from "@/data/barchart.json";
 import averages from "@/data/average-data.json";
 import { ReacentTransacctions } from "@/components/organization/dashboard/ReacentTransacctions";
 import { AverageType, BarchartType } from "@/difinitions/types/chart/barchart";
+import SockJS from "sockjs-client";
+import { Client } from "@stomp/stompjs";
 
 export function BarAndLineChartLanding() {
-  const [recentTransactions, setRecentTransactions] = useState<
-    TransactionType[]
-  >([]);
+  const [recentTransactions, setRecentTransactions] = useState<TransactionType[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<null | string>(null);
 
@@ -37,6 +37,7 @@ export function BarAndLineChartLanding() {
   }));
 
   useEffect(() => {
+    // Fetch initial transactions
     const fetchTransactions = async () => {
       try {
         const response = await fetch(
@@ -66,6 +67,48 @@ export function BarAndLineChartLanding() {
     };
 
     fetchTransactions();
+
+    // Set up WebSocket connection
+    const socket = new SockJS(`${process.env.NEXT_PUBLIC_API_BASE_URL}/ws`);
+    const stompClient = new Client({
+      webSocketFactory: () => socket,
+      reconnectDelay: 5000,
+      heartbeatIncoming: 4000,
+      heartbeatOutgoing: 4000,
+    });
+
+    stompClient.onConnect = () => {
+      console.log("WebSocket connected");
+      stompClient.subscribe("/topic/recentDonationTransaction", (message) => {
+        const newTransaction = JSON.parse(message.body);
+
+        // Map the new transaction to TransactionType format
+        const formattedTransaction: TransactionType = {
+          avatar: newTransaction.avatar || "",
+          donor: newTransaction.username,
+          amount: newTransaction.donationAmount,
+          timestamp: newTransaction.timestamp,
+        };
+
+        // Update the recentTransactions state
+        setRecentTransactions((prevTransactions) => [
+          formattedTransaction,
+          ...prevTransactions,
+        ]);
+      });
+    };
+
+    stompClient.onStompError = (frame) => {
+      console.error("WebSocket error:", frame.headers.message);
+      setError("WebSocket connection error");
+    };
+
+    stompClient.activate();
+
+    // Cleanup WebSocket connection on unmount
+    return () => {
+      stompClient.deactivate();
+    };
   }, []);
 
   if (loading) {
