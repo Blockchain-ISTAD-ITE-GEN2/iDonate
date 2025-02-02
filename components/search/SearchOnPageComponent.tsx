@@ -9,7 +9,7 @@ import { Button } from "../ui/button";
 
 export function SearchPage() {
 
-  // const [page,setPage] = useState(12);
+  // const [page,setPage] = useState(4);
 
   const {
     data: apiEventReponse = { content: [] },
@@ -17,8 +17,11 @@ export function SearchPage() {
     isError,
   } = useGetDraftEventsFalseQuery({});
 
-  const typedEvents: EventType[] = apiEventReponse?.content || [];
+  const eventOnSearch:EventType[] = apiEventReponse?.content || [];
 
+  const typedEvents:EventType[] = apiEventReponse?.content || [];
+
+  // const typedEventPage: EventType[] = eventOnSearch.slice(0,page) || [];
 
   const [filteredEvents, setFilteredEvents] = useState<EventType[]>(typedEvents);
 
@@ -77,7 +80,6 @@ export function SearchPage() {
   //   setPage((prevCountPage) => prevCountPage + 4);
   // };
 
-
   return (
     <section className="flex flex-col gap-6 container mx-auto">
       
@@ -114,15 +116,15 @@ export function SearchPage() {
       )}
 
       {/* Show More Button */}
-      <div className="flex justify-end">
+      {/* <div className="flex justify-end">
         <Button
-          // onClick={hanldeShowPage}
+          onClick={hanldeShowPage}
           className="text-medium-eng text-iDonate-navy-primary bg-iDonate-white-space border-2 border-iDonate-navy-accent hover:bg-iDonate-navy-accent dark:bg-iDonate-dark-mode dark:text-iDonate-navy-accent dark:hover:text-iDonate-navy-secondary dark:hover:border-iDonate-navy-secondary
         "
         >
           Show more
         </Button>
-      </div>
+      </div> */}
     </section>
   );
 }
