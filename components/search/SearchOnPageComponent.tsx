@@ -3,22 +3,24 @@ import {  useEffect, useState } from "react";
 import { Toolbar } from "@/components/filter/toolbar";
 import { EventType } from "@/difinitions/types/event/EventType";
 import { CommonEventCard } from "@/components/events/organization-event/CommonEventCard";
-import { useGetEventsQuery } from "@/redux/services/event-service";
+import { useGetDraftEventsFalseQuery, useGetEventsQuery } from "@/redux/services/event-service";
 import { SearchOnPagePlaceholder } from "./SearchOnPagePlaceholder";
+import { Button } from "../ui/button";
 
 export function SearchPage() {
-  // const [visibleCount,setVisibleCount] = useState(12);
+
+  // const [page,setPage] = useState(12);
 
   const {
     data: apiEventReponse = { content: [] },
     isLoading,
     isError,
-  } = useGetEventsQuery({});
+  } = useGetDraftEventsFalseQuery({});
 
   const typedEvents: EventType[] = apiEventReponse?.content || [];
 
 
-    const [filteredEvents, setFilteredEvents] = useState<EventType[]>(typedEvents);
+  const [filteredEvents, setFilteredEvents] = useState<EventType[]>(typedEvents);
 
 
   const filtersFace = [
@@ -71,13 +73,10 @@ export function SearchPage() {
     setFilteredEvents(typedEvents);
   }, [typedEvents]);
 
-    // if (isLoading) {
-    //   return (
-    //     <div className="flex flex-col gap-6 container mx-auto">
-    //           <SearchOnPagePlaceholder/>
-    //     </div>
-    //   );
-    //   } 
+  // const hanldeShowPage = () => {
+  //   setPage((prevCountPage) => prevCountPage + 4);
+  // };
+
 
   return (
     <section className="flex flex-col gap-6 container mx-auto">
@@ -113,6 +112,17 @@ export function SearchPage() {
           </div>
         </div>
       )}
+
+      {/* Show More Button */}
+      <div className="flex justify-end">
+        <Button
+          // onClick={hanldeShowPage}
+          className="text-medium-eng text-iDonate-navy-primary bg-iDonate-white-space border-2 border-iDonate-navy-accent hover:bg-iDonate-navy-accent dark:bg-iDonate-dark-mode dark:text-iDonate-navy-accent dark:hover:text-iDonate-navy-secondary dark:hover:border-iDonate-navy-secondary
+        "
+        >
+          Show more
+        </Button>
+      </div>
     </section>
   );
 }
