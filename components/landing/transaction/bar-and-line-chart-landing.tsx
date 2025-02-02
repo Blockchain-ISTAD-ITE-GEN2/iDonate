@@ -1,13 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { CardsMetric } from "./metric";
 import { Overview } from "./overview";
 import { TransactionType } from "@/difinitions/types/table-type/transaction";
@@ -124,16 +118,6 @@ export function BarAndLineChartLanding() {
       <div className="flex flex-col gap-4">
         {/* Cards for metrics */}
         <CardsMetric data={recentTransactions} />
-        {/* <Card className="w-full bg-iDonate-light-gray rounded-lg border border-iDonate-navy-accent dark:bg-iDonate-dark-mode dark:text-iDonate-navy-accent">
-          <CardHeader>
-            <CardTitle className="text-medium-eng font-normal text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
-              Comparison this week
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="pl-2">
-            <Overview data={barchartdata} />
-          </CardContent>
-        </Card> */}
       </div>
 
       {/* Recent Transactions Card */}

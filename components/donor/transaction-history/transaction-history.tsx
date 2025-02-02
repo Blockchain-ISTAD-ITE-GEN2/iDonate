@@ -27,7 +27,7 @@ export default function TransactionHistory() {
 
   useEffect(() => {
     if (!donorUuid) return;
-
+  
     const fetchTransactions = async () => {
       try {
         const response = await fetch(
@@ -37,22 +37,20 @@ export default function TransactionHistory() {
           throw new Error("Failed to fetch transactions");
         }
         const data = await response.json();
-
+  
         console.log("User Transaction Data: ", data);
-
+  
         // Transform API response to match `TransactionType`
         const formattedTransactions: TransactionType[] = data.content.map(
           (txn: any) => ({
             id: crypto.randomUUID(), // Generate a unique ID
-            donor: txn.username,
-            email: "", // No email in API response, so provide a default
-            event: "Donation", // Default value
-            date: txn.timestamp,
-            amount: txn.donationAmount,
-            avatar: txn.avatar || null,
+            avatar: txn.avatar || "", // Ensure avatar is a string
+            username: txn.username || "Anonymous", // Map to `username`
+            amount: txn.donationAmount, // Map to `amount`
+            timestamp: txn.timestamp, // Ensure timestamp is included
           }),
         );
-
+  
         setTransactions(formattedTransactions);
       } catch (err: any) {
         setError(err.message || "Something went wrong");
@@ -60,7 +58,7 @@ export default function TransactionHistory() {
         setLoading(false);
       }
     };
-
+  
     fetchTransactions();
   }, [donorUuid]);
 

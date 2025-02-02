@@ -10,7 +10,7 @@ import {
 import { Heart, LogOut, Search, User } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { selectToken } from "@/redux/features/auth/authSlice";
 import { useAppSelector } from "@/redux/hooks";
 import AvartarPlaceHolder from "@/public/images/user-idonate.png";

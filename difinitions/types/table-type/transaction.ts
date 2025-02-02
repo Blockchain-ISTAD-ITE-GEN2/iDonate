@@ -2,7 +2,12 @@ export type TransactionType = {
   date?: string;
   donor?: string;
   email?: string;
-  event?: string;
+  event?: {
+    name: string;
+    organization?: {
+      name: string;
+    };
+  };
   amount?: number;
   image?: string;
   description?: string;
