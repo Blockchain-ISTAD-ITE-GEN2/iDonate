@@ -86,12 +86,12 @@ export function EventInfoFormEdition({
 
   const { watch, handleSubmit, reset, control, formState } = form;
 
-  const title = watch("name");
+  const title: string = watch("name");
   const description = watch("description");
   const orderDate = watch("startDate");
   const endDate = watch("endDate");
   const image = watch("images");
-
+  
   const isFormFilled = {
     title: !!title.trim(),
     description: !!description.trim(),
@@ -99,6 +99,8 @@ export function EventInfoFormEdition({
     endDate: !!endDate,
     image: image.length > 0,
   };
+  
+  
 
   // Percentage calculation
   useEffect(() => {
