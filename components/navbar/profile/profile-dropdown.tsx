@@ -15,6 +15,7 @@ import { selectToken } from "@/redux/features/auth/authSlice";
 import { useAppSelector } from "@/redux/hooks";
 import AvartarPlaceHolder from "@/public/images/user-idonate.png";
 import { useGetUserProfileQuery } from "@/redux/services/user-profile";
+import Loading from "@/components/loading/LoadingComponent";
 export const ProfileDropdown = ({
   session,
   signOut,
@@ -35,7 +36,7 @@ export const ProfileDropdown = ({
   console.log("The value of Token: ", userProfile);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <div><Loading/></div>;
   }
 
   if (error) {

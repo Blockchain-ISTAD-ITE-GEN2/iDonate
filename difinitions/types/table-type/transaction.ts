@@ -4,9 +4,9 @@ export type TransactionType = {
   email?: string;
   event?: {
     name: string;
-    organization?: {
-      name: string;
-    };
+  };
+  organization?: {
+    name: string;
   };
   amount?: number;
   image?: string;

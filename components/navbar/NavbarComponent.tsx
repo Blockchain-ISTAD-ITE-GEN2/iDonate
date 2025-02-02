@@ -217,7 +217,7 @@ export default function NavbarComponent() {
                   {/* Menu Items */}
                   <DropdownMenuItem asChild>
                     <Link
-                      href="/profile"
+                      href={`/donor-dashboard/${uuid}`}
                       className="flex items-center space-x-2 cursor-pointer"
                     >
                       <User className="text-iDonate-navy-primary" size={20} />

@@ -38,7 +38,7 @@ export default function TransactionHistory() {
         }
         const data = await response.json();
   
-        console.log("User Transaction Data: ", data);
+        console.log("User Transaction Data: ", JSON.stringify(data));
   
         // Transform API response to match `TransactionType`
         const formattedTransactions: TransactionType[] = data.content.map(
@@ -46,6 +46,8 @@ export default function TransactionHistory() {
             id: crypto.randomUUID(), // Generate a unique ID
             avatar: txn.avatar || "", // Ensure avatar is a string
             username: txn.username || "Anonymous", // Map to `username`
+            event: txn.event,
+            organization: txn.organization,
             amount: txn.donationAmount, // Map to `amount`
             timestamp: txn.timestamp, // Ensure timestamp is included
           }),

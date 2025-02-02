@@ -74,7 +74,7 @@ export default function OrganizationDashboard({
 
           {/* Components */}
           <BannerComponent />
-          <BarAndLineChart />
+          <BarAndLineChart orgUuid={uuid}/>
         </div>
       </div>
     </section>

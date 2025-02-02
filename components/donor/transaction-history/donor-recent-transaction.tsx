@@ -46,7 +46,7 @@ export function DonorReacentTransacctions({
   </span>
 </p>
 <p className="text-xs line-clamp-1 sm:text-sub-description-eng sm:line-clamp-none lg:line-clamp-1 text-iDonate-gray">
-  {transaction.event?.organization?.name || "Unknown Organization"}
+  {transaction.organization?.name || "Unknown Organization"}
 </p>
 
             </div>
