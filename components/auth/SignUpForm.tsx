@@ -7,27 +7,15 @@ import GoogleIcon from "@/public/images/google.png";
 import FacebookIcon from "@/public/images/facebook.png";
 import Image from "next/image";
 import Link from "next/link";
-import { UseDispatch } from "react-redux";
 import SignUpIllustration from "@/public/landing/Donation-SignUp.jpg";
 
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
 import { signIn } from "next-auth/react";
-import { cn } from "@/lib/utils";
-import { Calendar } from "../ui/calendar";
-import { format } from "util";
-import { DayPicker } from "react-day-picker";
 import { DatePicker } from "./DayPicker";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
-import { totalmem } from "os";
-import { add } from "date-fns";
 
 const inputClassName = (value: string) =>
   `w-full px-4 py-2 border ${

@@ -33,11 +33,9 @@ export async function POST(req: NextRequest) {
 
   // If the request is successful, parse the response body to get the data
   const data = await response.json();
-  console.log("data: ", data);
   const user = data?.user || null;
   const accessToken = data?.accessToken || null;
   const refreshToken = data?.refreshToken || null;
-  console.log("RefreshToken: ", refreshToken);
 
   //  console.log("AcessToken: ", accessToken);
 

@@ -64,16 +64,17 @@ export default function OrganizationDashboard() {
           >
             <CardContent className="flex flex-col sm:flex-row items-center justify-center p-4 gap-4">
               {/* Logo */}
-              <div className="relative aspect-square min-w-[160px] h-full flex-shrink-0 rounded-lg">
+              <div className="relative w-[160px] h-[160px] flex-shrink-0 rounded-lg overflow-hidden">
                 {org?.image ? (
                   <Image
-                    src={org?.image}
-                    alt={org?.name || "Media"}
-                    fill
-                    className="object-cover rounded-lg"
+                    src={org.image}
+                    alt={org.name || "Media"}
+                    width={160}
+                    height={160}
+                    className="object-cover w-full h-full rounded-lg"
                   />
                 ) : (
-                  <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+                  <div className="w-full h-full bg-gray-900 flex items-center justify-center rounded-lg">
                     <span className="text-gray-500">No Image</span>
                   </div>
                 )}

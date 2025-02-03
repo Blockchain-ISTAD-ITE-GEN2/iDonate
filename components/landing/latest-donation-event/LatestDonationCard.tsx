@@ -77,10 +77,10 @@ export default function LatestDonationCard() {
     <div className="w-full h-auto bg-transparent flex flex-col gap-6 lg:pb-[500px]">
       {typedEvents.slice(3, 4).map((item) => (
         <Card
-         onClick={(e) => {
-          e.stopPropagation();
-          router.push(`/event-detail/${item?.uuid}`);
-        }}
+          onClick={(e) => {
+            e.stopPropagation();
+            router.push(`/event-detail/${item?.uuid}`);
+          }}
           key={item.uuid}
           className="w-full h-auto lg:h-[660px] z-2 p-0 m-0 border-none grid lg:grid-cols-2 item-center lg:z-0 lg:relative"
         >
@@ -133,11 +133,12 @@ export default function LatestDonationCard() {
               </div>
 
               <Button
-                 onClick={(e) => {
+                onClick={(e) => {
                   e.stopPropagation();
                   router.push(`/event-detail/${item?.uuid}`);
                 }}
-               className="w-full my-[36px] bg-iDonate-green-secondary hover:bg-iDonate-green-primary text-iDonate-navy-primary font-semibold">
+                className="w-full my-[36px] bg-iDonate-green-secondary hover:bg-iDonate-green-primary text-iDonate-navy-primary font-semibold"
+              >
                 <Heart
                   style={{ width: "25px", height: "25px" }}
                   className="bg-iDonate-navy-primary rounded-full p-1 fill-white group-hover:fill-iDonate-navy-primary group-hover:text-iDonate-navy-primary hover:bg-iDonate-green-secondary group-hover:bg-iDonate-green-secondary dark:bg-iDonate-green-secondary  dark:text-iDonate-navy-primary dark:fill-iDonate-navy-primary"
@@ -155,7 +156,7 @@ export default function LatestDonationCard() {
           <div className="grid grid-cols-1 sm:grid-cols-2 items-center justify-center mx-auto lg:grid-cols-3 gap-6 p-2 lg:mt-[500px]">
             {typedEvents.slice(0, 3).map((item) => (
               <Card
-                 onClick={() => router.push(`/event-detail/${item?.uuid}`)}
+                onClick={() => router.push(`/event-detail/${item?.uuid}`)}
                 key={item.uuid}
                 className="h-auto lg:h-[653px] lg:w-[400px] rounded-[10px] bg-iDonate-light-gray border-0 cursor-pointer shadow-md transition-transform hover:scale-[1.02] dark:bg-iDonate-dark-mode"
               >
@@ -199,8 +200,9 @@ export default function LatestDonationCard() {
                   </div>
 
                   <Button
-                  onClick={() => router.push(`/event-detail/${item?.uuid}`)}
-                  className="w-full bg-iDonate-green-secondary hover:bg-[#22c55e] text-[#1e2c49] font-semibold">
+                    onClick={() => router.push(`/event-detail/${item?.uuid}`)}
+                    className="w-full bg-iDonate-green-secondary hover:bg-[#22c55e] text-[#1e2c49] font-semibold"
+                  >
                     <Heart
                       style={{ width: "25px", height: "25px" }}
                       className="bg-iDonate-navy-primary rounded-full p-1 fill-white group-hover:fill-iDonate-navy-primary group-hover:text-iDonate-navy-primary hover:bg-iDonate-green-secondary group-hover:bg-iDonate-green-secondary dark:bg-iDonate-green-secondary  dark:text-iDonate-navy-primary dark:fill-iDonate-navy-primary"

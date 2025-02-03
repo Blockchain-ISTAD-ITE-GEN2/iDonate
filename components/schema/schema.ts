@@ -101,17 +101,30 @@ export const donationSchema = z.object({
   // visibily: z.boolean(),
 });
 
-export const eventSchema = z.object({
-  title: z.string().min(1, { message: "Title is required" }),
+export const eventSchemaCreation = z.object({
+  name: z.string().min(1, { message: "Name is required" }),
+  description: z.string().min(10, { message: "Description is required" }),
+  location: z.string().min(1, { message: "Location is required" }),
+  startDate: z.string().refine((date) => !isNaN(Date.parse(date)), {
+    message: "Invalid date format",
+  }),
+  endDate: z.string().refine((date) => !isNaN(Date.parse(date)), {
+    message: "Invalid date format",
+  }),
+  // timezone: z.string(),
+  images: z.any().nullable(),
 });
 
 export const eventInfoSchema = z.object({
   name: z.string().min(1, { message: "Name is required" }),
   description: z.string().min(10, { message: "Description is required" }),
+  isVisible: z.boolean(),
+  isDraft: z.boolean(),
   location: z.string().min(1, { message: "Location is required" }),
   startDate: z.string(),
   endDate: z.string(),
   category: z.string().min(1, { message: "Category is required" }),
+  organization: z.string().min(1, { message: "Organization is required" }),
   timezone: z.string(),
   images: z.any(),
 });

@@ -1,7 +1,7 @@
 export type OrganizationParam = {
-  uuid?:string | undefined | null;
+  uuid?: string | undefined | null;
   image: string | "";
-  name: string; 
+  name: string;
   description: string;
   key?: number | string;
   address?: string;

@@ -10,11 +10,11 @@ type OrganizationDetail = {
 };
 
 
-// get Event  Detail 
+// get Event  Detail
 async function getOrganizationDetails(uuid: string) {
 
   const response = await fetch(`https://idonateapi.kangtido.life/api/v1/events/get-event-by-organization/${uuid}`);
-  
+
   const data = await response.json();
 
   return {
@@ -53,7 +53,6 @@ export async function generateMetadata({ params }: OrganizationDetail): Promise<
 export default function Page({params}:OrganizationDetail) {
   return (
     <section className="flex flex-col gap-9 py-9 justify-center">
-      
       {/*Start Hero Section*/}
       <OrganizationDetailHeroSection />
 

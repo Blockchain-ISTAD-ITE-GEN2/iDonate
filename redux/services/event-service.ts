@@ -32,8 +32,8 @@ export const eventApi = idonateApi.injectEndpoints({
       providesTags: [{ type: "event", id: "LIST" }],
     }),
     createEvents: builder.mutation({
-      query: (newEvent) => ({
-        url: "/events",
+      query: ({categoryUuid, organizationUuid, newEvent}) => ({
+        url: `/events/${organizationUuid}/${categoryUuid}`,
         method: "POST",
         body: newEvent,
       }),
@@ -65,4 +65,6 @@ export const {
   useGetEventByUuidQuery,
   useGetEventByOrganizationQuery,
   useDeleteEventsMutation,
+  useEditEventsMutation,
+  useCreateEventsMutation
 } = eventApi;
