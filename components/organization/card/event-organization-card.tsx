@@ -15,6 +15,8 @@ import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 
 export function OrganizationEventCard({ event }: { event: EventType }) {
+  const placeholderImage =
+    "https://i.pinimg.com/736x/2a/86/a5/2a86a560f0559704310d98fc32bd3d32.jpg";
   const params = useParams();
   const orgUuid = String(params.uuid); // Ensures `uuid` is a string
   const [deleteEvent] = useDeleteEventsMutation();
@@ -39,10 +41,6 @@ export function OrganizationEventCard({ event }: { event: EventType }) {
     }
   };
 
-  const handleCancel = () => {
-    console.log("Action canceled"); // Handle cancel logic (if needed)
-  };
-
   return (
     <Card
       onClick={() => {
@@ -62,6 +60,9 @@ export function OrganizationEventCard({ event }: { event: EventType }) {
             <Button
               type="button"
               className="text-xl font-normal bg-transparent hover:bg-iDonate-navy-accent text-iDonate-error rounded-lg"
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
             >
               <Trash2
                 className="fill-iDonate-error w-9 h-9"
@@ -91,11 +92,11 @@ export function OrganizationEventCard({ event }: { event: EventType }) {
         <CardContent className="p-0 w-[300px] h-[300px] rounded-lg">
           {event?.images[0] ? (
             <Image
-              width={300}
+              src={event?.images[0] || placeholderImage}
+              alt={event?.name || "Event Image"}
+              width={400}
               height={300}
-              src={event?.images[0]}
-              alt={event?.name || "Media"}
-              className="w-full h-full object-cover rounded-lg"
+              className="w-full h-full object-cover"
             />
           ) : (
             <div className="w-full h-full bg-gray-200 flex items-center justify-center">

@@ -33,7 +33,7 @@ const chartConfig = {
 
 export function CardsMetric({ data }: AverageProps) {
   return (
-    <Card className="w-full bg-iDonate-light-gray rounded-lg border border-iDonate-navy-accent dark:bg-iDonate-dark-mode">
+    <Card className="w-full h-full bg-iDonate-light-gray rounded-lg border border-iDonate-navy-accent dark:bg-iDonate-dark-mode">
       <CardHeader>
         <CardTitle className="text-medium-eng font-normal text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
           Overall Transaction
@@ -43,7 +43,7 @@ export function CardsMetric({ data }: AverageProps) {
         </CardDescription>
       </CardHeader>
       <CardContent className="pb-4">
-        <ChartContainer config={chartConfig} className="h-[200px] w-full">
+        <ChartContainer config={chartConfig} className="h-[380px] w-full">
           <AreaChart
             accessibilityLayer
             data={data}

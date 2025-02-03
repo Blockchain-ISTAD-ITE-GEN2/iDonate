@@ -6,7 +6,7 @@ import { EmptyCard } from "@/components/fileupload/empty-card";
 import { FileText } from "lucide-react";
 
 type UploadedFilesCardProps = {
-  uploadedFiles: UploadedFile[];
+  uploadedFiles: UploadedFile[] | File[];
 };
 
 type FilePreviewProps = {
@@ -42,12 +42,12 @@ export function UploadedFilesCard({ uploadedFiles }: UploadedFilesCardProps) {
       <CardContent className="p-0 m-0 border-0 h-full">
         {uploadedFiles.length > 0 ? (
           <div className="flex flex-col w-full gap-2">
-            {uploadedFiles.map((file) => (
+            {uploadedFiles.map((file, index) => (
               <div
-                key={file.key}
+                key={"key" in file ? file.key : index}
                 className="relative flex items-center h-20 gap-2 border-[1.5px] w-full p-4 rounded-lg border-iDonate-navy-accent"
               >
-                <FilePreview file={file.file || undefined} />
+                <FilePreview file={"file" in file ? file.file : undefined} />
                 <div className="flex flex-col">
                   <CardDescription className="text-iDonate-navy-primary text-lg">
                     {file.name}

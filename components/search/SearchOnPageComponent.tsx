@@ -1,5 +1,5 @@
 "use client";
-import {  useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Toolbar } from "@/components/filter/toolbar";
 import { EventType } from "@/difinitions/types/event/EventType";
 import { CommonEventCard } from "@/components/events/organization-event/CommonEventCard";
@@ -17,9 +17,8 @@ export function SearchPage() {
 
   const typedEvents: EventType[] = apiEventReponse?.content || [];
 
-
-    const [filteredEvents, setFilteredEvents] = useState<EventType[]>(typedEvents);
-
+  const [filteredEvents, setFilteredEvents] =
+    useState<EventType[]>(typedEvents);
 
   const filtersFace = [
     {
@@ -71,17 +70,16 @@ export function SearchPage() {
     setFilteredEvents(typedEvents);
   }, [typedEvents]);
 
-    // if (isLoading) {
-    //   return (
-    //     <div className="flex flex-col gap-6 container mx-auto">
-    //           <SearchOnPagePlaceholder/>
-    //     </div>
-    //   );
-    //   } 
+  // if (isLoading) {
+  //   return (
+  //     <div className="flex flex-col gap-6 container mx-auto">
+  //           <SearchOnPagePlaceholder/>
+  //     </div>
+  //   );
+  //   }
 
   return (
     <section className="flex flex-col gap-6 container mx-auto">
-      
       <div className="container mx-auto px-4 md:px-6 lg:px-8 xl:px-10">
         <Toolbar
           events={typedEvents}

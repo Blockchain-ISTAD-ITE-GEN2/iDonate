@@ -9,20 +9,19 @@ import {
 import { CardsMetric } from "./metric";
 import { Overview } from "./overview";
 import { TransactionType } from "@/difinitions/types/table-type/transaction";
-import barchart from "@/data/barchart.json";
 import averages from "@/data/average-data.json";
 import transactions from "@/data/transactions.json";
 import { ReacentTransacctions } from "@/components/organization/dashboard/ReacentTransacctions";
 
 export function BarAndLineChart() {
-  const barchartdata: BarchartType[] = Object.entries(barchart).map(
-    ([name, values]) => ({
-      name,
-      ...values,
-    }),
-  );
+  // const barchartdata: BarchartType[] = Object.entries(barchart).map(
+  //   ([name, values]) => ({
+  //     name,
+  //     ...values,
+  //   }),
+  // );
 
-  const recentTransactions: TransactionType[] = transactions.slice(0, 9);
+  const recentTransactions: TransactionType[] = transactions.slice(0, 4);
   const averageDate: AverageType[] = averages;
 
   return (
@@ -30,7 +29,7 @@ export function BarAndLineChart() {
       <div className="flex flex-col gap-4">
         {/* Cards for metrics */}
         <CardsMetric data={averageDate} />
-        <Card className="w-full bg-iDonate-light-gray rounded-lg border border-iDonate-navy-accent dark:bg-iDonate-dark-mode dark:text-iDonate-navy-accent">
+        {/* <Card className="w-full bg-iDonate-light-gray rounded-lg border border-iDonate-navy-accent dark:bg-iDonate-dark-mode dark:text-iDonate-navy-accent">
           <CardHeader>
             <CardTitle className="text-medium-eng font-normal text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
               Comparison this week
@@ -39,7 +38,7 @@ export function BarAndLineChart() {
           <CardContent className="pl-2">
             <Overview data={barchartdata} />
           </CardContent>
-        </Card>
+        </Card> */}
       </div>
 
       {/* Recent Transactions Card */}

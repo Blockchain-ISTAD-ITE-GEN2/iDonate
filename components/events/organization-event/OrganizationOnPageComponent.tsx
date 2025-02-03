@@ -9,13 +9,10 @@ import { useGetOrganizationsQuery } from "@/redux/services/organization-service"
 import { OrganizationPlaceholderComponent } from "./OrganizationPlaceholerComponent";
 import { useRouter } from "next/navigation";
 
-
-
 export default function OrganizationOnPageComponent() {
-
   const router = useRouter();
 
- // Add  state
+  // Add  state
   const [visibleCount, setVisibleCount] = useState(6);
 
   // navigate  to detail org
@@ -27,10 +24,10 @@ export default function OrganizationOnPageComponent() {
     isError,
   } = useGetOrganizationsQuery({});
 
-
   const organizationData: OrganizationParam[] = apiResponse?.content || [];
 
-  const [filteredOrganizations, setFilteredOrganizations] = useState<OrganizationParam[]>(organizationData);
+  const [filteredOrganizations, setFilteredOrganizations] =
+    useState<OrganizationParam[]>(organizationData);
 
   const filtersFace = [
     {
@@ -91,7 +88,6 @@ export default function OrganizationOnPageComponent() {
     window.location.href = `/organizations/${uuid}`; // Instead of router.push()
   };
 
-
   return (
     <section className="flex flex-col py-9 gap-9 items-center">
       {/* Hero */}
@@ -109,33 +105,35 @@ export default function OrganizationOnPageComponent() {
           onFilterChange={handleFilterChange}
         />
 
-      {/* <Button onClick={() => testing()}>this is for testing</Button>  */}
+        {/* <Button onClick={() => testing()}>this is for testing</Button>  */}
 
-      <div className="grid gap-6 grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
-        {isLoadingOrg
-          ? Array(visibleCount)   // 06 as the defualt
-              .fill(null)
-              .map((_, index) => (
-                <OrganizationPlaceholderComponent key={index} />
-              ))
-          : filteredOrganizations.map((org: OrganizationParam, index: number) => (
-                <OrganizationCardComponent
-                 onClick={() => handleClick(org?.uuid)}
-                  key={index}
-                  uuid={org.uuid}
-                  image={org.image || ""}
-                  name={org.name}
-                  description={org.description}
-                  address={org.address}
-                />
-            ))}
-      </div>
+        <div className="grid gap-6 grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
+          {isLoadingOrg
+            ? Array(visibleCount) // 06 as the defualt
+                .fill(null)
+                .map((_, index) => (
+                  <OrganizationPlaceholderComponent key={index} />
+                ))
+            : filteredOrganizations.map(
+                (org: OrganizationParam, index: number) => (
+                  <OrganizationCardComponent
+                    onClick={() => handleClick(org?.uuid)}
+                    key={index}
+                    uuid={org.uuid}
+                    image={org.image || ""}
+                    name={org.name}
+                    description={org.description}
+                    address={org.address}
+                  />
+                ),
+              )}
+        </div>
 
-      <div className="flex justify-end">
+        <div className="flex justify-end">
           <Button
-           className="text-medium-eng text-iDonate-navy-primary bg-iDonate-white-space border-2 border-iDonate-navy-accent hover:bg-iDonate-navy-accent"
-           onClick={handleShowMore}
-           >
+            className="text-medium-eng text-iDonate-navy-primary bg-iDonate-white-space border-2 border-iDonate-navy-accent hover:bg-iDonate-navy-accent"
+            onClick={handleShowMore}
+          >
             Show more
           </Button>
         </div>
@@ -143,6 +141,5 @@ export default function OrganizationOnPageComponent() {
     </section>
   );
 }
-
 
 // new code

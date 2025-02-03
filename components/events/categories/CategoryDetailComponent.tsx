@@ -74,6 +74,7 @@ export default function CategoryDetailComponent() {
                     endDate: event.endDate,
                     location: event.location,
                     isDraft: event.isDraft,
+                    isVisible: event.isVisible,
                   }}
                 />
               ))

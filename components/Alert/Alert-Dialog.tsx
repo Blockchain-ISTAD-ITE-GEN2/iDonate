@@ -33,6 +33,7 @@ export function AlertComfirmDialog({
   // Handle Key Down Event
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.key === "Enter") {
+      e.stopPropagation();
       e.preventDefault();
       onAction();
       setOpen(false);

@@ -1,12 +1,10 @@
 "use client";
-
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -38,16 +36,24 @@ import { cn } from "@/lib/utils";
 import { UploadedFile } from "@/difinitions/types/fileupload";
 import { FileUploader } from "@/components/fileupload/file-uploader";
 import { UploadedFilesCard } from "@/components/fileupload/uploaded-files-card";
-import { useGetEventByUuidQuery } from "@/redux/services/event-service";
+import {
+  useEditEventsMutation,
+  useGetEventByUuidQuery,
+} from "@/redux/services/event-service";
 import { EventType } from "@/difinitions/types/event/EventType";
+import { useToast } from "@/hooks/use-toast";
+import { DatePicker } from "@/components/auth/DayPicker";
+import { Switch } from "@/components/ui/switch";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Label } from "@/components/ui/label";
 
 type EventInfoFormProps = {
   onTitlePercentageUpdate: (fullnamePercentage: number) => void;
-  onDescriptionPercentageUpdate: (emailPercentage: number) => void;
-  onOrderDatePercentageUpdate: (contactPercentage: number) => void;
-  onEndDatePercentageUpdate: (addressPercentage: number) => void;
-  onContactPercentageUpdate: (bioPercentage: number) => void;
+  onDescriptionPercentageUpdate: (descriptionPercentage: number) => void;
+  onOrderDatePercentageUpdate: (startDatePercentage: number) => void;
+  onEndDatePercentageUpdate: (endDatePercentage: number) => void;
   onImagePercentageUpdate: (imagePercentage: number) => void;
+  onOrganizationPercentageUpdate: (organizationPercentage: number) => void;
   uuid: string;
 };
 
@@ -56,17 +62,23 @@ export function EventInfoFormEdition({
   onDescriptionPercentageUpdate,
   onOrderDatePercentageUpdate,
   onEndDatePercentageUpdate,
-  onContactPercentageUpdate,
   onImagePercentageUpdate,
+  onOrganizationPercentageUpdate,
   uuid,
 }: EventInfoFormProps) {
-  // 1. State to toggle between view and edit mode
   const [isEditing, setIsEditing] = useState(false);
-  const [uploadedFiles, setUploadedFiles] = useState<UploadedFile[]>([]);
+  // const [uploadedFiles, setUploadedFiles] = useState<UploadedFile[]>([]);
   const [progresses, setProgresses] = useState<{ [key: string]: number }>({});
   const [isUploading, setIsUploading] = useState(false);
 
   const { data: event } = useGetEventByUuidQuery(uuid);
+  const [updateEvent, { isLoading }] = useEditEventsMutation();
+  const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
+  const [uploadProgresses, setUploadProgresses] = useState<
+    Record<string, number>
+  >({});
+  // const [previewImage, setPreviewImage] = useState<string | null>(null);
+  const { toast } = useToast();
 
   const typedEvent: EventType = event || {};
 
@@ -76,39 +88,50 @@ export function EventInfoFormEdition({
     defaultValues: {
       name: typedEvent?.name,
       description: typedEvent?.description,
-      location: typedEvent?.location,
       startDate: typedEvent?.startDate,
       endDate: typedEvent?.endDate,
-      timezone: typedEvent?.timezone,
       images: typedEvent?.images,
+      category: typedEvent?.category?.uuid,
+      isDraft: typedEvent?.isDraft,
+      isVisible: typedEvent?.isVisible,
+      organization: typedEvent?.organization?.uuid,
     },
   });
 
   const { watch, handleSubmit, reset, control, formState } = form;
 
-  const title = watch("name");
+  const name = watch("name");
   const description = watch("description");
+  // const location = watch("location");
   const orderDate = watch("startDate");
   const endDate = watch("endDate");
-  const image = watch("images");
+  const images = watch("images");
+  const isDraft = watch("isDraft");
+  const isVisible = watch("isVisible");
+  const organization = watch("organization");
 
   const isFormFilled = {
-    title: !!title.trim(),
-    description: !!description.trim(),
+    name: !!name,
+    description: !!description,
+    location: !!location,
     orderDate: !!orderDate,
     endDate: !!endDate,
-    image: image.length > 0,
+    images: !!images,
+    isDraft: !!isDraft,
+    isVisible: !!isVisible,
+    organization: !!organization,
   };
 
   // Percentage calculation
   useEffect(() => {
     // Calculate percentage for each field
     const calculateCompletionPercentage = () => {
-      const titlePercentage = title.trim() ? 20 : 0;
-      const descriptionPercentage = description.trim() ? 10 : 0;
+      const titlePercentage = name ? 20 : 0;
+      const descriptionPercentage = description ? 10 : 0;
       const orderDatePercentage = orderDate ? 10 : 0;
       const endDatePercentage = endDate ? 10 : 0;
-      const imagePercentage = image.length ? 20 : 0;
+      const imagePercentage = images?.length ? 20 : 0;
+      const organizationPercentage = organization ? 10 : 0;
 
       // Call individual percentage update functions for each field
       onTitlePercentageUpdate(titlePercentage);
@@ -116,20 +139,22 @@ export function EventInfoFormEdition({
       onOrderDatePercentageUpdate(orderDatePercentage);
       onEndDatePercentageUpdate(endDatePercentage);
       onImagePercentageUpdate(imagePercentage);
+      onOrganizationPercentageUpdate(organizationPercentage);
     };
 
     calculateCompletionPercentage();
   }, [
-    title,
+    name,
     description,
     orderDate,
     endDate,
-    image,
+    images,
+    organization,
     onTitlePercentageUpdate,
     onDescriptionPercentageUpdate,
     onOrderDatePercentageUpdate,
     onEndDatePercentageUpdate,
-    onContactPercentageUpdate,
+    onOrganizationPercentageUpdate,
     onImagePercentageUpdate,
   ]);
 
@@ -138,11 +163,14 @@ export function EventInfoFormEdition({
     const handleBeforeUnload = (event: BeforeUnloadEvent) => {
       // Check if any field is filled before showing the warning
       if (
-        isFormFilled.title ||
+        isFormFilled.name ||
         isFormFilled.description ||
         isFormFilled.orderDate ||
         isFormFilled.endDate ||
-        isFormFilled.image
+        isFormFilled.images ||
+        isFormFilled.isDraft ||
+        isFormFilled.isVisible ||
+        isFormFilled.organization
       ) {
         event.preventDefault();
         event.returnValue =
@@ -158,60 +186,58 @@ export function EventInfoFormEdition({
   }, [isFormFilled]);
 
   // 3. Define a submit handler.
-  function onSubmit(values: z.infer<typeof eventInfoSchema>) {
-    console.log(values);
-    // Switch back to view mode after submitting
-    setIsEditing(false);
-  }
+  const onSubmit = async () => {
+    if (!typedEvent || !typedEvent?.uuid) return;
 
-  async function simulateFileUpload(files: File[]) {
-    setIsUploading(true);
-
-    // Simulating file upload progress
-    const newUploadedFiles: UploadedFile[] = [];
-
-    for (const file of files) {
-      const fileKey = file.name;
-      const uploadProgress = { loaded: 0, total: file.size };
-
-      // Simulate upload progress
-      const interval = setInterval(() => {
-        uploadProgress.loaded += file.size * 0.1;
-        const progressPercent = Math.min(
-          Math.round((uploadProgress.loaded / uploadProgress.total) * 100),
-          100,
-        );
-
-        setProgresses((prev) => ({
-          ...prev,
-          [fileKey]: progressPercent,
-        }));
-
-        if (progressPercent === 100) clearInterval(interval);
-      }, 500);
-
-      await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulated delay
-
-      // Map each file to match the UploadedFile interface
-      const uploadedFile: UploadedFile = {
-        key: file.name,
-        url: URL.createObjectURL(file),
-        appUrl: "https://your-app-url.com/files/" + file.name,
-        fileHash: "dummy-hash-" + file.name,
-        customId: null,
-        name: file.name,
-        size: file.size,
-        type: file.type,
-        lastModified: file.lastModified,
-        file: { ...file, preview: URL.createObjectURL(file) },
+    try {
+      // Prepare updated event object with selected category UUID
+      const updatedEvent = {
+        ...typedEvent,
+        ...form.getValues(), // Ensures updated form values are included
       };
 
-      newUploadedFiles.push(uploadedFile);
-    }
+      // Send PUT request with full event data
+      await updateEvent({
+        uuid: typedEvent.uuid,
+        updatedData: updatedEvent,
+      }).unwrap();
 
-    setUploadedFiles((prev) => [...prev, ...newUploadedFiles]);
-    setIsUploading(false);
-  }
+      toast({
+        title: "Category Updated",
+        description: "The event category has been updated successfully.",
+        variant: "default",
+      });
+
+      setIsEditing(false);
+    } catch (error) {
+      toast({
+        title: "Update Failed",
+        description: "Failed to update the event category.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleFilesUpload = async (files: File[]): Promise<void> => {
+    // Simulate a file upload process
+    const simulateUpload = (file: File) =>
+      new Promise((resolve, reject) => {
+        const progressInterval = setInterval(() => {
+          setUploadProgresses((prev) => {
+            const newProgress = Math.min((prev[file.name] || 0) + 10, 100);
+            return { ...prev, [file.name]: newProgress };
+          });
+
+          if (uploadProgresses[file.name] >= 100) {
+            clearInterval(progressInterval);
+            resolve(file);
+          }
+        }, 200);
+      });
+
+    await Promise.all(files.map(simulateUpload));
+    // toast.success(`${files.length} file(s) uploaded successfully!`);
+  };
 
   function handleCancel() {
     reset(); // Reset the form
@@ -220,7 +246,7 @@ export function EventInfoFormEdition({
 
   return (
     <Form {...form}>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={form.handleSubmit(onSubmit)}>
         {/* View Mode */}
         {!isEditing && (
           <Card className="flex flex-col rounded-lg border-2 border-iDonate-navy-accent gap-6 p-9">
@@ -248,15 +274,6 @@ export function EventInfoFormEdition({
                 <UploadedFilesCard uploadedFiles={uploadedFiles} />
               </div>
 
-              {/* <div className="relative flex-1">
-                <Image
-                    fill
-                    src="https://i.pinimg.com/236x/a9/9e/ff/a99eff25eb1ba71647fcd884c15c035a.jpg"
-                    alt={"Media" } 
-                    className="object-cover rounded-lg"
-                />
-              </div> */}
-
               {/* Basic */}
               <div className="flex flex-col gap-6 flex-1">
                 <div className="flex flex-col space-y-3">
@@ -264,7 +281,7 @@ export function EventInfoFormEdition({
                     Event Title
                   </CardDescription>
                   <CardDescription className="text-xl text-iDonate-navy-primary">
-                    ការរត់ចរិតសាធារណៈ 2024
+                    {typedEvent?.name}
                   </CardDescription>
                 </div>
 
@@ -272,25 +289,24 @@ export function EventInfoFormEdition({
                   <CardDescription className="text-lg text-iDonate-gray">
                     Event Description
                   </CardDescription>
-                  <CardDescription className="text-xl text-iDonate-navy-primary">
-                    ព្រឹត្តិការណ៍ការរត់ចរិតសាធារណៈ 2024
-                    ត្រូវបានរៀបចំឡើងដើម្បីប្រមូលប្រាក់សម្រាប់ការអភិវឌ្ឍសហគមន៍ក្នុងតំបន់។
-                    ព្រឹត្តិការណ៍នេះមិនត្រឹមតែជាការរត់សម្រាប់សុខភាពផ្ទាល់ខ្លួនទេ
-                    ប៉ុន្តែវាក៏ជាការផ្តល់ឱកាសដល់សហគមន៍ក្នុងការចូលរួមក្នុងការផលិតប្រាក់ដើម្បីគាំទ្រប្រព័ន្ធសេវាសាធារណៈ។
-                    ដោយការចូលរួមរបស់អ្នកដែលមានចិត្ដស្មោះឯកសារ
-                    និងការប្រើប្រាស់ព្រឹត្តិការណ៍នេះ ដោយកំណត់ការចូលរួមជាសាធារណៈ
-                    សេវាកម្មពាណិជ្ជកម្មក្នុងតំបន់បានកែលម្អ
-                    និងប៉ះពាល់ដល់ការរីកចម្រើននៃសហគមន៍សម្រាប់អនាគត។
+                  <CardDescription className="text-xl text-iDona text-iDonate-navy-primary">
+                    {typedEvent?.description}
                   </CardDescription>
                 </div>
 
                 <div className="flex gap-6">
                   <div className="flex flex-col flex-1 space-y-3">
                     <CardDescription className="text-lg text-iDonate-gray">
-                      Order Date
+                      Start Date
                     </CardDescription>
                     <CardDescription className="text-xl text-iDonate-navy-primary">
-                      26 September 2024
+                      {typedEvent?.startDate
+                        ? new Intl.DateTimeFormat("en-US", {
+                            day: "2-digit",
+                            month: "long",
+                            year: "numeric",
+                          }).format(new Date(typedEvent.startDate))
+                        : ""}
                     </CardDescription>
                   </div>
 
@@ -299,16 +315,22 @@ export function EventInfoFormEdition({
                       End Date
                     </CardDescription>
                     <CardDescription className="text-xl text-iDonate-navy-primary">
-                      26 September 2025
+                      {typedEvent?.endDate
+                        ? new Intl.DateTimeFormat("en-US", {
+                            day: "2-digit",
+                            month: "long",
+                            year: "numeric",
+                          }).format(new Date(typedEvent?.endDate))
+                        : ""}
                     </CardDescription>
                   </div>
 
                   <div className="flex flex-col flex-1 space-y-3">
                     <CardDescription className="text-lg text-iDonate-gray">
-                      Contact
+                      Organization
                     </CardDescription>
-                    <CardDescription className="text-xl text-iDonate-navy-primary">
-                      +855 12345678
+                    <CardDescription className="text-xl text-iDonate-navy-primary line-clamp-1">
+                      {typedEvent?.organization?.name}
                     </CardDescription>
                   </div>
                 </div>
@@ -324,9 +346,7 @@ export function EventInfoFormEdition({
               <CardTitle className="text-2xl font-medium text-iDonate-navy-secondary">
                 Basic Information
               </CardTitle>
-
               <div className="flex gap-3">
-                {/* Cancel Button */}
                 {formState.isDirty ? (
                   <AlertComfirmDialog
                     trigger={
@@ -352,17 +372,14 @@ export function EventInfoFormEdition({
                     Cancel
                   </Button>
                 )}
-
-                {/* Submit Button */}
                 <Button
                   type="submit"
                   className="bg-iDonate-white-space border-2 hover:bg-iDonate-light-gray border-iDonate-navy-accent text-iDonate-navy-primary"
                 >
-                  Submit
+                  {isLoading ? "Submitting..." : "Submit"}
                 </Button>
               </div>
             </CardHeader>
-
             <div className="w-full flex gap-6">
               <CardContent className="flex relative flex-1 p-0 m-0">
                 <FormField
@@ -375,10 +392,10 @@ export function EventInfoFormEdition({
                       </FormLabel>
                       <FormControl>
                         <FileUploader
-                          className=" border-iDonate-gray"
+                          className="border-iDonate-gray"
                           value={field.value}
                           onValueChange={field.onChange}
-                          onUpload={simulateFileUpload}
+                          onUpload={handleFilesUpload}
                           maxFileCount={4}
                           maxSize={4 * 1024 * 1024}
                           progresses={progresses}
@@ -390,7 +407,6 @@ export function EventInfoFormEdition({
                   )}
                 />
               </CardContent>
-
               <CardContent className="flex-1 flex flex-col gap-6 p-0 m-0">
                 <FormField
                   control={control}
@@ -408,9 +424,6 @@ export function EventInfoFormEdition({
                         />
                       </FormControl>
                       <FormMessage />
-                      <FormDescription className="text-iDonate-gray text-sm">
-                        This is tile of your event.
-                      </FormDescription>
                     </FormItem>
                   )}
                 />
@@ -420,6 +433,9 @@ export function EventInfoFormEdition({
                   name="description"
                   render={({ field }) => (
                     <FormItem className="w-full h-full">
+                      <FormLabel className="text-sm text-iDonate-navy-secondary">
+                        Event Description
+                      </FormLabel>
                       <FormControl className="w-full h-full">
                         <Textarea
                           className="h-auto overflow-auto scrollbar-hide"
@@ -428,35 +444,31 @@ export function EventInfoFormEdition({
                         />
                       </FormControl>
                       <FormMessage />
-                      <FormDescription className="text-iDonate-gray text-sm">
-                        This is your event's description.
-                      </FormDescription>
                     </FormItem>
                   )}
                 />
 
-                <div className="flex gap-9 p-0 m-0">
+                <div className="flex gap-6">
                   <FormField
                     control={control}
                     name="startDate"
                     render={({ field }) => (
-                      <FormItem className="flex-1 flex flex-col">
+                      <FormItem className="flex flex-1 flex-col">
                         <FormLabel className="text-sm text-iDonate-navy-secondary">
                           Order Date
                         </FormLabel>
-
                         <Popover>
                           <PopoverTrigger asChild>
-                            <FormControl className="w-full">
+                            <FormControl>
                               <Button
-                                variant={"outline"}
+                                variant="outline"
                                 className={cn(
-                                  " pl-3 text-left font-normal",
+                                  "pl-3 text-left font-normal",
                                   !field.value && "text-muted-foreground",
                                 )}
                               >
                                 {field.value ? (
-                                  format(field.value, "PPP")
+                                  format(new Date(field.value), "PPP")
                                 ) : (
                                   <span>Pick a date</span>
                                 )}
@@ -470,21 +482,17 @@ export function EventInfoFormEdition({
                               selected={
                                 field.value ? new Date(field.value) : undefined
                               }
-                              onSelect={field.onChange}
+                              onSelect={(date) =>
+                                field.onChange(date?.toISOString())
+                              }
                               disabled={(date) =>
                                 date > new Date() ||
                                 date < new Date("1900-01-01")
                               }
-                              initialFocus
                             />
                           </PopoverContent>
                         </Popover>
-
                         <FormMessage />
-
-                        <FormDescription className="text-iDonate-gray text-sm">
-                          This is your event's order date.
-                        </FormDescription>
                       </FormItem>
                     )}
                   />
@@ -493,23 +501,22 @@ export function EventInfoFormEdition({
                     control={control}
                     name="endDate"
                     render={({ field }) => (
-                      <FormItem className="flex-1 flex flex-col">
+                      <FormItem className="flex flex-1 flex-col">
                         <FormLabel className="text-sm text-iDonate-navy-secondary">
                           End Date
                         </FormLabel>
-
                         <Popover>
                           <PopoverTrigger asChild>
-                            <FormControl className="w-full">
+                            <FormControl>
                               <Button
-                                variant={"outline"}
+                                variant="outline"
                                 className={cn(
-                                  " pl-3 text-left font-normal",
+                                  "pl-3 text-left font-normal",
                                   !field.value && "text-muted-foreground",
                                 )}
                               >
                                 {field.value ? (
-                                  format(field.value, "PPP")
+                                  format(new Date(field.value), "PPP")
                                 ) : (
                                   <span>Pick a date</span>
                                 )}
@@ -523,25 +530,100 @@ export function EventInfoFormEdition({
                               selected={
                                 field.value ? new Date(field.value) : undefined
                               }
-                              onSelect={field.onChange}
+                              onSelect={(date) =>
+                                field.onChange(date?.toISOString())
+                              }
                               disabled={(date) =>
                                 date > new Date() ||
                                 date < new Date("1900-01-01")
                               }
-                              initialFocus
                             />
                           </PopoverContent>
                         </Popover>
-
                         <FormMessage />
-
-                        <FormDescription className="text-iDonate-gray text-sm">
-                          This is your event's end date.
-                        </FormDescription>
                       </FormItem>
                     )}
                   />
                 </div>
+                <FormField
+                  control={control}
+                  name="isDraft"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-sm text-iDonate-navy-secondary">
+                        Draft
+                      </FormLabel>
+                      <FormControl>
+                        <RadioGroup
+                          value={field.value ? "true" : "false"}
+                          onValueChange={(val) =>
+                            field.onChange(val === "true")
+                          }
+                          className="flex gap-6"
+                        >
+                          <div className="flex items-center space-x-2">
+                            <RadioGroupItem value="true" id="draft-true" />
+                            <Label htmlFor="draft-true">Yes</Label>
+                          </div>
+                          <div className="flex items-center space-x-2">
+                            <RadioGroupItem value="false" id="draft-false" />
+                            <Label htmlFor="draft-false">No</Label>
+                          </div>
+                        </RadioGroup>
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={control}
+                  name="isVisible"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-sm text-iDonate-navy-secondary">
+                        Visibility
+                      </FormLabel>
+                      <FormControl>
+                        <RadioGroup
+                          value={field.value ? "true" : "false"}
+                          onValueChange={(val) =>
+                            field.onChange(val === "true")
+                          }
+                          className="flex gap-6"
+                        >
+                          <div className="flex items-center space-x-2">
+                            <RadioGroupItem value="true" id="visible-true" />
+                            <Label htmlFor="visible-true">Visible</Label>
+                          </div>
+                          <div className="flex items-center space-x-2">
+                            <RadioGroupItem value="false" id="visible-false" />
+                            <Label htmlFor="visible-false">Hidden</Label>
+                          </div>
+                        </RadioGroup>
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+
+                {/* <FormField
+                  control={control}
+                  name="organization"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-sm text-iDonate-navy-secondary">
+                        Organization
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Enter organization name"
+                          className="w-full"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                /> */}
               </CardContent>
             </div>
           </Card>

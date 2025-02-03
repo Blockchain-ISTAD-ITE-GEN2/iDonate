@@ -13,17 +13,6 @@ import { useGetEventsQuery } from "@/redux/services/event-service";
 import UpcommingEventPlaceholderComponent from "./UpcommingEventPlaceholderComponent";
 import { EventType } from "@/difinitions/types/event/EventType";
 
-interface Event {
-  id: number;
-  name: string;
-  description?: string;
-  startDate: string;
-  category: {
-    name: string;
-  };
-  images: string[];
-}
-
 export default function UpcomingEvents() {
   const {
     data: upCommingApiReponse = { content: [] },
@@ -33,7 +22,7 @@ export default function UpcomingEvents() {
 
   // Filter to get events with `isDraft: true`
   const events: EventType[] = upCommingApiReponse?.content?.filter(
-    (event: any) => event.isDraft
+    (event: any) => event.isDraft,
   );
 
   console.log("====> UP Comming Data RTK: ", events);
