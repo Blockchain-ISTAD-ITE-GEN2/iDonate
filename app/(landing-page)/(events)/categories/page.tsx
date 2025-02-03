@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     url: "https://yourwebsite.com/categories",
     images: [
       {
-        url: "https://yourwebsite.com/static/categories-banner.jpg",
+        url: "https://idonateapi.kangtido.life/media/819e4d30-4bcd-4f23-a004-744075dbecbf.png",
         width: 1200,
         height: 630,
         alt: "iDonate Categories Banner",
@@ -33,21 +33,17 @@ export const metadata: Metadata = {
     title: "Categories - iDonate",
     description:
       "Find the causes and organizations that matter to you in the iDonate categories.",
-    images: ["https://yourwebsite.com/static/categories-banner.jpg"],
-  },
-  icons: {
-    icon: "/favicon.ico",
-    apple: "/apple-touch-icon.png",
+    images: ["https://idonateapi.kangtido.life/media/819e4d30-4bcd-4f23-a004-744075dbecbf.png"],
   },
   robots: {
     index: true,
     follow: true,
   },
   alternates: {
-    canonical: "https://yourwebsite.com/categories",
+    canonical: "https://idonate.istad.co/categories",
     languages: {
-      en: "https://yourwebsite.com/categories",
-      km: "https://yourwebsite.com/kh/categories",
+      en: "https://idonate.istad.co/categories",
+      km: "https://idonate.istad.co/categories",
     },
   },
 };

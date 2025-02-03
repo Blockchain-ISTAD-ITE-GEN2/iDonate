@@ -67,6 +67,7 @@ export default function CategoryDetailComponent() {
                     uuid: event.uuid,
                     images: event.images,
                     name: event.name,
+                    media: event.media,
                     description: event.description,
                     totalDonors: event.totalDonors,
                     currentRaised: event.currentRaised,

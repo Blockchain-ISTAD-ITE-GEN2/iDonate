@@ -9,6 +9,7 @@ export const metadata: Metadata = {
   keywords: [
     "iDonate",
     "How It Works",
+    "how idonate work",
     "Donation Process",
     "Transparency",
     "Support",
@@ -17,10 +18,10 @@ export const metadata: Metadata = {
     title: "How It Works - iDonate",
     description:
       "Learn the steps behind the iDonate platform, ensuring transparency and credibility in every donation.",
-    url: "https://yourwebsite.com/how-it-works",
+    url: "https://idonate.istad.co/how-it-works",
     images: [
       {
-        url: "https://yourwebsite.com/static/how-it-works-banner.jpg",
+        url: "https://idonateapi.kangtido.life/media/819e4d30-4bcd-4f23-a004-744075dbecbf.png",
         width: 1200,
         height: 630,
         alt: "How It Works - iDonate",
@@ -33,21 +34,17 @@ export const metadata: Metadata = {
     title: "How It Works - iDonate",
     description:
       "Explore the process behind iDonate, from submitting donations to the verification process.",
-    images: ["https://yourwebsite.com/static/how-it-works-banner.jpg"],
-  },
-  icons: {
-    icon: "/favicon.ico",
-    apple: "/apple-touch-icon.png",
+    images: ["https://idonateapi.kangtido.life/media/819e4d30-4bcd-4f23-a004-744075dbecbf.png"],
   },
   robots: {
     index: true,
     follow: true,
   },
   alternates: {
-    canonical: "https://yourwebsite.com/how-it-works",
+    canonical: "https://idonate.istad.co/how-it-works",
     languages: {
-      en: "https://yourwebsite.com/how-it-works",
-      km: "https://yourwebsite.com/kh/how-it-works",
+      en: "https://idonate.istad.co/how-it-works",
+      km: "https://idonate.istad.co/how-it-works",
     },
   },
 };

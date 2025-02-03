@@ -17,10 +17,10 @@ export const metadata: Metadata = {
     title: "Donor Dashboard - iDonate",
     description:
       "Manage your donations, track your impact, and explore verified causes on your iDonate donor dashboard.",
-    url: "https://yourwebsite.com/donor-dashboard",
+    url: "https://idonate.istad.co/donor-dashboard",
     images: [
       {
-        url: "https://yourwebsite.com/static/donor-dashboard-banner.jpg",
+        url: "https://idonateapi.kangtido.life/media/819e4d30-4bcd-4f23-a004-744075dbecbf.png",
         width: 1200,
         height: 630,
         alt: "Donor Dashboard Preview",
@@ -28,26 +28,15 @@ export const metadata: Metadata = {
     ],
     type: "website",
   },
-  twitter: {
-    card: "summary_large_image",
-    title: "Donor Dashboard - iDonate",
-    description:
-      "View your donations, track your impact, and explore causes on your iDonate donor dashboard.",
-    images: ["https://yourwebsite.com/static/donor-dashboard-banner.jpg"],
-  },
-  icons: {
-    icon: "/favicon.ico",
-    apple: "/apple-touch-icon.png",
-  },
   robots: {
     index: false, // Prevent search engines from indexing the dashboard page
     follow: false,
   },
   alternates: {
-    canonical: "https://yourwebsite.com/donor-dashboard",
+    canonical: "https://idonate.istad.co/donor-dashboard",
     languages: {
-      en: "https://yourwebsite.com/donor-dashboard",
-      km: "https://yourwebsite.com/kh/donor-dashboard",
+      en: "https://idonate.istad.co/donor-dashboard",
+      km: "https://idonate.istad.co/donor-dashboard",
     },
   },
 };

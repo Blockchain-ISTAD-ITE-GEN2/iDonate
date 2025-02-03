@@ -133,7 +133,7 @@ export default function OrganizationDashboard({
           ) : (
             <>
               <BannerComponent />
-              <BarAndLineChart />
+              <BarAndLineChart orgUuid={orgUuid} />
             </>
           )}
         </div>

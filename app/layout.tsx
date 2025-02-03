@@ -1,4 +1,4 @@
-"use client";
+// "use client";
 import localFont from "next/font/local";
 import "./globals.css";
 import { ReactNode } from "react";
@@ -7,6 +7,45 @@ import CheckConnection from "@/components/checkConnection/CheckConnection";
 import StoreProvider from "./StoreProvider";
 import { ThemeProviders } from "./providers";
 import { Toaster } from "@/components/ui/toaster";
+import { Metadata } from "next";
+import GoogleAnalytics from "@/components/google/GoogleAnalytics";
+
+export const metadata: Metadata = {
+  title: {
+      template: "%s - iDonate",
+      default: "iDonate",
+  },
+  description: "iDonate ",
+  keywords: [
+      "IDONATE",
+      "iDonate",
+      "idonate istad",
+      "idonate.istad",
+      "idonate.istad.co",
+      "donation",
+      "donation cambodia",
+      "charity",
+      "Charity",
+  ],
+  openGraph: {
+      title: {
+          template: "%s - iDATA",
+          default: "iDATA",
+      },
+      description: "iDonate is a blockchain-based donation platform designed to enhance transparency, accountability, and efficiency in charitable giving",
+      url: "https://idata.istad.co",
+      type: "website",
+      locale: "kh_KH",
+      images: [
+        {
+            url: "https://idonateapi.kangtido.life/media/819e4d30-4bcd-4f23-a004-744075dbecbf.png",
+            width: 1200,  
+            height: 630,
+            alt: "iDonate Banner"
+        }
+    ],
+    }
+};
 
 const inter = localFont({
   src: "/fonts/Inter-VariableFont_opsz,wght.ttf",
@@ -23,7 +62,7 @@ const suwannaphum = localFont({
   variable: "--font-suwannaphum",
 });
 
-type RootLayoutProps = {
+type RootLayoutProps = {  
   children: ReactNode;
 };
 
@@ -34,6 +73,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
       className={`min-h-screen w-full overflow-auto scrollbar-hide ${suwannaphum.variable} ${inter.variable}`}
     >
       <body className="flex flex-col h-full bg-background text-foreground">
+        <GoogleAnalytics/>
         <StoreProvider>
           {/* <CheckConnection> */}
           <SessionWrapper>

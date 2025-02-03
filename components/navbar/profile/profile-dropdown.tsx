@@ -92,6 +92,39 @@ export const ProfileDropdown = ({
 
         <DropdownMenuSeparator />
 
+        {/* Menu Items */}
+        <DropdownMenuItem asChild>
+          <Link
+            href="/profile"
+            className="flex items-center space-x-2 cursor-pointer"
+          >
+            <User className="text-iDonate-navy-primary" size={20} />
+            <span>Profile Settings</span>
+          </Link>
+        </DropdownMenuItem>
+
+        <DropdownMenuItem asChild>
+          <Link
+            href="/donations"
+            className="flex items-center space-x-2 cursor-pointer"
+          >
+            <Heart className="text-iDonate-navy-primary" size={20} />
+            <span>My Donations</span>
+          </Link>
+        </DropdownMenuItem>
+
+        <DropdownMenuItem asChild>
+          <Link
+            href="/search"
+            className="flex items-center space-x-2 cursor-pointer"
+          >
+            <Search className="text-iDonate-navy-primary" size={20} />
+            <span>Search</span>
+          </Link>
+        </DropdownMenuItem>
+
+        <DropdownMenuSeparator />
+
         {/* Donate Button */}
         <div className="p-2">
           <Button className="w-full group bg-iDonate-white-space border-2 border-iDonate-navy-primary px-2 text-iDonate-navy-primary hover:bg-iDonate-navy-primary hover:text-white hover:border-iDonate-navy-primary rounded-[12px]">

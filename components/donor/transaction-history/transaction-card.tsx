@@ -48,7 +48,7 @@ export function TransactionHistoryCard({
                   transaction?.image ||
                   "https://i.pinimg.com/236x/a9/9e/ff/a99eff25eb1ba71647fcd884c15c035a.jpg"
                 }
-                alt={transaction?.event || ""}
+                alt={transaction?.event?.name || ""}
                 className="w-full h-full object-cover rounded-lg"
               />
             ) : (
@@ -70,7 +70,7 @@ export function TransactionHistoryCard({
           <div className="flex flex-col flex-1 justify-between h-full">
             <CardContent className="p-0 flex flex-col gap-4 flex-grow">
               <CardTitle className="text-3xl font-medium text-iDonate-navy-secondary p-0">
-                {transaction?.event || "Untitled Event"}
+                {transaction?.event?.name || "Untitled Event"}
               </CardTitle>
 
               <CardDescription className="text-xl leading-loose text-iDonate-navy-secondary p-0 overflow-hidden">

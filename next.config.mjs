@@ -148,6 +148,10 @@ const nextConfig = {
       },
     ];
   },
+  // hide all the console when production 
+  compiler: {
+    removeConsole: process.env.NODE_ENV === 'production',
+  },
 };
 
 export default nextConfig;

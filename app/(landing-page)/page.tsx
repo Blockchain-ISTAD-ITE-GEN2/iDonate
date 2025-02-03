@@ -15,6 +15,8 @@ export const metadata: Metadata = {
     "iDonate is a trusted platform connecting donors with verified organizations to ensure transparency and credibility in donations.",
   keywords: [
     "iDonate",
+    "idonate",
+    "idonate istad",
     "Donation Platform",
     "Transparent Donations",
     "Charity",
@@ -24,10 +26,10 @@ export const metadata: Metadata = {
     title: "iDonate - Empowering Transparent Donations",
     description:
       "Join iDonate to make impactful and transparent donations. Explore verified organizations and trusted causes.",
-    url: "https://yourwebsite.com",
+    url: "https://idonate.istad.co",
     images: [
       {
-        url: "https://yourwebsite.com/static/home-banner.jpg",
+        url: "https://idonateapi.kangtido.life/media/819e4d30-4bcd-4f23-a004-744075dbecbf.png",
         width: 1200,
         height: 630,
         alt: "iDonate Home Banner",
@@ -40,7 +42,7 @@ export const metadata: Metadata = {
     title: "iDonate - Empowering Transparent Donations",
     description:
       "Make donations you can trust with iDonate. Explore verified organizations and causes.",
-    images: ["https://yourwebsite.com/static/home-banner.jpg"],
+    images: ["https://idonateapi.kangtido.life/media/819e4d30-4bcd-4f23-a004-744075dbecbf.png"],
   },
   icons: {
     icon: "/favicon.ico",
@@ -51,10 +53,10 @@ export const metadata: Metadata = {
     follow: true,
   },
   alternates: {
-    canonical: "https://yourwebsite.com",
+    canonical: "https://idonate.istad.co",
     languages: {
-      en: "https://yourwebsite.com",
-      km: "https://yourwebsite.com/kh",
+      en: "https://idonate.istad.co",
+      km: "https://idonate.istad.co",
     },
   },
 };

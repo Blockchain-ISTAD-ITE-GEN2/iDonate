@@ -9,21 +9,30 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { CalendarDays, School } from "lucide-react";
-import { useGetEventsQuery } from "@/redux/services/event-service";
+import { useGetDraftEventsTrueQuery, useGetEventsQuery } from "@/redux/services/event-service";
 import UpcommingEventPlaceholderComponent from "./UpcommingEventPlaceholderComponent";
 import { EventType } from "@/difinitions/types/event/EventType";
+
+interface Event {
+  id: number;
+  name: string;
+  description?: string;
+  startDate: string;
+  category: {
+    name: string;
+  };
+  images: string[];
+}
 
 export default function UpcomingEvents() {
   const {
     data: upCommingApiReponse = { content: [] },
     isLoading,
     isError,
-  } = useGetEventsQuery({});
+  } = useGetDraftEventsTrueQuery({});
 
   // Filter to get events with `isDraft: true`
-  const events: EventType[] = upCommingApiReponse?.content?.filter(
-    (event: any) => event.isDraft,
-  );
+  const events: EventType[] = upCommingApiReponse?.content || [];
 
   console.log("====> UP Comming Data RTK: ", events);
 

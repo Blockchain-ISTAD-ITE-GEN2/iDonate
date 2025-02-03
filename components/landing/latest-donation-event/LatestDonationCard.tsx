@@ -4,33 +4,78 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import Image from "next/image";
 import { useGetEventsQuery } from "@/redux/services/event-service";
-import { useRouter } from "next/navigation";
 import { EventType } from "@/difinitions/types/event/EventType";
+import { useEffect, useState } from "react";
+import SockJS from "sockjs-client";
+import { Client } from "@stomp/stompjs";
+import { useRouter } from "next/navigation";
 
 export default function LatestDonationCard() {
+
   const router = useRouter();
+  const [typedEvents, setTypedEvents] = useState<EventType[]>([]);
 
-  // fetch data from RTK
-  // Get the latest event
-  const {
-    data: apiEventReponse = { content: [] },
-    isLoading,
-    isError,
-  } = useGetEventsQuery({});
+  // Fetch data from RTK
+  const { data: apiEventResponse = { content: [] } } = useGetEventsQuery({});
 
-  const typedEvents: EventType[] =
-    apiEventReponse?.content
-      ?.toSorted(
+  useEffect(() => {
+    // Sort and slice the events
+    const sortedEvents = apiEventResponse.content
+      .toSorted(
         (a: any, b: any) =>
-          new Date(b.startDate).getTime() - new Date(a.startDate).getTime(),
+          new Date(b.startDate).getTime() - new Date(a.startDate).getTime()
       )
-      ?.slice(0, 4) || [];
+      .slice(0, 4);
+    setTypedEvents(sortedEvents);
+  }, [apiEventResponse]);
 
-  console.log("========> Get Latest Event: ", typedEvents);
+  // WebSocket subscription for totalAmountOfEvent
+  useEffect(() => {
+    const socket = new SockJS(`${process.env.NEXT_PUBLIC_IDONATE_API_URL}/websocket`);
+    const stompClient = new Client({
+      webSocketFactory: () => socket,
+      debug: (str) => console.log(str),
+      reconnectDelay: 5000,
+      heartbeatIncoming: 4000,
+      heartbeatOutgoing: 4000,
+    });
+
+    stompClient.onConnect = (frame) => {
+      console.log("Connected: " + frame);
+
+      // Subscribe to /topic/totalAmountOfEvent
+      stompClient.subscribe("/topic/totalAmountOfEvent", (message) => {
+        const data = JSON.parse(message.body);
+        const { eventId, amount } = data;
+
+        // Update the currentRaised value for the specific event
+        setTypedEvents((prevEvents) =>
+          prevEvents.map((event) =>
+            event.uuid === eventId ? { ...event, currentRaised: amount } : event
+          )
+        );
+      });
+    };
+
+    stompClient.activate();
+
+    // Cleanup on unmount
+    return () => {
+      stompClient.deactivate();
+    };
+  }, []);
+
+  // Format amount for display
+  const formatAmount = (amount: any) => {
+    return new Intl.NumberFormat("en-US", {
+      style: "decimal",
+      maximumFractionDigits: 2,
+    }).format(amount);
+  };
 
   return (
-    <div className="w-full h-auto bg-transparent flex flex-col gap-6  lg:pb-[500px]">
-      {typedEvents.slice(3, 4).map((item, key) => (
+    <div className="w-full h-auto bg-transparent flex flex-col gap-6 lg:pb-[500px]">
+      {typedEvents.slice(3, 4).map((item) => (
         <Card
           onClick={(e) => {
             e.stopPropagation();
@@ -63,7 +108,7 @@ export default function LatestDonationCard() {
                 {item.name}
               </h2>
 
-              {/* Part 2 Description */}
+              {/* Description */}
               <p
                 lang="km"
                 className="flex-1 mb-[36px] text-description-khmer md:text-medium-khmer leading-relaxed"
@@ -71,19 +116,19 @@ export default function LatestDonationCard() {
                 {item.description}
               </p>
 
-              {/* Part 3 */}
+              {/* Donation Info */}
               <div
                 lang="km"
                 className="p-4 bg-iDonate-navy-accent rounded-lg flex flex-col sm:flex-row items-center justify-between gap-4"
               >
                 <div className="flex items-center gap-2 p-1">
-                  <span className=" text-iDonate-navy-primary p-1">
+                  <span className="text-iDonate-navy-primary p-1">
                     អ្នកបរិច្ចាគ: {item?.totalDonors || "0"} ពាន់នាក់
                   </span>
                 </div>
 
                 <div className="text-iDonate-navy-primary">
-                  ​​ទឹកប្រាក់ទទួលបាន: ${item?.currentRaised || "0"}
+                  ​​ទឹកប្រាក់ទទួលបាន: ${formatAmount(item?.currentRaised) || "0"}
                 </div>
               </div>
 
@@ -106,17 +151,16 @@ export default function LatestDonationCard() {
       ))}
 
       {/* Current Donations Section */}
-
       <div className="w-full flex flex-col gap-2 z-2 Lg:z-1 lg:absolute">
         {typedEvents.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 items-center justify-center mx-auto lg:grid-cols-3 gap-6 p-2 lg:mt-[500px]">
-            {typedEvents.slice(0, 3).map((item, key) => (
+            {typedEvents.slice(0, 3).map((item) => (
               <Card
                 onClick={() => router.push(`/event-detail/${item?.uuid}`)}
                 key={item.uuid}
-                className="h-auto lg:h-[653px] lg:w-[400px] rounded-[10px] bg-iDonate-light-gray border-0 cursor-pointer shadow-md transition-transform hover:scale-[1.02] dark:bg-iDonate-dark-mode  "
+                className="h-auto lg:h-[653px] lg:w-[400px] rounded-[10px] bg-iDonate-light-gray border-0 cursor-pointer shadow-md transition-transform hover:scale-[1.02] dark:bg-iDonate-dark-mode"
               >
-                <div className="h-[55%] ">
+                <div className="h-[55%]">
                   <Image
                     src={
                       Array.isArray(item?.images) && item.images[0]
@@ -130,9 +174,9 @@ export default function LatestDonationCard() {
                   />
                 </div>
 
-                <div className="p-4 space-y-4 ">
+                <div className="p-4 space-y-4">
                   <div>
-                    <h3 className="font-bold text-medium-khmer text-iDonate-navy-primary line-clamp-2 dark:text-iDonate-navy-accent ">
+                    <h3 className="font-bold text-medium-khmer text-iDonate-navy-primary line-clamp-2 dark:text-iDonate-navy-accent">
                       {item.name}
                     </h3>
                     <p className="font-light text-description-khmer text-iDonate-navy-secondary line-clamp-2 dark:text-iDonate-navy-accent">
@@ -140,17 +184,17 @@ export default function LatestDonationCard() {
                     </p>
                   </div>
 
-                  <div className="flex flex-col  sm:flex-row items-center justify-between text-sm gap-4">
-                    <div className="flex items-center gap-2 font-light text-iDonate-navy-secondary line-clamp-2 dark:text-iDonate-navy-accent h-12 ">
+                  <div className="flex flex-col sm:flex-row items-center justify-between text-sm gap-4">
+                    <div className="flex items-center gap-2 font-light text-iDonate-navy-secondary line-clamp-2 dark:text-iDonate-navy-accent h-12">
                       <Users className="h-4 w-4 text-iDonate-navy-primary" />
                       <span className="khmer-font">
                         អ្នកបរិច្ចាគ៖ {item?.totalDonors || "0"} ពាន់នាក់
                       </span>
                     </div>
-                    <span className="flex items-center gap-1 font-light text-iDonate-navy-secondary line-clamp-2 dark:text-iDonate-navy-accent h-12 ">
+                    <span className="flex items-center gap-1 font-light text-iDonate-navy-secondary line-clamp-2 dark:text-iDonate-navy-accent h-12">
                       <CircleDollarSign size={16} />
                       <span className="khmer-font">
-                        ទឹកប្រាក់ទទួលបាន៖​​ ${item.currentRaised || " 0 "}
+                        ទឹកប្រាក់ទទួលបាន៖​​ ${formatAmount(item.currentRaised) || "0"}
                       </span>
                     </span>
                   </div>
@@ -173,7 +217,7 @@ export default function LatestDonationCard() {
           <Card className="p-8 text-center w-full container mx-auto flex flex-col gap-4">
             <h3
               lang="km"
-              className="text-medium-khmer font-medium  text-iDonate-navy-primary khmer-font dark:text-iDonate-green-secondary"
+              className="text-medium-khmer font-medium text-iDonate-navy-primary khmer-font dark:text-iDonate-green-secondary"
             >
               បច្ចុប្បន្នមិនមានព្រឹត្តិការណ៍បរិច្ចាគទេ
             </h3>

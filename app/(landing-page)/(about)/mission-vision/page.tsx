@@ -18,10 +18,10 @@ export const metadata: Metadata = {
     title: "Our Mission & Vision - iDonate",
     description:
       "Learn about iDonate’s mission to ensure transparency and our vision for creating a world of impactful donations.",
-    url: "https://yourwebsite.com/mission-vision",
+    url: "https://idonate.istad.co/mission-vision",
     images: [
       {
-        url: "https://yourwebsite.com/static/mission-vision-banner.jpg",
+        url: "https://idonateapi.kangtido.life/media/0b967dfd-0897-4197-b631-c24affbd812b.png",
         width: 1200,
         height: 630,
         alt: "iDonate Mission and Vision Banner",
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     title: "Our Mission & Vision - iDonate",
     description:
       "Explore iDonate’s mission and vision, ensuring trust and impactful giving.",
-    images: ["https://yourwebsite.com/static/mission-vision-banner.jpg"],
+    images: ["https://idonateapi.kangtido.life/media/819e4d30-4bcd-4f23-a004-744075dbecbf.png"],
   },
   icons: {
     icon: "/favicon.ico",
@@ -45,10 +45,10 @@ export const metadata: Metadata = {
     follow: true,
   },
   alternates: {
-    canonical: "https://yourwebsite.com/mission-vision",
+    canonical: "https://idonate.istad.co/mission-vision",
     languages: {
-      en: "https://yourwebsite.com/mission-vision",
-      km: "https://yourwebsite.com/kh/mission-vision",
+      en: "https://idonate.istad.co/mission-vision",
+      km: "https://idonate.istad.co/mission-vision",
     },
   },
 };

@@ -16,10 +16,10 @@ export const metadata: Metadata = {
     title: "Search - iDonate",
     description:
       "Find donation requests, organizations, and events on iDonate.",
-    url: "https://yourwebsite.com/search",
+    url: "https://idonate.istad.co/search",
     images: [
       {
-        url: "https://yourwebsite.com/static/search-banner.jpg",
+        url: "https://idonateapi.kangtido.life/media/819e4d30-4bcd-4f23-a004-744075dbecbf.png",
         width: 1200,
         height: 630,
         alt: "Search - iDonate",
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     title: "Search - iDonate",
     description:
       "Discover donation opportunities, organizations, and events on iDonate.",
-    images: ["https://yourwebsite.com/static/search-banner.jpg"],
+    images: ["https://idonateapi.kangtido.life/media/a1108ea2-b140-4a4c-b07d-21aa141853f5.png"],
   },
   icons: {
     icon: "/favicon.ico",
