@@ -61,11 +61,11 @@ export function OrganizationEventCard({ event }: { event: EventType }) {
           trigger={
             <Button
               type="button"
-              className="text-xl font-normal bg-transparent hover:bg-iDonate-navy-accent text-iDonate-error rounded-lg"
+              className="text-md py-1 px-2 border border-red-400 font-normal bg-transparent hover:bg-iDonate-navy-accent hover:font-semibold text-iDonate-error rounded-lg"
             >
               <Trash2
                 className="fill-iDonate-error w-9 h-9"
-                style={{ width: "25px", height: "25px" }}
+                style={{ width: "20px", height: "20px" }}
               />
               Delete Event
             </Button>
@@ -123,7 +123,7 @@ export function OrganizationEventCard({ event }: { event: EventType }) {
               >
                 ថ្ងៃចាប់ផ្តើម
               </CardTitle>
-              <CardDescription className="text-xl font-inter text-iDonate-navy-primary p-0 dark:text-iDonate-navy-accent">
+              <CardDescription className="hover:bg-gray-100 text-md font-inter text-iDonate-navy-primary p-1 rounded-lg dark:text-iDonate-navy-accent">
                 {event?.startDate
                   ? new Intl.DateTimeFormat("en-US", {
                       day: "2-digit",
@@ -141,7 +141,7 @@ export function OrganizationEventCard({ event }: { event: EventType }) {
               >
                 ថ្ងៃបញ្ចប់
               </CardTitle>
-              <CardDescription className="text-xl font-inter text-iDonate-navy-primary p-0 dark:text-iDonate-navy-accent">
+              <CardDescription className="hover:bg-gray-100 text-md font-inter text-iDonate-navy-primary p-1 rounded-lg dark:text-iDonate-navy-accent">
                 {event?.endDate
                   ? new Intl.DateTimeFormat("en-US", {
                       day: "2-digit",
@@ -159,8 +159,8 @@ export function OrganizationEventCard({ event }: { event: EventType }) {
               >
                 ចំនួនទឹកប្រាក់
               </CardTitle>
-              <CardDescription className="text-xl font-inter text-iDonate-navy-primary p-0 dark:text-iDonate-navy-accent">
-                {event?.currentRaised || "មិនទាន់មានការបរិច្ចាគ"}
+              <CardDescription className="hover:bg-gray-100 text-xl font-inter text-iDonate-navy-primary p-1 rounded-lg dark:text-iDonate-navy-accent">
+                $ {event?.currentRaised || "មិនទាន់មានការបរិច្ចាគ"}
               </CardDescription>
             </div>
 
@@ -171,7 +171,7 @@ export function OrganizationEventCard({ event }: { event: EventType }) {
               >
                 ចំនួនអ្នកបរិច្ចាគ
               </CardTitle>
-              <CardDescription className="text-xl font-inter text-iDonate-navy-primary p-0 dark:text-iDonate-navy-accent">
+              <CardDescription className="hover:bg-gray-100 text-lg font-inter text-iDonate-navy-primary p-1 rounded-lg dark:text-iDonate-navy-accent">
                 {event?.totalDonors || "មិនទាន់មានអ្នកបរិច្ចាគ"}
               </CardDescription>
             </div>
