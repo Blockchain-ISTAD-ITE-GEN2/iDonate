@@ -31,7 +31,7 @@ export default function LatestDonationCard() {
 
   // WebSocket subscription for totalAmountOfEvent
   useEffect(() => {
-    const socket = new SockJS(`${process.env.NEXT_PUBLIC_API_BASE_URL}/websocket`);
+    const socket = new SockJS(`${process.env.NEXT_PUBLIC_IDONATE_API_URL}/websocket`);
     const stompClient = new Client({
       webSocketFactory: () => socket,
       debug: (str) => console.log(str),
