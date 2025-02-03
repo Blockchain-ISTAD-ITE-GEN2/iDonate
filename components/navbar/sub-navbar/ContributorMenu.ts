@@ -1,23 +1,15 @@
-import { useGetUserProfileQuery } from "@/redux/services/user-profile";
 import { icons } from "lucide-react";
-import { useRouter } from "next/navigation";
-
-export const ContributorMenulist = () => {
-  const router = useRouter();
-  const { data: user, isLoading, error } = useGetUserProfileQuery({});
-
-  return [
-    {
-      path: `/donor-dashboard/${user?.uuid}`,
-      title: "Donor",
-      icon: icons.User,
-      active: false,
-    },
-    {
-      path: `/organization-list/${user?.uuid}`,
-      title: "Organization",
-      icon: icons.Building2,
-      active: false,
-    },
-  ];
-};
+export const ContributorMenulist = (uuid: string) => [
+  {
+    path: `/donor-dashboard/${uuid}`,
+    title: "Donor",
+    icon: icons.User,
+    active: false,
+  },
+  {
+    path: `/organization-dashboard/${uuid}/dashboard`,
+    title: "Organization",
+    icon: icons.Building2,
+    active: false,
+  },
+];

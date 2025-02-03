@@ -10,12 +10,11 @@ import {
 import { Heart, LogOut, Search, User } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 import { selectToken } from "@/redux/features/auth/authSlice";
 import { useAppSelector } from "@/redux/hooks";
 import AvartarPlaceHolder from "@/public/images/user-idonate.png";
 import { useGetUserProfileQuery } from "@/redux/services/user-profile";
-import Loading from "@/components/loading/LoadingComponent";
 export const ProfileDropdown = ({
   session,
   signOut,
@@ -36,7 +35,7 @@ export const ProfileDropdown = ({
   console.log("The value of Token: ", userProfile);
 
   if (isLoading) {
-    return <div><Loading/></div>;
+    return <div>Loading...</div>;
   }
 
   if (error) {
@@ -90,6 +89,39 @@ export const ProfileDropdown = ({
             </div>
           </div>
         </div>
+
+        <DropdownMenuSeparator />
+
+        {/* Menu Items */}
+        <DropdownMenuItem asChild>
+          <Link
+            href="/profile"
+            className="flex items-center space-x-2 cursor-pointer"
+          >
+            <User className="text-iDonate-navy-primary" size={20} />
+            <span>Profile Settings</span>
+          </Link>
+        </DropdownMenuItem>
+
+        <DropdownMenuItem asChild>
+          <Link
+            href="/donations"
+            className="flex items-center space-x-2 cursor-pointer"
+          >
+            <Heart className="text-iDonate-navy-primary" size={20} />
+            <span>My Donations</span>
+          </Link>
+        </DropdownMenuItem>
+
+        <DropdownMenuItem asChild>
+          <Link
+            href="/search"
+            className="flex items-center space-x-2 cursor-pointer"
+          >
+            <Search className="text-iDonate-navy-primary" size={20} />
+            <span>Search</span>
+          </Link>
+        </DropdownMenuItem>
 
         <DropdownMenuSeparator />
 
