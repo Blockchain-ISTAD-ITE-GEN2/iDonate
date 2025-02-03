@@ -23,7 +23,7 @@ export function middleware(request: NextRequest) {
 export const config = {
   matcher: [
     "/donor-dashboard/:path*",
-    "/organization-dashboard/dashboard/:path*",
+    "/organization-dashboard/:path*",
   ],
   compiler: {
     removeConsole: true,

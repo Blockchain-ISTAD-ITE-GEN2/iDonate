@@ -23,7 +23,7 @@ const links_suppoort = [
   { name: "How It Works", href: "/how-it-works" },
   { name: "Mission & Vision", href: "/mission-vision" },
   { name: "Donor", href: "/donor-dashboard" },
-  { name: "Organization", href: "/organization-dashboard/dashboard" },
+  { name: "Organization", href: "/organization-dashboard" },
   { name: "Categories", href: "/categories" },
 ];
 export default function FooterComponent() {
