@@ -41,6 +41,9 @@ import categories from "@/data/category.json";
 import { useGetCategoriesQuery } from "@/redux/services/category-service";
 import { UploadedFilesCard } from "@/components/fileupload/uploaded-files-card";
 import { useCreateEventsMutation } from "@/redux/services/event-service";
+import { toast } from "@/hooks/use-toast";
+import { useParams } from "next/navigation";
+import { DatePicker } from "@/components/auth/DayPicker";
 
 type EventInfoFormProps = {
   onNamePercentageUpdate: (fullnamePercentage: number) => void;
@@ -48,7 +51,7 @@ type EventInfoFormProps = {
   onLocationPercentageUpdate: (phonePercentage: number) => void;
   onStartDatePercentageUpdate: (contactPercentage: number) => void;
   onEndDatePercentageUpdate: (addressPercentage: number) => void;
-  onTimezonePercentageUpdate: (imagePercentage: number) => void;
+  // onTimezonePercentageUpdate: (imagePercentage: number) => void;
   onImagesPercentageUpdate: (imagePercentage: number) => void;
 };
 
@@ -58,9 +61,12 @@ export function EventInfoFormCreation({
   onLocationPercentageUpdate,
   onStartDatePercentageUpdate,
   onEndDatePercentageUpdate,
-  onTimezonePercentageUpdate,
+  // onTimezonePercentageUpdate,
   onImagesPercentageUpdate,
 }: EventInfoFormProps) {
+
+  const org = useParams();
+  const orgUuid = String(org.uuid);
   const { data: categoriesData } = useGetCategoriesQuery({});
   const typeCategories: CategoryType[] = categoriesData || [];
   const [progresses, setProgresses] = useState<{ [key: string]: number }>({});
@@ -72,9 +78,12 @@ export function EventInfoFormCreation({
     Record<string, number>
   >({});
 
-  const [newEvent] = useCreateEventsMutation()
+  const [createEvent] = useCreateEventsMutation()
 
-  // 2. Define your
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
+
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
+
   const form = useForm<z.infer<typeof eventSchemaCreation>>({
     resolver: zodResolver(eventSchemaCreation),
     defaultValues: {
@@ -83,10 +92,20 @@ export function EventInfoFormCreation({
       location: "",
       startDate: "",
       endDate: "",
-      timezone: "",
+      // timezone: "",
       images: [],
     },
   });
+
+  const [formData, setFormData] = useState({
+    name: "",
+    description: "",
+    location: "",
+    startDate: "",
+    endDate: "",
+    images: [],
+  });
+  
 
   const { watch, handleSubmit, reset, control, formState } = form;
 
@@ -97,12 +116,30 @@ export function EventInfoFormCreation({
     setSelectedCategoryUuid(categoryUuid);
   };
 
+  const handleDateChange = (date: Date | undefined) => {
+    setSelectedDate(date);
+    
+    setFormData((prev) => ({
+      ...prev,
+      startDate: date ? date.toISOString().split("T")[0] : "", // Convert Date to YYYY-MM-DD string
+    }));
+  
+    if (formState.errors.startDate) {
+      setErrors((prev) => ({
+        ...prev,
+        startDate: "",
+      }));
+    }
+  };
+  
+
+
   const name = watch("name");
   const description = watch("description");
   const location = watch("location");
   const orderDate = watch("startDate");
   const endDate = watch("endDate");
-  const timezone = watch("timezone");
+  // const timezone = watch("timezone");
   const images = watch("images");
 
   const isFormFilled = {
@@ -112,7 +149,7 @@ export function EventInfoFormCreation({
     orderDate: !!orderDate,
     endDate: !!endDate,
     images: images.length > 0,
-    timezone: !!timezone,
+    // timezone: !!timezone,
   };
 
   // Percentage calculation
@@ -125,7 +162,7 @@ export function EventInfoFormCreation({
       const orderDatePercentage = orderDate ? 10 : 0;
       const endDatePercentage = endDate ? 10 : 0;
       const imagePercentage = images.length ? 10 : 0;
-      const timezonePercentage = timezone ? 10 : 0;
+      // const timezonePercentage = timezone ? 10 : 0;
 
       // Call individual percentage update functions for each field
       onNamePercentageUpdate(namePercentage);
@@ -134,7 +171,7 @@ export function EventInfoFormCreation({
       onStartDatePercentageUpdate(orderDatePercentage);
       onEndDatePercentageUpdate(endDatePercentage);
       onImagesPercentageUpdate(imagePercentage);
-      onTimezonePercentageUpdate(timezonePercentage);
+      // onTimezonePercentageUpdate(timezonePercentage);
     };
 
     calculateCompletionPercentage();
@@ -145,14 +182,14 @@ export function EventInfoFormCreation({
     orderDate,
     endDate,
     images,
-    timezone,
+    // timezone,
     onNamePercentageUpdate,
     onDescriptionPercentageUpdate,
     onLocationPercentageUpdate,
     onStartDatePercentageUpdate,
     onEndDatePercentageUpdate,
     onImagesPercentageUpdate,
-    onTimezonePercentageUpdate,
+    // onTimezonePercentageUpdate,
   ]);
 
   // Track if the form is filled and prevent user from leaving the page
@@ -165,7 +202,7 @@ export function EventInfoFormCreation({
         isFormFilled.orderDate ||
         isFormFilled.endDate ||
         isFormFilled.images ||
-        isFormFilled.timezone ||
+        // isFormFilled.timezone ||
         isFormFilled.location
       ) {
         event.preventDefault();
@@ -182,8 +219,41 @@ export function EventInfoFormCreation({
   }, [isFormFilled]);
 
   // 3. Define a submit handler.
-  function onSubmit(values: z.infer<typeof eventSchemaCreation>) {
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof eventSchemaCreation>) {
+    try {
+      const newEvent = {
+        name: values.name || "",
+        description: values.description,
+        location: values.location,
+        startDate: values.startDate,
+        endDate: values.endDate,
+        images: values.images
+      };
+  
+      // Call the mutation
+      await createEvent(
+        {categoryUuid: selectedCategoryUuid, organizationUuid: orgUuid, newEvent:   newEvent}
+      ).unwrap();
+  
+      // Success toast
+      toast({
+        title: "Success",
+        description: "Event created successfully!",
+        variant: "default",
+      });
+  
+      // Reset the form and close the dialog
+      reset();
+    } catch (err) {
+      console.error("Failed to create event:", err);
+  
+      // Error toast
+      toast({
+        title: "Error",
+        description: "Failed to create event. Please try again.",
+        variant: "destructive",
+      });
+    }
   }
 
   // async function simulateFileUpload(files: File[]) {
@@ -302,7 +372,7 @@ export function EventInfoFormCreation({
                 type="submit"
                 className="bg-iDonate-white-space border-2 hover:bg-iDonate-light-gray border-iDonate-navy-accent text-iDonate-navy-primary"
               >
-                Submit
+                {formState.isSubmitting ? "Submitting..." : "Submit"}
               </Button>
             </div>
           </CardHeader>
@@ -314,7 +384,7 @@ export function EventInfoFormCreation({
                 onClick={() => handleCategorySelection(item.uuid || "")} // Select category UUID
                 className={`border-2 flex flex-col items-center justify-center border-iDonate-navy-accent hover:bg-iDonate-white-space w-[200px] h-[200px] gap-4 p-0 m-0 rounded-lg cursor-pointer ${
                   selectedCategoryUuid === item.uuid
-                    ? "bg-iDonate-navy-accent text-white"
+                    ? "bg-iDonate-white-space text-white"
                     : ""
                 }`}
               >
@@ -372,6 +442,9 @@ export function EventInfoFormCreation({
                 name="description"
                 render={({ field }) => (
                   <FormItem className="w-full h-full">
+                    <FormLabel className="text-sm text-iDonate-navy-secondary">
+                      Description
+                    </FormLabel>
                     <FormControl className="w-full h-full">
                       <Textarea
                         className="h-auto overflow-auto scrollbar-hide"
@@ -386,112 +459,103 @@ export function EventInfoFormCreation({
                   </FormItem>
                 )}
               />
+              <FormField
+                control={control}
+                name="location"
+                render={({ field }) => (
+                  <FormItem className="flex-1">
+                    <FormLabel className="text-sm text-iDonate-navy-secondary">
+                      Event Location
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Phnom Penh, Cambodia"
+                        className="w-full"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                    <FormDescription className="text-iDonate-gray text-sm">
+                      This is location of your event.
+                    </FormDescription>
+                  </FormItem>
+                )}
+              />
 
-              <div className="flex gap-9 p-0 m-0">
-                <FormField
-                  control={control}
-                  name="startDate"
-                  render={({ field }) => (
-                    <FormItem className="flex-1 flex flex-col">
-                      <FormLabel className="text-sm text-iDonate-navy-secondary">
-                        Order Date
-                      </FormLabel>
+<div className="flex gap-9 p-0 m-0">
+  <FormField
+    control={control}
+    name="startDate"
+    render={({ field }) => (
+      <FormItem className="flex-1 flex flex-col">
+        <FormLabel className="text-sm text-iDonate-navy-secondary">
+          Start Date
+        </FormLabel>
 
-                      <Popover>
-                        <PopoverTrigger asChild>
-                          <FormControl className="w-full">
-                            <Button
-                              variant={"outline"}
-                              className={cn(
-                                " pl-3 text-left font-normal",
-                                !field.value && "text-muted-foreground",
-                              )}
-                            >
-                              {field.value ? (
-                                format(field.value, "PPP")
-                              ) : (
-                                <span>Pick a date</span>
-                              )}
-                              <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                            </Button>
-                          </FormControl>
-                        </PopoverTrigger>
-                        <PopoverContent className="w-auto p-0" align="start">
-                          <Calendar
-                            mode="single"
-                            selected={
-                              field.value ? new Date(field.value) : undefined
-                            }
-                            onSelect={field.onChange}
-                            disabled={(date) =>
-                              date > new Date() || date < new Date("1900-01-01")
-                            }
-                            initialFocus
-                          />
-                        </PopoverContent>
-                      </Popover>
+        <DatePicker
+                                selectedDate={selectedDate}
+                                onDateChange={handleDateChange}
+                                error={errors.dateOfBirth}
+                              />
 
-                      <FormMessage />
+        <FormMessage />
+        <FormDescription className="text-iDonate-gray text-sm">
+          This is your event's order date.
+        </FormDescription>
+      </FormItem>
+    )}
+  />
 
-                      <FormDescription className="text-iDonate-gray text-sm">
-                        This is your event's order date.
-                      </FormDescription>
-                    </FormItem>
-                  )}
-                />
+  <FormField
+    control={control}
+    name="endDate"
+    render={({ field }) => (
+      <FormItem className="flex-1 flex flex-col">
+        <FormLabel className="text-sm text-iDonate-navy-secondary">
+          End Date
+        </FormLabel>
 
-                <FormField
-                  control={control}
-                  name="endDate"
-                  render={({ field }) => (
-                    <FormItem className="flex-1 flex flex-col">
-                      <FormLabel className="text-sm text-iDonate-navy-secondary">
-                        End Date
-                      </FormLabel>
+        <Popover>
+          <PopoverTrigger asChild>
+            <FormControl className="w-full">
+              <Button
+                variant={"outline"}
+                className={cn(
+                  "pl-3 text-left font-normal",
+                  !field.value && "text-muted-foreground"
+                )}
+              >
+                {field.value ? (
+                  format(new Date(field.value), "PPP")
+                ) : (
+                  <span>Pick a date</span>
+                )}
+                <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+              </Button>
+            </FormControl>
+          </PopoverTrigger>
+          <PopoverContent className="w-auto p-0" align="start">
+            <Calendar
+              mode="single"
+              selected={field.value ? new Date(field.value) : undefined}
+              onSelect={(date) =>
+                field.onChange(date ? date.toISOString().split("T")[0] : "")
+              }
+              disabled={(date) => date > new Date() || date < new Date("1900-01-01")}
+              initialFocus
+            />
+          </PopoverContent>
+        </Popover>
 
-                      <Popover>
-                        <PopoverTrigger asChild>
-                          <FormControl className="w-full">
-                            <Button
-                              variant={"outline"}
-                              className={cn(
-                                " pl-3 text-left font-normal",
-                                !field.value && "text-muted-foreground",
-                              )}
-                            >
-                              {field.value ? (
-                                format(field.value, "PPP")
-                              ) : (
-                                <span>Pick a date</span>
-                              )}
-                              <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                            </Button>
-                          </FormControl>
-                        </PopoverTrigger>
-                        <PopoverContent className="w-auto p-0" align="start">
-                          <Calendar
-                            mode="single"
-                            selected={
-                              field.value ? new Date(field.value) : undefined
-                            }
-                            onSelect={field.onChange}
-                            disabled={(date) =>
-                              date > new Date() || date < new Date("1900-01-01")
-                            }
-                            initialFocus
-                          />
-                        </PopoverContent>
-                      </Popover>
+        <FormMessage />
+        <FormDescription className="text-iDonate-gray text-sm">
+          This is your event's end date.
+        </FormDescription>
+      </FormItem>
+    )}
+  />
+</div>
 
-                      <FormMessage />
-
-                      <FormDescription className="text-iDonate-gray text-sm">
-                        This is your event's end date.
-                      </FormDescription>
-                    </FormItem>
-                  )}
-                />
-              </div>
             </CardContent>
 
             <CardContent className="flex relative flex-1 p-0 m-0">

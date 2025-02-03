@@ -36,7 +36,7 @@ export function EventFormCreation() {
           onStartDatePercentageUpdate={setStartDatePercentage}
           onEndDatePercentageUpdate={setEndDatePercentage}
           onImagesPercentageUpdate={setImagesPercentage}
-          onTimezonePercentageUpdate={setImagesPercentage}
+          // onTimezonePercentageUpdate={setImagesPercentage}
 
           // onOrganizationPercentageUpdate={setOrganizationPercentage}
         />
