@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     url: "https://idonate.istad.co",
     images: [
       {
-        url: "https://idonateapi.kangtido.life/media/50712731-758e-43bb-8d85-37483a95048b.png",
+        url: "https://idonateapi.kangtido.life/media/819e4d30-4bcd-4f23-a004-744075dbecbf.png",
         width: 1200,
         height: 630,
         alt: "iDonate Home Banner",
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     title: "iDonate - Empowering Transparent Donations",
     description:
       "Make donations you can trust with iDonate. Explore verified organizations and causes.",
-    images: ["https://idonateapi.kangtido.life/media/50712731-758e-43bb-8d85-37483a95048b.png"],
+    images: ["https://idonateapi.kangtido.life/media/819e4d30-4bcd-4f23-a004-744075dbecbf.png"],
   },
   icons: {
     icon: "/favicon.ico",

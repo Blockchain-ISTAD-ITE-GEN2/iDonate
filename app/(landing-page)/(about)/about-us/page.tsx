@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     url: "https://idonate.istad.co/about-us",
     images: [
       {
-        url: "https://idonateapi.kangtido.life/media/50712731-758e-43bb-8d85-37483a95048b.png",
+        url: "https://idonateapi.kangtido.life/media/819e4d30-4bcd-4f23-a004-744075dbecbf.png",
         width: 1200,
         height: 630,
         alt: "iDonate Team Photo",

@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     url: "https://idonate.istad.co/how-it-works",
     images: [
       {
-        url: "https://idonateapi.kangtido.life/media/50712731-758e-43bb-8d85-37483a95048b.png",
+        url: "https://idonateapi.kangtido.life/media/819e4d30-4bcd-4f23-a004-744075dbecbf.png",
         width: 1200,
         height: 630,
         alt: "How It Works - iDonate",
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     title: "How It Works - iDonate",
     description:
       "Explore the process behind iDonate, from submitting donations to the verification process.",
-    images: ["https://idonateapi.kangtido.life/media/50712731-758e-43bb-8d85-37483a95048b.png"],
+    images: ["https://idonateapi.kangtido.life/media/819e4d30-4bcd-4f23-a004-744075dbecbf.png"],
   },
   robots: {
     index: true,
