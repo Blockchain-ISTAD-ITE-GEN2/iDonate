@@ -3,18 +3,18 @@
 import { BannerComponent } from "@/components/organization/card/banner";
 import { BarAndLineChart } from "@/components/organization/dashboard/bar-and-line-chart";
 import WaitingForVerification from "@/components/organization/waiting-verification/waiting-verification";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { useGetOrganizationByuuidQuery } from "@/redux/services/organization-service";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 
-export default function OrganizationDashboard({
-  params,
-}: {
-  params: { uuid: string };
-}) {
-  const uuid = params.uuid;
-
+export default function OrganizationDashboard() {
+  const params = useParams();
   const router = useRouter();
+  
+  const uuid = params?.uuid as string; // Ensure it's treated as a string
+
+  console.log("UUID from params:", uuid);
+
   const {
     data: organization,
     isLoading,
@@ -57,7 +57,6 @@ export default function OrganizationDashboard({
                     src={organization?.image || "/placeholder-avatar.png"}
                     alt={organization?.name || "Organization Avatar"}
                   />
-                  {/* <AvatarFallback className="rounded-lg">CN</AvatarFallback> */}
                 </Avatar>
 
                 <div className="flex flex-col flex-1 text-left text-sm leading-tight">
@@ -74,7 +73,7 @@ export default function OrganizationDashboard({
 
           {/* Components */}
           <BannerComponent />
-          <BarAndLineChart orgUuid={uuid}/>
+          <BarAndLineChart orgUuid={uuid} />
         </div>
       </div>
     </section>
