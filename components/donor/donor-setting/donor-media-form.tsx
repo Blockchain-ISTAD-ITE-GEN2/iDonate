@@ -116,7 +116,7 @@ export function DonorMediaForm({
   };
 
   const profileImageUrl = userProfile?.avatar
-    ? `${process.env.NEXT_PUBLIC_IDONATE_API_URL}/media/${userProfile?.avatar}`
+    ? `${userProfile?.avatar}`
     : AvartarPlaceHolder;
 
   return (
