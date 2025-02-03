@@ -34,7 +34,7 @@ export const metadata: Metadata = {
       url: "https://idata.istad.co",
       type: "website",
       locale: "kh_KH",
-      images: "https://idonateapi.kangtido.life/media/a1108ea2-b140-4a4c-b07d-21aa141853f5.png",
+      images: "https://idonateapi.kangtido.life/media/819e4d30-4bcd-4f23-a004-744075dbecbf.png",
   }
 };
 

@@ -38,7 +38,7 @@ export const metadata: Metadata = {
       locale: "kh_KH",
       images: [
         {
-            url: "https://idonateapi.kangtido.life/media/287b8ea2-c365-42e0-8683-57f57f2d5e78.png",
+            url: "https://idonateapi.kangtido.life/media/819e4d30-4bcd-4f23-a004-744075dbecbf.png",
             width: 1200,  
             height: 630,
             alt: "iDonate Banner"
