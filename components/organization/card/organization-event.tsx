@@ -1,67 +1,72 @@
 "use client";
+
+import { useEffect, useState } from "react";
+import { useParams, useRouter } from "next/navigation";
+import { Client } from "@stomp/stompjs";
+import SockJS from "sockjs-client";
 import { Toolbar } from "@/components/filter/toolbar";
-import { use, useEffect, useState } from "react";
 import { OrganizationEventCard } from "@/components/organization/card/event-organization-card";
 import { Button } from "@/components/ui/button";
-import { useParams, useRouter } from "next/navigation";
 import { useGetEventByOrganizationQuery } from "@/redux/services/event-service";
 import { EventType } from "@/difinitions/types/event/EventType";
 
 export function OrganizationEventPage() {
   const router = useRouter();
   const params = useParams();
-  const orgUuid = String(params.uuid); // Ensures `uuid` is a string
+  const orgUuid = String(params.uuid);
 
+  // Fetch initial events from API
   const { data: events } = useGetEventByOrganizationQuery(orgUuid);
   const typedEvents: EventType[] = events?.content || [];
 
-  const filtersFace = [
-    {
-      key: "name",
-      title: "Events",
-      options: Array.from(new Set(typedEvents.map((event) => event.name)))
-        .filter((event): event is string => event !== undefined)
-        .map((event) => ({
-          label: event,
-          value: event,
-        })),
-    },
-    {
-      key: "currentRaised",
-      title: "Amount Range",
-      options: Array.from(
-        new Set(typedEvents.map((event) => event.currentRaised)),
-      )
-        .filter((amount): amount is number => amount !== undefined)
-        .map((amount) => ({
-          label: amount.toString(),
-          value: amount.toString(),
-        })),
-    },
-    {
-      key: "isDraft",
-      title: "Draft Event",
-      options: Array.from(new Set(typedEvents.map((event) => event.isDraft)))
-        .filter((amount): amount is boolean => amount !== undefined)
-        .map((amount) => ({
-          label: amount.toString(),
-          value: amount.toString(),
-        })),
-    },
-  ];
+  // State for filtered events
+  const [filteredEvents, setFilteredEvents] = useState<EventType[]>(typedEvents);
 
-  const filtersDateRange = [
-    {
-      key: "startDate", // Assuming we are filtering by the event's order_date
-      title: "Date Range",
-    },
-  ];
-
-  const [filteredEvents, setFilteredEvents] =
-    useState<EventType[]>(typedEvents);
-
+  // 🔥 WebSocket Setup with STOMP
   useEffect(() => {
-    setFilteredEvents(typedEvents); // Reset filtered events whenever `events` prop changes
+    const socket = new SockJS(`${process.env.NEXT_PUBLIC_IDONATE_API_URL}/websocket`);
+
+    const stompClient = new Client({
+      webSocketFactory: () => socket,
+      debug: (str) => console.log(str),
+      reconnectDelay: 5000,
+      heartbeatIncoming: 4000,
+      heartbeatOutgoing: 4000,
+    });
+
+    stompClient.onConnect = () => {
+      console.log("Connected to WebSocket");
+
+      // Subscribe to donation updates
+      stompClient.subscribe("/topic/donation-updates", (message) => {
+        const update = JSON.parse(message.body);
+        console.log("Received Donation Update:", update);
+
+        setFilteredEvents((prevEvents) =>
+          prevEvents.map((event) =>
+            event.uuid === update.eventUuid
+              ? { ...event, currentRaised: update.totalAmount }
+              : event
+          )
+        );
+      });
+    };
+
+    stompClient.onWebSocketClose = () => {
+      console.warn("WebSocket connection closed. Reconnecting...");
+      setTimeout(() => stompClient.activate(), 5000);
+    };
+
+    stompClient.activate();
+
+    return () => {
+      stompClient.deactivate();
+    };
+  }, []);
+
+  // Update filtered events when API data changes
+  useEffect(() => {
+    setFilteredEvents(typedEvents);
   }, [typedEvents]);
 
   return (
@@ -69,24 +74,47 @@ export function OrganizationEventPage() {
       <div className="flex justify-between items-center">
         <Toolbar
           events={typedEvents}
-          filtersFace={filtersFace}
-          searchKey={"name"}
+          filtersFace={[
+            {
+              key: "name",
+              title: "Events",
+              options: typedEvents.map((event) => ({
+                label: event.name,
+                value: event.name,
+              })),
+            },
+            {
+              key: "currentRaised",
+              title: "Amount Range",
+              options: typedEvents.map((event: any) => ({
+                label: event.currentRaised.toString(),
+                value: event.currentRaised.toString(),
+              })),
+            },
+            {
+              key: "isDraft",
+              title: "Draft Event",
+              options: typedEvents.map((event) => ({
+                label: event.isDraft.toString(),
+                value: event.isDraft.toString(),
+              })),
+            },
+          ]}
+          searchKey="name"
           onFilterChange={setFilteredEvents}
-          filtersDateRange={filtersDateRange}
+          filtersDateRange={[{ key: "startDate", title: "Date Range" }]}
         />
 
         <Button
           variant="outline"
-          onClick={() => {
-            router.push(`/organization-dashboard/${orgUuid}/event-creation`);
-          }}
+          onClick={() => router.push(`/organization-dashboard/${orgUuid}/event-creation`)}
         >
           New Event
         </Button>
       </div>
 
-      {filteredEvents.map((event, index) => (
-        <OrganizationEventCard key={index} event={event} />
+      {filteredEvents.map((event) => (
+        <OrganizationEventCard key={event.uuid} event={event} />
       ))}
     </>
   );
