@@ -11,6 +11,9 @@ import { ReacentTransacctions } from "@/components/organization/dashboard/Reacen
 import { AverageType, BarchartType } from "@/difinitions/types/chart/barchart";
 import SockJS from "sockjs-client";
 import { Client } from "@stomp/stompjs";
+import { CardsMetricSkeleton } from "./CardsMetricSkeleton";
+import { RecentTransactionsSkeleton } from "./RecentTransactionsSkeleton";
+import { LoadingTrasaction } from "./LoadingTrasaction";
 
 export function BarAndLineChartLanding() {
   const [recentTransactions, setRecentTransactions] = useState<TransactionType[]>([]);
@@ -105,18 +108,24 @@ export function BarAndLineChartLanding() {
     };
   }, []);
 
+
   if (loading) {
-    return <div>Loading...</div>;
+    return(
+      <>
+      <LoadingTrasaction/>
+      </>
+    )
   }
 
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
+  // if (error) {
+  //   return <div>Error: {error}</div>;
+  // }
 
   return (
     <div className="container mx-auto px-4 md:w-full grid gap-4 lg:grid-cols-[1fr_480px] grid-cols-1">
       <div className="flex flex-col gap-4">
         {/* Cards for metrics */}
+        {/* <CardsMetricSkeleton/> */}
         <CardsMetric data={recentTransactions} />
       </div>
 

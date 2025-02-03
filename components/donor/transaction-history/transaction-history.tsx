@@ -12,6 +12,9 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { TransactionType } from "@/difinitions/types/table-type/transaction"; // Ensure this import is correct
+import { CardsMetricSkeleton } from "@/components/landing/transaction/CardsMetricSkeleton";
+import { LoadingTrasaction } from "@/components/landing/transaction/LoadingTrasaction";
+import { RecentTransactionsSkeleton } from "@/components/landing/transaction/RecentTransactionsSkeleton";
 
 export default function TransactionHistory() {
   const {
@@ -69,7 +72,9 @@ export default function TransactionHistory() {
       {/* Cards for metrics */}
       <div className="flex-1">
         {loading ? (
-          <p>Loading...</p>
+          <div>
+            <CardsMetricSkeleton />
+          </div>
         ) : error ? (
           <p className="text-red-500">{error}</p>
         ) : (
@@ -78,25 +83,27 @@ export default function TransactionHistory() {
       </div>
 
       {/* Recent Transactions */}
-      <Card className="w-full xl:w-[480px] bg-iDonate-light-gray rounded-lg border border-iDonate-navy-accent dark:bg-iDonate-dark-mode">
-        <CardHeader>
-          <CardTitle className="text-medium-eng font-normal text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
-            Recent Transactions
-          </CardTitle>
-          <CardDescription className="text-sub-description-eng text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
-            You have donated {transactions.length} times this week.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          {loading ? (
-            <p>Loading...</p>
-          ) : error ? (
-            <p className="text-red-500">{error}</p>
-          ) : (
-            <DonorReacentTransacctions transactions={transactions} />
-          )}
-        </CardContent>
-      </Card>
+      <div>
+        { loading? (
+          <div>
+            <RecentTransactionsSkeleton />
+          </div>
+        ):(
+          <Card className="w-full xl:w-[480px] bg-iDonate-light-gray rounded-lg border border-iDonate-navy-accent dark:bg-iDonate-dark-mode">
+          <CardHeader>
+            <CardTitle className="text-medium-eng font-normal text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
+              Recent Transactions
+            </CardTitle>
+            <CardDescription className="text-sub-description-eng text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
+              You have donated {transactions.length} times this week.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+              <DonorReacentTransacctions transactions={transactions} />
+          </CardContent>
+        </Card>
+        )}
+      </div>
     </div>
   );
 }
