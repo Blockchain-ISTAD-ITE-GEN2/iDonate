@@ -23,7 +23,6 @@ import Image from "next/image";
 import logo from "@/public/logo/logodesign no background.png";
 import { Button } from "../ui/button";
 import ThemeSwitch from "../theme/ThemeSwitches";
-// import { ProfileDropdown } from "./profile/profile-dropdown";
 import { signOut, useSession } from "next-auth/react";
 import { useAppSelector } from "@/redux/hooks";
 import { selectToken } from "@/redux/features/auth/authSlice";

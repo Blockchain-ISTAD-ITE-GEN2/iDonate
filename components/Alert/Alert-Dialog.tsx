@@ -55,13 +55,19 @@ export function AlertComfirmDialog({
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel
-            onClick={() => setOpen(false)}
+            onClick={(e) => {
+              e.stopPropagation();
+              e.preventDefault(); // Prevent default navigation behavior
+              setOpen(false);
+            }}
             className="border-[2px] border-iDonate-navy-accent"
           >
             {cancelText}
           </AlertDialogCancel>
           <AlertDialogAction
-            onClick={() => {
+             onClick={(e) => {
+              e.stopPropagation();
+              e.preventDefault(); // Prevent default form submission
               onAction();
               setOpen(false);
             }}

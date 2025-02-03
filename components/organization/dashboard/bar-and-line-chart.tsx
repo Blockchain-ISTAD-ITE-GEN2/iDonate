@@ -87,16 +87,6 @@ export function BarAndLineChart({ orgUuid }: { orgUuid: string }) {
         {/* ✅ Render CardsMetric with computed average data */}
         <CardsMetric data={averageData} />
 
-        <Card className="w-full bg-iDonate-light-gray rounded-lg border border-iDonate-navy-accent dark:bg-iDonate-dark-mode dark:text-iDonate-navy-accent">
-          <CardHeader>
-            <CardTitle className="text-medium-eng font-normal text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
-              Comparison this week
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="pl-2">
-            <Overview data={barchartdata} />
-          </CardContent>
-        </Card>
       </div>
 
       {/* Recent Transactions Card */}
