@@ -9,7 +9,11 @@ export default function Contributor() {
   const params = useParams();
   const orgUuid = String(params.uuid); // Ensures `uuid` is a string
 
-  const { data: orgTransaction } = useGetOrgTransactionsQuery(orgUuid);
+  const {
+    data: orgTransaction,
+    isError,
+    isLoading,
+  } = useGetOrgTransactionsQuery(orgUuid);
 
   const typedTransactions: TransactionType[] = orgTransaction?.content || [];
 

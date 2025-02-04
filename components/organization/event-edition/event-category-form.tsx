@@ -13,12 +13,17 @@ import {
 } from "@/components/ui/card";
 import { useEffect, useState } from "react";
 import { SquarePen } from "lucide-react";
-import { eventSchema } from "@/components/schema/schema";
+import { eventInfoSchema } from "@/components/schema/schema";
 import { AlertComfirmDialog } from "@/components/Alert/Alert-Dialog";
 import Image from "next/image";
 import { CategoryType } from "@/difinitions/types/components-type/CategoryType";
-import categories from "@/data/category.json";
 import { useGetCategoriesQuery } from "@/redux/services/category-service";
+import {
+  useEditEventsMutation,
+  useGetEventByUuidQuery,
+} from "@/redux/services/event-service";
+import { EventType } from "@/difinitions/types/event/EventType";
+import { useToast } from "@/hooks/use-toast";
 
 type EventCategoryFormProps = {
   onPercentageUpdate: (percentage: number) => void;
@@ -29,32 +34,37 @@ export function EventCategoryFormEdition({
   onPercentageUpdate,
   uuid,
 }: EventCategoryFormProps) {
-  const categories = useGetCategoriesQuery({});
-
-  const typeCategories: CategoryType[] = categories?.currentData || [];
-
+  const { data: categoriesData } = useGetCategoriesQuery({});
+  const typeCategories: CategoryType[] = categoriesData || [];
   const [isEditing, setIsEditing] = useState(false);
+  const { data: event } = useGetEventByUuidQuery(uuid);
+  const typedEvent: EventType = event || {};
 
-  const form = useForm<z.infer<typeof eventSchema>>({
-    resolver: zodResolver(eventSchema),
+  const [updateEventCategory, { isLoading }] = useEditEventsMutation();
+  const { toast } = useToast();
+
+  const eventCategory: CategoryType = typedEvent?.category || {
+    Key: "",
+    name: "",
+    media: "",
+    description: "",
+    benefits: "",
+  };
+
+  const form = useForm<z.infer<typeof eventInfoSchema>>({
+    resolver: zodResolver(eventInfoSchema),
     defaultValues: {
-      title: "",
+      category: eventCategory.Key || "",
     },
   });
 
-  const { watch, handleSubmit, reset, control, formState } = form;
-  const categoryValue = watch("title");
+  const { watch, handleSubmit, reset, setValue, formState } = form;
+  const categoryValue = watch("category");
 
-  // Track if the form is filled
   const isFormFilled = !!categoryValue.trim();
 
-  // Update percentage based on input
   useEffect(() => {
-    if (isFormFilled) {
-      onPercentageUpdate(10); // Address field filled, update percentage
-    } else {
-      onPercentageUpdate(0); // Address field empty, reset percentage
-    }
+    onPercentageUpdate(isFormFilled ? 20 : 0);
   }, [isFormFilled, onPercentageUpdate]);
 
   useEffect(() => {
@@ -67,16 +77,51 @@ export function EventCategoryFormEdition({
     };
 
     window.addEventListener("beforeunload", handleBeforeUnload);
-
     return () => {
       window.removeEventListener("beforeunload", handleBeforeUnload);
     };
   }, [isFormFilled]);
 
-  function onSubmit(values: z.infer<typeof eventSchema>) {
-    console.log(values);
-    setIsEditing(false);
-  }
+  const [selectedCategoryUuid, setSelectedCategoryUuid] = useState<string>(
+    eventCategory?.Key || "",
+  );
+
+  // Handle category selection
+  const handleCategorySelection = (categoryUuid: string) => {
+    setSelectedCategoryUuid(categoryUuid);
+  };
+
+  const onSubmit = async () => {
+    if (!typedEvent || !selectedCategoryUuid) return;
+
+    try {
+      // Prepare updated event object with selected category UUID
+      const updatedEvent = {
+        ...typedEvent, // Spread existing event data
+        category: selectedCategoryUuid, // Update only category with its UUID
+      };
+
+      // Send PUT request with full event data
+      await updateEventCategory({
+        uuid,
+        updatedData: updatedEvent,
+      }).unwrap();
+
+      toast({
+        title: "Category Updated",
+        description: "The event category has been updated successfully.",
+        variant: "default",
+      });
+
+      setIsEditing(false);
+    } catch (error) {
+      toast({
+        title: "Update Failed",
+        description: "Failed to update the event category.",
+        variant: "destructive",
+      });
+    }
+  };
 
   function handleCancel() {
     reset();
@@ -86,8 +131,7 @@ export function EventCategoryFormEdition({
   return (
     <Form {...form}>
       <form onSubmit={handleSubmit(onSubmit)}>
-        {/* View Mode */}
-        {!isEditing && (
+        {!isEditing ? (
           <Card className="flex flex-col rounded-lg border-2 border-iDonate-navy-accent gap-2 p-9">
             <CardHeader className="flex flex-row items-center justify-between p-0 m-0">
               <CardTitle className="text-2xl font-medium text-iDonate-navy-secondary">
@@ -103,25 +147,24 @@ export function EventCategoryFormEdition({
               </Button>
             </CardHeader>
 
-            <CardContent className="border-2 flex flex-col items-center justify-center border-iDonate-navy-accent  w-[200px] h-[200px] gap-4 p-0 m-0 rounded-lg">
-              <div className=" w-[100px] h-[100px] bg-iDonate-navy-accent rounded-full border flex items-center justify-center">
-                <Image
-                  width={60}
-                  height={60}
-                  src="https://charius-next.netlify.app/_next/static/media/3.0714cc33.svg"
-                  alt={"Media"}
-                />
+            <CardContent className="border-2 flex flex-col items-center justify-center border-iDonate-navy-accent w-[200px] h-[200px] gap-4 p-0 m-0 rounded-lg">
+              <div className="w-[100px] h-[100px] bg-iDonate-navy-accent rounded-full border flex items-center justify-center">
+                {eventCategory?.media && (
+                  <Image
+                    width={60}
+                    height={60}
+                    src={eventCategory?.media}
+                    alt={eventCategory?.name || "Media"}
+                  />
+                )}
               </div>
 
               <CardDescription className="text-iDonate-navy-secondary text-xl">
-                អាហារ សុខភាព
+                {eventCategory?.name}
               </CardDescription>
             </CardContent>
           </Card>
-        )}
-
-        {/* Edit Mode */}
-        {isEditing && (
+        ) : (
           <Card className="flex flex-col bg-iDonate-light-gray rounded-lg border-2 border-iDonate-navy-accent gap-2 p-9">
             <CardHeader className="flex flex-row items-center justify-between p-0 m-0">
               <CardTitle className="text-2xl font-medium text-iDonate-navy-secondary">
@@ -129,7 +172,6 @@ export function EventCategoryFormEdition({
               </CardTitle>
 
               <div className="flex gap-3">
-                {/* Cancel Button */}
                 {formState.isDirty ? (
                   <AlertComfirmDialog
                     trigger={
@@ -156,12 +198,12 @@ export function EventCategoryFormEdition({
                   </Button>
                 )}
 
-                {/* Submit Button */}
                 <Button
                   type="submit"
                   className="bg-iDonate-white-space border-2 hover:bg-iDonate-light-gray border-iDonate-navy-accent text-iDonate-navy-primary"
+                  disabled={isLoading}
                 >
-                  Submit
+                  {isLoading ? "Submitting..." : "Submit"}
                 </Button>
               </div>
             </CardHeader>
@@ -170,7 +212,12 @@ export function EventCategoryFormEdition({
               {typeCategories.map((item, index) => (
                 <CardContent
                   key={index}
-                  className="border-2 flex flex-col items-center justify-center border-iDonate-navy-accent w-[200px] h-[200px] gap-4 p-0 m-0 rounded-lg"
+                  onClick={() => handleCategorySelection(item.uuid || "")} // Select category UUID
+                  className={`border-2 flex flex-col items-center justify-center border-iDonate-navy-accent hover:bg-iDonate-white-space w-[200px] h-[200px] gap-4 p-0 m-0 rounded-lg cursor-pointer ${
+                    selectedCategoryUuid === item.uuid
+                      ? "bg-iDonate-navy-accent text-white"
+                      : ""
+                  }`}
                 >
                   <div className="w-[100px] h-[100px] bg-iDonate-navy-accent rounded-full border flex items-center justify-center">
                     <Image
@@ -185,8 +232,7 @@ export function EventCategoryFormEdition({
                   </div>
 
                   <CardDescription className="text-iDonate-navy-secondary text-xl">
-                    {item.name || ""}{" "}
-                    {/* Assuming 'item.name' holds the category name */}
+                    {item.name || ""}
                   </CardDescription>
                 </CardContent>
               ))}

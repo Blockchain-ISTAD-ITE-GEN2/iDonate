@@ -15,6 +15,8 @@ import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 
 export function OrganizationEventCard({ event }: { event: EventType }) {
+  const placeholderImage =
+    "https://i.pinimg.com/736x/2a/86/a5/2a86a560f0559704310d98fc32bd3d32.jpg";
   const params = useParams();
   const orgUuid = String(params.uuid); // Ensures `uuid` is a string
   const [deleteEvent] = useDeleteEventsMutation();
@@ -39,10 +41,6 @@ export function OrganizationEventCard({ event }: { event: EventType }) {
     }
   };
 
-  const handleCancel = () => {
-    console.log("Action canceled"); // Handle cancel logic (if needed)
-  };
-
   return (
     <Card
       onClick={() => {
@@ -61,7 +59,10 @@ export function OrganizationEventCard({ event }: { event: EventType }) {
           trigger={
             <Button
               type="button"
-              className="text-md py-1 px-2 border border-red-400 font-normal bg-transparent hover:bg-iDonate-navy-accent hover:font-semibold text-iDonate-error rounded-lg"
+              className="text-xl font-normal bg-transparent hover:bg-iDonate-navy-accent text-iDonate-error rounded-lg"
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
             >
               <Trash2
                 className="fill-iDonate-error w-9 h-9"
@@ -91,11 +92,11 @@ export function OrganizationEventCard({ event }: { event: EventType }) {
         <CardContent className="p-0 w-[300px] h-[300px] rounded-lg">
           {event?.images[0] ? (
             <Image
-              width={300}
+              src={event?.images[0] || placeholderImage}
+              alt={event?.name || "Event Image"}
+              width={400}
               height={300}
-              src={event?.images[0]}
-              alt={event?.name || "Media"}
-              className="w-full h-full object-cover rounded-lg"
+              className="w-full h-full object-cover"
             />
           ) : (
             <div className="w-full h-full bg-gray-200 flex items-center justify-center">
@@ -123,7 +124,7 @@ export function OrganizationEventCard({ event }: { event: EventType }) {
               >
                 ថ្ងៃចាប់ផ្តើម
               </CardTitle>
-              <CardDescription className="hover:bg-gray-100 text-md font-inter text-iDonate-navy-primary p-1 rounded-lg dark:text-iDonate-navy-accent">
+              <CardDescription className=" text-md font-inter text-iDonate-navy-primary p-1 rounded-lg dark:text-iDonate-navy-accent">
                 {event?.startDate
                   ? new Intl.DateTimeFormat("en-US", {
                       day: "2-digit",
@@ -141,7 +142,7 @@ export function OrganizationEventCard({ event }: { event: EventType }) {
               >
                 ថ្ងៃបញ្ចប់
               </CardTitle>
-              <CardDescription className="hover:bg-gray-100 text-md font-inter text-iDonate-navy-primary p-1 rounded-lg dark:text-iDonate-navy-accent">
+              <CardDescription className=" text-md font-inter text-iDonate-navy-primary p-1 rounded-lg dark:text-iDonate-navy-accent">
                 {event?.endDate
                   ? new Intl.DateTimeFormat("en-US", {
                       day: "2-digit",
@@ -159,8 +160,8 @@ export function OrganizationEventCard({ event }: { event: EventType }) {
               >
                 ចំនួនទឹកប្រាក់
               </CardTitle>
-              <CardDescription className="hover:bg-gray-100 text-xl font-inter text-iDonate-navy-primary p-1 rounded-lg dark:text-iDonate-navy-accent">
-                $ {event?.currentRaised || "មិនទាន់មានការបរិច្ចាគ"}
+              <CardDescription className=" text-xl font-inter text-iDonate-navy-primary p-1 rounded-lg dark:text-iDonate-navy-accent">
+              {event?.currentRaised ? `$ ${event.currentRaised}` : "មិនទាន់មានការបរិច្ចាគ"}
               </CardDescription>
             </div>
 
@@ -171,7 +172,7 @@ export function OrganizationEventCard({ event }: { event: EventType }) {
               >
                 ចំនួនអ្នកបរិច្ចាគ
               </CardTitle>
-              <CardDescription className="hover:bg-gray-100 text-lg font-inter text-iDonate-navy-primary p-1 rounded-lg dark:text-iDonate-navy-accent">
+              <CardDescription className=" text-lg font-inter text-iDonate-navy-primary p-1 rounded-lg dark:text-iDonate-navy-accent">
                 {event?.totalDonors || "មិនទាន់មានអ្នកបរិច្ចាគ"}
               </CardDescription>
             </div>

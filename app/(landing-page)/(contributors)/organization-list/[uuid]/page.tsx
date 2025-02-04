@@ -6,31 +6,31 @@ import { useGetOrganizationByUserQuery } from "@/redux/services/organization-ser
 import { useGetUserProfileQuery } from "@/redux/services/user-profile";
 import { MapPinned } from "lucide-react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { OrganizationType } from "@/difinitions/types/organization/OrganizationType";
 
-export default function OrganizationDashboard({
-  params,
-}: {
-  params: { uuid: string };
-}) {
-  const userUuid = params.uuid;
+export default function OrganizationDashboard() {
+  const params = useParams();
+  const userUuid = String(params.uuid);
   const router = useRouter();
   const { data: organizations } = useGetOrganizationByUserQuery(userUuid);
   const { data: user, isLoading, error } = useGetUserProfileQuery({});
   const typeOrganizations: OrganizationType[] = organizations?.content || [];
 
+  console.log("Trans data: ", JSON.stringify(typeOrganizations));
+
   // Check if user has the ORGANIZER role
   const isOrganizer = user?.role?.some(
-    (role: { name: string }) => role.name === "ORGANIZER",
+    (role: { name: string }) => role.name === "ORGANIZER"
   );
 
   // Redirect non-organizers to the registration page
   useEffect(() => {
-    if (!isLoading && !error && !isOrganizer) {
-      router.push("/organization-registration");
+    if (!isLoading && !error && !user) {
+      router.push("/login");
+    } else if (!isLoading && !error && !isOrganizer) {
+      router.push(`/organization-list/${userUuid}`); // Redirect to organization list first
     }
-    if (!user) router.push("/login");
   }, [isLoading, error, isOrganizer, router, user]);
 
   // Show loading state
@@ -53,23 +53,28 @@ export default function OrganizationDashboard({
         {typeOrganizations.map((org) => (
           <Card
             key={org.uuid}
-            onClick={() =>
-              router.push(`/organization-dashboard/${org.uuid}/dashboard`)
-            }
+            onClick={() => {
+              // Navigate to organization-list first before dashboard
+              router.push(`/organization-list/${org?.uuid}`);
+              setTimeout(() => {
+                router.push(`/organization-dashboard/${org?.uuid}/dashboard`);
+              }, 1000); // Delay to ensure organization-list loads first
+            }}
             className="w-full rounded-[10px] bg-iDonate-white-space border-0 cursor-pointer shadow-md transition-transform hover:scale-[1.02] dark:bg-iDonate-dark-mode"
           >
             <CardContent className="flex flex-col sm:flex-row items-center justify-center p-4 gap-4">
               {/* Logo */}
-              <div className="relative aspect-square min-w-[160px] h-full flex-shrink-0 rounded-lg">
+              <div className="relative w-[160px] h-[160px] flex-shrink-0 rounded-lg overflow-hidden">
                 {org?.image ? (
                   <Image
-                    src={org?.image}
-                    alt={org?.name || "Media"}
-                    fill
-                    className="object-cover rounded-lg"
+                    src={org.image}
+                    alt={org.name || "Media"}
+                    width={160}
+                    height={160}
+                    className="object-cover w-full h-full rounded-lg"
                   />
                 ) : (
-                  <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+                  <div className="w-full h-full bg-gray-900 flex items-center justify-center rounded-lg">
                     <span className="text-gray-500">No Image</span>
                   </div>
                 )}

@@ -4,30 +4,42 @@ import { Progress } from "@/components/ui/progress";
 import { useEffect, useState } from "react";
 
 type EventPercentageProps = {
-  image: number;
-  category: number;
-  title: number;
-  description: number;
-  endDate: number;
-  startDate: number;
-  contact: number;
+  name?: number;
+  description?: number;
+  location?: number;
+  endDate?: number;
+  startDate?: number;
+  timezone?: number;
+  organization?: number;
+  category?: number;
+  images?: number;
 };
 
 export function ProgressEvent({
-  image,
-  category,
-  title,
+  name,
   description,
+  location,
   endDate,
   startDate,
-  contact,
+  timezone,
+  organization,
+  category,
+  images,
 }: EventPercentageProps) {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
     // Calculate the total percentage
     const totalProgress =
-      image + category + title + description + endDate + startDate + contact;
+      (name || 0) +
+      (description || 0) +
+      (location || 0) +
+      (endDate || 0) +
+      (startDate || 0) +
+      (timezone || 0) +
+      (organization || 0) +
+      (category || 0) +
+      (images || 0);
 
     // Set progress with a delay for a smooth animation
     const timer = setTimeout(() => {
@@ -35,7 +47,17 @@ export function ProgressEvent({
     }, 500);
 
     return () => clearTimeout(timer);
-  }, [image, category, title, description, endDate, startDate, contact]);
+  }, [
+    name,
+    description,
+    location,
+    endDate,
+    startDate,
+    timezone,
+    organization,
+    category,
+    images,
+  ]);
 
   return (
     <section className="flex flex-col gap-4 border-b-2 border-iDonate-navy-primary border-dashed py-6">

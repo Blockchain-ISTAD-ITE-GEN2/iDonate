@@ -9,13 +9,13 @@
 // import { useState } from "react";
 
 // export default function EventDetail() {
-//   const params = useParams(); 
-//   const uuid = params.uuid as string; 
+//   const params = useParams();
+//   const uuid = params.uuid as string;
 
 //   // Ensure uuid is defined before making the query
 //   const { data: events } = useGetEventByUuidQuery(uuid, { skip: !uuid });
 //   const typedEvent: EventType = events || {};
-  
+
 //   const placeholderImage = "https://i.pinimg.com/736x/2a/86/a5/2a86a560f0559704310d98fc32bd3d32.jpg";
 
 //   // State to track broken images

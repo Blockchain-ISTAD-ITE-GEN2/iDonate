@@ -66,7 +66,7 @@ export function BarAndLineChartLanding() {
     fetchTransactions();
 
     // Set up WebSocket connection
-    const socket = new SockJS(`${process.env.NEXT_PUBLIC_API_BASE_URL}/ws`);
+    const socket = new SockJS(`${process.env.NEXT_PUBLIC_IDONATE_API_URL}/websockket`);
     const stompClient = new Client({
       webSocketFactory: () => socket,
       reconnectDelay: 5000,

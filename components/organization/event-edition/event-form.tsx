@@ -11,8 +11,11 @@ export function EventFormEdition() {
   const [imagePercentage, setImagePercentage] = useState(0);
   const [startDatePercentage, setStartDatePercentage] = useState(0);
   const [endDatePercentage, setEndDatePercentage] = useState(0);
-  const [contactPercentage, setContactPercentage] = useState(0);
   const [categoryPercentage, setCategoryPercentage] = useState(0);
+  const [organizationPercentage, setOrganizationPercentage] = useState(0);
+  // const [locationPercentage, setLocationPercentage] = useState(0);
+  // const [isVisiblePercentage, setIsVisiblePercentage] = useState(0);
+
   const params = useParams();
   const eventUuid = String(params.eventUuid); // Ensures `uuid` is a string
 
@@ -22,12 +25,14 @@ export function EventFormEdition() {
     <section className="w-full flex flex-col gap-6 rounded-lg border-2 border-iDonate-navy-accent shadow-light p-6">
       <ProgressEvent
         category={categoryPercentage}
-        contact={contactPercentage}
         description={descriptionPercentage}
         endDate={endDatePercentage}
-        image={imagePercentage}
+        images={imagePercentage}
         startDate={startDatePercentage}
-        title={titlePercentage}
+        name={titlePercentage}
+        organization={organizationPercentage}
+        // location={locationPercentage}
+        // isVisible={isVisiblePercentage}
       />
 
       <div className="w-full flex flex-col gap-6 border-iDonate-navy-accent">
@@ -44,7 +49,9 @@ export function EventFormEdition() {
           onImagePercentageUpdate={setImagePercentage}
           onOrderDatePercentageUpdate={setStartDatePercentage}
           onEndDatePercentageUpdate={setEndDatePercentage}
-          onContactPercentageUpdate={setContactPercentage}
+          onOrganizationPercentageUpdate={setOrganizationPercentage}
+          // onLocationPercentageUpdate={setLocationPercentage}
+          // onVisiblePercentageUpdate={setIsVisiblePercentage
           uuid={eventUuid}
         />
       </div>

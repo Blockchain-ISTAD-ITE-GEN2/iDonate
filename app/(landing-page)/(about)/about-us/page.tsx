@@ -1,4 +1,4 @@
-import AboutUsComponent from "@/components/about-us/AboutUsComponen";
+import AboutUsComponent from "@/components/about-us/AboutUsComponent";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

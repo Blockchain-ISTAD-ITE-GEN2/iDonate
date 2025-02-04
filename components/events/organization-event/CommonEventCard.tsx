@@ -31,7 +31,7 @@ export function CommonEventCard({ event }: { event: EventType }) {
   useEffect(() => {
     if (!event?.uuid) return;
   
-    const socket = new SockJS(`${process.env.NEXT_PUBLIC_API_BASE_URL}/websocket`);
+    const socket = new SockJS(`${process.env.NEXT_PUBLIC_IDONATE_API_URL}/websocket`);
     const stompClient = new Client({
       webSocketFactory: () => socket,
       reconnectDelay: 5000,

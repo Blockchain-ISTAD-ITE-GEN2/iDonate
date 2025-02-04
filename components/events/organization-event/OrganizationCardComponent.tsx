@@ -11,16 +11,14 @@ export function OrganizationCardComponent({
   name,
   description,
   address,
-  onClick
+  onClick,
 }: OrganizationParam) {
-  
   // const router = useRouter();
 
   return (
     <Card
-
-    onClick={onClick}
-    className="w-full rounded-[10px] bg-iDonate-light-gray border-0 cursor-pointer shadow-md transition-transform hover:scale-[1.02] dark:bg-iDonate-dark-mode"
+      onClick={onClick}
+      className="w-full rounded-[10px] bg-iDonate-light-gray border-0 cursor-pointer shadow-md transition-transform hover:scale-[1.02] dark:bg-iDonate-dark-mode"
     >
       <CardContent className="flex flex-col sm:flex-row items-center justify-center p-4 gap-4">
         {/* Logo */}

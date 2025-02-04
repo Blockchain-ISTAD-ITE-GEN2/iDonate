@@ -1,3 +1,4 @@
+import { CategoryType } from "../components-type/CategoryType";
 import { OrganizationType } from "../organization/OrganizationType";
 
 export type EventType = {
@@ -10,13 +11,12 @@ export type EventType = {
   endDate: string;
   // date?: string;
   key?: number;
-  category?: {
-    name: string;
-  };
+  category?: CategoryType;
   organization?: OrganizationType;
   images: string[];
   currentRaised?: number;
   totalDonors?: number;
   isDraft: boolean;
+  isVisible: boolean;
   timezone?: string;
 };

@@ -20,7 +20,7 @@ export function RecentTransactionsLanding() {
     const fetchTransactions = async () => {
       try {
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/donation`,
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/v1/donation`,
         );
         if (!response.ok) {
           throw new Error("Failed to fetch transactions");
