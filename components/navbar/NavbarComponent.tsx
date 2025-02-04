@@ -42,6 +42,7 @@ export default function NavbarComponent() {
   const accessTokenValue = useAppSelector(selectToken);
   const { data: userProfile, error, isLoading } = useGetUserProfileQuery({});
 
+
   useEffect(() => {}, [accessTokenValue, session]);
 
   // useEffect(() => {},[accessTokenValue,session])
@@ -219,7 +220,7 @@ export default function NavbarComponent() {
                   {/* Menu Items */}
                   <DropdownMenuItem asChild>
                     <Link
-                      href="/profile"
+                      href={`/donor-dashboard/${uuid}`}
                       className="flex items-center space-x-2 cursor-pointer"
                     >
                       <User className="text-iDonate-navy-primary" size={20} />
@@ -256,7 +257,7 @@ export default function NavbarComponent() {
                         style={{ width: "25px", height: "25px" }}
                         className="bg-iDonate-navy-primary rounded-full p-1 fill-white group-hover:fill-iDonate-navy-primary group-hover:text-iDonate-navy-primary group-hover:bg-iDonate-green-secondary"
                       />
-                      <span className="text-lg">Donate Now</span>
+                      <span className="text-lg">បរិច្ចាគឥឡូវនេះ</span>
                     </Button>
                   </div>
 
@@ -291,7 +292,7 @@ export default function NavbarComponent() {
             className="bg-iDonate-navy-primary rounded-full p-1 fill-white group-hover:fill-iDonate-navy-primary group-hover:text-iDonate-navy-primary group-hover:bg-iDonate-green-secondary dark:bg-iDonate-green-secondary  dark:text-iDonate-navy-primary dark:fill-iDonate-navy-primary"
           />
           <span className="text-sub-description-eng xl:text-description-eng">
-            Donate Now
+            បរិច្ចាគឥឡូវនេះ
           </span>
         </Button>
       </section>

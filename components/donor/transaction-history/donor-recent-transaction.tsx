@@ -65,7 +65,7 @@ export function DonorReacentTransacctions({
 
       {/* View All Transactions */}
       <Label className="flex items-center py-4 text-sm sm:text-medium-eng text-iDonate-navy-secondary cursor-pointer dark:text-iDonate-navy-accent">
-        View all transactions
+        មើលប្រតិបត្តិការទាំងអស់
       </Label>
     </div>
   );

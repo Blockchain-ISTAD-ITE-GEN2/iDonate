@@ -1,12 +1,12 @@
 export const AboutMenulist = [
   {
     path: "/about-us",
-    title: "About Us",
+    title: "អំពីយើង",
     active: false,
   },
   {
     path: "/mission-vision",
-    title: "Mission and Vision",
+    title: "ចក្ចុវិស័យ",
     active: false,
   },
 ];

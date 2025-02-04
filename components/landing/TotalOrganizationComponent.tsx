@@ -184,7 +184,7 @@ export default function TotalOrganizationComponent() {
     >
       {/* Heading */}
       <h2 className="text-2xl sm:text-3xl md:text-4xl font-medium text-center dark:text-white text-iDonate-navy-primary mb-8 sm:mb-12 leading-tight">
-        យើងរួមគ្នា កសាងសហគមន៍ដ៏រឹងមាំ
+        យើងរួមគ្នា កសាងសហគមន៍ដ៏រឹងមាំមួយ
       </h2>
 
       {/* Grid Layout for Stats */}

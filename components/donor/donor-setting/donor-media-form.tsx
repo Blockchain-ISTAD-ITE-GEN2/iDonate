@@ -64,7 +64,7 @@ export function DonorMediaForm({
 
     if (!file.name.match(/\.(jpg|jpeg|png)$/i)) {
       toast.error("Only JPG or PNG files are allowed.");
-      return;
+      return; 
     }
 
     const previewURL = URL.createObjectURL(file);
@@ -115,9 +115,9 @@ export function DonorMediaForm({
     }
   };
 
-  const profileImageUrl = userProfile?.avatar
-    ? `${userProfile?.avatar}`
-    : AvartarPlaceHolder;
+  const profileImageUrl = userProfile?.avatar || AvartarPlaceHolder;
+
+    console.log("Profile image api: ", userProfile);
 
   return (
     <Form {...form}>
