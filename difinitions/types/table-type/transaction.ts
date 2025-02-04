@@ -4,10 +4,10 @@ export type TransactionType = {
   email?: string;
   event?: {
     name: string;
-  };
+  } | null;
   organization?: {
     name: string;
-  };
+  } | null;
   amount?: number;
   image?: string;
   description?: string;
