@@ -74,7 +74,7 @@ export function EventDetailBanner({ uuid }: EventDetailBannerProps) {
         <div className="flex flex-col gap-1">
           <CardTitle className="flex gap-3 text-iDonate-gray text-lg">
             <Users className="text-iDonate-navy-primary" />
-            Total Donors
+            ចំនួនអ្នកបរិច្ចាគសរុប
           </CardTitle>
           <CardDescription className="text-iDonate-navy-primary text-2xl font-medium">
             {isEventLoading ? "Loading..." : event?.totalDonors || 0} Donors
@@ -83,7 +83,7 @@ export function EventDetailBanner({ uuid }: EventDetailBannerProps) {
         <div className="flex flex-col gap-1">
           <CardTitle className="flex gap-3 text-iDonate-gray text-lg">
             <HandCoins className="text-iDonate-navy-primary" />
-            Total Donations
+            ចំនួនថវិការទទួលបាន
           </CardTitle>
           <CardDescription className="text-iDonate-navy-primary text-2xl font-medium">
             {isEventLoading ? "Loading..." : formattedCurrentRaised}
@@ -92,16 +92,16 @@ export function EventDetailBanner({ uuid }: EventDetailBannerProps) {
       </CardHeader>
 
       <CardContent className="flex flex-col gap-9">
-        <div className="flex flex-col gap-3">
-          <Button className="w-full rounded-lg bg-iDonate-green-secondary hover:bg-iDonate-green-secondary text-iDonate-navy-primary font-semibold">
+        <div className="flex flex-col gap-3​​">
+          <Button className="w-full text-[16px] rounded-lg bg-iDonate-green-secondary hover:bg-iDonate-green-secondary text-iDonate-navy-primary font-semibold">
             <Share2Icon />
-            Share Event
+            ចែករំលែក
           </Button>
         </div>
 
         <div className="flex flex-col gap-6">
           <CardDescription className="text-iDonate-navy-primary text-2xl font-medium">
-            Recent Donations
+            ការបរិច្ចាគថ្មីៗ
           </CardDescription>
 
           {loading ? (
