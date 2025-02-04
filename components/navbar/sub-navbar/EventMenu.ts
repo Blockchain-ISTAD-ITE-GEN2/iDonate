@@ -4,14 +4,14 @@ export const EventMenulist = [
   {
     path: "/categories",
     icon: icons.LayoutList,
-    title: "Categories",
+    title: "ប្រភេទ",
     active: false,
   },
 
   {
     path: "/organizations",
     icon: icons.Building2,
-    title: "Organizations",
+    title: "អង្គភាព",
     active: false,
   },
 ];

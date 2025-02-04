@@ -71,14 +71,15 @@ export function CardsMetric({ data }: AverageProps) {
             />
             <Area
               type="monotone"
-              strokeWidth={2}
+              strokeWidth={1.5}
+              stroke="#263A61"
               dataKey="amount"
               fill="fill-iDonate-green-primary"
               className="fill-iDonate-green-primary dark:fill-iDonate-green-secondary"
             />
             <ChartTooltip
               cursor={false}
-              content={<ChartTooltipContent indicator="dot" />}
+              content={<ChartTooltipContent indicator="dot" color="" />}
             />
           </AreaChart>
         </ChartContainer>

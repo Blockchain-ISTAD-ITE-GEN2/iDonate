@@ -75,7 +75,8 @@ export function DonorCardsMetric({ data }: TransactionProps) {
 
             <Area
               type="monotone"
-              strokeWidth={2}
+              strokeWidth={1.5}
+              stroke="#263A61"
               dataKey="amount"
               fill="fill-iDonate-green-primary"
               className="fill-iDonate-green-primary"
