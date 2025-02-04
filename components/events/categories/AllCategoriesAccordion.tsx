@@ -15,7 +15,7 @@ export function AllCategoriesButton() {
       lang="km"
       className="w-auto flex flex-col gap-6 p-9 bg-transparent border rounded-lg shadow-custom self-start"
     >
-      <h2 className="text-center font-bold text-title-eng text-iDonate-navy-secondary">
+      <h2 className="text-center dark:text-iDonate-navy-accent font-bold text-title-eng text-iDonate-navy-secondary">
         ប្រភេទទាំងអស់
       </h2>
 
@@ -24,7 +24,7 @@ export function AllCategoriesButton() {
           <Button
             key={index}
             variant="outline"
-            className="w-full border-0 text-iDonate-navy-primary gap-2 justify-start items-center hover:bg-iDonate-navy-accent text-lg"
+            className="w-full border-0 dark:text-iDonate-navy-accent text-iDonate-navy-primary gap-2 justify-start items-center hover:bg-iDonate-navy-accent text-lg"
           >
             <Play className="w-10 h-10" />
             {item.name}

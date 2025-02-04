@@ -1,108 +1,128 @@
 "use client";
 
 import Image from "next/image";
-import { CommonEventCard } from "@/components/events/organization-event/CommonEventCard";
-import { Button } from "@/components/ui/button";
-
-import { EventType } from "@/difinitions/types/event/EventType";
-import { useGetEventsQuery } from "@/redux/services/event-service";
 import { AccordionCategory } from "./AccordionCategory";
 import { AllCategoriesButton } from "./AllCategoriesAccordion";
+import { useParams } from "next/navigation";
+import { useGetCategoryByUuidQuery } from "@/redux/services/category-service";
+import { CategoryType } from "@/difinitions/types/components-type/CategoryType";
+import { useGetDraftEventsFalseQuery, useGetEventByCategoryQuery, useGetEventByUuidQuery } from "@/redux/services/event-service";
+import { CommonEventCard } from "@/components/events/organization-event/CommonEventCard";
+import { Button } from "@/components/ui/button";
+import { EventType } from "@/difinitions/types/event/EventType";
+import { useState } from "react";
+import CategoryPlaceholerDetailComponent from "./CategoryPlaceholderDetail";
 
 export default function CategoryDetailComponent() {
-  // const typedEvents: EventType[] = events.slice(0, 4);
+  // Get UUID from URL
+  const params = useParams();
+  const uuid = params.uuid as string;
+  const [page,setPage] = useState(3)
+
+  // Fetch category by UUID
   const {
+    data: category = null,
+    isLoading: isLoadingByUuid
+  } = useGetCategoryByUuidQuery(uuid, { skip: !uuid });
+
+  const { 
     data: eventsApiResponse = { content: [] },
     isLoading: isEventsLoading,
-  } = useGetEventsQuery({});
+  } = useGetEventByCategoryQuery(uuid, { skip: !uuid });
 
-  const events: EventType[] = eventsApiResponse.content || [];
+  const events: EventType[] = eventsApiResponse?.content ?? [];
 
-  const typedEvents: EventType[] = events.slice(0, 4);
+  const typedEvents: EventType[] = events.slice(0, page) || [];
 
+  // console.log("============> uuid: ",uuid);
+  // console.log("============> Event: ",typedEvents);
+  // console.log("============> Category: ",category);
+
+  // Add pagination 
+  const handleShowMore = () => {
+    setPage((pre) => pre + 3 )
+  }
+
+  // Random image 
+  // Extract images from all getEventby UUID 
+const allEventImages: string[] = events.flatMap(event => event.images ?? []);
+
+// Select a random image from event images
+const randomImage = allEventImages.length > 0
+  ? allEventImages[Math.floor(Math.random() * allEventImages.length)]
+  : "https://i.pinimg.com/736x/2a/86/a5/2a86a560f0559704310d98fc32bd3d32.jpg"; 
+
+  if (isLoadingByUuid && isEventsLoading){
+    return (
+      <CategoryPlaceholerDetailComponent />
+    )
+  }
+  
   return (
-    <section className=" flex flex-col md:flex-row gap-9 px-9">
-      {/*section to the left */}
+    <section className="flex flex-col md:flex-row gap-9 px-9">
+      {/* Left Section */}
       <div className="md:order-first flex flex-col gap-9 flex-1 h-full">
-        {/*image*/}
-        <div className="relative min-h-[600px]">
-          <Image
-            src="https://www.childfund.org.kh/c/uploads/2020/02/LY9A3560-1.jpg"
-            alt="image"
-            className="rounded-lg object-cover"
-            fill
-          />
+        {/* Image & Category Info */}
+        {category && (
+        <div className="relative min-h-[600px] flex flex-col gap-6">
+          {/* Image Section */}
+          <div className="relative min-h-[600px]">
+           <Image
+              src={randomImage}
+              alt={category?.name || "Category Image"}
+              className="rounded-lg object-cover"
+              fill
+            />
+          </div>
+
+          {/* Name and Description Section */}
+          <div className="flex flex-col gap-6">
+            <h1 className="text-heading-two-khmer text-iDonate-navy-primary leading-normal">
+              {category?.name}
+            </h1>
+
+            <p className="text-iDonate-navy-primary text-description-khmer md:text-lg lg:text-xl leading-9">
+             {category?.description}
+            </p>
+          </div>
         </div>
+      )}
 
-        <div className="flex flex-col gap-6">
-          <h1 className="text-heading-two-khmer text-iDonate-navy-primary leading-normal ">
-            ជួយកុមារសម្រេចអនាគតដ៏ភ្លឺស្វាង
-          </h1>
-
-          <p className="text-iDonate-navy-primary text-description-khmer md:text-lg lg:text-xl leading-9">
-            ការបរិច្ចាគរបស់អ្នកគឺមិនមែនគ្រាន់តែជាការផ្តល់អាហារ
-            ឬសម្ភារៈសិក្សាប៉ុណ្ណោះទេ។ វាជាការផ្តល់ឱកាសក្នុងការរីកចម្រើន
-            បង្កើតជីវិតថ្មី និងជួយកុមារជាច្រើនឆ្ពោះទៅរកភាពជោគជ័យ។
-            ការបរិច្ចាគត្រឹមតែបន្តិចអាចធ្វើឱ្យមានការផ្លាស់ប្តូរធំមួយក្នុងជីវិតកុមារ។
-            ពួកគេនឹងមានសង្ឃឹមថ្មីសញ្ញាសម្តែងនៃភាពស្រស់ស្រាយ និងការរីកចម្រើន។
-            អ្នកអាចជាម្ចាស់នៃការផ្លាស់ប្តូរនោះ! ចូលរួមជាមួយយើងឥឡូវនេះ
-            ដើម្បីជួយកុមាររបស់សហគមន៍សម្រេចក្តីសុបិន្តរបស់ពួកគេ។
-            អនាគតរបស់ពួកគេប្រពៅលើការចូលរួមរបស់អ្នក។ ដោយសារ​អ្នក
-            កុមារជាច្រើននឹងមានអនាគតមួយដ៏ភ្លឺស្វាង និងមានសុភមង្គល។
-            ការចូលរួមរបស់អ្នកជាផ្នែកសំខាន់ក្នុងការផ្តល់អំណោយនេះ។
-            កុំឲ្យពេលវេលាចំណាយទៅដោយអ្វីខុសឆ្គង!
-          </p>
-        </div>
-
-        {/* Event Cards */}
+      {/* Event Cards  Start */}
         <div className="flex flex-col gap-6">
           <div className="grid gap-6 grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
-            {isEventsLoading ? (
-              <p>Loading events...</p>
-            ) : (
-              typedEvents.map((event, eventIndex) => (
+              {typedEvents.map((event, eventIndex) => (
                 <CommonEventCard
-                  key={eventIndex}
-                  event={{
-                    uuid: event.uuid,
-                    images: event.images,
-                    name: event.name,
-                    media: event.media,
-                    description: event.description,
-                    totalDonors: event.totalDonors,
-                    currentRaised: event.currentRaised,
-                    startDate: event.startDate,
-                    endDate: event.endDate,
-                    location: event.location,
-                    isDraft: event.isDraft,
-                  }}
+                  key={event.uuid}
+                  event={event}
                 />
-              ))
-            )}
+              ))}
           </div>
 
           <div className="flex justify-end">
-            <Button className="text-medium-eng text-iDonate-navy-primary bg-iDonate-white-space border-2 border-iDonate-navy-accent hover:bg-iDonate-navy-accent">
+            <Button 
+            onClick={handleShowMore}
+            className="text-medium-eng text-iDonate-navy-primary bg-iDonate-white-space border-2 border-iDonate-navy-accent hover:bg-iDonate-navy-accent">
               Show more
             </Button>
           </div>
         </div>
+        {/* Event Cards  End */}
 
-        {/*QA*/}
+        {/* Benefits Section */}
         <div>
           <div className="mb-[36px]">
-            <h1 className="text-iDonate-navy-primary max-w-2xl text-heading-two-khmer  tracking-tight leading-none md:text-[36px] xl:text-[36px] dark:text-white">
+            <h1 className="text-iDonate-navy-primary dark:text-iDonate-navy-accent max-w-2xl text-heading-two-khmer tracking-tight leading-none md:text-[36px] xl:text-[36px]">
               អត្ថប្រយោជន៍
             </h1>
           </div>
-
           <div className="mb-[36px]">
-            <AccordionCategory />
+            {category && <AccordionCategory uuid={category.uuid} />}
           </div>
         </div>
       </div>
 
-      {/* section to the right */}
+      {/* Right Section */}
       <div className="order-first">
         <AllCategoriesButton />
       </div>
