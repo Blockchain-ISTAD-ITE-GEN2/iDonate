@@ -30,53 +30,65 @@ export function CommonEventCard({ event }: { event: EventType }) {
 
   useEffect(() => {
     if (!event?.uuid) return;
-  
+
     const socket = new SockJS(`${process.env.NEXT_PUBLIC_IDONATE_API_URL}/websocket`);
     const stompClient = new Client({
       webSocketFactory: () => socket,
+      debug: (str) => console.log(str),
       reconnectDelay: 5000,
+      heartbeatIncoming: 4000,
+      heartbeatOutgoing: 4000,
     });
-  
-    stompClient.onConnect = () => {
+
+    const handleWebSocketClose = () => {
+      console.warn("WebSocket connection closed. Attempting to reconnect...");
+      setTimeout(() => stompClient.activate(), 5000);
+    };
+
+    const handleWebSocketError = (error: any) => {
+      console.error("WebSocket Error:", error);
+    };
+
+    const handleWebSocketConnect = () => {
       console.log(`Connected to WebSocket for event: ${event.uuid}`);
-  
-      stompClient.subscribe(`/topic/totalAmountOfEvent`, (message) => {
+
+      stompClient.subscribe("/topic/totalAmountOfEvent", (message) => {
         const updatedData = JSON.parse(message.body);
         if (updatedData.uuid === event.uuid) {
           setCurrentRaised(updatedData.amount);
         }
       });
-  
-      stompClient.subscribe(`/topic/totalDonorsByEachEvent`, (message) => {
+
+      stompClient.subscribe("/topic/totalDonorsByEachEvent", (message) => {
         const updatedData = JSON.parse(message.body);
         if (updatedData.uuid === event.uuid) {
           setTotalDonors(updatedData.totalDonors);
         }
       });
-  
+
+      // Send initial requests for data
       stompClient.publish({
         destination: "/app/chat.sendTotalAmountOfEvent",
         body: JSON.stringify({ uuid: event.uuid }),
       });
-  
+
       stompClient.publish({
         destination: "/app/chat.sendTotalDonorsByEachEvent",
         body: JSON.stringify({ uuid: event.uuid }),
       });
     };
-  
-    stompClient.onWebSocketError = (error) => {
-      console.error("WebSocket Error:", error);
-    };
-  
+
+    stompClient.onWebSocketClose = handleWebSocketClose;
+    stompClient.onWebSocketError = handleWebSocketError;
+    stompClient.onConnect = handleWebSocketConnect;
+
     stompClient.activate();
-  
+
     return () => {
       console.log(`Disconnecting WebSocket for event: ${event.uuid}`);
       stompClient.deactivate();
     };
-  }, [event?.uuid]); // ✅ Cleanup runs when event.uuid changes
-  
+  }, [event?.uuid]);
 
   return (
     <Card
@@ -156,18 +168,14 @@ export function CommonEventCard({ event }: { event: EventType }) {
           <div className="flex items-center gap-2">
             <Users className="h-5 w-5 text-iDonate-navy-primary dark:text-iDonate-navy-accent" />
             <h3 className="text-description-khmer text-iDonate-navy-primary line-clamp-1 dark:text-iDonate-navy-accent">
-            {totalDonors
-            ? `${totalDonors} នាក់បរិច្ចាគ`
-            : "No donors yet"}
+              {totalDonors ? `${totalDonors} នាក់បរិច្ចាគ` : "No donors yet"}
             </h3>
           </div>
 
           <div className="flex items-center gap-2">
             <CircleDollarSign className="h-5 w-5 text-iDonate-green-primary dark:text-iDonate-green-secondary" />
             <p className="text-medium-khmer text-iDonate-green-primary line-clamp-1 dark:text-iDonate-green-secondary">
-              {currentRaised
-                ? `$ ${currentRaised}`
-                : "No amount collected"}
+              {currentRaised ? `$ ${currentRaised}` : "No amount collected"}
             </p>
           </div>
         </div>
