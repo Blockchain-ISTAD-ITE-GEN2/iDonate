@@ -101,11 +101,11 @@ export function BarAndLineChart({ orgUuid }: { orgUuid: string }) {
           </CardDescription>
         </CardHeader>
 
-        <CardContent>
+        <CardContent className="">
           <div>
             {loading && <p>Loading transactions...</p>}
             {error && <p className="text-red-500">{error}</p>}
-            {!loading && !error && <ReacentTransacctions transactions={recentTransactions} />}
+            {!loading && !error && <ReacentTransacctions transactions={recentTransactions.slice(0, 5)} />}
           </div>
         </CardContent>
       </Card>

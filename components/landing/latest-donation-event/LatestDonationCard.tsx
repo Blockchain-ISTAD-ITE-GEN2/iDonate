@@ -98,7 +98,7 @@ export default function LatestDonationCard() {
                   e.stopPropagation();
                   router.push(`/event-detail/${item?.uuid}`);
                 }}
-                className="w-full my-[36px] bg-iDonate-green-secondary hover:bg-iDonate-green-primary text-iDonate-navy-primary font-semibold"
+                className="w-full p-2 text-[12px] my-[36px] bg-iDonate-green-secondary hover:bg-iDonate-green-primary text-iDonate-navy-primary font-semibold"
               >
                 <Heart
                   style={{ width: "25px", height: "25px" }}

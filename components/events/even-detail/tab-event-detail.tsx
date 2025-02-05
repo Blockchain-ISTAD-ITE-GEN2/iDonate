@@ -10,13 +10,13 @@ export function TabEventDetail() {
           className="border-2 rounded-lg px-9 border-iDonate-navy-accent data-[state=active]:bg-iDonate-navy-accent data-[state=active]:text-iDonate-navy-secondary dat`a-[state=active]:shadow-none"
           value="event-description"
         >
-          Description
+          ការពិពណ៌នា
         </TabsTrigger>
         <TabsTrigger
           className="border-2 rounded-lg px-9  border-iDonate-navy-accent data-[state=active]:bg-iDonate-navy-accent data-[state=active]:text-iDonate-navy-secondary dat`a-[state=active]:shadow-none"
           value="make-donation"
         >
-          Make Donation
+          ធ្វើការបរិច្ចាគ
         </TabsTrigger>
       </TabsList>
 
