@@ -110,7 +110,7 @@ export function EventDetailBanner({ uuid }: EventDetailBannerProps) {
             <p className="text-center text-red-500">{error}</p>
           ) : (
             <div className="flex flex-col gap-2">
-              {recentTransactions.map((transaction: any, index) => (
+              {recentTransactions.slice(0, 6).map((transaction: any, index) => (
                 <div
                   key={index}
                   className="flex w-full justify-between items-center gap-1 ml-4"
