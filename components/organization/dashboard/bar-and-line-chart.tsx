@@ -45,7 +45,7 @@ export function BarAndLineChart({ orgUuid }: { orgUuid: string }) {
 
         // Format transactions
         const formattedTransactions = data.content.map((transaction: any) => ({
-          avatar: transaction.avatar || "",
+          avatar: transaction.avatar,
           donor: transaction.username,
           amount: transaction.donationAmount,
           timestamp: transaction.timestamp,
@@ -95,7 +95,7 @@ export function BarAndLineChart({ orgUuid }: { orgUuid: string }) {
             ប្រតិបត្តិការថ្មីៗ
           </CardTitle>
 
-          <CardDescription className="text-sub-description-eng text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
+          <CardDescription className="text-sub-description-eng py-2 text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
             អ្នកទទួលបានការបរិច្ចាគចំនួន {recentTransactions.length}​ ក្នុងសប្តាហ៍នេះ។
           </CardDescription>
         </CardHeader>

@@ -34,7 +34,7 @@ export default function TransactionHistory() {
     const fetchTransactions = async () => {
       try {
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_IDONATE_API_URL}/api/v1/donation/${donorUuid}`,
+          `${process.env.NEXT_PUBLIC_IDONATE_API_URL}/api/v1/donation/${donorUuid}`
         );
         if (!response.ok) {
           throw new Error("Failed to fetch transactions");
@@ -52,10 +52,15 @@ export default function TransactionHistory() {
             event: txn.event,
             organization: txn.organization,
             amount: txn.donationAmount, // Map to `amount`
-            timestamp: txn.timestamp, // Ensure timestamp is included
-          }),
+            timestamp: new Date(txn.timestamp).toISOString(), // Ensure timestamp is a formatted string
+          })
         );
 
+        formattedTransactions.sort(
+          (a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
+        );
+
+        // Update state and keep the transactions sorted
         setTransactions(formattedTransactions);
       } catch (err: any) {
         setError(err.message || "Something went wrong");
@@ -90,18 +95,18 @@ export default function TransactionHistory() {
           </div>
         ) : (
           <Card className="w-full xl:w-[480px] bg-iDonate-light-gray rounded-lg border border-iDonate-navy-accent dark:bg-iDonate-dark-mode">
-          <CardHeader>
-            <CardTitle className="text-medium-eng font-normal text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
-              ប្រតិបត្តិការថ្មីៗ
-            </CardTitle>
-            <CardDescription className="text-sub-description-eng text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
-              អ្នកបានបរិច្ចាគចំនួន {transactions.length} ដងក្នុងសប្តាហ៍នេះ។
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
+            <CardHeader>
+              <CardTitle className="text-medium-eng font-normal text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
+                ប្រតិបត្តិការថ្មីៗ
+              </CardTitle>
+              <CardDescription className="text-sub-description-eng text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
+                អ្នកបានបរិច្ចាគចំនួន {transactions.length} ដងក្នុងសប្តាហ៍នេះ។
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
               <DonorReacentTransacctions transactions={transactions.slice(0, 5)} />
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
         )}
       </div>
     </div>

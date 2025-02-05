@@ -100,7 +100,7 @@ export function OrganizationAddressForm({ uuid }: { uuid: string }) {
 
               <Button
                 onClick={() => setIsEditing(true)}
-                className="bg-iDonate-white-space border-2 hover:bg-iDonate-light-gray border-iDonate-navy-accent text-iDonate-navy-primary dark:text-iDonate-navy-accent dark:bg-iDonate-dark-mode dark:hover:bg-black"
+                className="bg-iDonate-white-space border-2 hover:bg-iDonate-light-gray border-iDonate-navy-accent text-iDonate-navy-primary dark:text-iDonate-navy-accent dark:bg-iDonate-dark-mode dark:hover:bg-black "
               >
                 <SquarePen />
                 Edit
@@ -109,7 +109,7 @@ export function OrganizationAddressForm({ uuid }: { uuid: string }) {
 
             <CardContent className="flex w-fle gap-9 p-0 m-0">
               <div className="flex flex-col space-y-3">
-                <CardDescription className="text-xl text-iDonate-navy-primary dark:text-iDonate-navy-accent">
+                <CardDescription className="text-xl bg-gray-100 p-2 rounded-lg text-iDonate-navy-primary dark:text-iDonate-navy-accent">
                   {typeOrganization?.address}
                 </CardDescription>
               </div>

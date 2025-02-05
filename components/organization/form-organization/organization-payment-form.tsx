@@ -83,7 +83,7 @@ export function OrganizationPaymentForm({ uuid }: { uuid: string }) {
           <Card className="flex flex-col rounded-lg border-2 border-iDonate-navy-accent gap-6 p-9">
             <CardHeader className="flex flex-row items-center justify-between p-0 m-0">
               <CardTitle className="text-2xl font-medium text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
-                Location
+                Bank Account Number
               </CardTitle>
 
               <Button
@@ -97,7 +97,7 @@ export function OrganizationPaymentForm({ uuid }: { uuid: string }) {
 
             <CardContent className="flex w-fle gap-9 p-0 m-0">
               <div className="flex flex-col space-y-3">
-                <CardDescription className="text-xl text-iDonate-navy-primary dark:text-iDonate-navy-accent">
+                <CardDescription className="text-xl bg-gray-100 p-2 rounded-lg text-iDonate-navy-primary dark:text-iDonate-navy-accent">
                   {organization?.bankAccountNumber || "No bank account number provided"}
                 </CardDescription>
               </div>

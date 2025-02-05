@@ -116,7 +116,7 @@ export function DonorAddressForm({
             </CardHeader>
             <CardContent className="flex flex-wrap gap-4 sm:gap-6 lg:gap-9 p-0 m-0">
               <div className="flex flex-col md:space-y-1 ">
-                <CardDescription className="text-sm sm:text-description-eng lg:text-medium-eng text-iDonate-navy-primary">
+                <CardDescription className="text-sm sm:text-description-eng lg:text-medium-eng text-iDonate-navy-primary ">
                   {donorProfile?.address || "No address provided"}
                 </CardDescription>
               </div>
