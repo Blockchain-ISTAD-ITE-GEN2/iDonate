@@ -14,6 +14,8 @@ import { HandCoins, Share2Icon, Users } from "lucide-react";
 import { useState, useEffect } from "react";
 import { TransactionType } from "@/difinitions/types/table-type/transaction";
 import { useGetEventByUuidQuery } from "@/redux/services/event-service"; // Adjust the import path as needed
+import Image from "next/image";
+import donateIcon from "@/public/images/give-and-recieve.png";
 
 type EventDetailBannerProps = {
   uuid: string; // Accept UUID as a prop
@@ -110,32 +112,44 @@ export function EventDetailBanner({ uuid }: EventDetailBannerProps) {
             <p className="text-center text-red-500">{error}</p>
           ) : (
             <div className="flex flex-col gap-2">
-              {recentTransactions.slice(0, 6).map((transaction: any, index) => (
-                <div
-                  key={index}
-                  className="flex w-full justify-between items-center gap-1 ml-4"
-                >
-                  <div className="flex items-center gap-4">
-                    <Avatar className="h-full w-auto p-0 m-0 flex items-center gap-1">
-                      <AvatarFallback className="h-10 w-10 border border-iDonate-navy-primary">
-                        {transaction.name
-                          .split(" ")
-                          .map((n: any) => n[0])
-                          .join("")}
-                      </AvatarFallback>
-                    </Avatar>
+              {recentTransactions.slice(0,5).map((transaction, index) => (
+        <div
+          key={index}
+          className="flex flex-wrap sm:flex-nowrap w-full justify-between items-center border-b border-iDonate-navy-accent py-2 gap-2"
+        >
+          <div className="flex items-center gap-2 sm:gap-4">
+          <Avatar className="h-12 w-12 sm:h-16 sm:w-16 flex items-center justify-center border bg-iDonate-green-accent">
+              {transaction.avatar ? (
+                <img
+                  src={transaction.avatar}
+                  alt={`${transaction.username} Avatar`}
+                  className="h-full w-full object-cover"
+                />
+              ) : (
+                <Image
+                  width={40}
+                  height={40}
+                  src={donateIcon}
+                  alt={`${transaction.username} Avatar`}
+                />
+              )}
+            </Avatar>
 
-                    <div>
-                      <p className="text-sub-description-eng text-iDonate-gray">
-                        {transaction.name}
-                      </p>
-                      <p className="text-medium-eng font-semibold text-iDonate-navy-secondary">
-                        ${transaction.amount.toFixed(2)}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              ))}
+            <div className="space-y-1">
+              <p className="text-sm sm:text-base font-medium text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
+                {transaction.username}
+              </p>
+              <p className="text-xs sm:text-sm text-iDonate-gray">
+                {transaction.timestamp}
+              </p>
+            </div>
+          </div>
+
+          <span className="text-iDonate-green-primary text-sm sm:text-base font-medium ml-auto dark:text-iDonate-green-secondary">
+            ${transaction.amount?.toFixed(2)}
+          </span>
+        </div>
+      ))}
             </div>
           )}
         </div>

@@ -5,7 +5,6 @@ import { Card, CardContent, CardHeader } from "../../ui/card";
 import { CircleDollarSign, Users } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { FaRegCalendarAlt } from "react-icons/fa";
-import { HiCalendarDateRange } from "react-icons/hi2";
 import { EventType } from "@/difinitions/types/event/EventType";
 import SockJS from "sockjs-client";
 import { Client } from "@stomp/stompjs";
@@ -106,14 +105,24 @@ export function CommonEventCard({ event }: { event: EventType }) {
           {event?.description || "No description available"}
         </p>
 
+        {/* Start Date and End Date */}
         <div className="flex items-center gap-2">
-          <Users className="h-5 w-5 text-iDonate-navy-primary dark:text-iDonate-navy-accent" />
-          <h3>{totalDonors ? `អ្នកបរិច្ចាគ​ ${totalDonors} នាក់` : "មិនទាន់មានអ្នកបរិច្ចាគ"}</h3>
+          <FaRegCalendarAlt className="h-5 w-5 text-iDonate-navy-primary dark:text-iDonate-navy-accent" />
+          <p className="text-[14px]">
+            {formatDate(event.startDate)} - {formatDate(event.endDate)}
+          </p>
         </div>
 
+        {/* Total Donors */}
+        <div className="flex items-center gap-2">
+          <Users className="h-5 w-5 text-iDonate-navy-primary dark:text-iDonate-navy-accent" />
+          <h3 className=" text-iDonate-navy-primary dark:text-iDonate-navy-accent">{totalDonors ? `អ្នកបរិច្ចាគ​ ${totalDonors} នាក់` : "មិនទាន់មានអ្នកបរិច្ចាគ"}</h3>
+        </div>
+
+        {/* Amount Raised */}
         <div className="flex items-center gap-2">
           <CircleDollarSign className="h-5 w-5 text-iDonate-green-primary dark:text-iDonate-green-secondary" />
-          <p>{currentRaised ? `${currentRaised}` : "មិនទាន់ទទួលបានថវិការ"}</p>
+          <p  className=" text-iDonate-navy-primary dark:text-iDonate-navy-accent">{currentRaised ? `$${currentRaised.toLocaleString()}` : "មិនទាន់ទទួលបានថវិការ"}</p>
         </div>
       </CardContent>
     </Card>
