@@ -1,4 +1,5 @@
 "use client";
+
 import { CategoryType } from "@/difinitions/types/components-type/CategoryType";
 import { Button } from "@/components/ui/button";
 import { EventType } from "@/difinitions/types/event/EventType";
@@ -15,21 +16,20 @@ export default function CategoryWithEventComponent({
   // Pagination state
   const [page, setPage] = useState(4);
 
-  // Ensure category UUID exists
-  const uuid = category?.uuid;
-  if (!uuid) {
-    console.error("Category UUID is missing");
-    return null; // Prevent rendering if UUID is missing
-  }
-
   // Fetch events for the category
   const {
     data: eventsApiResponse = { content: [] },
     isLoading: isEventsLoading,
-  } = useGetEventByCategoryQuery({ uuid });
+  } = useGetEventByCategoryQuery({ uuid: category?.uuid || "" }); // Ensure UUID is always passed
 
   const events: EventType[] = eventsApiResponse.content || [];
   const typedEvents: EventType[] = events.slice(0, Math.min(page, events.length));
+
+  // Ensure category UUID exists
+  if (!category?.uuid) {
+    console.error("Category UUID is missing");
+    return null; // Prevent rendering if UUID is missing
+  }
 
   console.log("Fetched events:", events); // Debugging
 
@@ -70,3 +70,5 @@ export default function CategoryWithEventComponent({
     </section>
   );
 }
+
+

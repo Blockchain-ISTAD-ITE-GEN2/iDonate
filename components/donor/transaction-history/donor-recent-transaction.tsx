@@ -25,7 +25,9 @@ export function DonorReacentTransacctions({
           <div className="flex items-center gap-3 w-full sm:w-auto">
             <Avatar className="h-12 w-12 sm:h-16 sm:w-16 flex items-center justify-center border bg-iDonate-green-accent">
               {transaction.avatar ? (
-                <img
+                <Image
+                  width={40}
+                  height={40}
                   src={transaction.avatar}
                   alt={`${transaction.username} Avatar`}
                   className="h-full w-full object-cover"
