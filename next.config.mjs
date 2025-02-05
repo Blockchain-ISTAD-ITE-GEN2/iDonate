@@ -60,6 +60,11 @@ const nextConfig = {
         pathname: "/**",
       },
       {
+        protocol: "https",
+        hostname: "idonateapi.kangtido.life",
+        pathname: "/media/**",
+      },
+      {
         protocol: "http",
         hostname: "**",
         pathname: "/**",

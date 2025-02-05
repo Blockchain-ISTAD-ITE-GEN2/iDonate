@@ -286,7 +286,7 @@ export function DonationForm() {
               disabled={isSubmitting}
               className="w-full rounded-lg bg-iDonate-green-secondary hover:bg-iDonate-green-secondary text-iDonate-navy-primary font-semibold"
             >
-              {isSubmitting ? "Processing..." : "Donate Now"}
+              {isSubmitting ? "Processing..." : "បរិច្ចាគឥឡូវនេះ"}
             </Button>
           </CardFooter>
         </Card>

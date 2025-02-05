@@ -6,32 +6,32 @@ import { useGetOrganizationByUserQuery } from "@/redux/services/organization-ser
 import { useGetUserProfileQuery } from "@/redux/services/user-profile";
 import { MapPinned } from "lucide-react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { OrganizationType } from "@/difinitions/types/organization/OrganizationType";
 import LoadingInsidePage from "@/components/loading/LoadingComponent";
 
-export default function OrganizationDashboard({
-  params,
-}: {
-  params: { uuid: string };
-}) {
-  const userUuid = params.uuid;
+export default function OrganizationDashboard() {
+  const params = useParams();
+  const userUuid = String(params.uuid);
   const router = useRouter();
   const { data: organizations } = useGetOrganizationByUserQuery(userUuid);
   const { data: user, isLoading, error } = useGetUserProfileQuery({});
   const typeOrganizations: OrganizationType[] = organizations?.content || [];
 
+  console.log("Trans data: ", JSON.stringify(typeOrganizations));
+
   // Check if user has the ORGANIZER role
   const isOrganizer = user?.role?.some(
-    (role: { name: string }) => role.name === "ORGANIZER",
+    (role: { name: string }) => role.name === "ORGANIZER"
   );
 
   // Redirect non-organizers to the registration page
   useEffect(() => {
-    if (!isLoading && !error && !isOrganizer) {
-      router.push("/organization-registration");
+    if (!isLoading && !error && !user) {
+      router.push("/login");
+    } else if (!isLoading && !error && !isOrganizer) {
+      router.push(`/organization-list/${userUuid}`); // Redirect to organization list first
     }
-    if (!user) router.push("/login");
   }, [isLoading, error, isOrganizer, router, user]);
 
   // Show loading state
@@ -40,9 +40,9 @@ export default function OrganizationDashboard({
   }
 
   // Show error state
-  if (error) {
-    return <p className="text-center text-red-500">Error loading user data.</p>;
-  }
+  // if (error) {
+  //   return <p className="text-center text-red-500">Error loading user data.</p>;
+  // }
 
   return (
     <section className="flex flex-1 flex-col h-full items-center justify-center p-9 gap-9">
@@ -54,9 +54,13 @@ export default function OrganizationDashboard({
         {typeOrganizations.map((org) => (
           <Card
             key={org.uuid}
-            onClick={() =>
-              router.push(`/organization-dashboard/${org.uuid}/dashboard`)
-            }
+            onClick={() => {
+              // Navigate to organization-list first before dashboard
+              router.push(`/organization-list/${org?.uuid}`);
+              setTimeout(() => {
+                router.push(`/organization-dashboard/${org?.uuid}/dashboard`);
+              }); // Delay to ensure organization-list loads first
+            }}
             className="w-full rounded-[10px] bg-iDonate-white-space border-0 cursor-pointer shadow-md transition-transform hover:scale-[1.02] dark:bg-iDonate-dark-mode"
           >
             <CardContent className="flex flex-col sm:flex-row items-center justify-center p-4 gap-4">

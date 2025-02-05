@@ -46,8 +46,8 @@ export function ReacentTransacctions({ transactions }: RecentSalesProps) {
         </div>
       ))}
 
-      <Label className="flex items-center py-4 text-sm sm:text-base dark:text-iDonate-navy-accent">
-        View all transactions
+      <Label className="flex items-center py-4 text-lg sm:text-base​​ text-iDonate-navy-primary dark:text-iDonate-navy-accent">
+        មើលប្រតិបត្តិការទាំងអស់
       </Label>
     </div>
   );

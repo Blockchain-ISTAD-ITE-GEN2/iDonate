@@ -79,7 +79,7 @@ export default function HowItWorks() {
               {[
                 {
                   number: "១",
-                  title: "ជ្រើសរើស Event ណាមួយដែលចង់បរិច្ចាគ",
+                  title: "ជ្រើសរើស កម្មវិធីបរិច្ចាគ ណាមួយដែលចង់បរិច្ចាគ",
                   description:
                     "ជ្រើសរើសពីការបរិច្ឆេទដែលអ្នកចង់បរិច្ឆេទដោយមានភាពទំនាក់ទំនងច្បាស់លាស់។",
                 },
@@ -122,9 +122,9 @@ export default function HowItWorks() {
               transition={{ duration: 0.5 }}
               className="order-first md:order-last"
             >
-              <div className="w-full h-auto max-w-[300px] sm:max-w-[350px] mx-auto">
+              <div className="w-full ">
                 <Lottie
-                  className="w-full h-auto max-h-[400px] md:mb-[200px] md:w-[500px] md:h-[500px]"
+                  className="w-full "
                   animationData={HowItWork1}
                 />
               </div>
@@ -191,19 +191,19 @@ export default function HowItWorks() {
               {[
                 {
                   number: "១",
-                  title: "ជំហាន ១៖ ចុះបញ្ជីជាអ្នកបរិច្ចាគ",
+                  title: " ចុះបញ្ជីជាអ្នកបរិច្ចាគ",
                   description:
                     "ចុះបញ្ជីដើម្បីចាប់ផ្តើមការបរិច្ឆេទដោយមានភាពទំនាក់ទំនងច្បាស់លាស់។",
                 },
                 {
                   number: "២",
-                  title: "ជំហាន ២៖ បរិច្ចាគ",
+                  title: " បរិច្ចាគ",
                   description:
                     "ការបរិច្ឆេទរបស់អ្នកនឹងទៅជូនអ្នកទទួលដោយគ្មានគិតតម្លៃសេវាកម្ម។",
                 },
                 {
                   number: "៣",
-                  title: "ជំហាន ៣៖ តាមដានការបរិច្ឆេទរបស់អ្នក",
+                  title: " តាមដានការបរិច្ឆេទរបស់អ្នក",
                   description:
                     "មើលថាតើការបរិច្ឆេទរបស់អ្នកមានអត្ថិភាពយ៉ាងដូចម្តេចលើបុគ្គលនិងសហគមន៍។",
                 },

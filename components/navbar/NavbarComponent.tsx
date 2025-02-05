@@ -46,8 +46,23 @@ export default function NavbarComponent() {
   const { data: session, status } = useSession();
   const accessTokenValue = useAppSelector(selectToken);
   const { data: userProfile, error, isLoading } = useGetUserProfileQuery({});
+
+
+  useEffect(() => {}, [accessTokenValue, session]);
+
+  // useEffect(() => {},[accessTokenValue,session])
   const uuid = getUuidFromToken(accessTokenValue as string);
 
+  if (
+    pathname === "/login" ||
+    pathname === "/sign-up" ||
+    pathname === "/verification" ||
+    pathname === "/forgot-password" ||
+    pathname === "/reset-password" ||
+    pathname === "/waiting-verification"
+  ) {
+    return null;
+  }
 
   const handleLogout = () => {
     //  alert("Logout successful");
@@ -74,19 +89,6 @@ export default function NavbarComponent() {
       });
     }
   };
-
-  useEffect(() => {}, [accessTokenValue, session]);
-
-  if (
-    pathname === "/login" ||
-    pathname === "/sign-up" ||
-    pathname === "/verification" ||
-    pathname === "/forgot-password" ||
-    pathname === "/reset-password" ||
-    pathname === "/waiting-verification"
-  ) {
-    return null;
-  }
 
   if (isMobileMenuOpen) {
     return activeSubmenu ? (
@@ -213,7 +215,7 @@ export default function NavbarComponent() {
               </AvatarFallback>
             )}
           </Avatar>
-                     
+
                       <div className="text-sm">
                         <div className="font-medium text-gray-900">
                           {session?.user?.name ||
@@ -241,6 +243,41 @@ export default function NavbarComponent() {
                       <span>Profile Settings</span>
                     </Link>
                   </DropdownMenuItem>
+
+                  <DropdownMenuItem asChild>
+                    <Link
+                      href="/donations"
+                      className="flex items-center space-x-2 cursor-pointer"
+                    >
+                      <Heart className="text-iDonate-navy-primary" size={20} />
+                      <span>My Donations</span>
+                    </Link>
+                  </DropdownMenuItem>
+
+                  <DropdownMenuItem asChild>
+                    <Link
+                      href="/search"
+                      className="flex items-center space-x-2 cursor-pointer"
+                    >
+                      <Search className="text-iDonate-navy-primary" size={20} />
+                      <span>Search</span>
+                    </Link>
+                  </DropdownMenuItem>
+
+                  <DropdownMenuSeparator />
+
+                  {/* Donate Button */}
+                  <div className="p-2">
+                    <Button className="w-full group bg-iDonate-white-space border-2 border-iDonate-navy-primary px-2 text-iDonate-navy-primary hover:bg-iDonate-navy-primary hover:text-white hover:border-iDonate-navy-primary rounded-[12px]">
+                      <Heart
+                        style={{ width: "25px", height: "25px" }}
+                        className="bg-iDonate-navy-primary rounded-full p-1 fill-white group-hover:fill-iDonate-navy-primary group-hover:text-iDonate-navy-primary group-hover:bg-iDonate-green-secondary"
+                      />
+                      <span className="text-lg">បរិច្ចាគឥឡូវនេះ</span>
+                    </Button>
+                  </div>
+
+                  <DropdownMenuSeparator />
 
                   {/* Sign Out */}
                   <DropdownMenuItem
@@ -271,11 +308,10 @@ export default function NavbarComponent() {
             className="bg-iDonate-navy-primary rounded-full p-1 fill-white group-hover:fill-iDonate-navy-primary group-hover:text-iDonate-navy-primary group-hover:bg-iDonate-green-secondary dark:bg-iDonate-green-secondary  dark:text-iDonate-navy-primary dark:fill-iDonate-navy-primary"
           />
           <span className="text-sub-description-eng xl:text-description-eng">
-            Donate Now
+            បរិច្ចាគឥឡូវនេះ
           </span>
         </Button>
       </section>
     </nav>
   );
-  
 }

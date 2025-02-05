@@ -87,7 +87,7 @@ export function RecentTransactionsLanding() {
       ))}
 
       <Label className="flex items-center py-4 text-sm sm:text-base dark:text-iDonate-navy-accent">
-        View all transactions
+        មើលប្រតិបត្តិការទាំងអស់
       </Label>
     </div>
   );

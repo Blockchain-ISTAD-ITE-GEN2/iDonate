@@ -6,6 +6,10 @@ export const categoryApi = idonateApi.injectEndpoints({
       query: () => `/categories`,
       providesTags: [{ type: "category", id: "LIST" }],
     }),
+    getCategoryByUuid: builder.query({
+      query: (uuid) => `/categories/${uuid}`,
+      providesTags: [{ type: "category", id: "LIST" }],
+    }),
     createCategories: builder.mutation({
       query: (newCategory) => ({
         url: "/categories",
@@ -34,6 +38,7 @@ export const categoryApi = idonateApi.injectEndpoints({
 
 export const {
   useGetCategoriesQuery,
+  useGetCategoryByUuidQuery,
   useCreateCategoriesMutation,
   useEditCategoriesMutation,
   useDeleteCategoriesMutation,

@@ -23,7 +23,7 @@ const links_suppoort = [
   { name: "How It Works", href: "/how-it-works" },
   { name: "Mission & Vision", href: "/mission-vision" },
   { name: "Donor", href: "/donor-dashboard" },
-  { name: "Organization", href: "/organization-dashboard/dashboard" },
+  { name: "Organization", href: "/organization-dashboard" },
   { name: "Categories", href: "/categories" },
 ];
 export default function FooterComponent() {
@@ -54,9 +54,9 @@ export default function FooterComponent() {
               transition={{ duration: 0.5 }}
               className="flex flex-col items-center md:items-start w-full md:w-auto"
             >
-              <span className="text-sm mb-1">Follow us on</span>
+              <span className="text-sm mb-1">តាមដានពួកយើងនៅលើ</span>
               <h2 className="text-xl md:text-2xl font-bold mb-3 text-center md:text-left">
-                Social Media Platform
+                បណ្ដាញសង្គមផ្សេងៗ
               </h2>
               <div className="flex gap-4">
                 {[
@@ -68,7 +68,7 @@ export default function FooterComponent() {
                     key={social.label}
                     href="#"
                     className="hover:text-gray-300 transition-colors rounded-full bg-gray-50 p-2"
-                    aria-label={`Follow us on ${social.label}`}
+                    aria-label={`តាមដានពួកយើងនៅលើ ${social.label}`}
                   >
                     <social.icon
                       size={18}
@@ -87,10 +87,10 @@ export default function FooterComponent() {
               className="text-center md:text-right"
             >
               <p className="text-base md:text-lg mb-1">
-                Donation Change their life
+                ការបរិច្ចាគផ្លាស់ប្តូរជីវិតរបស់ពួកគេ
               </p>
               <p className="text-lg md:text-xl">
-                who are <span className="font-bold">orphan and ILLITERATE</span>
+                ដែលជា​ <span className="font-bold">ក្មេងកំព្រានិងជនពិការ</span>
               </p>
             </motion.div>
           </div>

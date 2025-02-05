@@ -1,13 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { CardsMetric } from "./metric";
 import { Overview } from "./overview";
 import { TransactionType } from "@/difinitions/types/table-type/transaction";
@@ -22,9 +16,7 @@ import { RecentTransactionsSkeleton } from "./RecentTransactionsSkeleton";
 import { LoadingTrasaction } from "./LoadingTrasaction";
 
 export function BarAndLineChartLanding() {
-  const [recentTransactions, setRecentTransactions] = useState<
-    TransactionType[]
-  >([]);
+  const [recentTransactions, setRecentTransactions] = useState<TransactionType[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<null | string>(null);
 
@@ -74,9 +66,7 @@ export function BarAndLineChartLanding() {
     fetchTransactions();
 
     // Set up WebSocket connection
-    const socket = new SockJS(
-      `${process.env.NEXT_PUBLIC_IDONATE_API_URL}/websockket`,
-    );
+    const socket = new SockJS(`${process.env.NEXT_PUBLIC_IDONATE_API_URL}/websocket`);
     const stompClient = new Client({
       webSocketFactory: () => socket,
       reconnectDelay: 5000,
@@ -118,12 +108,13 @@ export function BarAndLineChartLanding() {
     };
   }, []);
 
+
   if (loading) {
-    return (
+    return(
       <>
-        <LoadingTrasaction />
+      <LoadingTrasaction/>
       </>
-    );
+    )
   }
 
   // if (error) {
@@ -138,18 +129,18 @@ export function BarAndLineChartLanding() {
         <CardsMetric data={recentTransactions} />
       </div>
 
-      {/* Recent Transactions Card */}
+      {/* ប្រតិបត្តិការថ្មីៗ Card */}
       <Card className="md:w-full lg:w-[480px] bg-iDonate-light-gray rounded-lg border border-iDonate-navy-accent dark:bg-iDonate-dark-mode">
         <CardHeader>
           <CardTitle className="text-medium-eng font-normal text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
-            Recent Transactions
+            ប្រតិបត្តិការថ្មីៗ
           </CardTitle>
           <CardDescription className="text-sub-description-eng text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
-            You received {recentTransactions.length} donations this week.
+          អ្នកទទួលបានការបរិច្ចាគចំនួន {recentTransactions.length}​ ក្នុងសប្តាហ៍នេះ។
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <ReacentTransacctions transactions={recentTransactions} />
+          <ReacentTransacctions transactions={recentTransactions.slice(0, 5)} />
         </CardContent>
       </Card>
     </div>

@@ -41,13 +41,13 @@ export function MobileMenu({
   const handleSubmenuClick = (title: string) => {
     setActiveSubmenu(title);
     switch (title) {
-      case "Events":
+      case "កម្មវិធីបរិច្ចាគ":
         setSubmenuItems(eventMenulist);
         break;
-      case "Contributors":
+      case "អ្នកចូលរួម":
         setSubmenuItems(contributorMenulist);
         break;
-      case "About":
+      case "អំពីយើង":
         setSubmenuItems(aboutMenulist);
         break;
       default:
@@ -115,7 +115,7 @@ export function MobileMenu({
         <div className="flex flex-col p-4 gap-4 bg-iDonate-light-gray dark:bg-iDonate-bg-dark-mode shadow-light dark:border-b">
           <div className="flex flex-col gap-2">
             {menuList.map((item, index) => {
-              const hasSubmenu = ["Events", "Contributors", "About"].includes(
+              const hasSubmenu = ["កម្មវិធីបរិច្ចាគ", "Contributors", "About"].includes(
                 item.title,
               );
               const specialPaths = ["/how-it-works", "/search"];
@@ -189,7 +189,7 @@ export function MobileMenu({
 
             <Button className="flex-1 items-center justify-center space-x-2 bg-iDonate-white-space border-2 border-iDonate-navy-primary text-iDonate-navy-primary hover:bg-iDonate-navy-primary hover:text-white rounded-lg dark:text-iDonate-navy-accent dark:bg-iDonate-dark-mode dark:border-transparent">
               <Heart className="w-5 h-5 dark:fill-iDonate-green-primary dark:text-iDonate-green-primary" />
-              <span>Donate Now</span>
+              <span>បរិច្ចាគឥឡូវនេះ</span>
             </Button>
           </div>
         </div>
