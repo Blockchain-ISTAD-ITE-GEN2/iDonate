@@ -29,7 +29,11 @@ import { selectToken } from "@/redux/features/auth/authSlice";
 import AvartarPlaceHolder from "@/public/images/user-idonate.png";
 import { useGetUserProfileQuery } from "@/redux/services/user-profile";
 import { getUuidFromToken } from "@/lib/uuid";
-import toast from "react-hot-toast";
+import { toast } from "@/hooks/use-toast";
+import { AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
+import { Avatar } from "../ui/avatar";
+
+
 
 export default function NavbarComponent() {
   const [menuList] = useState<NavMenuType[]>(NavMenulist);
@@ -37,6 +41,7 @@ export default function NavbarComponent() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSubmenu, setActiveSubmenu] = useState<string | null>(null);
   const [submenuItems, setSubmenuItems] = useState<NavMenuType[]>([]);
+
   const router = useRouter();
   const { data: session, status } = useSession();
   const accessTokenValue = useAppSelector(selectToken);
@@ -71,12 +76,13 @@ export default function NavbarComponent() {
       }).then((res) => {
         if (res.ok) {
           // alert("Logout successful");
-          toast.success("Logout successful", {
-            position: "top-right",
-            duration: 3000,
-          });
+          toast({
+            variant: "destructive",
+            title: "ចាកចេញបានជោគជ័យ",
+            description: "សូមស្វាគមន៍ម្តងទៀត",
+          })
           router.refresh();
-          router.push("/");
+          router.push("/")
         } else {
           console.log("Error ");
         }
@@ -98,10 +104,8 @@ export default function NavbarComponent() {
       />
     ) : (
       <MobileMenu
-        // activeSubmenu={activeSubmenu}
         setActiveSubmenu={setActiveSubmenu}
         setSubmenuItems={setSubmenuItems}
-        // submenuItems={submenuItems}
         isOpen={isMobileMenuOpen}
         onClose={() => setIsMobileMenuOpen(false)}
         menuItems={menuList}
@@ -110,6 +114,16 @@ export default function NavbarComponent() {
         aboutMenulist={AboutMenulist}
       />
     );
+  }
+
+  const renderAvatar = (size: "sm" | "lg") => {
+    if (!userProfile) {
+      return (
+        <div className={`${size === "sm" ? "w-10 h-10" : "w-14 h-14"} rounded-full bg-iDonate-navy-primary flex items-center justify-center`}>
+          <User className="text-white" size={size === "sm" ? 20 : 24} />
+        </div>
+      );
+    }
   }
 
 
@@ -156,49 +170,52 @@ export default function NavbarComponent() {
           </div>
 
           <div className="flex items-center">
-            {session || accessTokenValue ? (
+            {accessTokenValue ? (
               <DropdownMenu>
-                <DropdownMenuTrigger>
-                  {session?.user?.image ? (
-                    <Image
-                      src={
-                        session.user.image ||
-                        AvartarPlaceHolder ||
-                        userProfile?.avatar
-                      }
-                      alt={`${session.user.name ?? "user"}'s avatar`}
-                      width={40}
-                      height={40}
-                      className="rounded-full border-2 border-iDonate-navy-primary"
-                    />
-                  ) : (
-                    <div className="w-10 h-10 rounded-full bg-iDonate-navy-primary flex items-center justify-center">
-                      <User className="text-white" size={20} />
-                    </div>
-                  )}
-                </DropdownMenuTrigger>
+                      <DropdownMenuTrigger>
+                      <Avatar className="w-14 h-14">
+        {userProfile?.avatar ? (
+          <AvatarImage
+            width={500}
+            height={500}
+            src={userProfile?.avatar}
+            className="object-cover w-full rounded-full ring-2 h-full ring-iDonate-navy-primary"
+            alt={`${userProfile?.username || 'User'}'s avatar`}
+            onError={(e) => {
+              e.currentTarget.style.display = 'none';
+            }}
+          />
+        ) : (
+          <AvatarFallback className="text-gray-700">
+            {userProfile?.username?.[0]?.toUpperCase() || "?"}
+          </AvatarFallback>
+        )}
+      </Avatar>
+                    </DropdownMenuTrigger>
 
-                <DropdownMenuContent className="w-72 p-2">
-                  {/* User Info */}
-                  <div className="p-3">
-                    <div className="flex items-center space-x-3">
-                      {session?.user?.image ? (
-                        <Image
-                          src={
-                            session.user.image ||
-                            AvartarPlaceHolder ||
-                            userProfile?.avatar
-                          }
-                          alt={`${session.user.name ?? "User"}'s avatar`}
-                          width={40}
-                          height={40}
-                          className="rounded-full border-2 border-iDonate-navy-primary"
-                        />
-                      ) : (
-                        <div className="w-10 h-10 rounded-full bg-iDonate-navy-primary flex items-center justify-center">
-                          <User className="text-white" size={20} />
-                        </div>
-                      )}
+                      <DropdownMenuContent className="w-72 p-2">
+                        {/* User Info */}
+                        <div className="p-3">
+                          <div className="flex items-center space-x-3">
+                          <Avatar className="w-14 h-14">
+            {userProfile?.avatar ? (
+              <AvatarImage
+                width={500}
+                height={500}
+                src={userProfile?.avatar}
+                className="object-cover w-full rounded-full ring-2 h-full ring-iDonate-navy-primary"
+                alt={`${userProfile?.username || 'User'}'s avatar`}
+                onError={(e) => {
+                  e.currentTarget.style.display = 'none';
+                }}
+              />
+            ) : (
+              <AvatarFallback className="text-gray-700">
+                {userProfile?.username?.[0]?.toUpperCase() || "?"}
+              </AvatarFallback>
+            )}
+          </Avatar>
+
                       <div className="text-sm">
                         <div className="font-medium text-gray-900">
                           {session?.user?.name ||
@@ -215,7 +232,6 @@ export default function NavbarComponent() {
                   </div>
 
                   <DropdownMenuSeparator />
-
 
                   {/* Menu Items */}
                   <DropdownMenuItem asChild>
@@ -265,7 +281,7 @@ export default function NavbarComponent() {
 
                   {/* Sign Out */}
                   <DropdownMenuItem
-                    onClick={handleLogout} // Use handleSignOut instead of signOut directly
+                    onClick={handleLogout}
                     className="text-red-600 hover:text-red-700 hover:bg-red-50"
                   >
                     <LogOut className="mr-2 h-4 w-4" />

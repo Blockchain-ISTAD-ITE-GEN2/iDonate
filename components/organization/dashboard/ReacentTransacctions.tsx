@@ -22,12 +22,12 @@ export function ReacentTransacctions({ transactions }: RecentSalesProps) {
         >
           <div className="flex items-center gap-2 sm:gap-4">
             <Avatar className="h-12 w-12 sm:h-16 sm:w-16 flex items-center">
-            <AvatarFallback className="h-10 w-10 border border-iDonate-navy-primary dark:border-iDonate-navy-accent">
-              {(transaction.avatar || "NA")
-                .split(" ")
-                .map((n) => n[0])
-                .join("")}
-            </AvatarFallback>
+              <AvatarFallback className="h-10 w-10 border border-iDonate-navy-primary dark:border-iDonate-navy-accent">
+                {(transaction.avatar || "NA")
+                  .split(" ")
+                  .map((n) => n[0])
+                  .join("")}
+              </AvatarFallback>
             </Avatar>
 
             <div className="space-y-1">

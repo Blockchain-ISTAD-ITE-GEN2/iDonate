@@ -42,7 +42,9 @@ export const metadata: Metadata = {
     title: "iDonate - Empowering Transparent Donations",
     description:
       "Make donations you can trust with iDonate. Explore verified organizations and causes.",
-    images: ["https://idonateapi.kangtido.life/media/819e4d30-4bcd-4f23-a004-744075dbecbf.png"],
+    images: [
+      "https://idonateapi.kangtido.life/media/819e4d30-4bcd-4f23-a004-744075dbecbf.png",
+    ],
   },
   icons: {
     icon: "/favicon.ico",
@@ -62,14 +64,6 @@ export const metadata: Metadata = {
 };
 
 export default function Homepage() {
-  // update thsi for debugging
-
-  console.log(
-    "NEXT_PUBLIC_IDONATE_API_URL:",
-    process.env.NEXT_PUBLIC_IDONATE_API_URL,
-  );
-
-  // const typedCategory: CategoryType[] = categories;
   return (
     <section className="flex flex-col items-center gap-9">
       {/* Here section */}

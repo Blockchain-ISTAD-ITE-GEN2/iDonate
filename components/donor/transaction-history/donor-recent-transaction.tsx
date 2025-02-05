@@ -54,7 +54,7 @@ export function DonorReacentTransacctions({
 
           {/* Amount */}
           <span className="ml-auto text-iDonate-green-primary text-sm sm:text-medium-eng text-text-start dark:text-iDonate-green-secondary">
-            ${transaction.amount}
+            ${transaction.donationAmount}
           </span>
         </div>
       ))

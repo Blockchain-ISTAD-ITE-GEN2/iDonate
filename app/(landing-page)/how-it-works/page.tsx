@@ -34,7 +34,9 @@ export const metadata: Metadata = {
     title: "How It Works - iDonate",
     description:
       "Explore the process behind iDonate, from submitting donations to the verification process.",
-    images: ["https://idonateapi.kangtido.life/media/819e4d30-4bcd-4f23-a004-744075dbecbf.png"],
+    images: [
+      "https://idonateapi.kangtido.life/media/819e4d30-4bcd-4f23-a004-744075dbecbf.png",
+    ],
   },
   robots: {
     index: true,

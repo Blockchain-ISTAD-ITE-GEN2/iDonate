@@ -65,7 +65,7 @@ export function AlertComfirmDialog({
             {cancelText}
           </AlertDialogCancel>
           <AlertDialogAction
-             onClick={(e) => {
+            onClick={(e) => {
               e.stopPropagation();
               e.preventDefault(); // Prevent default form submission
               onAction();

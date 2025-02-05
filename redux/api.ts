@@ -5,15 +5,9 @@ import { setToken } from "@/redux/features/auth/authSlice";
 const baseQuery = fetchBaseQuery({
   baseUrl: `${process.env.NEXT_PUBLIC_IDONATE_API_URL}/api/v1`,
   // baseUrl: `https://idonateapi.kangtido.life/api/v1`,
-  prepareHeaders: (headers, { getState, endpoint }) => {
+  prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).auth.token;
 
-    // Skip auth for specific endpoints
-    if (endpoint === "generateQrCode") {
-      return headers; // Don't add Authorization header
-    }
-
-    // console.log(token);
     if (token) {
       headers.set("authorization", `Bearer ${token}`);
     }

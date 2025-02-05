@@ -160,8 +160,10 @@ export function OrganizationEventCard({ event }: { event: EventType }) {
               >
                 ចំនួនទឹកប្រាក់
               </CardTitle>
-              <CardDescription className=" text-xl font-medium font-inter text-iDonate-navy-primary p-1 rounded-lg dark:text-iDonate-navy-accent">
-              {event?.currentRaised ? `$ ${event.currentRaised}` : "មិនទាន់មានការបរិច្ចាគ"}
+              <CardDescription className=" text-xl font-inter text-iDonate-navy-primary p-1 rounded-lg dark:text-iDonate-navy-accent">
+                {event?.currentRaised
+                  ? `$ ${event.currentRaised}`
+                  : "មិនទាន់មានការបរិច្ចាគ"}
               </CardDescription>
             </div>
 

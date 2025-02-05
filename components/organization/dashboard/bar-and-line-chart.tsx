@@ -86,7 +86,6 @@ export function BarAndLineChart({ orgUuid }: { orgUuid: string }) {
       <div className="flex flex-col gap-4">
         {/* ✅ Render CardsMetric with computed average data */}
         <CardsMetric data={averageData} />
-
       </div>
 
       {/* ប្រតិបត្តិការថ្មីៗ Card */}

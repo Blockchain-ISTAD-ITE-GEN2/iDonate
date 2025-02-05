@@ -6,11 +6,12 @@ type EventDetailProps = {
     uuid: string;
   };
 };
-// get Event  Detail 
+// get Event  Detail
 async function getEventDetails(uuid: string) {
+  const response = await fetch(
+    `https://idonateapi.kangtido.life/api/v1/events/get-event-by-uuid/${uuid}`,
+  );
 
-  const response = await fetch(`https://idonateapi.kangtido.life/api/v1/events/get-event-by-uuid/${uuid}`);
-  
   const data = await response.json();
 
   return {
@@ -19,8 +20,9 @@ async function getEventDetails(uuid: string) {
   };
 }
 // Generate metadata dynamically
-export async function generateMetadata({ params }: EventDetailProps): Promise<Metadata> {
-
+export async function generateMetadata({
+  params,
+}: EventDetailProps): Promise<Metadata> {
   const event = await getEventDetails(params.uuid);
 
   return {
@@ -45,8 +47,6 @@ export async function generateMetadata({ params }: EventDetailProps): Promise<Me
     },
   };
 }
-
-
 
 export default function EvenDetailPage({ params }: EventDetailProps) {
   return (

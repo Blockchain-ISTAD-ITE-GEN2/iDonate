@@ -22,7 +22,7 @@ export function RecentTransactionsSkeleton() {
       </CardHeader>
       <CardContent>
         <div className="flex flex-col gap-3">
-          {[...Array(8)].map((_, i) => (    
+          {[...Array(8)].map((_, i) => (
             <div key={i} className="flex items-center gap-3">
               <Skeleton className="h-16 w-16 rounded-full" />
               <div className="flex flex-col flex-1">
@@ -35,7 +35,6 @@ export function RecentTransactionsSkeleton() {
         </div>
 
         <Skeleton className="h-5 w-25 m-3 items-center mb-1 flex-shrink-0 text-iDonate-navy-secondary dark:text-iDonate-navy-accent" />
-     
       </CardContent>
     </Card>
   );
