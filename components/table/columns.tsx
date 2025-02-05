@@ -4,6 +4,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Checkbox } from "@/components/ui/checkbox";
 import { DataTableColumnHeader } from "./data-table-column-header";
 import { DataTableRowActions } from "./data-table-row-actions";
+import { format } from "date-fns";
 
 export const transactionColumns: ColumnDef<TransactionType>[] = [
   {
@@ -29,41 +30,37 @@ export const transactionColumns: ColumnDef<TransactionType>[] = [
     enableHiding: false,
   },
 
-  {
-    accessorKey: "timestamp",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Timestamp" />
-    ),
-    cell: ({ row }) => <span>{row.getValue("timestamp")}</span>,
-    filterFn: (row, columnId, filterValue) => {
-      if (!filterValue) return true; // No filter applied
+{
+  accessorKey: "timestamp",
+  header: ({ column }) => (
+    <DataTableColumnHeader column={column} title="Timestamp" />
+  ),
+  cell: ({ row }) => {
+    const timestamp = row.getValue("timestamp");
+    const formattedDate = timestamp
+      ? format(new Date(timestamp as string | number | Date), "MMMM do, yyyy h:mm a") // February 3rd, 2025 09:15 AM
+      : "N/A"; // Fallback if timestamp is missing
 
-      const rowDate = new Date(row.getValue(columnId));
-      const { from, to } = filterValue;
-
-      if (from && rowDate < new Date(from)) {
-        return false;
-      }
-      if (to && rowDate > new Date(to)) {
-        return false;
-      }
-      return true;
-    },
-    enableSorting: true,
-    enableHiding: true,
-
-    // header: ({ column }) => {
-    //     return (
-    //       <Button
-    //         variant="ghost"
-    //         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-    //       >
-    //         Date
-    //         <ArrowUpDown className="ml-2 h-4 w-4" />
-    //       </Button>
-    //     )
-    //   },
+    return <span>{formattedDate}</span>;
   },
+  filterFn: (row, columnId, filterValue) => {
+    if (!filterValue) return true; // No filter applied
+
+    const rowDate = new Date(row.getValue(columnId));
+    const { from, to } = filterValue;
+
+    if (from && rowDate < new Date(from)) {
+      return false;
+    }
+    if (to && rowDate > new Date(to)) {
+      return false;
+    }
+    return true;
+  },
+  enableSorting: true,
+  enableHiding: true,
+}
+,
 
   {
     accessorKey: "username",
@@ -75,25 +72,6 @@ export const transactionColumns: ColumnDef<TransactionType>[] = [
     enableHiding: true,
   },
 
-  // {
-  //   accessorKey: "email",
-  //   header: ({ column }) => (
-  //     <DataTableColumnHeader column={column} title="Email" />
-  //   ),
-  //   cell: ({ row }) => <div>{row.getValue("email")}</div>,
-  //   enableSorting: true,
-  //   enableHiding: true,
-  // },
-
-  // {
-  //   accessorKey: "event",
-  //   header: ({ column }) => (
-  //     <DataTableColumnHeader column={column} title="Event" />
-  //   ),
-  //   cell: ({ row }) => <div>{row.getValue("event")}</div>,
-  //   enableSorting: true,
-  //   enableHiding: true,
-  // },
 
   {
     accessorKey: "donationAmount",
@@ -117,6 +95,34 @@ export const transactionColumns: ColumnDef<TransactionType>[] = [
     enableSorting: true,
     enableHiding: true,
   },
+
+  {
+    accessorKey: "organization",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Organization" />
+    ),
+    cell: ({ row }) => {
+      const organization = row.getValue("organization") as { name: string };
+      return <div>{organization?.name}</div>;
+    },
+    enableSorting: true,
+    enableHiding: true,
+  },
+
+  {
+    accessorKey: "event",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Event" />
+    ),
+    cell: ({ row }) => {
+      const organization = row.getValue("event") as { name: string };
+      return <div>{organization?.name}</div>;
+    },
+    enableSorting: true,
+    enableHiding: true,
+  }
+  
+  
 
   // {
   //   id: "actions",

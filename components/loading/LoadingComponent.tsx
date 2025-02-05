@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 const LoadingInsidePage = () => {
   return (
-    <StyledWrapper>
+    <StyledWrapper className="w-full h-full items-center justify-center">
       <div className="loading">
         <span />
         <span />

@@ -44,6 +44,7 @@ import { useCreateEventsMutation } from "@/redux/services/event-service";
 import { toast } from "@/hooks/use-toast";
 import { useParams } from "next/navigation";
 import { DatePicker } from "@/components/auth/DayPicker";
+import { useUploadMultipleMediaMutation, useUploadSingleMediaMutation } from "@/redux/services/media";
 
 type EventInfoFormProps = {
   onNamePercentageUpdate: (fullnamePercentage: number) => void;
@@ -64,48 +65,35 @@ export function EventInfoFormCreation({
   // onTimezonePercentageUpdate,
   onImagesPercentageUpdate,
 }: EventInfoFormProps) {
-
   const org = useParams();
   const orgUuid = String(org.uuid);
   const { data: categoriesData } = useGetCategoriesQuery({});
   const typeCategories: CategoryType[] = categoriesData || [];
   const [progresses, setProgresses] = useState<{ [key: string]: number }>({});
   const [isUploading, setIsUploading] = useState(false);
-  const [uploadedFiles, setUploadedFiles] = useState<UploadedFile[] | File[]>(
-    [],
-  );
+  // const [uploadedFiles, setUploadedFiles] = useState<UploadedFile[]>([]);
   const [uploadProgresses, setUploadProgresses] = useState<
     Record<string, number>
   >({});
 
-  const [createEvent] = useCreateEventsMutation()
+  const [createSingleFile] = useUploadSingleMediaMutation();
+  const [createEvent] = useCreateEventsMutation();
+  const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
+  const [uploadedFileUris, setUploadedFileUris] = useState<string[]>([]);
 
-  const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
+    const form = useForm<z.infer<typeof eventSchemaCreation>>({
+      resolver: zodResolver(eventSchemaCreation),
+      defaultValues: {
+        name: "",
+        description: "",
+        location: "",
+        startDate: "",
+        endDate: "",
+        // timezone: "",
+        images: [],
+      },
+    });
 
-  const [errors, setErrors] = useState<{ [key: string]: string }>({});
-
-  const form = useForm<z.infer<typeof eventSchemaCreation>>({
-    resolver: zodResolver(eventSchemaCreation),
-    defaultValues: {
-      name: "",
-      description: "",
-      location: "",
-      startDate: "",
-      endDate: "",
-      // timezone: "",
-      images: [],
-    },
-  });
-
-  const [formData, setFormData] = useState({
-    name: "",
-    description: "",
-    location: "",
-    startDate: "",
-    endDate: "",
-    images: [],
-  });
-  
 
   const { watch, handleSubmit, reset, control, formState } = form;
 
@@ -116,30 +104,11 @@ export function EventInfoFormCreation({
     setSelectedCategoryUuid(categoryUuid);
   };
 
-  const handleDateChange = (date: Date | undefined) => {
-    setSelectedDate(date);
-    
-    setFormData((prev) => ({
-      ...prev,
-      startDate: date ? date.toISOString().split("T")[0] : "", // Convert Date to YYYY-MM-DD string
-    }));
-  
-    if (formState.errors.startDate) {
-      setErrors((prev) => ({
-        ...prev,
-        startDate: "",
-      }));
-    }
-  };
-  
-
-
   const name = watch("name");
   const description = watch("description");
   const location = watch("location");
   const orderDate = watch("startDate");
   const endDate = watch("endDate");
-  // const timezone = watch("timezone");
   const images = watch("images");
 
   const isFormFilled = {
@@ -149,12 +118,9 @@ export function EventInfoFormCreation({
     orderDate: !!orderDate,
     endDate: !!endDate,
     images: images.length > 0,
-    // timezone: !!timezone,
   };
 
-  // Percentage calculation
   useEffect(() => {
-    // Calculate percentage for each field
     const calculateCompletionPercentage = () => {
       const namePercentage = name ? 20 : 0;
       const descriptionPercentage = description ? 10 : 0;
@@ -162,16 +128,13 @@ export function EventInfoFormCreation({
       const orderDatePercentage = orderDate ? 10 : 0;
       const endDatePercentage = endDate ? 10 : 0;
       const imagePercentage = images.length ? 10 : 0;
-      // const timezonePercentage = timezone ? 10 : 0;
-
-      // Call individual percentage update functions for each field
+ 
       onNamePercentageUpdate(namePercentage);
       onDescriptionPercentageUpdate(descriptionPercentage);
       onLocationPercentageUpdate(locationPercentage);
       onStartDatePercentageUpdate(orderDatePercentage);
       onEndDatePercentageUpdate(endDatePercentage);
       onImagesPercentageUpdate(imagePercentage);
-      // onTimezonePercentageUpdate(timezonePercentage);
     };
 
     calculateCompletionPercentage();
@@ -182,14 +145,12 @@ export function EventInfoFormCreation({
     orderDate,
     endDate,
     images,
-    // timezone,
     onNamePercentageUpdate,
     onDescriptionPercentageUpdate,
     onLocationPercentageUpdate,
     onStartDatePercentageUpdate,
     onEndDatePercentageUpdate,
     onImagesPercentageUpdate,
-    // onTimezonePercentageUpdate,
   ]);
 
   // Track if the form is filled and prevent user from leaving the page
@@ -218,113 +179,77 @@ export function EventInfoFormCreation({
     };
   }, [isFormFilled]);
 
-  // 3. Define a submit handler.
-  async function onSubmit(values: z.infer<typeof eventSchemaCreation>) {
+  const handleFilesUpload = async (files: File[]) => {
+    setIsUploading(true);
     try {
-      const newEvent = {
-        name: values.name || "",
-        description: values.description,
-        location: values.location,
-        startDate: values.startDate,
-        endDate: values.endDate,
-        images: values.images
-      };
+      const uploadedUris: string[] = [];
   
-      // Call the mutation
-      await createEvent(
-        {categoryUuid: selectedCategoryUuid, organizationUuid: orgUuid, newEvent:   newEvent}
-      ).unwrap();
+      for (const file of files) {
+        const formData = new FormData();
+        formData.append("file", file);
   
-      // Success toast
+        const response = await createSingleFile(formData).unwrap();
+        uploadedUris.push(response.uri); // Assuming response contains a `url` field
+  
+        setUploadProgresses((prev) => ({
+          ...prev,
+          [file.name]: 100, // Mark as completed
+        }));
+      }
+  
+      setUploadedFileUris(uploadedUris);
+
+      console.log("uploadedUris", uploadedUris);
+
       toast({
-        title: "Success",
-        description: "Event created successfully!",
+        title: "Upload Success",
+        description: `${files.length} file(s) uploaded successfully!`,
         variant: "default",
       });
-  
-      // Reset the form and close the dialog
-      reset();
-    } catch (err) {
-      console.error("Failed to create event:", err);
-  
-      // Error toast
+    } catch (error) {
+      console.error("File upload failed:", error);
       toast({
-        title: "Error",
-        description: "Failed to create event. Please try again.",
+        title: "Upload Failed",
+        description: "There was an error uploading your file. Please try again.",
         variant: "destructive",
       });
+    } finally {
+      setIsUploading(false);
     }
-  }
-
-  // async function simulateFileUpload(files: File[]) {
-  //   setIsUploading(true);
-
-  //   // Simulating file upload progress
-  //   const newUploadedFiles: UploadedFile[] = [];
-
-  //   for (const file of files) {
-  //     const fileKey = file.name;
-  //     const uploadProgress = { loaded: 0, total: file.size };
-
-  //     // Simulate upload progress
-  //     const interval = setInterval(() => {
-  //       uploadProgress.loaded += file.size * 0.1;
-  //       const progressPercent = Math.min(
-  //         Math.round((uploadProgress.loaded / uploadProgress.total) * 100),
-  //         100,
-  //       );
-
-  //       setProgresses((prev) => ({
-  //         ...prev,
-  //         [fileKey]: progressPercent,
-  //       }));
-
-  //       if (progressPercent === 100) clearInterval(interval);
-  //     }, 500);
-
-  //     await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulated delay
-
-  //     // Map each file to match the UploadedFile interface
-  //     const uploadedFile: UploadedFile = {
-  //       key: file.name,
-  //       url: URL.createObjectURL(file),
-  //       appUrl: "https://your-app-url.com/files/" + file.name,
-  //       fileHash: "dummy-hash-" + file.name,
-  //       customId: null,
-  //       name: file.name,
-  //       size: file.size,
-  //       type: file.type,
-  //       lastModified: file.lastModified,
-  //       file: { ...file, preview: URL.createObjectURL(file) },
-  //     };
-
-  //     newUploadedFiles.push(uploadedFile);
-  //   }
-
-  //   setUploadedFiles((prev) => [...prev, ...newUploadedFiles]);
-  //   setIsUploading(false);
-  // }
-
-  const handleFilesUpload = async (files: File[]): Promise<void> => {
-    // Simulate a file upload process
-    const simulateUpload = (file: File) =>
-      new Promise((resolve, reject) => {
-        const progressInterval = setInterval(() => {
-          setUploadProgresses((prev) => {
-            const newProgress = Math.min((prev[file.name] || 0) + 10, 100);
-            return { ...prev, [file.name]: newProgress };
-          });
-
-          if (uploadProgresses[file.name] >= 100) {
-            clearInterval(progressInterval);
-            resolve(file);
-          }
-        }, 200);
-      });
-
-    await Promise.all(files.map(simulateUpload));
-    // toast.success(`${files.length} file(s) uploaded successfully!`);
   };
+
+  async function onSubmit(values: z.infer<typeof eventSchemaCreation>) {
+  try {
+    // Ensure uploaded images are used
+    const eventImages = uploadedFileUris.length > 0 ? uploadedFileUris : values.images;
+  
+    const newEvent = {
+      ...values,
+      images: eventImages, // Pass uploaded image URLs
+    };
+
+    await createEvent({
+      categoryUuid: selectedCategoryUuid,
+      organizationUuid: orgUuid,
+      newEvent,
+    }).unwrap();
+
+    toast({
+      title: "Success",
+      description: "Event created successfully!",
+      variant: "default",
+    });
+
+    reset();
+  } catch (err) {
+    console.error("Failed to create event:", err);
+    toast({
+      title: "Error",
+      description: "Failed to create event. Please try again.",
+      variant: "destructive",
+    });
+  }
+}
 
   function handleCancel() {
     reset(); // Reset the form
@@ -482,107 +407,120 @@ export function EventInfoFormCreation({
                 )}
               />
 
-<div className="flex gap-9 p-0 m-0">
-  <FormField
-    control={control}
-    name="startDate"
-    render={({ field }) => (
-      <FormItem className="flex-1 flex flex-col">
-        <FormLabel className="text-sm text-iDonate-navy-secondary">
-          Start Date
-        </FormLabel>
+              <div className="flex gap-9 p-0 m-0">
+                <FormField
+                  control={control}
+                  name="startDate"
+                  render={({ field }) => (
+                    <FormItem className="flex-1 flex flex-col">
+                      <FormLabel className="text-sm text-iDonate-navy-secondary">
+                        Start Date
+                      </FormLabel>
 
-        <DatePicker
-                                selectedDate={selectedDate}
-                                onDateChange={handleDateChange}
-                                error={errors.dateOfBirth}
-                              />
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <FormControl className="w-full">
+                            <Button
+                              variant={"outline"}
+                              className={cn(
+                                "pl-3 text-left font-normal",
+                                !field.value && "text-muted-foreground",
+                              )}
+                            >
+                              {field.value ? (
+                                format(new Date(field.value), "PPP")
+                              ) : (
+                                <span>Pick a date</span>
+                              )}
+                              <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                            </Button>
+                          </FormControl>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0" align="start">
+                          <Calendar
+                            mode="single"
+                            selected={
+                              field.value ? new Date(field.value) : undefined
+                            }
+                            onSelect={(date) =>
+                              field.onChange(
+                                date ? date.toISOString().split("T")[0] : "",
+                              )
+                            }
+                            disabled={(date) =>
+                              date > new Date() || date < new Date("1900-01-01")
+                            }
+                            initialFocus
+                          />
+                        </PopoverContent>
+                      </Popover>
 
-        <FormMessage />
-        <FormDescription className="text-iDonate-gray text-sm">
-          This is your event's order date.
-        </FormDescription>
-      </FormItem>
-    )}
-  />
+                      <FormMessage />
+                      <FormDescription className="text-iDonate-gray text-sm">
+                        This is your event's order date.
+                      </FormDescription>
+                    </FormItem>
+                  )}
+                />
 
-  <FormField
-    control={control}
-    name="endDate"
-    render={({ field }) => (
-      <FormItem className="flex-1 flex flex-col">
-        <FormLabel className="text-sm text-iDonate-navy-secondary">
-          End Date
-        </FormLabel>
+                <FormField
+                  control={control}
+                  name="endDate"
+                  render={({ field }) => (
+                    <FormItem className="flex-1 flex flex-col">
+                      <FormLabel className="text-sm text-iDonate-navy-secondary">
+                        End Date
+                      </FormLabel>
 
-        <Popover>
-          <PopoverTrigger asChild>
-            <FormControl className="w-full">
-              <Button
-                variant={"outline"}
-                className={cn(
-                  "pl-3 text-left font-normal",
-                  !field.value && "text-muted-foreground"
-                )}
-              >
-                {field.value ? (
-                  format(new Date(field.value), "PPP")
-                ) : (
-                  <span>Pick a date</span>
-                )}
-                <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-              </Button>
-            </FormControl>
-          </PopoverTrigger>
-          <PopoverContent className="w-auto p-0" align="start">
-            <Calendar
-              mode="single"
-              selected={field.value ? new Date(field.value) : undefined}
-              onSelect={(date) =>
-                field.onChange(date ? date.toISOString().split("T")[0] : "")
-              }
-              disabled={(date) => date > new Date() || date < new Date("1900-01-01")}
-              initialFocus
-            />
-          </PopoverContent>
-        </Popover>
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <FormControl className="w-full">
+                            <Button
+                              variant={"outline"}
+                              className={cn(
+                                "pl-3 text-left font-normal",
+                                !field.value && "text-muted-foreground",
+                              )}
+                            >
+                              {field.value ? (
+                                format(new Date(field.value), "PPP")
+                              ) : (
+                                <span>Pick a date</span>
+                              )}
+                              <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                            </Button>
+                          </FormControl>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0" align="start">
+                          <Calendar
+                            mode="single"
+                            selected={
+                              field.value ? new Date(field.value) : undefined
+                            }
+                            onSelect={(date) =>
+                              field.onChange(
+                                date ? date.toISOString().split("T")[0] : "",
+                              )
+                            }
+                            disabled={(date) =>
+                              date > new Date() || date < new Date("1900-01-01")
+                            }
+                            initialFocus
+                          />
+                        </PopoverContent>
+                      </Popover>
 
-        <FormMessage />
-        <FormDescription className="text-iDonate-gray text-sm">
-          This is your event's end date.
-        </FormDescription>
-      </FormItem>
-    )}
-  />
-</div>
-
+                      <FormMessage />
+                      <FormDescription className="text-iDonate-gray text-sm">
+                        This is your event's end date.
+                      </FormDescription>
+                    </FormItem>
+                  )}
+                />
+              </div>
             </CardContent>
 
             <CardContent className="flex relative flex-1 p-0 m-0">
-              {/* <FormField
-                control={control}
-                name="images"
-                render={({ field }) => (
-                  <FormItem className="w-full">
-                    <FormLabel className="text-sm text-iDonate-navy-secondary">
-                      Event Images
-                    </FormLabel>
-                    <FormControl>
-                      <FileUploader
-                        className=" border-iDonate-gray"
-                        value={field.value}
-                        onValueChange={field.onChange}
-                        onUpload={simulateFileUpload}
-                        maxFileCount={4}
-                        maxSize={4 * 1024 * 1024}
-                        progresses={progresses}
-                        disabled={isUploading}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              /> */}
 
               <FormField
                 control={control}
@@ -593,16 +531,20 @@ export function EventInfoFormCreation({
                       Event Images
                     </FormLabel>
                     <FormControl>
-                      <FileUploader
-                        className="border-iDonate-gray"
-                        value={field.value}
-                        onValueChange={field.onChange}
-                        onUpload={handleFilesUpload}
-                        maxFileCount={4}
-                        maxSize={4 * 1024 * 1024}
-                        progresses={progresses}
-                        disabled={isUploading}
-                      />
+                    <FileUploader
+                          className=" border-iDonate-gray"
+                          value={uploadedFiles}
+                          onValueChange={setUploadedFiles}
+                          onUpload={handleFilesUpload}
+                          progresses={uploadProgresses}
+                          maxFileCount={5}
+                          maxSize={1024 * 1024 * 5} // 5MB
+                          accept={{
+                            "image/*": [],
+                            "application/pdf": [],
+                            "application/msword": [],
+                          }}
+                        />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

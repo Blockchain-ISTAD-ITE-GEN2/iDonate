@@ -20,11 +20,14 @@ export function OrganizationEventPage() {
   const typedEvents: EventType[] = events?.content || [];
 
   // State for filtered events
-  const [filteredEvents, setFilteredEvents] = useState<EventType[]>(typedEvents);
+  const [filteredEvents, setFilteredEvents] =
+    useState<EventType[]>(typedEvents);
 
   // 🔥 WebSocket Setup with STOMP
   useEffect(() => {
-    const socket = new SockJS(`${process.env.NEXT_PUBLIC_IDONATE_API_URL}/websocket`);
+    const socket = new SockJS(
+      `${process.env.NEXT_PUBLIC_IDONATE_API_URL}/websocket`,
+    );
 
     const stompClient = new Client({
       webSocketFactory: () => socket,
@@ -46,8 +49,8 @@ export function OrganizationEventPage() {
           prevEvents.map((event) =>
             event.uuid === update.eventUuid
               ? { ...event, currentRaised: update.totalAmount }
-              : event
-          )
+              : event,
+          ),
         );
       });
     };
@@ -107,7 +110,9 @@ export function OrganizationEventPage() {
 
         <Button
           variant="outline"
-          onClick={() => router.push(`/organization-dashboard/${orgUuid}/event-creation`)}
+          onClick={() =>
+            router.push(`/organization-dashboard/${orgUuid}/event-creation`)
+          }
         >
           New Event
         </Button>

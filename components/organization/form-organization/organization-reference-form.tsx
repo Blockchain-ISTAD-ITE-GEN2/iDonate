@@ -69,16 +69,10 @@ export function OrganizationReferenceForm({ uuid }: { uuid: string }) {
 
       // Map each file to match the UploadedFile interface
       const uploadedFile: UploadedFile = {
-        key: file.name,
-        url: URL.createObjectURL(file),
-        appUrl: "https://your-app-url.com/files/" + file.name,
-        fileHash: "dummy-hash-" + file.name,
-        customId: null,
+        uri: URL.createObjectURL(file),
         name: file.name,
         size: file.size,
         type: file.type,
-        lastModified: file.lastModified,
-        file: { ...file, preview: URL.createObjectURL(file) },
       };
 
       newUploadedFiles.push(uploadedFile);

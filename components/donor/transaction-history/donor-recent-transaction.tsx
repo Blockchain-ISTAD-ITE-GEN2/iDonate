@@ -54,7 +54,7 @@ export function DonorReacentTransacctions({
 
           {/* Amount */}
           <span className="ml-auto text-iDonate-green-primary text-sm sm:text-medium-eng text-text-start dark:text-iDonate-green-secondary">
-            ${transaction.amount}
+            ${transaction.donationAmount}
           </span>
         </div>
       ))
@@ -65,7 +65,7 @@ export function DonorReacentTransacctions({
 
       {/* View All Transactions */}
       <Label className="flex items-center py-4 text-sm sm:text-medium-eng text-iDonate-navy-secondary cursor-pointer dark:text-iDonate-navy-accent">
-        View all transactions
+        មើលប្រតិបត្តិការទាំងអស់
       </Label>
     </div>
   );

@@ -30,7 +30,7 @@ export default function TransactionHistory() {
 
   useEffect(() => {
     if (!donorUuid) return;
-  
+
     const fetchTransactions = async () => {
       try {
         const response = await fetch(
@@ -40,9 +40,9 @@ export default function TransactionHistory() {
           throw new Error("Failed to fetch transactions");
         }
         const data = await response.json();
-  
+
         console.log("User Transaction Data: ", JSON.stringify(data));
-  
+
         // Transform API response to match `TransactionType`
         const formattedTransactions: TransactionType[] = data.content.map(
           (txn: any) => ({
@@ -55,7 +55,7 @@ export default function TransactionHistory() {
             timestamp: txn.timestamp, // Ensure timestamp is included
           }),
         );
-  
+
         setTransactions(formattedTransactions);
       } catch (err: any) {
         setError(err.message || "Something went wrong");
@@ -63,7 +63,7 @@ export default function TransactionHistory() {
         setLoading(false);
       }
     };
-  
+
     fetchTransactions();
   }, [donorUuid]);
 
@@ -84,24 +84,24 @@ export default function TransactionHistory() {
 
       {/* Recent Transactions */}
       <div>
-        { loading? (
+        {loading ? (
           <div>
             <RecentTransactionsSkeleton />
           </div>
-        ):(
+        ) : (
           <Card className="w-full xl:w-[480px] bg-iDonate-light-gray rounded-lg border border-iDonate-navy-accent dark:bg-iDonate-dark-mode">
-          <CardHeader>
-            <CardTitle className="text-medium-eng font-normal text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
-              Recent Transactions
-            </CardTitle>
-            <CardDescription className="text-sub-description-eng text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
-              You have donated {transactions.length} times this week.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
+            <CardHeader>
+              <CardTitle className="text-medium-eng font-normal text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
+                Recent Transactions
+              </CardTitle>
+              <CardDescription className="text-sub-description-eng text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
+                You have donated {transactions.length} times this week.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
               <DonorReacentTransacctions transactions={transactions} />
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
         )}
       </div>
     </div>

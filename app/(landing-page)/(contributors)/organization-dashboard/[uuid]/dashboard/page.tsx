@@ -1,12 +1,10 @@
 "use client";
-
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { BannerComponent } from "@/components/organization/card/banner";
 import { BarAndLineChart } from "@/components/organization/dashboard/bar-and-line-chart";
 import WaitingForVerification from "@/components/organization/waiting-verification/waiting-verification";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Skeleton } from "@/components/ui/skeleton";
 import { useGetOrganizationByuuidQuery } from "@/redux/services/organization-service";
 import { TransactionType } from "@/difinitions/types/table-type/transaction";
 import { useGetOrgTransactionsQuery } from "@/redux/services/donation-service";
@@ -46,17 +44,6 @@ export default function OrganizationDashboard({
     }
   }, [isUninitialized, error, router]);
 
-  if (isLoading) {
-    return (
-      <div className="flex items-center space-x-4">
-        <Skeleton className="h-12 w-12 rounded-full" />
-        <div className="space-y-2">
-          <Skeleton className="h-4 w-[250px]" />
-          <Skeleton className="h-4 w-[200px]" />
-        </div>
-      </div>
-    );
-  }
 
   if (error) {
     return (
@@ -72,11 +59,7 @@ export default function OrganizationDashboard({
 
   if (!organization) {
     return (
-      <div className="text-center p-6">
-        <p className="text-red-500 font-semibold">
-          Organization data not found.
-        </p>
-      </div>
+      <LoadingInsidePage />
     );
   }
 

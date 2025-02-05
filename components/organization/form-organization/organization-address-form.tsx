@@ -20,18 +20,19 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SquarePen } from "lucide-react";
 import { organizationAddressSchema } from "@/components/schema/schema";
 import { AlertComfirmDialog } from "@/components/Alert/Alert-Dialog";
 import { OrganizationType } from "@/difinitions/types/organization/OrganizationType";
-import { useGetOrganizationByuuidQuery } from "@/redux/services/organization-service";
+import { useEditOrganizationsMutation, useGetOrganizationByuuidQuery } from "@/redux/services/organization-service";
+import { toast } from "@/hooks/use-toast";
 
 export function OrganizationAddressForm({ uuid }: { uuid: string }) {
   const { data: organization } = useGetOrganizationByuuidQuery(uuid);
+  const [editOrganization] = useEditOrganizationsMutation();
 
   const typeOrganization: OrganizationType = organization || {};
-  // 1. State to toggle between view and edit mode
   const [isEditing, setIsEditing] = useState(false);
 
   // 2. Define your form.
@@ -42,11 +43,43 @@ export function OrganizationAddressForm({ uuid }: { uuid: string }) {
     },
   });
 
+  useEffect(() => {
+    if (organization) {
+      form.reset({
+        address: typeOrganization?.address || "",
+      });
+    }
+  }, [typeOrganization, form]);
+
   // 3. Define a submit handler.
-  function onSubmit(values: z.infer<typeof organizationAddressSchema>) {
-    console.log(values);
-    // Switch back to view mode after submitting
-    setIsEditing(false);
+  async function onSubmit(values: z.infer<typeof organizationAddressSchema>) {
+    if (!organization?.uuid) return;
+  
+    try {
+      const updatedOrganization = {
+        ...organization, // Keep all existing properties
+        address: values.address
+      };
+  
+      await editOrganization({
+        uuid: organization.uuid,
+        updatedData: updatedOrganization,
+      }).unwrap();
+  
+      toast({
+        title: "Organization Updated",
+        description: "The organization details have been updated successfully.",
+        variant: "default",
+      });
+  
+      setIsEditing(false);
+    } catch (error) {
+      toast({
+        title: "Update Failed",
+        description: "Failed to update the organization details.",
+        variant: "destructive",
+      });
+    }
   }
 
   function handleCancel() {
@@ -125,7 +158,7 @@ export function OrganizationAddressForm({ uuid }: { uuid: string }) {
                   type="submit"
                   className="bg-iDonate-white-space border-2 hover:bg-iDonate-light-gray border-iDonate-navy-accent text-iDonate-navy-primary dark:bg-iDonate-dark-mode dark:hover:bg-black dark:text-iDonate-navy-accent"
                 >
-                  Submit
+                   {form.formState.isSubmitting ? "Submitting..." : "Submit"}
                 </Button>
               </div>
             </CardHeader>

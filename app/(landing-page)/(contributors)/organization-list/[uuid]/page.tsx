@@ -8,6 +8,7 @@ import { MapPinned } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { OrganizationType } from "@/difinitions/types/organization/OrganizationType";
+import LoadingInsidePage from "@/components/loading/LoadingComponent";
 
 export default function OrganizationDashboard({
   params,
@@ -35,7 +36,7 @@ export default function OrganizationDashboard({
 
   // Show loading state
   if (isLoading) {
-    return <p className="text-center text-gray-500">Loading...</p>;
+    return  <LoadingInsidePage />;
   }
 
   // Show error state
@@ -63,7 +64,7 @@ export default function OrganizationDashboard({
               <div className="relative w-[160px] h-[160px] flex-shrink-0 rounded-lg overflow-hidden">
                 {org?.image ? (
                   <Image
-                    src={org.image}
+                    src={org.image instanceof File ? URL.createObjectURL(org.image) : org.image}
                     alt={org.name || "Media"}
                     width={160}
                     height={160}

@@ -9,7 +9,10 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { CalendarDays, School } from "lucide-react";
-import { useGetDraftEventsTrueQuery, useGetEventsQuery } from "@/redux/services/event-service";
+import {
+  useGetDraftEventsTrueQuery,
+  useGetEventsQuery,
+} from "@/redux/services/event-service";
 import UpcommingEventPlaceholderComponent from "./UpcommingEventPlaceholderComponent";
 import { EventType } from "@/difinitions/types/event/EventType";
 

@@ -11,7 +11,6 @@ import { Client } from "@stomp/stompjs";
 import { useRouter } from "next/navigation";
 
 export default function LatestDonationCard() {
-
   const router = useRouter();
   const [typedEvents, setTypedEvents] = useState<EventType[]>([]);
 
@@ -23,7 +22,7 @@ export default function LatestDonationCard() {
     const sortedEvents = apiEventResponse.content
       .toSorted(
         (a: any, b: any) =>
-          new Date(b.startDate).getTime() - new Date(a.startDate).getTime()
+          new Date(b.startDate).getTime() - new Date(a.startDate).getTime(),
       )
       .slice(0, 4);
     setTypedEvents(sortedEvents);
@@ -31,7 +30,9 @@ export default function LatestDonationCard() {
 
   // WebSocket subscription for totalAmountOfEvent
   useEffect(() => {
-    const socket = new SockJS(`${process.env.NEXT_PUBLIC_IDONATE_API_URL}/websocket`);
+    const socket = new SockJS(
+      `${process.env.NEXT_PUBLIC_IDONATE_API_URL}/websocket`,
+    );
     const stompClient = new Client({
       webSocketFactory: () => socket,
       debug: (str) => console.log(str),
@@ -51,8 +52,10 @@ export default function LatestDonationCard() {
         // Update the currentRaised value for the specific event
         setTypedEvents((prevEvents) =>
           prevEvents.map((event) =>
-            event.uuid === eventId ? { ...event, currentRaised: amount } : event
-          )
+            event.uuid === eventId
+              ? { ...event, currentRaised: amount }
+              : event,
+          ),
         );
       });
     };
@@ -128,7 +131,8 @@ export default function LatestDonationCard() {
                 </div>
 
                 <div className="text-iDonate-navy-primary">
-                  ​​ទឹកប្រាក់ទទួលបាន: ${formatAmount(item?.currentRaised) || "0"}
+                  ​​ទឹកប្រាក់ទទួលបាន: $
+                  {formatAmount(item?.currentRaised) || "0"}
                 </div>
               </div>
 
@@ -194,7 +198,8 @@ export default function LatestDonationCard() {
                     <span className="flex items-center gap-1 font-light text-iDonate-navy-secondary line-clamp-2 dark:text-iDonate-navy-accent h-12">
                       <CircleDollarSign size={16} />
                       <span className="khmer-font">
-                        ទឹកប្រាក់ទទួលបាន៖​​ ${formatAmount(item.currentRaised) || "0"}
+                        ទឹកប្រាក់ទទួលបាន៖​​ $
+                        {formatAmount(item.currentRaised) || "0"}
                       </span>
                     </span>
                   </div>

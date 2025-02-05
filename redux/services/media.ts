@@ -1,22 +1,21 @@
-import { UpdateProfileImageType } from "@/lib/definition";
 import { idonateApi } from "../api";
-import { headers } from "next/headers";
 
 export const mediasApi = idonateApi.injectEndpoints({
   endpoints: (builder) => ({
     uploadSingleMedia: builder.mutation({
-      query: (file) => {
-        console.log("log file:", file);
-        // let formData = new FormData();
-        // formData.append("file",file);
-        // formData.entries();
-        // console.log("log entries file: ",formData.append('file',file));
-        return {
-          url: `/media/upload-single`,
-          method: "POST",
-          body: file,
-        };
-      },
+      query: (fileData) => ({
+        url: `media/upload-single`,
+        method: "POST",
+        body: fileData,
+      }),
+      invalidatesTags: ["media"],
+    }),
+    uploadMultipleMedia: builder.mutation({
+      query: (fileData) => ({
+        url: `media/upload-multiple`,
+        method: "POST",
+        body: fileData,
+      }),
       invalidatesTags: ["media"],
     }),
 
@@ -28,5 +27,8 @@ export const mediasApi = idonateApi.injectEndpoints({
   }),
 });
 
-export const { useUploadSingleMediaMutation, useGetMediasNameQuery } =
-  mediasApi;
+export const {
+  useUploadSingleMediaMutation,
+  useGetMediasNameQuery,
+  useUploadMultipleMediaMutation,
+} = mediasApi;

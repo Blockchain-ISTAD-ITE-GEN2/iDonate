@@ -16,7 +16,9 @@ import barchart from "@/data/barchart.json";
 import { ReacentTransacctions } from "@/components/organization/dashboard/ReacentTransacctions";
 
 export function BarAndLineChart({ orgUuid }: { orgUuid: string }) {
-  const [recentTransactions, setRecentTransactions] = useState<TransactionType[]>([]);
+  const [recentTransactions, setRecentTransactions] = useState<
+    TransactionType[]
+  >([]);
   const [averageData, setAverageData] = useState<AverageType[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<null | string>(null);
@@ -25,7 +27,7 @@ export function BarAndLineChart({ orgUuid }: { orgUuid: string }) {
     ([name, values]) => ({
       name,
       ...values,
-    })
+    }),
   );
 
   useEffect(() => {
@@ -34,7 +36,7 @@ export function BarAndLineChart({ orgUuid }: { orgUuid: string }) {
     const fetchTransactions = async () => {
       try {
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_BASE_URL}/v1/donation/org-transactions/${orgUuid}`
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/v1/donation/org-transactions/${orgUuid}`,
         );
         if (!response.ok) {
           throw new Error("Failed to fetch transactions");
@@ -54,8 +56,11 @@ export function BarAndLineChart({ orgUuid }: { orgUuid: string }) {
         setRecentTransactions(formattedTransactions);
 
         // Compute average donation per day
-        const aggregatedData: Record<string, { totalAmount: number; count: number }> = {};
-        
+        const aggregatedData: Record<
+          string,
+          { totalAmount: number; count: number }
+        > = {};
+
         formattedTransactions.forEach((txn: any) => {
           const date = txn.timestamp.split("T")[0]; // Extract YYYY-MM-DD
           if (!aggregatedData[date]) {
@@ -65,10 +70,13 @@ export function BarAndLineChart({ orgUuid }: { orgUuid: string }) {
           aggregatedData[date].count += 1;
         });
 
-        const computedAverages: AverageType[] = Object.keys(aggregatedData).map((date) => ({
-          date,
-          amount: aggregatedData[date].totalAmount / aggregatedData[date].count, // Compute average per day
-        }));
+        const computedAverages: AverageType[] = Object.keys(aggregatedData).map(
+          (date) => ({
+            date,
+            amount:
+              aggregatedData[date].totalAmount / aggregatedData[date].count, // Compute average per day
+          }),
+        );
 
         setAverageData(computedAverages);
       } catch (err: any) {
@@ -86,7 +94,6 @@ export function BarAndLineChart({ orgUuid }: { orgUuid: string }) {
       <div className="flex flex-col gap-4">
         {/* ✅ Render CardsMetric with computed average data */}
         <CardsMetric data={averageData} />
-
       </div>
 
       {/* Recent Transactions Card */}
@@ -105,7 +112,9 @@ export function BarAndLineChart({ orgUuid }: { orgUuid: string }) {
           <div>
             {loading && <p>Loading transactions...</p>}
             {error && <p className="text-red-500">{error}</p>}
-            {!loading && !error && <ReacentTransacctions transactions={recentTransactions} />}
+            {!loading && !error && (
+              <ReacentTransacctions transactions={recentTransactions} />
+            )}
           </div>
         </CardContent>
       </Card>

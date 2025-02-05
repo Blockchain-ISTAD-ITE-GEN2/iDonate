@@ -26,7 +26,9 @@ export const metadata: Metadata = {
     title: "About Us - iDonate",
     description:
       "Discover the team and mentors behind iDonate, ensuring trust and credibility in donations.",
-    images: ["https://idonateapi.kangtido.life/media/0b967dfd-0897-4197-b631-c24affbd812b.png"],
+    images: [
+      "https://idonateapi.kangtido.life/media/0b967dfd-0897-4197-b631-c24affbd812b.png",
+    ],
   },
   icons: {
     icon: "/favicon.ico",

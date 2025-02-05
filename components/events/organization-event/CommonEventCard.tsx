@@ -23,60 +23,65 @@ function formatDate(dateString: string | undefined): string {
 
 export function CommonEventCard({ event }: { event: EventType }) {
   const router = useRouter();
-  
+
   // State for real-time updates
-  const [totalDonors, setTotalDonors] = useState<number>(event.totalDonors ?? 0);
-  const [currentRaised, setCurrentRaised] = useState<number>(event.currentRaised ?? 0); 
+  const [totalDonors, setTotalDonors] = useState<number>(
+    event.totalDonors ?? 0,
+  );
+  const [currentRaised, setCurrentRaised] = useState<number>(
+    event.currentRaised ?? 0,
+  );
 
   useEffect(() => {
     if (!event?.uuid) return;
-  
-    const socket = new SockJS(`${process.env.NEXT_PUBLIC_IDONATE_API_URL}/websocket`);
+
+    const socket = new SockJS(
+      `${process.env.NEXT_PUBLIC_IDONATE_API_URL}/websocket`,
+    );
     const stompClient = new Client({
       webSocketFactory: () => socket,
       reconnectDelay: 5000,
     });
-  
+
     stompClient.onConnect = () => {
       console.log(`Connected to WebSocket for event: ${event.uuid}`);
-  
+
       stompClient.subscribe(`/topic/totalAmountOfEvent`, (message) => {
         const updatedData = JSON.parse(message.body);
         if (updatedData.uuid === event.uuid) {
           setCurrentRaised(updatedData.amount);
         }
       });
-  
+
       stompClient.subscribe(`/topic/totalDonorsByEachEvent`, (message) => {
         const updatedData = JSON.parse(message.body);
         if (updatedData.uuid === event.uuid) {
           setTotalDonors(updatedData.totalDonors);
         }
       });
-  
+
       stompClient.publish({
         destination: "/app/chat.sendTotalAmountOfEvent",
         body: JSON.stringify({ uuid: event.uuid }),
       });
-  
+
       stompClient.publish({
         destination: "/app/chat.sendTotalDonorsByEachEvent",
         body: JSON.stringify({ uuid: event.uuid }),
       });
     };
-  
+
     stompClient.onWebSocketError = (error) => {
       console.error("WebSocket Error:", error);
     };
-  
+
     stompClient.activate();
-  
+
     return () => {
       console.log(`Disconnecting WebSocket for event: ${event.uuid}`);
       stompClient.deactivate();
     };
   }, [event?.uuid]); // ✅ Cleanup runs when event.uuid changes
-  
 
   return (
     <Card
@@ -156,18 +161,14 @@ export function CommonEventCard({ event }: { event: EventType }) {
           <div className="flex items-center gap-2">
             <Users className="h-5 w-5 text-iDonate-navy-primary dark:text-iDonate-navy-accent" />
             <h3 className="text-description-khmer text-iDonate-navy-primary line-clamp-1 dark:text-iDonate-navy-accent">
-            {totalDonors
-            ? `${totalDonors} នាក់បរិច្ចាគ`
-            : "No donors yet"}
+              {totalDonors ? `${totalDonors} នាក់បរិច្ចាគ` : "No donors yet"}
             </h3>
           </div>
 
           <div className="flex items-center gap-2">
             <CircleDollarSign className="h-5 w-5 text-iDonate-green-primary dark:text-iDonate-green-secondary" />
             <p className="text-medium-khmer text-iDonate-green-primary line-clamp-1 dark:text-iDonate-green-secondary">
-              {currentRaised
-                ? `$ ${currentRaised}`
-                : "No amount collected"}
+              {currentRaised ? `$ ${currentRaised}` : "No amount collected"}
             </p>
           </div>
         </div>

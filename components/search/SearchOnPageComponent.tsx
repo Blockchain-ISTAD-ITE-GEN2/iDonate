@@ -1,14 +1,16 @@
 "use client";
-import {  useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Toolbar } from "@/components/filter/toolbar";
 import { EventType } from "@/difinitions/types/event/EventType";
 import { CommonEventCard } from "@/components/events/organization-event/CommonEventCard";
-import { useGetDraftEventsFalseQuery, useGetEventsQuery } from "@/redux/services/event-service";
+import {
+  useGetDraftEventsFalseQuery,
+  useGetEventsQuery,
+} from "@/redux/services/event-service";
 import { SearchOnPagePlaceholder } from "./SearchOnPagePlaceholder";
 import { Button } from "../ui/button";
 
 export function SearchPage() {
-
   // const [page,setPage] = useState(4);
 
   const {
@@ -17,14 +19,14 @@ export function SearchPage() {
     isError,
   } = useGetDraftEventsFalseQuery({});
 
-  const eventOnSearch:EventType[] = apiEventReponse?.content || [];
+  const eventOnSearch: EventType[] = apiEventReponse?.content || [];
 
-  const typedEvents:EventType[] = apiEventReponse?.content || [];
+  const typedEvents: EventType[] = apiEventReponse?.content || [];
 
   // const typedEventPage: EventType[] = eventOnSearch.slice(0,page) || [];
 
-  const [filteredEvents, setFilteredEvents] = useState<EventType[]>(typedEvents);
-
+  const [filteredEvents, setFilteredEvents] =
+    useState<EventType[]>(typedEvents);
 
   const filtersFace = [
     {
@@ -82,7 +84,6 @@ export function SearchPage() {
 
   return (
     <section className="flex flex-col gap-6 container mx-auto">
-      
       <div className="container mx-auto px-4 md:px-6 lg:px-8 xl:px-10">
         <Toolbar
           events={typedEvents}
