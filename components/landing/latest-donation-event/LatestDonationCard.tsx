@@ -163,7 +163,7 @@ function formatDate(dateString: string | undefined): string {
                     >
                       <div className="flex items-center gap-2 p-1">
                         <span className="text-iDonate-navy-primary p-1">
-                          អ្នកបរិច្ចាគ: {item?.totalDonors || "0"} ពាន់នាក់
+                          អ្នកបរិច្ចាគ: {item?.totalDonors || "0"} នាក់
                         </span>
                       </div>
 
@@ -257,9 +257,9 @@ function formatDate(dateString: string | undefined): string {
 
                   <div className="lg:flex flex-col sm:flex-row items-center justify-between text-sm gap-4">
                     <div className="flex items-center gap-2 font-light text-iDonate-navy-secondary line-clamp-2 dark:text-iDonate-navy-accent h-12">
-                      <Users className="h-4 w-4 text-iDonate-navy-primary" />
+                      <Users className="h-4 w-4 text-iDonate-navy-primary dark:text-iDonate-navy-accent" />
                       <span className="khmer-font">
-                        អ្នកបរិច្ចាគ៖ {item?.totalDonors || "0"} ពាន់នាក់
+                        អ្នកបរិច្ចាគ៖ {item?.totalDonors || "0"} នាក់
                       </span>
                     </div>
                     <span className="flex items-center gap-1 font-light text-iDonate-navy-secondary line-clamp-2 dark:text-iDonate-navy-accent h-12">
