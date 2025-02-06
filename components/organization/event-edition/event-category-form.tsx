@@ -25,15 +25,8 @@ import {
 import { EventType } from "@/difinitions/types/event/EventType";
 import { useToast } from "@/hooks/use-toast";
 
-type EventCategoryFormProps = {
-  onPercentageUpdate: (percentage: number) => void;
-  uuid: string;
-};
 
-export function EventCategoryFormEdition({
-  onPercentageUpdate,
-  uuid,
-}: EventCategoryFormProps) {
+export function EventCategoryFormEdition({uuid}:{uuid:string}) {
   const { data: categoriesData } = useGetCategoriesQuery({});
   const typeCategories: CategoryType[] = categoriesData || [];
   const [isEditing, setIsEditing] = useState(false);
@@ -62,10 +55,6 @@ export function EventCategoryFormEdition({
   const categoryValue = watch("category");
 
   const isFormFilled = !!categoryValue.trim();
-
-  useEffect(() => {
-    onPercentageUpdate(isFormFilled ? 20 : 0);
-  }, [isFormFilled, onPercentageUpdate]);
 
   useEffect(() => {
     const handleBeforeUnload = (event: BeforeUnloadEvent) => {

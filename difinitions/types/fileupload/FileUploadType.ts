@@ -8,7 +8,7 @@ export interface FileUploaderProps
    * @default undefined
    * @example value={files}
    */
-  value?: File[];
+  value?: File[] | File | undefined;
 
   /**
    * Function to be called when the value changes.

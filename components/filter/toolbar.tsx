@@ -88,7 +88,7 @@ export function Toolbar({
 
   return (
     <div className="flex items-center justify-between">
-      <div className="flex flex-wrap lg:flex-nowrap items-center gap-2 ">
+      <div className="flex flex-wrap  items-center gap-2 ">
         <Input
           placeholder={`Search by ${searchKey}`}
           value={searchValue}

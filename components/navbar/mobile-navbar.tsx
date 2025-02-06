@@ -4,13 +4,13 @@ import Image from "next/image";
 import { DropdownMenu } from "../ui/dropdown-menu";
 import { DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
 import ThemeSwitch from "../theme/ThemeSwitches";
-import { ProfileDropdown } from "./profile/profile-dropdown";
 import { useState } from "react";
 import { NavMenuType } from "@/difinitions/types/components-type/NavMenuType";
 import { usePathname, useRouter } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
 import logo from "@/public/logo/logodesign no background.png";
 import Link from "next/link";
+import { ProfileDropdown } from "./profile/profile-dropdown";
 
 type MobileMenuProps = {
   isOpen: boolean;

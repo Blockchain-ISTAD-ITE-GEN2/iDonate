@@ -46,30 +46,11 @@ import { useParams } from "next/navigation";
 import { DatePicker } from "@/components/auth/DayPicker";
 import { useUploadMultipleMediaMutation, useUploadSingleMediaMutation } from "@/redux/services/media";
 
-type EventInfoFormProps = {
-  onNamePercentageUpdate: (fullnamePercentage: number) => void;
-  onDescriptionPercentageUpdate: (emailPercentage: number) => void;
-  onLocationPercentageUpdate: (phonePercentage: number) => void;
-  onStartDatePercentageUpdate: (contactPercentage: number) => void;
-  onEndDatePercentageUpdate: (addressPercentage: number) => void;
-  // onTimezonePercentageUpdate: (imagePercentage: number) => void;
-  onImagesPercentageUpdate: (imagePercentage: number) => void;
-};
-
-export function EventInfoFormCreation({
-  onNamePercentageUpdate,
-  onDescriptionPercentageUpdate,
-  onLocationPercentageUpdate,
-  onStartDatePercentageUpdate,
-  onEndDatePercentageUpdate,
-  // onTimezonePercentageUpdate,
-  onImagesPercentageUpdate,
-}: EventInfoFormProps) {
+export function EventInfoFormCreation() {
   const org = useParams();
   const orgUuid = String(org.uuid);
   const { data: categoriesData } = useGetCategoriesQuery({});
   const typeCategories: CategoryType[] = categoriesData || [];
-  const [progresses, setProgresses] = useState<{ [key: string]: number }>({});
   const [isUploading, setIsUploading] = useState(false);
   // const [uploadedFiles, setUploadedFiles] = useState<UploadedFile[]>([]);
   const [uploadProgresses, setUploadProgresses] = useState<
@@ -79,7 +60,7 @@ export function EventInfoFormCreation({
   const [createSingleFile] = useUploadSingleMediaMutation();
   const [createEvent] = useCreateEventsMutation();
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
-  const [uploadedFileUris, setUploadedFileUris] = useState<string[]>([]);
+
 
     const form = useForm<z.infer<typeof eventSchemaCreation>>({
       resolver: zodResolver(eventSchemaCreation),
@@ -120,39 +101,6 @@ export function EventInfoFormCreation({
     images: images.length > 0,
   };
 
-  useEffect(() => {
-    const calculateCompletionPercentage = () => {
-      const namePercentage = name ? 20 : 0;
-      const descriptionPercentage = description ? 10 : 0;
-      const locationPercentage = location ? 10 : 0;
-      const orderDatePercentage = orderDate ? 10 : 0;
-      const endDatePercentage = endDate ? 10 : 0;
-      const imagePercentage = images.length ? 10 : 0;
- 
-      onNamePercentageUpdate(namePercentage);
-      onDescriptionPercentageUpdate(descriptionPercentage);
-      onLocationPercentageUpdate(locationPercentage);
-      onStartDatePercentageUpdate(orderDatePercentage);
-      onEndDatePercentageUpdate(endDatePercentage);
-      onImagesPercentageUpdate(imagePercentage);
-    };
-
-    calculateCompletionPercentage();
-  }, [
-    name,
-    description,
-    location,
-    orderDate,
-    endDate,
-    images,
-    onNamePercentageUpdate,
-    onDescriptionPercentageUpdate,
-    onLocationPercentageUpdate,
-    onStartDatePercentageUpdate,
-    onEndDatePercentageUpdate,
-    onImagesPercentageUpdate,
-  ]);
-
   // Track if the form is filled and prevent user from leaving the page
   useEffect(() => {
     const handleBeforeUnload = (event: BeforeUnloadEvent) => {
@@ -179,77 +127,62 @@ export function EventInfoFormCreation({
     };
   }, [isFormFilled]);
 
-  const handleFilesUpload = async (files: File[]) => {
-    setIsUploading(true);
+
+  const handleFilesSelection = (files: File[]) => {
+    setUploadedFiles(files); // Store files without uploading them immediately
+  };
+  
+
+  async function onSubmit(values: z.infer<typeof eventSchemaCreation>) {
     try {
-      const uploadedUris: string[] = [];
+      let uploadedUris: string[] = [];
   
-      for (const file of files) {
-        const formData = new FormData();
-        formData.append("file", file);
+      if (uploadedFiles.length > 0) {
+        setIsUploading(true);
+        uploadedUris = await Promise.all(
+          uploadedFiles.map(async (file) => {
+            const formData = new FormData();
+            formData.append("file", file);
   
-        const response = await createSingleFile(formData).unwrap();
-        uploadedUris.push(response.uri); // Assuming response contains a `url` field
-  
-        setUploadProgresses((prev) => ({
-          ...prev,
-          [file.name]: 100, // Mark as completed
-        }));
+            const response = await createSingleFile(formData).unwrap();
+            return response.uri; // Assuming response contains a `uri` field
+          })
+        );
+        setIsUploading(false);
       }
   
-      setUploadedFileUris(uploadedUris);
-
-      console.log("uploadedUris", uploadedUris);
-
+      const newEvent = {
+        ...values,
+        images: uploadedUris, // Use uploaded image URLs
+      };
+  
+      await createEvent({
+        categoryUuid: selectedCategoryUuid,
+        organizationUuid: orgUuid,
+        newEvent,
+      }).unwrap();
+  
       toast({
-        title: "Upload Success",
-        description: `${files.length} file(s) uploaded successfully!`,
+        title: "Success",
+        description: "Event created successfully!",
         variant: "default",
       });
-    } catch (error) {
-      console.error("File upload failed:", error);
+  
+      reset();
+      setUploadedFiles([]); // Clear selected files after successful submission
+    } catch (err) {
+      console.error("Failed to create event:", err);
       toast({
-        title: "Upload Failed",
-        description: "There was an error uploading your file. Please try again.",
+        title: "Error",
+        description: "Failed to create event. Please try again.",
         variant: "destructive",
       });
     } finally {
       setIsUploading(false);
     }
-  };
-
-  async function onSubmit(values: z.infer<typeof eventSchemaCreation>) {
-  try {
-    // Ensure uploaded images are used
-    const eventImages = uploadedFileUris.length > 0 ? uploadedFileUris : values.images;
-  
-    const newEvent = {
-      ...values,
-      images: eventImages, // Pass uploaded image URLs
-    };
-
-    await createEvent({
-      categoryUuid: selectedCategoryUuid,
-      organizationUuid: orgUuid,
-      newEvent,
-    }).unwrap();
-
-    toast({
-      title: "Success",
-      description: "Event created successfully!",
-      variant: "default",
-    });
-
-    reset();
-  } catch (err) {
-    console.error("Failed to create event:", err);
-    toast({
-      title: "Error",
-      description: "Failed to create event. Please try again.",
-      variant: "destructive",
-    });
   }
-}
+  
+
 
   function handleCancel() {
     reset(); // Reset the form
@@ -532,19 +465,19 @@ export function EventInfoFormCreation({
                     </FormLabel>
                     <FormControl>
                     <FileUploader
-                          className=" border-iDonate-gray"
-                          value={uploadedFiles}
-                          onValueChange={setUploadedFiles}
-                          onUpload={handleFilesUpload}
-                          progresses={uploadProgresses}
-                          maxFileCount={5}
-                          maxSize={1024 * 1024 * 5} // 5MB
-                          accept={{
-                            "image/*": [],
-                            "application/pdf": [],
-                            "application/msword": [],
-                          }}
-                        />
+  className="border-iDonate-gray"
+  value={uploadedFiles}
+  onValueChange={handleFilesSelection} // Only store files, no upload
+  progresses={uploadProgresses}
+  maxFileCount={5}
+  maxSize={1024 * 1024 * 5} // 5MB
+  accept={{
+    "image/*": [],
+    "application/pdf": [],
+    "application/msword": [],
+  }}
+/>
+
                     </FormControl>
                     <FormMessage />
                   </FormItem>

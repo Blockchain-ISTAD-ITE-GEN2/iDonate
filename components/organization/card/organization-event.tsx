@@ -16,7 +16,7 @@ export function OrganizationEventPage() {
   const orgUuid = String(params.uuid);
 
   // Fetch initial events from API
-  const { data: events } = useGetEventByOrganizationQuery(orgUuid);
+  const { data: events, isLoading } = useGetEventByOrganizationQuery(orgUuid);
   const typedEvents: EventType[] = events?.content || [];
 
   // State for filtered events
@@ -74,7 +74,7 @@ export function OrganizationEventPage() {
 
   return (
     <>
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-start">
         <Toolbar
           events={typedEvents}
           filtersFace={[
