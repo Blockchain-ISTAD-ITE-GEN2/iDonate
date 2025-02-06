@@ -90,18 +90,20 @@ export default function TransactionHistory() {
           </div>
         ) : (
           <Card className="w-full xl:w-[480px] bg-iDonate-light-gray rounded-lg border border-iDonate-navy-accent dark:bg-iDonate-dark-mode">
-          <CardHeader>
-            <CardTitle className="text-medium-eng font-normal text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
-              ប្រតិបត្តិការថ្មីៗ
-            </CardTitle>
-            <CardDescription className="text-sub-description-eng text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
-              អ្នកបានបរិច្ចាគចំនួន {transactions.length} ដងក្នុងសប្តាហ៍នេះ។
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-              <DonorReacentTransacctions transactions={transactions.slice(0, 5)} />
-          </CardContent>
-        </Card>
+            <CardHeader>
+              <CardTitle className="text-medium-eng font-normal text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
+                ប្រតិបត្តិការថ្មីៗ
+              </CardTitle>
+              <CardDescription className="text-sub-description-eng text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
+                អ្នកបានបរិច្ចាគចំនួន {transactions.length} ដងក្នុងសប្តាហ៍នេះ។
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <DonorReacentTransacctions
+                transactions={transactions.slice(0, 5)}
+              />
+            </CardContent>
+          </Card>
         )}
       </div>
     </div>

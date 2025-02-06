@@ -5,8 +5,7 @@ import { NextResponse } from "next/server";
 export async function POST() {
   const cookieStore = cookies();
   const cookieName =
-    process.env.COOKIE_REFRESH_TOKEN_NAME ||
-    "idonate-refresh-token" ;
+    process.env.COOKIE_REFRESH_TOKEN_NAME || "idonate-refresh-token";
 
   const credential = cookieStore.get("idonate-refresh-token");
 

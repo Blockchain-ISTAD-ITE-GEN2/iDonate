@@ -44,7 +44,10 @@ import { useCreateEventsMutation } from "@/redux/services/event-service";
 import { toast } from "@/hooks/use-toast";
 import { useParams } from "next/navigation";
 import { DatePicker } from "@/components/auth/DayPicker";
-import { useUploadMultipleMediaMutation, useUploadSingleMediaMutation } from "@/redux/services/media";
+import {
+  useUploadMultipleMediaMutation,
+  useUploadSingleMediaMutation,
+} from "@/redux/services/media";
 
 export function EventInfoFormCreation() {
   const org = useParams();
@@ -61,20 +64,18 @@ export function EventInfoFormCreation() {
   const [createEvent] = useCreateEventsMutation();
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
 
-
-    const form = useForm<z.infer<typeof eventSchemaCreation>>({
-      resolver: zodResolver(eventSchemaCreation),
-      defaultValues: {
-        name: "",
-        description: "",
-        location: "",
-        startDate: "",
-        endDate: "",
-        // timezone: "",
-        images: [],
-      },
-    });
-
+  const form = useForm<z.infer<typeof eventSchemaCreation>>({
+    resolver: zodResolver(eventSchemaCreation),
+    defaultValues: {
+      name: "",
+      description: "",
+      location: "",
+      startDate: "",
+      endDate: "",
+      // timezone: "",
+      images: [],
+    },
+  });
 
   const { watch, handleSubmit, reset, control, formState } = form;
 
@@ -127,47 +128,45 @@ export function EventInfoFormCreation() {
     };
   }, [isFormFilled]);
 
-
   const handleFilesSelection = (files: File[]) => {
     setUploadedFiles(files); // Store files without uploading them immediately
   };
-  
 
   async function onSubmit(values: z.infer<typeof eventSchemaCreation>) {
     try {
       let uploadedUris: string[] = [];
-  
+
       if (uploadedFiles.length > 0) {
         setIsUploading(true);
         uploadedUris = await Promise.all(
           uploadedFiles.map(async (file) => {
             const formData = new FormData();
             formData.append("file", file);
-  
+
             const response = await createSingleFile(formData).unwrap();
             return response.uri; // Assuming response contains a `uri` field
-          })
+          }),
         );
         setIsUploading(false);
       }
-  
+
       const newEvent = {
         ...values,
         images: uploadedUris, // Use uploaded image URLs
       };
-  
+
       await createEvent({
         categoryUuid: selectedCategoryUuid,
         organizationUuid: orgUuid,
         newEvent,
       }).unwrap();
-  
+
       toast({
         title: "Success",
         description: "Event created successfully!",
         variant: "default",
       });
-  
+
       reset();
       setUploadedFiles([]); // Clear selected files after successful submission
     } catch (err) {
@@ -181,8 +180,6 @@ export function EventInfoFormCreation() {
       setIsUploading(false);
     }
   }
-  
-
 
   function handleCancel() {
     reset(); // Reset the form
@@ -454,7 +451,6 @@ export function EventInfoFormCreation() {
             </CardContent>
 
             <CardContent className="flex relative flex-1 p-0 m-0">
-
               <FormField
                 control={control}
                 name="images"
@@ -464,20 +460,19 @@ export function EventInfoFormCreation() {
                       Event Images
                     </FormLabel>
                     <FormControl>
-                    <FileUploader
-  className="border-iDonate-gray"
-  value={uploadedFiles}
-  onValueChange={handleFilesSelection} // Only store files, no upload
-  progresses={uploadProgresses}
-  maxFileCount={5}
-  maxSize={1024 * 1024 * 5} // 5MB
-  accept={{
-    "image/*": [],
-    "application/pdf": [],
-    "application/msword": [],
-  }}
-/>
-
+                      <FileUploader
+                        className="border-iDonate-gray"
+                        value={uploadedFiles}
+                        onValueChange={handleFilesSelection} // Only store files, no upload
+                        progresses={uploadProgresses}
+                        maxFileCount={5}
+                        maxSize={1024 * 1024 * 5} // 5MB
+                        accept={{
+                          "image/*": [],
+                          "application/pdf": [],
+                          "application/msword": [],
+                        }}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

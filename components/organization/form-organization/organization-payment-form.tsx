@@ -14,10 +14,19 @@ import {
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import { SquarePen, Upload } from "lucide-react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { organizationPaymentSchema } from "@/components/schema/schema";
 import { AlertComfirmDialog } from "@/components/Alert/Alert-Dialog";
-import { useGetOrganizationByuuidQuery, useSetBankAccountMutation } from "@/redux/services/organization-service";
+import {
+  useGetOrganizationByuuidQuery,
+  useSetBankAccountMutation,
+} from "@/redux/services/organization-service";
 import { Input } from "@/components/ui/input";
 import { toast } from "@/hooks/use-toast";
 
@@ -43,23 +52,25 @@ export function OrganizationPaymentForm({ uuid }: { uuid: string }) {
     }
   }, [organization, form]);
 
-
   async function onSubmit(values: z.infer<typeof organizationPaymentSchema>) {
     if (!organization?.uuid) return;
-  
+
     try {
       const bankAccountNumber = {
-        bankAccountNumber: values.bankAccountNumber
+        bankAccountNumber: values.bankAccountNumber,
       };
-  
-      await setOrganizationBank({ orgUuid: uuid, bankAccount: bankAccountNumber}).unwrap();
-  
+
+      await setOrganizationBank({
+        orgUuid: uuid,
+        bankAccount: bankAccountNumber,
+      }).unwrap();
+
       toast({
         title: "Organization Updated",
         description: "The organization details have been updated successfully.",
         variant: "default",
       });
-  
+
       setIsEditing(false);
     } catch (error) {
       toast({
@@ -77,7 +88,7 @@ export function OrganizationPaymentForm({ uuid }: { uuid: string }) {
 
   return (
     <Form {...form}>
-     <form onSubmit={form.handleSubmit(onSubmit)}>
+      <form onSubmit={form.handleSubmit(onSubmit)}>
         {/* View Mode */}
         {!isEditing && (
           <Card className="flex flex-col rounded-lg border-2 border-iDonate-navy-accent gap-6 p-9">
@@ -98,7 +109,8 @@ export function OrganizationPaymentForm({ uuid }: { uuid: string }) {
             <CardContent className="flex w-fle gap-9 p-0 m-0">
               <div className="flex flex-col space-y-3">
                 <CardDescription className="text-xl text-iDonate-navy-primary dark:text-iDonate-navy-accent">
-                  {organization?.bankAccountNumber || "No bank account number provided"}
+                  {organization?.bankAccountNumber ||
+                    "No bank account number provided"}
                 </CardDescription>
               </div>
             </CardContent>
@@ -146,7 +158,7 @@ export function OrganizationPaymentForm({ uuid }: { uuid: string }) {
                   type="submit"
                   className="bg-iDonate-white-space border-2 hover:bg-iDonate-light-gray border-iDonate-navy-accent text-iDonate-navy-primary dark:bg-iDonate-dark-mode dark:hover:bg-black dark:text-iDonate-navy-accent"
                 >
-                   {form.formState.isSubmitting ? "Submitting..." : "Submit"}
+                  {form.formState.isSubmitting ? "Submitting..." : "Submit"}
                 </Button>
               </div>
             </CardHeader>

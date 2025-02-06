@@ -62,22 +62,19 @@ export const organizationPaymentSchema = z.object({
   bankAccountNumber: z.string(), // Allow empty string as default value
 });
 
-
 export const organizationMediaSchema = z.object({
-  image: z
-    .any()
-    // .refine((file) => file instanceof File, {
-    //   message: "Invalid file format. Please upload an image.",
-    // })
-    // .refine((file) => file.type?.startsWith("image/"), {
-    //   message: "Only image files are allowed.",
-    // })
-    // .refine((file) => file.size <= 2 * 1024 * 1024, {
-    //   message: "File size must be 2MB or less.",
-    // })
-    // .optional(), // Allows empty input initially
+  image: z.any(),
+  // .refine((file) => file instanceof File, {
+  //   message: "Invalid file format. Please upload an image.",
+  // })
+  // .refine((file) => file.type?.startsWith("image/"), {
+  //   message: "Only image files are allowed.",
+  // })
+  // .refine((file) => file.size <= 2 * 1024 * 1024, {
+  //   message: "File size must be 2MB or less.",
+  // })
+  // .optional(), // Allows empty input initially
 });
-
 
 export const organizationReferenceSchema = z.object({
   images: z.array(z.instanceof(File)),

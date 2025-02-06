@@ -20,7 +20,7 @@ export default function LatestDonationCard() {
     const sortedEvents = apiEventResponse.content
       .toSorted(
         (a: any, b: any) =>
-          new Date(b.startDate).getTime() - new Date(a.startDate).getTime()
+          new Date(b.startDate).getTime() - new Date(a.startDate).getTime(),
       )
       .slice(0, 4);
     setTypedEvents(sortedEvents);
@@ -89,7 +89,8 @@ export default function LatestDonationCard() {
                 </div>
 
                 <div className="text-iDonate-navy-primary text-[16px]">
-                  ​​ទឹកប្រាក់ទទួលបាន: ${formatAmount(item?.currentRaised) || "0"}
+                  ​​ទឹកប្រាក់ទទួលបាន: $
+                  {formatAmount(item?.currentRaised) || "0"}
                 </div>
               </div>
 

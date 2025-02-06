@@ -8,7 +8,21 @@ import { useEffect, useState } from "react";
 export default function TransactionCardHistory() {
   const typedTransactions: TransactionType[] = transactions.map((t) => ({
     ...t,
-    event: typeof t.event === "string" ? { name: t.event, media: "", description: "", location: "", startDate: "", endDate: "", type: "", images: [], isDraft: false, isVisible: true } : t.event,
+    event:
+      typeof t.event === "string"
+        ? {
+            name: t.event,
+            media: "",
+            description: "",
+            location: "",
+            startDate: "",
+            endDate: "",
+            type: "",
+            images: [],
+            isDraft: false,
+            isVisible: true,
+          }
+        : t.event,
   }));
 
   const [filteredtransactions, setFilteredtransactions] = useState<
@@ -16,7 +30,21 @@ export default function TransactionCardHistory() {
   >(
     transactions.map((t) => ({
       ...t,
-      event: typeof t.event === "string" ? { name: t.event, media: "", description: "", location: "", startDate: "", endDate: "", type: "", images: [], isDraft: false, isVisible: true } : t.event,
+      event:
+        typeof t.event === "string"
+          ? {
+              name: t.event,
+              media: "",
+              description: "",
+              location: "",
+              startDate: "",
+              endDate: "",
+              type: "",
+              images: [],
+              isDraft: false,
+              isVisible: true,
+            }
+          : t.event,
     })),
   );
 

@@ -25,8 +25,7 @@ import {
 import { EventType } from "@/difinitions/types/event/EventType";
 import { useToast } from "@/hooks/use-toast";
 
-
-export function EventCategoryFormEdition({uuid}:{uuid:string}) {
+export function EventCategoryFormEdition({ uuid }: { uuid: string }) {
   const { data: categoriesData } = useGetCategoriesQuery({});
   const typeCategories: CategoryType[] = categoriesData || [];
   const [isEditing, setIsEditing] = useState(false);

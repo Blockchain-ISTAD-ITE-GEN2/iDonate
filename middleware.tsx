@@ -18,7 +18,7 @@ export function middleware(request: NextRequest) {
     const loginUrl = new URL("/", request.url); // Replace "/" with your login page path if different
     return NextResponse.redirect(loginUrl);
   }
-  return NextResponse.next(); 
+  return NextResponse.next();
 }
 
 export const config = {

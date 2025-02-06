@@ -40,7 +40,7 @@ export function DonorCardsMetric({ data }: TransactionProps) {
         </CardTitle>
         <CardDescription className="text-sub-description-eng text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
           ប្រតិបត្តិការទាំងអស់ដែលបង្កើតដោយអ្នក
-         </CardDescription>
+        </CardDescription>
       </CardHeader>
 
       <CardContent className="p-2">

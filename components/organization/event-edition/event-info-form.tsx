@@ -21,7 +21,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {  eventSchemaEdition } from "@/components/schema/schema";
+import { eventSchemaEdition } from "@/components/schema/schema";
 import { AlertComfirmDialog } from "@/components/Alert/Alert-Dialog";
 import { Textarea } from "@/components/ui/textarea";
 import {
@@ -41,10 +41,7 @@ import {
 import { EventType } from "@/difinitions/types/event/EventType";
 import { useToast } from "@/hooks/use-toast";
 
-
-
-
-export function EventInfoFormEdition({uuid}:{uuid:string}) {
+export function EventInfoFormEdition({ uuid }: { uuid: string }) {
   const [isEditing, setIsEditing] = useState(false);
   const [progresses, setProgresses] = useState<{ [key: string]: number }>({});
   const [isUploading, setIsUploading] = useState(false);
@@ -69,22 +66,21 @@ export function EventInfoFormEdition({uuid}:{uuid:string}) {
       location: typedEvent?.location,
       startDate: typedEvent?.startDate,
       endDate: typedEvent?.endDate,
-    }
+    },
   });
 
-    // Update form values when organization data is fetched
-    useEffect(() => {
-      if (typedEvent?.uuid) {
-        form.reset({
-          name: typedEvent.name || "",
-          description: typedEvent.description || "",
-          location: typedEvent.location || "",
-          startDate: typedEvent.startDate || "",
-          endDate: typedEvent.endDate || "",
-        });
-      }
-    }, [typedEvent?.uuid, form]);
-    
+  // Update form values when organization data is fetched
+  useEffect(() => {
+    if (typedEvent?.uuid) {
+      form.reset({
+        name: typedEvent.name || "",
+        description: typedEvent.description || "",
+        location: typedEvent.location || "",
+        startDate: typedEvent.startDate || "",
+        endDate: typedEvent.endDate || "",
+      });
+    }
+  }, [typedEvent?.uuid, form]);
 
   const { watch, reset, control, formState } = form;
 
@@ -93,7 +89,7 @@ export function EventInfoFormEdition({uuid}:{uuid:string}) {
   const location = watch("location");
   const orderDate = watch("startDate");
   const endDate = watch("endDate");
-  
+
   const isFormFilled = {
     name: !!name,
     description: !!description,
@@ -110,7 +106,7 @@ export function EventInfoFormEdition({uuid}:{uuid:string}) {
         isFormFilled.name ||
         isFormFilled.description ||
         isFormFilled.orderDate ||
-        isFormFilled.endDate 
+        isFormFilled.endDate
       ) {
         event.preventDefault();
         event.returnValue =
@@ -128,18 +124,16 @@ export function EventInfoFormEdition({uuid}:{uuid:string}) {
   // 3. Define a submit handler.
 
   async function onSubmit(values: z.infer<typeof eventSchemaEdition>) {
-
     if (!typedEvent || !typedEvent?.uuid) return;
 
     try {
       // Prepare updated event object with selected category UUID
       const updatedEvent = {
-        name: values.name, 
-        description: values.description, 
+        name: values.name,
+        description: values.description,
         location: values.location,
-        startDate: values.startDate || "", 
+        startDate: values.startDate || "",
         endDate: values.endDate || "",
-        
       };
 
       // Send PUT request with full event data
@@ -162,7 +156,7 @@ export function EventInfoFormEdition({uuid}:{uuid:string}) {
         variant: "destructive",
       });
     }
-  };
+  }
 
   const handleFilesUpload = async (files: File[]): Promise<void> => {
     // Simulate a file upload process
@@ -493,7 +487,6 @@ export function EventInfoFormEdition({uuid}:{uuid:string}) {
                   />
                 </div>
 
-
                 {/* <div className="flex gap-6">
                 <FormField
                   control={control}
@@ -557,7 +550,6 @@ export function EventInfoFormEdition({uuid}:{uuid:string}) {
 
                 </div>
                  */}
-
               </CardContent>
             </div>
           </Card>

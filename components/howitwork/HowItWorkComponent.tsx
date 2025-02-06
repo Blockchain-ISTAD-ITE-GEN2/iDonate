@@ -123,10 +123,7 @@ export default function HowItWorks() {
               className="order-first md:order-last"
             >
               <div className="w-full ">
-                <Lottie
-                  className="w-full "
-                  animationData={HowItWork1}
-                />
+                <Lottie className="w-full " animationData={HowItWork1} />
               </div>
             </motion.div>
           </div>

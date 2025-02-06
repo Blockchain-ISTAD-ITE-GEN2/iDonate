@@ -28,7 +28,7 @@ import { toast } from "@/hooks/use-toast";
 export function OrganizationMediaForm({ uuid }: { uuid: string }) {
   const { data: organization } = useGetOrganizationByuuidQuery(uuid);
   const typeOrganization: OrganizationType = organization || {};
-  
+
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
@@ -50,42 +50,45 @@ export function OrganizationMediaForm({ uuid }: { uuid: string }) {
       });
       return;
     }
-  
+
     try {
       const formData = new FormData();
       formData.append("file", selectedFile);
-  
+
       console.log("Uploading file:", selectedFile.name);
-  
+
       // Upload file using RTK Query mutation
-      const uploadResponse = await uploadOrgImage({ orgUuid: uuid, fileData: formData }).unwrap();
-  
+      const uploadResponse = await uploadOrgImage({
+        orgUuid: uuid,
+        fileData: formData,
+      }).unwrap();
+
       console.log("Upload Response:", uploadResponse);
-  
+
       toast({
         title: "Upload Success",
         description: "Image uploaded successfully!",
         variant: "default",
       });
-  
+
       // Force a refresh of the organization data
       setPreviewImage(uploadResponse.imageUrl); // Assuming response contains the new image URL
-  
+
       // Reset form
       form.reset();
       setSelectedFile(null);
     } catch (error: any) {
       console.error("Upload Error:", error);
-  
+
       toast({
         title: "Upload Failed",
-        description: error?.data?.error || "Internal Server Error. Please try again later.",
+        description:
+          error?.data?.error ||
+          "Internal Server Error. Please try again later.",
         variant: "destructive",
       });
     }
   }
-  
-  
 
   const handleFileChange = (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -93,7 +96,7 @@ export function OrganizationMediaForm({ uuid }: { uuid: string }) {
   ) => {
     const file = event.target.files?.[0];
     if (!file) return;
-  
+
     if (!file.name.match(/\.(jpg|jpeg|png)$/i)) {
       toast({
         title: "Upload Failed",
@@ -102,13 +105,12 @@ export function OrganizationMediaForm({ uuid }: { uuid: string }) {
       });
       return;
     }
-  
+
     const previewURL = URL.createObjectURL(file);
     setPreviewImage(previewURL);
     setSelectedFile(file);
     onChange(previewURL);
   };
-  
 
   function handleCancel() {
     form.reset();
@@ -128,7 +130,9 @@ export function OrganizationMediaForm({ uuid }: { uuid: string }) {
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <Card
           className={`flex flex-col border-0 shadow-none px-20 py-12 rounded-none items-start gap-6 ${
-            previewImage ? "bg-iDonate-light-gray dark:bg-iDonate-dark-mode" : ""
+            previewImage
+              ? "bg-iDonate-light-gray dark:bg-iDonate-dark-mode"
+              : ""
           }`}
         >
           {/* Card Header: Conditionally rendered when previewImage exists */}
@@ -190,7 +194,11 @@ export function OrganizationMediaForm({ uuid }: { uuid: string }) {
                 />
               ) : typeOrganization.image ? (
                 <Image
-                  src={typeof typeOrganization.image === "string" ? typeOrganization.image : ""}
+                  src={
+                    typeof typeOrganization.image === "string"
+                      ? typeOrganization.image
+                      : ""
+                  }
                   alt="Organization"
                   width={150}
                   height={150}
@@ -202,7 +210,6 @@ export function OrganizationMediaForm({ uuid }: { uuid: string }) {
                 </div>
               )}
             </CardContent>
-
 
             {/* Card Content for Upload Button */}
             <CardContent className="flex flex-col p-0 m-0 gap-4">

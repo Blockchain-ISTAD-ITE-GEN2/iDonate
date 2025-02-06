@@ -12,10 +12,8 @@ type CategoryDetailProps = {
 
 export function AccordionCategory({ uuid }: CategoryDetailProps) {
   // Fetch category details
-  const {
-    data: category = null,
-    isLoading: isLoadingByUuid,
-  } = useGetCategoryByUuidQuery(uuid, { skip: !uuid });
+  const { data: category = null, isLoading: isLoadingByUuid } =
+    useGetCategoryByUuidQuery(uuid, { skip: !uuid });
 
   // Handle loading state
   if (isLoadingByUuid) {
@@ -31,18 +29,26 @@ export function AccordionCategory({ uuid }: CategoryDetailProps) {
     <section lang="km">
       <Accordion lang="km" type="single" collapsible className="w-full">
         {category.benefits && category.benefits.length > 0 ? (
-          category.benefits.map((benefit:any, index:number) => (
+          category.benefits.map((benefit: any, index: number) => (
             <AccordionItem key={index} value={`item-${index}`}>
-              <AccordionTrigger lang="km" className="text-iDonate-navy-secondary text-medium-khmer">
+              <AccordionTrigger
+                lang="km"
+                className="text-iDonate-navy-secondary text-medium-khmer"
+              >
                 {benefit.question}
               </AccordionTrigger>
-              <AccordionContent lang="km" className="text-iDonate-navy-secondary text-medium-khmer my-[36px]">
+              <AccordionContent
+                lang="km"
+                className="text-iDonate-navy-secondary text-medium-khmer my-[36px]"
+              >
                 {benefit.answer}
               </AccordionContent>
             </AccordionItem>
           ))
         ) : (
-          <p className="text-center text-gray-500">No benefits available for this category.</p>
+          <p className="text-center text-gray-500">
+            No benefits available for this category.
+          </p>
         )}
       </Accordion>
     </section>
