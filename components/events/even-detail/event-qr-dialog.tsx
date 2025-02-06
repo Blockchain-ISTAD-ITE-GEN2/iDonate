@@ -30,15 +30,8 @@ export default function EventQrDialog({
     ? qrcode
     : `data:image/png;base64,${qrcode}`;
 
-  const {
-    eventUuid,
-    donor,
-    amount,
-    recipient,
-    acquiringBank,
-    currency,
-    city,
-  } = paymentData;
+  const { eventUuid, donor, amount, recipient, acquiringBank, currency, city } =
+    paymentData;
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose} modal>

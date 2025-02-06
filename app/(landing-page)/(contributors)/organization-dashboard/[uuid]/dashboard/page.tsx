@@ -44,7 +44,6 @@ export default function OrganizationDashboard({
     }
   }, [isUninitialized, error, router]);
 
-
   if (error) {
     return (
       <div className="text-center p-6">
@@ -58,9 +57,7 @@ export default function OrganizationDashboard({
   }
 
   if (!organization) {
-    return (
-      <LoadingInsidePage />
-    );
+    return <LoadingInsidePage />;
   }
 
   // 🔹 If organization is not approved, show waiting screen

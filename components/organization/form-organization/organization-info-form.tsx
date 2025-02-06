@@ -25,12 +25,19 @@ import {
 } from "@/components/ui/card";
 import { organizationInfomationSchema } from "@/components/schema/schema";
 import { AlertComfirmDialog } from "@/components/Alert/Alert-Dialog";
-import { useEditOrganizationsMutation, useGetOrganizationByuuidQuery } from "@/redux/services/organization-service";
+import {
+  useEditOrganizationsMutation,
+  useGetOrganizationByuuidQuery,
+} from "@/redux/services/organization-service";
 import { OrganizationType } from "@/difinitions/types/organization/OrganizationType";
 import { toast } from "@/hooks/use-toast";
 
 export function OrganizationInfoForm({ uuid }: { uuid: string }) {
-  const { data: organization, isLoading, error } = useGetOrganizationByuuidQuery(uuid);
+  const {
+    data: organization,
+    isLoading,
+    error,
+  } = useGetOrganizationByuuidQuery(uuid);
   const [editOrganization] = useEditOrganizationsMutation();
 
   const [isEditing, setIsEditing] = useState(false);
@@ -56,34 +63,36 @@ export function OrganizationInfoForm({ uuid }: { uuid: string }) {
     }
   }, [organization, form]);
 
-  async function onSubmit(values: z.infer<typeof organizationInfomationSchema>) {
+  async function onSubmit(
+    values: z.infer<typeof organizationInfomationSchema>,
+  ) {
     if (!organization?.uuid) return;
-  
+
     try {
       const updatedOrganization = {
         // ... values, // Keep all existing properties
-        name: values.name, 
-        email: values.email, 
+        name: values.name,
+        email: values.email,
         phone: values.phone,
         address: organization.address || "", // Ensure address is always included
-        description: organization.description || null, 
-        bio: organization.bio || null, 
-        image: organization.image || null, 
-        purpose: organization.purpose || null, 
-        fileReferences: organization.fileReferences 
+        description: organization.description || null,
+        bio: organization.bio || null,
+        image: organization.image || null,
+        purpose: organization.purpose || null,
+        fileReferences: organization.fileReferences,
       };
-  
+
       await editOrganization({
         uuid: organization.uuid,
         updatedData: updatedOrganization,
       }).unwrap();
-  
+
       toast({
         title: "Organization Updated",
         description: "The organization details have been updated successfully.",
         variant: "default",
       });
-  
+
       setIsEditing(false);
     } catch (error) {
       toast({
@@ -93,7 +102,7 @@ export function OrganizationInfoForm({ uuid }: { uuid: string }) {
       });
     }
   }
-  
+
   function handleCancel() {
     if (organization) {
       form.reset({
@@ -106,7 +115,8 @@ export function OrganizationInfoForm({ uuid }: { uuid: string }) {
   }
 
   if (isLoading) return <p>Loading organization details...</p>;
-  if (error) return <p className="text-red-500">Failed to load organization details.</p>;
+  if (error)
+    return <p className="text-red-500">Failed to load organization details.</p>;
 
   return (
     <Form {...form}>
@@ -129,21 +139,27 @@ export function OrganizationInfoForm({ uuid }: { uuid: string }) {
 
             <CardContent className="flex w-full gap-9 p-0 m-0">
               <div className="flex flex-col space-y-3">
-                <CardDescription className="text-lg text-iDonate-gray">Full Name</CardDescription>
+                <CardDescription className="text-lg text-iDonate-gray">
+                  Full Name
+                </CardDescription>
                 <CardDescription className="text-xl text-iDonate-navy-primary dark:text-iDonate-navy-accent">
                   {organization?.name}
                 </CardDescription>
               </div>
 
               <div className="flex flex-col space-y-3">
-                <CardDescription className="text-lg text-iDonate-gray">Email</CardDescription>
+                <CardDescription className="text-lg text-iDonate-gray">
+                  Email
+                </CardDescription>
                 <CardDescription className="text-xl text-iDonate-navy-primary dark:text-iDonate-navy-accent">
                   {organization?.email}
                 </CardDescription>
               </div>
 
               <div className="flex flex-col space-y-3">
-                <CardDescription className="text-lg text-iDonate-gray">Contact</CardDescription>
+                <CardDescription className="text-lg text-iDonate-gray">
+                  Contact
+                </CardDescription>
                 <CardDescription className="text-xl text-iDonate-navy-primary dark:text-iDonate-navy-accent">
                   {organization?.phone}
                 </CardDescription>
@@ -199,29 +215,47 @@ export function OrganizationInfoForm({ uuid }: { uuid: string }) {
             </CardHeader>
 
             <CardContent className="flex gap-9 p-0 m-0">
-              <FormField control={form.control} name="name" render={({ field }) => (
-                <FormItem className="flex-1">
-                  <FormLabel>Full Name</FormLabel>
-                  <FormControl><Input {...field} /></FormControl>
-                  <FormMessage />
-                </FormItem>
-              )} />
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem className="flex-1">
+                    <FormLabel>Full Name</FormLabel>
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-              <FormField control={form.control} name="email" render={({ field }) => (
-                <FormItem className="flex-1">
-                  <FormLabel>Email</FormLabel>
-                  <FormControl><Input {...field} /></FormControl>
-                  <FormMessage />
-                </FormItem>
-              )} />
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem className="flex-1">
+                    <FormLabel>Email</FormLabel>
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-              <FormField control={form.control} name="phone" render={({ field }) => (
-                <FormItem className="flex-1">
-                  <FormLabel>Contact</FormLabel>
-                  <FormControl><Input {...field} /></FormControl>
-                  <FormMessage />
-                </FormItem>
-              )} />
+              <FormField
+                control={form.control}
+                name="phone"
+                render={({ field }) => (
+                  <FormItem className="flex-1">
+                    <FormLabel>Contact</FormLabel>
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
             </CardContent>
           </Card>
         )}

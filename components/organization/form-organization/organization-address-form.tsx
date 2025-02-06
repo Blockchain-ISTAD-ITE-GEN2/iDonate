@@ -25,7 +25,10 @@ import { SquarePen } from "lucide-react";
 import { organizationAddressSchema } from "@/components/schema/schema";
 import { AlertComfirmDialog } from "@/components/Alert/Alert-Dialog";
 import { OrganizationType } from "@/difinitions/types/organization/OrganizationType";
-import { useEditOrganizationsMutation, useGetOrganizationByuuidQuery } from "@/redux/services/organization-service";
+import {
+  useEditOrganizationsMutation,
+  useGetOrganizationByuuidQuery,
+} from "@/redux/services/organization-service";
 import { toast } from "@/hooks/use-toast";
 
 export function OrganizationAddressForm({ uuid }: { uuid: string }) {
@@ -54,24 +57,24 @@ export function OrganizationAddressForm({ uuid }: { uuid: string }) {
   // 3. Define a submit handler.
   async function onSubmit(values: z.infer<typeof organizationAddressSchema>) {
     if (!organization?.uuid) return;
-  
+
     try {
       const updatedOrganization = {
         ...organization, // Keep all existing properties
-        address: values.address
+        address: values.address,
       };
-  
+
       await editOrganization({
         uuid: organization.uuid,
         updatedData: updatedOrganization,
       }).unwrap();
-  
+
       toast({
         title: "Organization Updated",
         description: "The organization details have been updated successfully.",
         variant: "default",
       });
-  
+
       setIsEditing(false);
     } catch (error) {
       toast({
@@ -158,7 +161,7 @@ export function OrganizationAddressForm({ uuid }: { uuid: string }) {
                   type="submit"
                   className="bg-iDonate-white-space border-2 hover:bg-iDonate-light-gray border-iDonate-navy-accent text-iDonate-navy-primary dark:bg-iDonate-dark-mode dark:hover:bg-black dark:text-iDonate-navy-accent"
                 >
-                   {form.formState.isSubmitting ? "Submitting..." : "Submit"}
+                  {form.formState.isSubmitting ? "Submitting..." : "Submit"}
                 </Button>
               </div>
             </CardHeader>

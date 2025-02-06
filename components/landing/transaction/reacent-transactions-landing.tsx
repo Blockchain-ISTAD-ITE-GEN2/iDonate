@@ -8,7 +8,7 @@ import donateIcon from "@/public/images/give-and-recieve.png";
 
 type Donation = {
   avatar: string;
-  username: string;
+  donor: string;
   donationAmount: number;
   timestamp: string;
 };
@@ -61,7 +61,7 @@ export function RecentTransactionsLanding() {
               {transaction.avatar ? (
                 <img
                   src={transaction.avatar}
-                  alt={`${transaction.username} Avatar`}
+                  alt={`${transaction.donor} Avatar`}
                   className="h-full w-full object-cover"
                 />
               ) : (
@@ -69,14 +69,14 @@ export function RecentTransactionsLanding() {
                   width={40}
                   height={40}
                   src={donateIcon}
-                  alt={`${transaction.username} Avatar`}
+                  alt={`${transaction.donor} Avatar`}
                 />
               )}
             </Avatar>
 
             <div className="space-y-1">
               <p className="text-sm sm:text-base font-medium text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
-                {transaction.username}
+                {transaction.donor}
               </p>
               <p className="text-xs sm:text-sm text-iDonate-gray">
                 {transaction.timestamp}
@@ -85,7 +85,7 @@ export function RecentTransactionsLanding() {
           </div>
 
           <span className="text-iDonate-green-primary text-sm sm:text-base font-medium ml-auto dark:text-iDonate-green-secondary">
-            ${transaction.donationAmount.toFixed(2)}
+            {transaction.donationAmount.toFixed(2)}
           </span>
         </div>
       ))}

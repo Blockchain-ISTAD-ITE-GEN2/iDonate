@@ -5,4 +5,4 @@ export type UploadedFile = {
   type?: string; // Optional: MIME type (e.g., "image/png")
 };
 
-export type UploadedFileType = UploadedFile | UploadedFile[]; 
+export type UploadedFileType = UploadedFile | UploadedFile[];

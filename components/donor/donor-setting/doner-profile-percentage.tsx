@@ -181,7 +181,7 @@ export function DonorProfilePercentage({
               key={index}
               className="flex items-center justify-between gap-6"
             >
-              <div className="flex items-center gap-6">
+              <div className="flex items-center gap-6 ">
                 {data.completion > 0 ? (
                   <Check className="text-medium-eng text-iDonate-green-primary" />
                 ) : (

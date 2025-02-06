@@ -52,7 +52,7 @@ export function BarAndLineChartLanding() {
           .map((txn: any) => ({
             id: crypto.randomUUID(), // Generate a unique ID
             avatar: txn.avatar || "", // Ensure avatar is a string
-            username: txn.username || "Anonymous", // Map to `username`
+            donor: txn.username || "Anonymous", // Map to `username`
             event: txn.event,
             organization: txn.organization,
             amount: txn.donationAmount, // Map to `amount`
@@ -70,8 +70,7 @@ export function BarAndLineChartLanding() {
       }
     };
     
-    
-
+  
     fetchTransactions();
 
     // Set up WebSocket connection

@@ -18,10 +18,18 @@ export default function OrganizationSidebarComponent() {
   );
   const pathname = usePathname();
 
-  const navActiveClass = (isActive: boolean) =>
-    `w-[210px] h-[62px] font-normal bg-transparent flex hover:bg-iDonate-light-gray justify-start px-6 py-4 ${
-      isActive ? "text-iDonate-green-primary" : "text-iDonate-navy-primary"
-    }`;
+  const navActiveClass = (isActive: boolean, isDisabled: boolean = false) =>
+    `w-[210px] h-[62px] font-normal bg-transparent flex justify-start px-6 py-4 
+     transition-colors duration-200 ease-in-out
+     ${
+       isDisabled
+         ? "text-gray-400 cursor-not-allowed"
+         : `hover:bg-iDonate-light-gray hover:text-iDonate-navy-secondary ${
+             isActive
+               ? "text-iDonate-green-primary"
+               : "text-iDonate-navy-primary dark:hover:text-iDonate-navy-secondary dark:text-iDonate-navy-accent"
+           }`
+     }`;
 
   if (
     pathname === "/" ||
@@ -71,7 +79,7 @@ export default function OrganizationSidebarComponent() {
                   </Link>
                 </Button>
               ) : (
-                <Button className={`${navActiveClass(isActive)} text-lg`}>
+                <Button className={`${navActiveClass(true)} text-lg`}>
                   {item.icon && (
                     <item.icon
                       style={{

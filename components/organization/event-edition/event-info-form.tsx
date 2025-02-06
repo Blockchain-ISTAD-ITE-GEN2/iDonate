@@ -21,9 +21,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { eventInfoSchema } from "@/components/schema/schema";
+import { eventSchemaEdition } from "@/components/schema/schema";
 import { AlertComfirmDialog } from "@/components/Alert/Alert-Dialog";
-import Image from "next/image";
 import { Textarea } from "@/components/ui/textarea";
 import {
   Popover,
@@ -33,7 +32,6 @@ import {
 import { format } from "date-fns";
 import { Calendar } from "@/components/ui/calendar";
 import { cn } from "@/lib/utils";
-import { UploadedFile } from "@/difinitions/types/fileupload";
 import { FileUploader } from "@/components/fileupload/file-uploader";
 import { UploadedFilesCard } from "@/components/fileupload/uploaded-files-card";
 import {
@@ -42,32 +40,9 @@ import {
 } from "@/redux/services/event-service";
 import { EventType } from "@/difinitions/types/event/EventType";
 import { useToast } from "@/hooks/use-toast";
-import { DatePicker } from "@/components/auth/DayPicker";
-import { Switch } from "@/components/ui/switch";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Label } from "@/components/ui/label";
 
-type EventInfoFormProps = {
-  onTitlePercentageUpdate: (fullnamePercentage: number) => void;
-  onDescriptionPercentageUpdate: (descriptionPercentage: number) => void;
-  onOrderDatePercentageUpdate: (startDatePercentage: number) => void;
-  onEndDatePercentageUpdate: (endDatePercentage: number) => void;
-  onImagePercentageUpdate: (imagePercentage: number) => void;
-  onOrganizationPercentageUpdate: (organizationPercentage: number) => void;
-  uuid: string;
-};
-
-export function EventInfoFormEdition({
-  onTitlePercentageUpdate,
-  onDescriptionPercentageUpdate,
-  onOrderDatePercentageUpdate,
-  onEndDatePercentageUpdate,
-  onImagePercentageUpdate,
-  onOrganizationPercentageUpdate,
-  uuid,
-}: EventInfoFormProps) {
+export function EventInfoFormEdition({ uuid }: { uuid: string }) {
   const [isEditing, setIsEditing] = useState(false);
-  // const [uploadedFiles, setUploadedFiles] = useState<UploadedFile[]>([]);
   const [progresses, setProgresses] = useState<{ [key: string]: number }>({});
   const [isUploading, setIsUploading] = useState(false);
 
@@ -83,32 +58,37 @@ export function EventInfoFormEdition({
   const typedEvent: EventType = event || {};
 
   // 2. Define your
-  const form = useForm<z.infer<typeof eventInfoSchema>>({
-    resolver: zodResolver(eventInfoSchema),
+  const form = useForm<z.infer<typeof eventSchemaEdition>>({
+    resolver: zodResolver(eventSchemaEdition),
     defaultValues: {
       name: typedEvent?.name,
       description: typedEvent?.description,
+      location: typedEvent?.location,
       startDate: typedEvent?.startDate,
       endDate: typedEvent?.endDate,
-      images: typedEvent?.images,
-      category: typedEvent?.category?.uuid,
-      isDraft: typedEvent?.isDraft,
-      isVisible: typedEvent?.isVisible,
-      organization: typedEvent?.organization?.uuid,
     },
   });
 
-  const { watch, handleSubmit, reset, control, formState } = form;
+  // Update form values when organization data is fetched
+  useEffect(() => {
+    if (typedEvent?.uuid) {
+      form.reset({
+        name: typedEvent.name || "",
+        description: typedEvent.description || "",
+        location: typedEvent.location || "",
+        startDate: typedEvent.startDate || "",
+        endDate: typedEvent.endDate || "",
+      });
+    }
+  }, [typedEvent?.uuid, form]);
+
+  const { watch, reset, control, formState } = form;
 
   const name = watch("name");
   const description = watch("description");
-  // const location = watch("location");
+  const location = watch("location");
   const orderDate = watch("startDate");
   const endDate = watch("endDate");
-  const images = watch("images");
-  const isDraft = watch("isDraft");
-  const isVisible = watch("isVisible");
-  const organization = watch("organization");
 
   const isFormFilled = {
     name: !!name,
@@ -116,47 +96,7 @@ export function EventInfoFormEdition({
     location: !!location,
     orderDate: !!orderDate,
     endDate: !!endDate,
-    images: !!images,
-    isDraft: !!isDraft,
-    isVisible: !!isVisible,
-    organization: !!organization,
   };
-
-  // Percentage calculation
-  useEffect(() => {
-    // Calculate percentage for each field
-    const calculateCompletionPercentage = () => {
-      const titlePercentage = name ? 20 : 0;
-      const descriptionPercentage = description ? 10 : 0;
-      const orderDatePercentage = orderDate ? 10 : 0;
-      const endDatePercentage = endDate ? 10 : 0;
-      const imagePercentage = images?.length ? 20 : 0;
-      const organizationPercentage = organization ? 10 : 0;
-
-      // Call individual percentage update functions for each field
-      onTitlePercentageUpdate(titlePercentage);
-      onDescriptionPercentageUpdate(descriptionPercentage);
-      onOrderDatePercentageUpdate(orderDatePercentage);
-      onEndDatePercentageUpdate(endDatePercentage);
-      onImagePercentageUpdate(imagePercentage);
-      onOrganizationPercentageUpdate(organizationPercentage);
-    };
-
-    calculateCompletionPercentage();
-  }, [
-    name,
-    description,
-    orderDate,
-    endDate,
-    images,
-    organization,
-    onTitlePercentageUpdate,
-    onDescriptionPercentageUpdate,
-    onOrderDatePercentageUpdate,
-    onEndDatePercentageUpdate,
-    onOrganizationPercentageUpdate,
-    onImagePercentageUpdate,
-  ]);
 
   // Track if the form is filled and prevent user from leaving the page
   useEffect(() => {
@@ -166,11 +106,7 @@ export function EventInfoFormEdition({
         isFormFilled.name ||
         isFormFilled.description ||
         isFormFilled.orderDate ||
-        isFormFilled.endDate ||
-        isFormFilled.images ||
-        isFormFilled.isDraft ||
-        isFormFilled.isVisible ||
-        isFormFilled.organization
+        isFormFilled.endDate
       ) {
         event.preventDefault();
         event.returnValue =
@@ -186,14 +122,18 @@ export function EventInfoFormEdition({
   }, [isFormFilled]);
 
   // 3. Define a submit handler.
-  const onSubmit = async () => {
+
+  async function onSubmit(values: z.infer<typeof eventSchemaEdition>) {
     if (!typedEvent || !typedEvent?.uuid) return;
 
     try {
       // Prepare updated event object with selected category UUID
       const updatedEvent = {
-        ...typedEvent,
-        ...form.getValues(), // Ensures updated form values are included
+        name: values.name,
+        description: values.description,
+        location: values.location,
+        startDate: values.startDate || "",
+        endDate: values.endDate || "",
       };
 
       // Send PUT request with full event data
@@ -216,7 +156,7 @@ export function EventInfoFormEdition({
         variant: "destructive",
       });
     }
-  };
+  }
 
   const handleFilesUpload = async (files: File[]): Promise<void> => {
     // Simulate a file upload process
@@ -381,7 +321,7 @@ export function EventInfoFormEdition({
               </div>
             </CardHeader>
             <div className="w-full flex gap-6">
-              <CardContent className="flex relative flex-1 p-0 m-0">
+              {/* <CardContent className="flex relative flex-1 p-0 m-0">
                 <FormField
                   control={control}
                   name="images"
@@ -406,7 +346,8 @@ export function EventInfoFormEdition({
                     </FormItem>
                   )}
                 />
-              </CardContent>
+              </CardContent> */}
+
               <CardContent className="flex-1 flex flex-col gap-6 p-0 m-0">
                 <FormField
                   control={control}
@@ -545,12 +486,14 @@ export function EventInfoFormEdition({
                     )}
                   />
                 </div>
+
+                {/* <div className="flex gap-6">
                 <FormField
                   control={control}
                   name="isDraft"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-sm text-iDonate-navy-secondary">
+                      <FormLabel className="flex-1 text-sm text-iDonate-navy-secondary">
                         Draft
                       </FormLabel>
                       <FormControl>
@@ -580,7 +523,7 @@ export function EventInfoFormEdition({
                   name="isVisible"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-sm text-iDonate-navy-secondary">
+                      <FormLabel className="flex-1 text-sm text-iDonate-navy-secondary">
                         Visibility
                       </FormLabel>
                       <FormControl>
@@ -605,25 +548,8 @@ export function EventInfoFormEdition({
                   )}
                 />
 
-                {/* <FormField
-                  control={control}
-                  name="organization"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-sm text-iDonate-navy-secondary">
-                        Organization
-                      </FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="Enter organization name"
-                          className="w-full"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                /> */}
+                </div>
+                 */}
               </CardContent>
             </div>
           </Card>

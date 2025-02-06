@@ -1,4 +1,7 @@
-import { DonationRecordType, DonationType } from "@/difinitions/types/donation/donation";
+import {
+  DonationRecordType,
+  DonationType,
+} from "@/difinitions/types/donation/donation";
 import { idonateApi } from "@/redux/api";
 
 export const donationApi = idonateApi.injectEndpoints({
@@ -27,7 +30,7 @@ export const donationApi = idonateApi.injectEndpoints({
         body: { qr }, // Send as a JSON object
       }),
     }),
-    
+
     getOrgTransactions: builder.query({
       query: (orgUuid: string) => `/donation/org-transactions/${orgUuid}`,
       providesTags: [{ type: "donation", id: "LIST" }],
