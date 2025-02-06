@@ -111,7 +111,7 @@ export function DonorProfilePercentage({
   return (
     <Card className="self-start w-full lg:w-auto flex flex-col rounded-lg border-2 border-iDonate-navy-accent shadow-light">
       <CardHeader className="items-center pb-0 ">
-        <CardTitle className="w-full text-lg lg:text-2xl text-center leading-9 text-iDonate-navy-primary whitespace-nowrap">
+        <CardTitle className="w-full text-lg lg:text-2xl text-center leading-9 text-iDonate-navy-primary whitespace-nowrap dark:text-iDonate-navy-accent">
           Profile Completion
         </CardTitle>
       </CardHeader>
@@ -173,7 +173,7 @@ export function DonorProfilePercentage({
         </ChartContainer>
       </CardContent>
 
-      <CardContent className="flex flex-col gap-2 md:gap-4 xl:gap-6">
+      <CardContent className="flex flex-col gap-2 md:gap-4 xl:gap-6 ">
         {chartData
           .filter((data) => data.category !== "Remaining") // Exclude "Remaining" from the list
           .map((data, index) => (
@@ -187,7 +187,7 @@ export function DonorProfilePercentage({
                 ) : (
                   <X className="text-medium-eng text-iDonate-error" />
                 )}
-                <span className="text-sm sm:text-description-eng lg:text-medium-eng text-iDonate-navy-primary text-left whitespace-nowrap">
+                <span className="text-sm sm:text-description-eng lg:text-medium-eng text-iDonate-navy-primary text-left whitespace-nowrap  dark:text-iDonate-navy-accent">
                   {data.category}
                 </span>
               </div>

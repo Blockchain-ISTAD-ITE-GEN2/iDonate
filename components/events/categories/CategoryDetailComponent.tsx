@@ -77,11 +77,11 @@ const randomImage = allEventImages.length > 0
 
           {/* Name and Description Section */}
           <div className="flex flex-col gap-6">
-            <h1 className="text-heading-two-khmer text-iDonate-navy-primary leading-normal">
+            <h1 className="text-heading-two-khmer text-iDonate-navy-primary leading-normal dark:text-iDonate-navy-accent">
               {category?.name}
             </h1>
 
-            <p className="text-iDonate-navy-primary text-description-khmer md:text-lg lg:text-xl leading-9">
+            <p className="text-iDonate-navy-primary text-description-khmer md:text-lg lg:text-xl leading-9 dark:text-iDonate-navy-accent">
              {category?.description}
             </p>
           </div>

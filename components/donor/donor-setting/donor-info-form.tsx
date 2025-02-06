@@ -242,7 +242,7 @@ export function DonorInfoForm({
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <Card className="p-6">
           <CardHeader className="flex flex-row items-center justify-between p-0 mb-6">
-            <CardTitle className="text-3xl font-medium text-iDonate-navy-primary">
+            <CardTitle className="text-3xl font-medium text-iDonate-navy-primary dark:text-iDonate-navy-accent">
               ព័ត៌មានផ្ទាល់ខ្លួន
             </CardTitle>
 
@@ -250,7 +250,7 @@ export function DonorInfoForm({
               <Button
                 onClick={() => setIsEditing(true)}
                 variant="outline"
-                className="gap-2 text-iDonate-navy-primary"
+                className="gap-2 text-iDonate-navy-primary dark:text-iDonate-navy-accent"
               >
                 <SquarePen className="h-4 w-4" />
                 កែប្រែព័ត៌មាន

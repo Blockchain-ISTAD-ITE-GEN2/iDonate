@@ -84,7 +84,7 @@ function formatDate(dateString: string | undefined): string {
   return (
     <div className="w-full h-auto bg-transparent flex flex-col gap-6 lg:pb-[500px]">
       {/* The Big Card of Lastest Event  */}
-      <div className="lg:relative z-[10] lg:hover:z-[40] pointer-events-auto transition-transform duration-200 lg:hover:scale-95">
+      <div className="lg:relative z-[10] lg:hover:z-[40] pointer-events-auto transition-transform duration-600 lg:hover:scale-105">
           {typedEvents.slice(3, 4).map((item) => (
               <Card
                 onClick={(e) => {
