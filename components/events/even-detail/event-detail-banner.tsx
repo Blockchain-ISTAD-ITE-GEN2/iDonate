@@ -10,7 +10,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { HandCoins, Share2Icon, Users } from "lucide-react";
+import { CircleDollarSign, HandCoins, Share2Icon, Users } from "lucide-react";
 import { useState, useEffect } from "react";
 import { TransactionType } from "@/difinitions/types/table-type/transaction";
 import { useGetEventByUuidQuery } from "@/redux/services/event-service"; // Adjust the import path as needed
@@ -145,9 +145,12 @@ export function EventDetailBanner({ uuid }: EventDetailBannerProps) {
             </div>
           </div>
 
-          <span className="text-iDonate-green-primary text-sm sm:text-base font-medium ml-auto dark:text-iDonate-green-secondary">
-            ${transaction.amount?.toFixed(2)}
-          </span>
+          <div className="flex items-center gap-1 h-full">
+          <CircleDollarSign className="h-5 w-5 text-iDonate-green-primary dark:text-iDonate-green-secondary align-middle" />
+          <p className="text-iDonate-green-primary font-medium text-[17px] leading-none dark:text-iDonate-navy-accent">
+            {transaction.amount ? `${transaction.amount.toLocaleString()}` : "មិនទាន់ទទួលបានថវិការ"}
+          </p>
+        </div>
         </div>
       ))}
             </div>

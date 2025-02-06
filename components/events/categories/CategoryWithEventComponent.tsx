@@ -20,15 +20,20 @@ export default function CategoryWithEventComponent({
   const {
     data: eventsApiResponse = { content: [] },
     isLoading: isEventsLoading,
-  } = useGetEventByCategoryQuery({ uuid: category?.uuid || "" }); // Ensure UUID is always passed
+    error,
+  } = useGetEventByCategoryQuery({ uuid: category?.uuid || "" });
 
   const events: EventType[] = eventsApiResponse.content || [];
-  const typedEvents: EventType[] = events.slice(0, Math.min(page, events.length));
+  // const typedEvents: EventType[] = events.slice(0, Math.min(page, events.length));
+  const typedEvents = events.slice(0, page);
+
+  console.log("All Events:", events.length);
+  console.log("Typed Events (Displayed):", typedEvents.length);
 
   // Ensure category UUID exists
   if (!category?.uuid) {
     console.error("Category UUID is missing");
-    return null; // Prevent rendering if UUID is missing
+    return null; 
   }
 
   console.log("Fetched events:", events); // Debugging
@@ -47,7 +52,7 @@ export default function CategoryWithEventComponent({
       <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {isEventsLoading ? (
           <CategoryPlaceholder />
-        ) : typedEvents.length > 0 ? (
+        ) : events.length > 0 ? ( // Use `events.length` instead of `typedEvents.length`
           typedEvents.map((event) => (
             <CommonEventCard key={event.uuid} event={event} />
           ))
@@ -57,15 +62,12 @@ export default function CategoryWithEventComponent({
       </div>
 
       {/* Show More Button */}
-      {typedEvents.length < events.length && (
-        <div className="flex justify-end">
-          <Button
-            onClick={() => setPage((prev) => prev + 4)}
-            className="text-medium-eng text-iDonate-navy-primary bg-iDonate-white-space border-2 border-iDonate-navy-accent hover:bg-iDonate-navy-accent dark:bg-iDonate-dark-mode dark:text-iDonate-navy-accent dark:hover:text-iDonate-navy-secondary dark:hover:border-iDonate-navy-secondary"
-          >
-            Show more
-          </Button>
-        </div>
+      {typedEvents.map((event) =>
+        event?.uuid ? (
+          <CommonEventCard key={event.uuid} event={event} />
+        ) : (
+          <p key={event.uuid}>Invalid event data</p>
+        )
       )}
     </section>
   );
