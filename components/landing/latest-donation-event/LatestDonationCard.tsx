@@ -160,7 +160,7 @@ export default function LatestDonationCard() {
             {typedEvents.slice(0, 3).map((item) => (
               <Card
                 onClick={() => router.push(`/event-detail/${item?.uuid}`)}
-                key={item.uuid}
+                key={item?.uuid}
                 className="h-auto lg:h-[653px] lg:w-[400px] rounded-[10px] bg-iDonate-light-gray border-0 cursor-pointer shadow-md transition-transform hover:scale-[1.02] dark:bg-iDonate-dark-mode"
               >
                 <div className="h-[55%]">

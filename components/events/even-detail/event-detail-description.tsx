@@ -12,13 +12,13 @@ export function EvenDetailDescription() {
       <Card className="w-full border-2 border-iDonate-navy-accent">
         <div>
           <CardHeader>
-            <CardTitle className="text-iDonate-navy-primary font-semibold text-2xl">
+            <CardTitle className="text-iDonate-navy-primary font-semibold text-2xl dark:text-iDonate-navy-accent">
               ផ្ដើមចេញពីយើង ដើម្បីអនាគតកុមារកម្ពុជានិងប្រទេសរបស់យើងទាំងអស់គ្នា
             </CardTitle>
           </CardHeader>
 
           <CardContent>
-            <CardDescription className="text-iDonate-navy-primary text-lg leading-9">
+            <CardDescription className="text-iDonate-navy-primary text-lg leading-9 dark:text-iDonate-navy-accent">
               រាជធានីភ្នំពេញ ថ្ងៃទី ២១ ខែមីនា ឆ្នាំ ២០២៤ -
               យូនីសេហ្វ​ចាប់ផ្តើមផ្សព្វផ្សាយយុទ្ធនាការ​ឌីជីថល​ប្រកបដោយភាពច្នៃប្រឌិតមួយ
               ដើម្បីទប់ស្កាត់
@@ -39,13 +39,13 @@ export function EvenDetailDescription() {
 
         <div>
           <CardHeader>
-            <CardTitle className="text-iDonate-navy-primary font-semibold text-2xl">
+            <CardTitle className="text-iDonate-navy-primary font-semibold text-2xl dark:text-iDonate-navy-accent">
               អ្វីដែលយើងចង់បាន គឺកុមារកម្ពុជាអាចទទួលបានការអប់រំមួយដែលប្រសើរ
             </CardTitle>
           </CardHeader>
 
           <CardContent>
-            <CardDescription className="text-iDonate-navy-primary text-lg leading-9">
+            <CardDescription className="text-iDonate-navy-primary text-lg leading-9 dark:text-iDonate-navy-accent">
               កិច្ចខិតខំប្រឹងប្រែងទាំងនេះ
               គឺជាផ្នែកមួយនៃការប្តេជ្ញាចិត្តរបស់យូនីសេហ្វ
               ក្នុងការកសាងពិភពឌីជីថលមួយ

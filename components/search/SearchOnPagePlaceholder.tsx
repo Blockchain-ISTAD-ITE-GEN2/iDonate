@@ -8,7 +8,7 @@ export function SearchOnPagePlaceholder() {
       {Array.from({ length: 12 }).map((_, index) => (
         <Card
           key={index}
-          className="overflow-hidden transition-transform hover:scale-[1.02] cursor-pointer rounded-lg shadow-md bg-transparent dark:bg-iDonate-dark-mode"
+          className="overflow-hidden transition-transform hover:scale-[1.02] cursor-pointer rounded-lg shadow-md bg-transparent dark:bg-iDonate-navy-accent"
         >
           {/* Image Placeholder */}
           <CardHeader className="w-full aspect-video p-0 rounded-t-lg overflow-hidden">

@@ -16,11 +16,13 @@ export default function CategoryWithEventComponent({
   // Pagination state
   const [page, setPage] = useState(4);
 
+  const uuid = category?.uuid;
+
   // Fetch events for the category
   const {
     data: eventsApiResponse = { content: [] },
     isLoading: isEventsLoading,
-  } = useGetEventByCategoryQuery({ uuid: category?.uuid || "" }); // Ensure UUID is always passed
+  } = useGetEventByCategoryQuery({ uuid }); // Ensure UUID is always passed
 
   const events: EventType[] = eventsApiResponse.content || [];
   const typedEvents: EventType[] = events.slice(0, Math.min(page, events.length));
@@ -32,6 +34,7 @@ export default function CategoryWithEventComponent({
   }
 
   console.log("Fetched events:", events); // Debugging
+  console.log("Log uuid : ",category?.uuid);
 
   return (
     <section className="flex flex-col gap-6 container mx-auto">

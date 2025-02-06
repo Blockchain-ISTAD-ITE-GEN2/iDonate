@@ -74,20 +74,20 @@ export function EventDetailBanner({ uuid }: EventDetailBannerProps) {
     <Card className="w-[440px] h-full border-2 border-iDonate-navy-accent shadow-light">
       <CardHeader className="flex flex-col gap-6">
         <div className="flex flex-col gap-1">
-          <CardTitle className="flex gap-3 text-iDonate-gray text-lg">
-            <Users className="text-iDonate-navy-primary" />
+          <CardTitle className="flex gap-3 text-iDonate-gray text-lg  dark:text-iDonate-navy-accent">
+            <Users className="text-iDonate-navy-primary dark:text-iDonate-navy-accent" />
             ចំនួនអ្នកបរិច្ចាគសរុប
           </CardTitle>
-          <CardDescription className="text-iDonate-navy-primary text-2xl font-medium">
+          <CardDescription className="text-iDonate-navy-primary text-2xl font-medium  dark:text-iDonate-navy-accent">
             {isEventLoading ? "Loading..." : event?.totalDonors || 0} Donors
           </CardDescription>
         </div>
         <div className="flex flex-col gap-1">
-          <CardTitle className="flex gap-3 text-iDonate-gray text-lg">
-            <HandCoins className="text-iDonate-navy-primary" />
+          <CardTitle className="flex gap-3 text-iDonate-gray text-lg  dark:text-iDonate-navy-accent">
+            <HandCoins className="text-iDonate-navy-primary dark:text-iDonate-navy-accent" />
             ចំនួនថវិការទទួលបាន
           </CardTitle>
-          <CardDescription className="text-iDonate-navy-primary text-2xl font-medium">
+          <CardDescription className="text-iDonate-navy-primary text-2xl font-medium dark:text-iDonate-green-secondary">
             {isEventLoading ? "Loading..." : formattedCurrentRaised}
           </CardDescription>
         </div>
@@ -102,7 +102,7 @@ export function EventDetailBanner({ uuid }: EventDetailBannerProps) {
         </div>
 
         <div className="flex flex-col gap-6">
-          <CardDescription className="text-iDonate-navy-primary text-2xl font-medium">
+          <CardDescription className="text-iDonate-navy-primary text-2xl font-medium dark:text-iDonate-navy-accent">
             ការបរិច្ចាគថ្មីៗ
           </CardDescription>
 
@@ -139,7 +139,7 @@ export function EventDetailBanner({ uuid }: EventDetailBannerProps) {
               <p className="text-sm sm:text-base font-medium text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
                 {transaction.username}
               </p>
-              <p className="text-xs sm:text-sm text-iDonate-gray">
+              <p className="text-xs sm:text-sm text-iDonate-gray  dark:text-iDonate-navy-accent">
                 {transaction.timestamp}
               </p>
             </div>
@@ -157,13 +157,13 @@ export function EventDetailBanner({ uuid }: EventDetailBannerProps) {
 
       <CardFooter className="flex justify-between gap-3">
         <Button
-          className="flex-1 border-iDonate-navy-primary rounded-lg text-iDonate-navy-primary"
+          className="flex-1 border-iDonate-navy-primary rounded-lg text-iDonate-navy-primary  dark:text-iDonate-navy-accent"
           variant="outline"
         >
           All Donations
         </Button>
         <Button
-          className="flex-1 border-iDonate-navy-primary rounded-lg text-iDonate-navy-primary"
+          className="flex-1 border-iDonate-navy-primary rounded-lg text-iDonate-navy-primary  dark:text-iDonate-navy-accent"
           variant="outline"
         >
           Top Donations
