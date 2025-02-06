@@ -9,7 +9,9 @@ export function BannerComponent() {
           <CardTitle className="text-medium-eng font-normal text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
             Total Donations
           </CardTitle>
-          <span className="text-sm text-iDonate-navy-accent dark:text-iDonate-green-secondary">2024</span>
+          <span className="text-sm text-iDonate-navy-accent dark:text-iDonate-green-secondary">
+            2024
+          </span>
         </CardHeader>
 
         <CardContent>

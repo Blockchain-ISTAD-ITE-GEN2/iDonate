@@ -30,37 +30,39 @@ export const transactionColumns: ColumnDef<TransactionType>[] = [
     enableHiding: false,
   },
 
-{
-  accessorKey: "timestamp",
-  header: ({ column }) => (
-    <DataTableColumnHeader column={column} title="Timestamp" />
-  ),
-  cell: ({ row }) => {
-    const timestamp = row.getValue("timestamp");
-    const formattedDate = timestamp
-      ? format(new Date(timestamp as string | number | Date), "MMMM do, yyyy h:mm a") // February 3rd, 2025 09:15 AM
-      : "N/A"; // Fallback if timestamp is missing
+  {
+    accessorKey: "timestamp",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Timestamp" />
+    ),
+    cell: ({ row }) => {
+      const timestamp = row.getValue("timestamp");
+      const formattedDate = timestamp
+        ? format(
+            new Date(timestamp as string | number | Date),
+            "MMMM do, yyyy h:mm a",
+          ) // February 3rd, 2025 09:15 AM
+        : "N/A"; // Fallback if timestamp is missing
 
-    return <span>{formattedDate}</span>;
+      return <span>{formattedDate}</span>;
+    },
+    filterFn: (row, columnId, filterValue) => {
+      if (!filterValue) return true; // No filter applied
+
+      const rowDate = new Date(row.getValue(columnId));
+      const { from, to } = filterValue;
+
+      if (from && rowDate < new Date(from)) {
+        return false;
+      }
+      if (to && rowDate > new Date(to)) {
+        return false;
+      }
+      return true;
+    },
+    enableSorting: true,
+    enableHiding: true,
   },
-  filterFn: (row, columnId, filterValue) => {
-    if (!filterValue) return true; // No filter applied
-
-    const rowDate = new Date(row.getValue(columnId));
-    const { from, to } = filterValue;
-
-    if (from && rowDate < new Date(from)) {
-      return false;
-    }
-    if (to && rowDate > new Date(to)) {
-      return false;
-    }
-    return true;
-  },
-  enableSorting: true,
-  enableHiding: true,
-}
-,
 
   {
     accessorKey: "username",
@@ -71,7 +73,6 @@ export const transactionColumns: ColumnDef<TransactionType>[] = [
     enableSorting: true,
     enableHiding: true,
   },
-
 
   {
     accessorKey: "donationAmount",
@@ -120,9 +121,7 @@ export const transactionColumns: ColumnDef<TransactionType>[] = [
     },
     enableSorting: true,
     enableHiding: true,
-  }
-  
-  
+  },
 
   // {
   //   id: "actions",

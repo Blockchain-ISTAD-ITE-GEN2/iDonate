@@ -22,7 +22,11 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { useGetEventByUuidQuery } from "@/redux/services/event-service";
-import { useGenerateQrCodeMutation, useMakeDonationMutation, useSaveRecordMutation } from "@/redux/services/donation-service";
+import {
+  useGenerateQrCodeMutation,
+  useMakeDonationMutation,
+  useSaveRecordMutation,
+} from "@/redux/services/donation-service";
 import { EventType } from "@/difinitions/types/event/EventType";
 import {
   DonationDataType,
@@ -135,12 +139,12 @@ export function DonationForm() {
 
   useEffect(() => {
     if (transactionData?.responseCode === 0) {
-      const record : DonationRecordType = {
+      const record: DonationRecordType = {
         donationEventID: typedEvents?.uuid || "",
         amount: transactionData?.data?.amount,
-        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone
+        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
       };
-  
+
       saveRecord(record)
         .unwrap()
         .then(() => {
@@ -149,11 +153,11 @@ export function DonationForm() {
         .catch((error) => {
           console.error("Error saving record:", error);
         });
-  
+
       setIsSuccessDialogOpen(true);
     }
   }, [transactionData]);
-  
+
   // Submit handler for the donation form
   async function onSubmit(values: z.infer<typeof donationSchema>) {
     try {
@@ -189,7 +193,10 @@ export function DonationForm() {
       }
 
       // Make donation API call
-      const donateResponse = await donate({donation:donation, organizationUuid:typedEvents?.organization?.uuid || "" }).unwrap();
+      const donateResponse = await donate({
+        donation: donation,
+        organizationUuid: typedEvents?.organization?.uuid || "",
+      }).unwrap();
       console.log("Donation API Response:", donateResponse);
 
       const md5Value = donateResponse?.data?.md5;
@@ -232,7 +239,6 @@ export function DonationForm() {
       });
     }
   }
-
 
   return (
     <Form {...form}>
@@ -301,10 +307,9 @@ export function DonationForm() {
         isOpen={isOpened}
         onClose={() => setIsOpened(false)}
         paymentData={paymentData}
-        />
+      />
 
       {transactionData?.responseCode === 0 && isSuccessDialogOpen && (
-
         <SuccessDialog
           isOpen={true}
           onClose={() => setTransactionData(undefined)}

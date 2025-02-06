@@ -62,22 +62,19 @@ export const organizationPaymentSchema = z.object({
   bankAccountNumber: z.string(), // Allow empty string as default value
 });
 
-
 export const organizationMediaSchema = z.object({
-  image: z
-    .any()
-    // .refine((file) => file instanceof File, {
-    //   message: "Invalid file format. Please upload an image.",
-    // })
-    // .refine((file) => file.type?.startsWith("image/"), {
-    //   message: "Only image files are allowed.",
-    // })
-    // .refine((file) => file.size <= 2 * 1024 * 1024, {
-    //   message: "File size must be 2MB or less.",
-    // })
-    // .optional(), // Allows empty input initially
+  image: z.any(),
+  // .refine((file) => file instanceof File, {
+  //   message: "Invalid file format. Please upload an image.",
+  // })
+  // .refine((file) => file.type?.startsWith("image/"), {
+  //   message: "Only image files are allowed.",
+  // })
+  // .refine((file) => file.size <= 2 * 1024 * 1024, {
+  //   message: "File size must be 2MB or less.",
+  // })
+  // .optional(), // Allows empty input initially
 });
-
 
 export const organizationReferenceSchema = z.object({
   images: z.array(z.instanceof(File)),
@@ -126,6 +123,18 @@ export const eventSchemaCreation = z.object({
   }),
   // timezone: z.string(),
   images: z.any().nullable(),
+});
+
+export const eventSchemaEdition = z.object({
+  name: z.string().min(1, { message: "Name is required" }),
+  description: z.string().min(10, { message: "Description is required" }),
+  location: z.string().min(1, { message: "Location is required" }),
+  startDate: z.string().refine((date) => !isNaN(Date.parse(date)), {
+    message: "Invalid date format",
+  }),
+  endDate: z.string().refine((date) => !isNaN(Date.parse(date)), {
+    message: "Invalid date format",
+  }),
 });
 
 export const eventInfoSchema = z.object({

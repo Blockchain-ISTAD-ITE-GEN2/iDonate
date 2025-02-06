@@ -22,12 +22,13 @@ export function MobileSubmenu({
 }: MobileSubmenuProps) {
   const pathname = usePathname();
 
+  if (!isMobileMenuOpen || !activeSubmenu) return null; // ✅ Now safe to return
+
   const navActiveClass = (isActive: boolean) =>
     `text-md xl:text-description-eng font-normal dark:text-iDonate-navy-accent ${
       isActive ? "text-iDonate-green-primary" : "text-iDonate-navy-primary"
     }`;
 
-  if (!isMobileMenuOpen || !activeSubmenu) return null; // Render nothing if submenu is closed or no active submenu
 
   return (
     <div className="fixed h-20 inset-0 bg-white dark:bg-iDonate-bg-dark-mode z-50  lg:hidden">
@@ -52,7 +53,7 @@ export function MobileSubmenu({
 
       <div className="flex flex-col p-4 gap-4 bg-iDonate-light-gray shadow-light dark:bg-iDonate-bg-dark-mode dark:border-b">
         <h2 className="text-xl font-semibold text-iDonate-navy-primary dark:text-iDonate-white-space">
-          {activeSubmenu}
+          {activeSubmenu || "No submenu active"}
         </h2>
 
         <div className="flex flex-col gap-2">

@@ -23,10 +23,10 @@ export type DonationDataType = {
 };
 
 export type DonationRecordType = {
-  donationEventID: string,
-  timezone: string,
-  amount: number
-}
+  donationEventID: string;
+  timezone: string;
+  amount: number;
+};
 
 export type TransactionDataType = {
   responseCode: number;

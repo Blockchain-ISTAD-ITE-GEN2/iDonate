@@ -25,7 +25,7 @@ export default function CategoryPlaceholderDetailComponent() {
         </div>
 
         <div className="flex flex-col gap-6">
-              <EvnetCardPlaceholder />
+          <EvnetCardPlaceholder />
           <div className="flex justify-end">
             <Skeleton className="h-10 w-32 rounded-lg" />
           </div>

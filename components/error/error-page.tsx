@@ -33,6 +33,7 @@ const ErrorPage = () => {
             Retry
           </button>
           <Link
+            onClick={() => router.refresh()}
             href="/"
             className="rounded-lg border border-gray-300 px-5 py-2 text-sm font-semibold text-gray-900 hover:bg-gray-200"
           >

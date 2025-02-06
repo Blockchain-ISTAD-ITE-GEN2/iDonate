@@ -10,7 +10,7 @@ type UploadedFilesCardProps = {
 };
 
 type FilePreviewProps = {
-  file?: (File & { preview: string });
+  file?: File & { preview: string };
 };
 
 function FilePreview({ file }: FilePreviewProps) {
@@ -47,14 +47,22 @@ export function UploadedFilesCard({ uploadedFiles }: UploadedFilesCardProps) {
                 key={"key" in file ? (file.key as React.Key) : index}
                 className="relative flex items-center h-20 gap-2 border-[1.5px] w-full p-4 rounded-lg border-iDonate-navy-accent"
               >
-                <FilePreview file={"file" in file ? (file.file as File & { preview: string }) : undefined} />
+                <FilePreview
+                  file={
+                    "file" in file
+                      ? (file.file as File & { preview: string })
+                      : undefined
+                  }
+                />
                 <div className="flex flex-col">
                   <CardDescription className="text-iDonate-navy-primary text-lg">
                     {file.name}
                   </CardDescription>
 
                   <CardDescription className="text-iDonate-gray text-sm">
-                    {file.size !== undefined ? formatFileSize(file.size) : "Unknown size"}
+                    {file.size !== undefined
+                      ? formatFileSize(file.size)
+                      : "Unknown size"}
                   </CardDescription>
                 </div>
               </div>

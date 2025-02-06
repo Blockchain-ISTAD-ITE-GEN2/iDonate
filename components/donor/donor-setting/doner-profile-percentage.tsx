@@ -173,7 +173,7 @@ export function DonorProfilePercentage({
         </ChartContainer>
       </CardContent>
 
-      <CardContent className="flex flex-col gap-2 md:gap-4 xl:gap-6">
+      <CardContent className="flex flex-col gap-2 md:gap-4 xl:gap-6 ">
         {chartData
           .filter((data) => data.category !== "Remaining") // Exclude "Remaining" from the list
           .map((data, index) => (

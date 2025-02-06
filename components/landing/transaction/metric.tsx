@@ -81,7 +81,7 @@ export function CardsMetric({ data }: TransactionProps) {
             />
             <ChartTooltip
               cursor={false}
-              content={<ChartTooltipContent indicator="line"/>}
+              content={<ChartTooltipContent indicator="line" />}
             />
           </AreaChart>
         </ChartContainer>
