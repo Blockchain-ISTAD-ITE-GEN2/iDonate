@@ -15,7 +15,7 @@ export type TransactionType = {
   email?: string;
   event?: EventType;
   username?: string;
-  organization?: OrganizationType;
+  organization?: OrganizationType
   amount?: number;
   image?: string;
   description?: string;
@@ -23,5 +23,5 @@ export type TransactionType = {
   end_date?: string;
   avatar?: string;
   donationAmount?: string;
-  timestamp?: string;
+  timestamp?: any;
 };

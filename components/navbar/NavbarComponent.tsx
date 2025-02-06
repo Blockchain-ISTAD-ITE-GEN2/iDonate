@@ -140,12 +140,12 @@ export default function NavbarComponent() {
         </span>
       </section>
 
-      <div className="flex gap-2 items-center h-12">
-        <div className="flex lg:hidden  items-center justify-center w-10 h-10">
+      <div className="flex lg:hidden gap-2 items-center h-12">
+        <div className="flex   items-center justify-center w-10 h-10">
           <ThemeSwitch />
         </div>
 
-          <div className="flex lg:hidden  items-center justify-center">
+          <div className="flex   items-center justify-center">
             {accessTokenValue ? (
               <Popover>
                 <PopoverTrigger asChild>
@@ -231,7 +231,7 @@ export default function NavbarComponent() {
           </div>
 
           <Button
-            className="lg:hidden w-10 h-10 bg-transparent text-iDonate-gray hover:bg-iDonate-light-gray hover:text-iDonate-navy-primary rounded-[12px] dark:text-iDonate-white-space dark:hover:bg-iDonate-dark-mode flex items-center justify-center"
+            className=" w-10 h-10 bg-transparent text-iDonate-gray hover:bg-iDonate-light-gray hover:text-iDonate-navy-primary rounded-[12px] dark:text-iDonate-white-space dark:hover:bg-iDonate-dark-mode flex items-center justify-center"
             onClick={() => setIsMobileMenuOpen(true)}
           >
             <Menu className="w-6 h-6" />

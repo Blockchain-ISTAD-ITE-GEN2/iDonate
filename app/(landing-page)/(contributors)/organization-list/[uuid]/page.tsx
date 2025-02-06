@@ -2,7 +2,6 @@
 
 import { useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import { Skeleton } from "@/components/ui/skeleton";
 import { useGetOrganizationByUserQuery } from "@/redux/services/organization-service";
 import { useGetUserProfileQuery } from "@/redux/services/user-profile";
 import { MapPinned } from "lucide-react";
@@ -17,13 +16,8 @@ export default function OrganizationDashboard({
 }) {
   const userUuid = params.uuid;
   const router = useRouter();
-  const { data: organizations, isLoading: orgLoading } =
-    useGetOrganizationByUserQuery(userUuid);
-  const {
-    data: user,
-    isLoading: userLoading,
-    error,
-  } = useGetUserProfileQuery({});
+  const { data: organizations } = useGetOrganizationByUserQuery(userUuid);
+  const { data: user, isLoading, error } = useGetUserProfileQuery({});
   const typeOrganizations: OrganizationType[] = organizations?.content || [];
 
   // Check if user has the ORGANIZER role
@@ -33,83 +27,71 @@ export default function OrganizationDashboard({
 
   // Redirect non-organizers to the registration page
   useEffect(() => {
-    if (!userLoading && !error && !isOrganizer) {
+    if (!isLoading && !error && !isOrganizer) {
       router.push("/organization-registration");
     }
     if (!user) router.push("/login");
-  }, [userLoading, error, isOrganizer, router, user]);
+  }, [isLoading, error, isOrganizer, router, user]);
+
+  // Show loading state
+  if (isLoading) {
+    return <p className="text-center text-gray-500">Loading...</p>;
+  }
 
   return (
     <section className="flex flex-1 flex-col h-full items-center justify-center p-9 gap-9">
-      <h1 className="text-2xl font-bold text-iDonate-navy-primary">
+      <h1 className="text-2xl font-bold text-iDonate-navy-primary dark:text-iDonate-navy-accent">
         Organizations
       </h1>
 
-      <div className="flex flex-col gap-6 border-2 border-iDonate-navy-accent p-16 rounded-lg bg-iDonate-light-gray">
-        {orgLoading
-          ? Array.from({ length: 2 }).map((_, index) => (
-              <Card
-                key={index}
-                className="w-full rounded-[10px] border-0 shadow-md"
-              >
-                <CardContent className="flex flex-col sm:flex-row items-center justify-center p-4 gap-4">
-                  <Skeleton className="w-[160px] h-[160px] rounded-lg" />
-                  <div className="flex flex-col h-full gap-2 flex-1">
-                    <Skeleton className="h-6 w-3/4" />
-                    <Skeleton className="h-4 w-full" />
-                    {/* <Skeleton className="h-4 w-5/6" /> */}
-                    {/* <Skeleton className="h-4 w-4/6" /> */}
+      <div className="flex flex-col gap-6 border-2 border-iDonate-navy-accent p-16 rounded-lg bg-iDonate-light-gray dark:bg-iDonate-light-gray">
+        {typeOrganizations.map((org) => (
+          <Card
+            key={org.uuid}
+            onClick={() =>
+              router.push(`/organization-dashboard/${org.uuid}/dashboard`)
+            }
+            className="w-full rounded-[10px] bg-iDonate-white-space border-0 cursor-pointer shadow-md transition-transform hover:scale-[1.02] dark:bg-iDonate-dark-mode"
+          >
+            <CardContent className="flex flex-col sm:flex-row items-center justify-center p-4 gap-4">
+              {/* Logo */}
+              <div className="relative w-[160px] h-[160px] flex-shrink-0 rounded-lg overflow-hidden">
+                {org?.image ? (
+                  <Image
+                    src={typeof org.image === 'string' ? org.image : ''}
+                    alt={org.name || "Media"}
+                    width={160}
+                    height={160}
+                    className="object-cover w-full h-full rounded-lg"
+                  />
+                ) : (
+                  <div className="w-full h-full bg-gray-900 flex items-center justify-center rounded-lg">
+                    <span className="text-gray-500">No Image</span>
                   </div>
-                </CardContent>
-              </Card>
-            ))
-          : typeOrganizations.map((org) => (
-              <Card
-                key={org.uuid}
-                onClick={() =>
-                  router.push(`/organization-dashboard/${org.uuid}/dashboard`)
-                }
-                className="w-full rounded-[10px] bg-iDonate-white-space border-0 cursor-pointer shadow-md transition-transform hover:scale-[1.02] dark:bg-iDonate-dark-mode"
-              >
-                <CardContent className="flex flex-col sm:flex-row items-center justify-center p-4 gap-4">
-                  {/* Logo */}
-                  <div className="relative w-[160px] h-[160px] flex-shrink-0 rounded-lg overflow-hidden">
-                    {org?.image ? (
-                      <Image
-                        src={typeof org.image === "string" ? org.image : ""}
-                        alt={org.name || "Media"}
-                        width={160}
-                        height={160}
-                        className="object-cover w-full h-full rounded-lg"
-                      />
-                    ) : (
-                      <div className="w-full h-full bg-gray-900 flex items-center justify-center rounded-lg">
-                        <span className="text-gray-500">No Image</span>
-                      </div>
-                    )}
-                  </div>
+                )}
+              </div>
 
-                  {/* Description */}
-                  <div className="flex flex-col h-full gap-2 flex-1">
-                    <h2 className="text-description-eng sm:text-medium-eng font-semibold text-iDonate-navy-primary dark:text-iDonate-navy-accent">
-                      {org?.name}
-                    </h2>
+              {/* Description */}
+              <div className="flex flex-col h-full gap-2 flex-1">
+                <h2 className="text-description-eng sm:text-medium-eng font-semibold text-iDonate-navy-primary dark:text-iDonate-navy-accent">
+                  {org?.name}
+                </h2>
 
-                    <p className="flex-1 text-sub-description-eng text-iDonate-navy-secondary sm:line-clamp-4 dark:text-iDonate-navy-accent">
-                      {org?.description}
-                    </p>
+                <p className="flex-1 text-sub-description-eng text-iDonate-navy-secondary sm:line-clamp-4 dark:text-iDonate-navy-accent">
+                  {org?.description}
+                </p>
 
-                    {/* Location */}
-                    <div className="flex gap-2 text-iDonate-gray dark:text-iDonate-green-secondary">
-                      <MapPinned className="w-5" />
-                      <p className="line-clamp-1 flex gap-2 items-center">
-                        {org?.address}
-                      </p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+                {/* Location */}
+                <div className="flex gap-2 text-iDonate-gray dark:text-iDonate-green-secondary">
+                  <MapPinned className="w-5" />
+                  <p className="line-clamp-1 flex gap-2 items-center">
+                    {org?.address}
+                  </p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        ))}
       </div>
     </section>
   );

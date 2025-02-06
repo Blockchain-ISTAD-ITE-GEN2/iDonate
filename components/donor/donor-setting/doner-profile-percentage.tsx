@@ -111,7 +111,7 @@ export function DonorProfilePercentage({
   return (
     <Card className="self-start w-full lg:w-auto flex flex-col rounded-lg border-2 border-iDonate-navy-accent shadow-light">
       <CardHeader className="items-center pb-0 ">
-        <CardTitle className="w-full text-lg lg:text-2xl text-center leading-9 text-iDonate-navy-primary whitespace-nowrap">
+        <CardTitle className="w-full text-lg lg:text-2xl text-center leading-9 text-iDonate-navy-primary whitespace-nowrap dark:text-iDonate-navy-accent">
           Profile Completion
         </CardTitle>
       </CardHeader>
@@ -181,13 +181,13 @@ export function DonorProfilePercentage({
               key={index}
               className="flex items-center justify-between gap-6"
             >
-              <div className="flex items-center gap-6">
+              <div className="flex items-center gap-6 ">
                 {data.completion > 0 ? (
                   <Check className="text-medium-eng text-iDonate-green-primary" />
                 ) : (
                   <X className="text-medium-eng text-iDonate-error" />
                 )}
-                <span className="text-sm sm:text-description-eng lg:text-medium-eng text-iDonate-navy-primary text-left whitespace-nowrap">
+                <span className="text-sm sm:text-description-eng lg:text-medium-eng text-iDonate-navy-primary text-left whitespace-nowrap  dark:text-iDonate-navy-accent">
                   {data.category}
                 </span>
               </div>

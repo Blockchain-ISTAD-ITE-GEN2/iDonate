@@ -10,10 +10,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { HandCoins, Share2Icon, Users } from "lucide-react";
+import { CircleDollarSign, HandCoins, Share2Icon, Users } from "lucide-react";
 import { useState, useEffect } from "react";
 import { TransactionType } from "@/difinitions/types/table-type/transaction";
 import { useGetEventByUuidQuery } from "@/redux/services/event-service"; // Adjust the import path as needed
+import Image from "next/image";
+import donateIcon from "@/public/images/give-and-recieve.png";
 
 type EventDetailBannerProps = {
   uuid: string; // Accept UUID as a prop
@@ -72,20 +74,20 @@ export function EventDetailBanner({ uuid }: EventDetailBannerProps) {
     <Card className="w-[440px] h-full border-2 border-iDonate-navy-accent shadow-light">
       <CardHeader className="flex flex-col gap-6">
         <div className="flex flex-col gap-1">
-          <CardTitle className="flex gap-3 text-iDonate-gray text-lg">
-            <Users className="text-iDonate-navy-primary" />
+          <CardTitle className="flex gap-3 text-iDonate-gray text-lg  dark:text-iDonate-navy-accent">
+            <Users className="text-iDonate-navy-primary dark:text-iDonate-navy-accent" />
             ចំនួនអ្នកបរិច្ចាគសរុប
           </CardTitle>
-          <CardDescription className="text-iDonate-navy-primary text-2xl font-medium">
+          <CardDescription className="text-iDonate-navy-primary text-2xl font-medium  dark:text-iDonate-navy-accent">
             {isEventLoading ? "Loading..." : event?.totalDonors || 0} Donors
           </CardDescription>
         </div>
         <div className="flex flex-col gap-1">
-          <CardTitle className="flex gap-3 text-iDonate-gray text-lg">
-            <HandCoins className="text-iDonate-navy-primary" />
+          <CardTitle className="flex gap-3 text-iDonate-gray text-lg  dark:text-iDonate-navy-accent">
+            <HandCoins className="text-iDonate-navy-primary dark:text-iDonate-navy-accent" />
             ចំនួនថវិការទទួលបាន
           </CardTitle>
-          <CardDescription className="text-iDonate-navy-primary text-2xl font-medium">
+          <CardDescription className="text-iDonate-navy-primary text-2xl font-medium dark:text-iDonate-green-secondary">
             {isEventLoading ? "Loading..." : formattedCurrentRaised}
           </CardDescription>
         </div>
@@ -100,7 +102,7 @@ export function EventDetailBanner({ uuid }: EventDetailBannerProps) {
         </div>
 
         <div className="flex flex-col gap-6">
-          <CardDescription className="text-iDonate-navy-primary text-2xl font-medium">
+          <CardDescription className="text-iDonate-navy-primary text-2xl font-medium dark:text-iDonate-navy-accent">
             ការបរិច្ចាគថ្មីៗ
           </CardDescription>
 
@@ -110,32 +112,47 @@ export function EventDetailBanner({ uuid }: EventDetailBannerProps) {
             <p className="text-center text-red-500">{error}</p>
           ) : (
             <div className="flex flex-col gap-2">
-              {recentTransactions.slice(0, 6).map((transaction: any, index) => (
-                <div
-                  key={index}
-                  className="flex w-full justify-between items-center gap-1 ml-4"
-                >
-                  <div className="flex items-center gap-4">
-                    <Avatar className="h-full w-auto p-0 m-0 flex items-center gap-1">
-                      <AvatarFallback className="h-10 w-10 border border-iDonate-navy-primary">
-                        {transaction.name
-                          .split(" ")
-                          .map((n: any) => n[0])
-                          .join("")}
-                      </AvatarFallback>
-                    </Avatar>
+              {recentTransactions.slice(0,5).map((transaction, index) => (
+        <div
+          key={index}
+          className="flex flex-wrap sm:flex-nowrap w-full justify-between items-center border-b border-iDonate-navy-accent py-2 gap-2"
+        >
+          <div className="flex items-center gap-2 sm:gap-4">
+          <Avatar className="h-12 w-12 sm:h-16 sm:w-16 flex items-center justify-center border bg-iDonate-green-accent">
+              {transaction.avatar ? (
+                <img
+                  src={transaction.avatar}
+                  alt={`${transaction.username} Avatar`}
+                  className="h-full w-full object-cover"
+                />
+              ) : (
+                <Image
+                  width={40}
+                  height={40}
+                  src={donateIcon}
+                  alt={`${transaction.username} Avatar`}
+                />
+              )}
+            </Avatar>
 
-                    <div>
-                      <p className="text-sub-description-eng text-iDonate-gray">
-                        {transaction.name}
-                      </p>
-                      <p className="text-medium-eng font-semibold text-iDonate-navy-secondary">
-                        ${transaction.amount.toFixed(2)}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              ))}
+            <div className="space-y-1">
+              <p className="text-sm sm:text-base font-medium text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
+                {transaction.username}
+              </p>
+              <p className="text-xs sm:text-sm text-iDonate-gray  dark:text-iDonate-navy-accent">
+                {transaction.timestamp}
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-1 h-full">
+          <CircleDollarSign className="h-5 w-5 text-iDonate-green-primary dark:text-iDonate-green-secondary align-middle" />
+          <p className="text-iDonate-green-primary font-medium text-[17px] leading-none dark:text-iDonate-navy-accent">
+            {transaction.amount ? `${transaction.amount.toLocaleString()}` : "មិនទាន់ទទួលបានថវិការ"}
+          </p>
+        </div>
+        </div>
+      ))}
             </div>
           )}
         </div>
@@ -143,13 +160,13 @@ export function EventDetailBanner({ uuid }: EventDetailBannerProps) {
 
       <CardFooter className="flex justify-between gap-3">
         <Button
-          className="flex-1 border-iDonate-navy-primary rounded-lg text-iDonate-navy-primary"
+          className="flex-1 border-iDonate-navy-primary rounded-lg text-iDonate-navy-primary  dark:text-iDonate-navy-accent"
           variant="outline"
         >
           All Donations
         </Button>
         <Button
-          className="flex-1 border-iDonate-navy-primary rounded-lg text-iDonate-navy-primary"
+          className="flex-1 border-iDonate-navy-primary rounded-lg text-iDonate-navy-primary  dark:text-iDonate-navy-accent"
           variant="outline"
         >
           Top Donations

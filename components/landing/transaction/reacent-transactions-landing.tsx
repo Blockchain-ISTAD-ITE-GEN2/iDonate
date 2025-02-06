@@ -3,10 +3,12 @@
 import { useEffect, useState } from "react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Label } from "@/components/ui/label";
+import Image from "next/image";
+import donateIcon from "@/public/images/give-and-recieve.png";
 
 type Donation = {
   avatar: string;
-  username: string;
+  donor: string;
   donationAmount: number;
   timestamp: string;
 };
@@ -55,24 +57,26 @@ export function RecentTransactionsLanding() {
           className="flex flex-wrap sm:flex-nowrap w-full justify-between items-center border-b border-iDonate-navy-accent py-2 gap-2"
         >
           <div className="flex items-center gap-2 sm:gap-4">
-            <Avatar className="h-12 w-12 sm:h-16 sm:w-16 flex items-center">
-              <img
-                src={transaction.avatar}
-                alt={transaction.username}
-                className="h-full w-full rounded-full object-cover"
-                onError={(e) => (e.currentTarget.src = "/fallback-avatar.png")} // Optional: Provide a fallback image
-              />
-              <AvatarFallback className="h-10 w-10 border border-iDonate-navy-primary dark:border-iDonate-navy-accent">
-                {transaction.username
-                  .split(" ")
-                  .map((n) => n[0])
-                  .join("")}
-              </AvatarFallback>
+          <Avatar className="h-12 w-12 sm:h-16 sm:w-16 flex items-center justify-center border bg-iDonate-green-accent">
+              {transaction.avatar ? (
+                <img
+                  src={transaction.avatar}
+                  alt={`${transaction.donor} Avatar`}
+                  className="h-full w-full object-cover"
+                />
+              ) : (
+                <Image
+                  width={40}
+                  height={40}
+                  src={donateIcon}
+                  alt={`${transaction.donor} Avatar`}
+                />
+              )}
             </Avatar>
 
             <div className="space-y-1">
               <p className="text-sm sm:text-base font-medium text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
-                {transaction.username}
+                {transaction.donor}
               </p>
               <p className="text-xs sm:text-sm text-iDonate-gray">
                 {transaction.timestamp}
@@ -81,7 +85,7 @@ export function RecentTransactionsLanding() {
           </div>
 
           <span className="text-iDonate-green-primary text-sm sm:text-base font-medium ml-auto dark:text-iDonate-green-secondary">
-            ${transaction.donationAmount.toFixed(2)}
+            {transaction.donationAmount.toFixed(2)}
           </span>
         </div>
       ))}

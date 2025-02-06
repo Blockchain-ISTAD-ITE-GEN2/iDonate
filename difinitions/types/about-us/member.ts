@@ -18,7 +18,7 @@ export const members = [
   {
     image: ChiporImage,
     name: "Sreng Chipor",
-    role: "BACKEND DEVELOPER",
+    role: "FULL STACK DEVELOPER",
     facebook: "https://www.facebook.com/share/14kBPvwu2e/",
     email: "srengchipor99@gmail.com",
     github: "https://github.com/jiporCK",
@@ -26,7 +26,7 @@ export const members = [
   {
     image: PanhaImage,
     name: "Sanh Panha",
-    role: "FRONTEND DEVELOPER",
+    role: "FULL STACK DEVELOPER",
     facebook: "https://www.facebook.com/share/15dvhYfMyX/",
     email: "sanhpanha3003@gmail.com",
     github: "https://github.com/SanhPanha",
@@ -34,7 +34,7 @@ export const members = [
   {
     image: KangImage,
     name: "Kay Kang",
-    role: "Smart Contract Developer",
+    role: "FULL STACK DEVELOPER",
     facebook: "https://www.facebook.com/share/19ceCrXBKa/",
     email: "kaykang84@gmail.com",
     github: "https://github.com/kevin-kang-tido",
@@ -42,7 +42,7 @@ export const members = [
   {
     image: ReaksaImage,
     name: "Nouth ChanRaksa",
-    role: "FRONTEND DEVELOPER",
+    role: "FULL STACK DEVELOPER",
     facebook: "https://www.facebook.com/share/18Wv14jb7D/",
     email: "chanreaksanuth@gmail.com",
     github: "https://github.com/NuthChanReaksa",
