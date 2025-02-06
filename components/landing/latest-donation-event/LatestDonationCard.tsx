@@ -64,9 +64,11 @@ export default function LatestDonationCard() {
     }).format(amount);
   };
 
+  const lastEvent = typedEvents.length > 0 ? [typedEvents[typedEvents.length - 1]] : [];
+
   return (
     <div className="w-full h-auto bg-transparent flex flex-col gap-6 lg:pb-[500px]">
-      {typedEvents.slice(3, 4).map((item) => (
+      {lastEvent.map((item) => (
         <Card
           onClick={(e) => {
             e.stopPropagation();

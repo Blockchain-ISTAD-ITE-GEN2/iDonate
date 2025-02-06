@@ -8,6 +8,7 @@ import { FaRegCalendarAlt } from "react-icons/fa";
 import { EventType } from "@/difinitions/types/event/EventType";
 import SockJS from "sockjs-client";
 import { Client } from "@stomp/stompjs";
+import { HiCalendarDateRange } from "react-icons/hi2";
 
 // Function to format dates
 function formatDate(dateString?: string): string {
@@ -54,7 +55,7 @@ export function CommonEventCard({ event }: { event: EventType }) {
   return (
     <Card
       onClick={() => router.push(`/event-detail/${event?.uuid}`)}
-      className="w-full rounded-[10px] bg-iDonate-light-gray border-0 cursor-pointer shadow-md hover:scale-[1.02]"
+      className="w-full rounded-[10px] bg-iDonate-light-gray border-0 cursor-pointer shadow-md transition-transform hover:scale-[1.02] dark:bg-iDonate-dark-mode"
     >
       <CardHeader className="w-full h-[180px] p-0 overflow-hidden rounded-t-[10px]">
         <Image
@@ -66,34 +67,71 @@ export function CommonEventCard({ event }: { event: EventType }) {
         />
       </CardHeader>
 
-      <CardContent className="px-4 py-6 flex flex-col gap-4 h-[250px]">
-        <h3 lang="km" className="font-bold text-medium-khmer text-iDonate-navy-primary truncate dark:text-iDonate-navy-accent">
-          {event?.name || "Untitled Event"}
-        </h3>
+      
 
-        <p lang="km" className="font-light text-iDonate-navy-secondary truncate dark:text-iDonate-navy-accent">
-          {event?.description || "No description available"}
-        </p>
-
-        <div className="flex items-center gap-2">
-          <FaRegCalendarAlt className="h-5 w-5 text-iDonate-navy-primary dark:text-iDonate-navy-accent" />
-          <p className="text-[14px] text-iDonate-navy-primary dark:text-iDonate-navy-accent">
-            {formatDate(event.startDate)} - {formatDate(event.endDate)}
-          </p>
+      {/* Content */}
+      <CardContent className="px-4 py-4 flex flex-col gap-4">
+        {/* Dates */}
+        <div className="flex justify-between text-sm">
+          <div className="flex flex-col">
+            <div className="flex items-center">
+              <span className="text-iDonate-navy-secondary dark:text-iDonate-navy-accent mr-1">
+                <FaRegCalendarAlt />
+              </span>
+              <p className="text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
+                Start date
+              </p>
+            </div>
+            <p className="text-iDonate-green-primary dark:text-iDonate-green-secondary">
+              {formatDate(event?.startDate) || "12 Dec 2024"}
+            </p>
+          </div>
+          <div className="flex flex-col">
+            <div className="flex items-center">
+              <span className="text-iDonate-navy-secondary dark:text-iDonate-navy-accent mr-1">
+                <HiCalendarDateRange />
+              </span>
+              <p className="text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
+                End date
+              </p>
+            </div>
+            <p className="text-iDonate-green-primary dark:text-iDonate-green-secondary">
+              {formatDate(event?.endDate) || "12 Dec 2025"}
+            </p>
+          </div>
         </div>
 
-        <div className="flex items-center gap-2">
-          <Users className="h-5 w-5 text-iDonate-navy-primary dark:text-iDonate-navy-accent" />
-          <h3 className="text-iDonate-navy-primary dark:text-iDonate-navy-accent">
-            {totalDonors > 0 ? `អ្នកបរិច្ចាគ ${totalDonors} នាក់` : "No donors yet"}
+        {/* Title and Description */}
+        <div className="flex flex-col flex-1">
+          <h3
+            lang="km"
+            className="font-bold text-medium-khmer text-iDonate-navy-primary line-clamp-1 dark:text-iDonate-navy-accent"
+          >
+            {event?.name || "Untitled Event"}
           </h3>
+          <p
+            lang="km"
+            className="font-light text-iDonate-navy-secondary line-clamp-2 dark:text-iDonate-navy-accent h-12"
+          >
+            {event?.description || "No description available"}
+          </p>
         </div>
 
-        <div className="flex items-center gap-1">
-          <CircleDollarSign className="h-5 w-5 text-iDonate-green-primary dark:text-iDonate-green-secondary" />
-          <p className="text-iDonate-green-primary font-medium text-[17px] dark:text-iDonate-navy-accent">
-            {currentRaised > 0 ? `${currentRaised.toFixed(2).toLocaleString()} USD` : "No funds raised yet"}
-          </p>
+          {/* Donor and Amount Information */}
+        <div className="flex flex-col gap-2">
+          <div className="flex items-center gap-2">
+              <Users className="h-5 w-5 text-iDonate-navy-primary dark:text-iDonate-navy-accent" />
+              <h3 className="text-description-khmer text-iDonate-navy-primary line-clamp-1 dark:text-iDonate-navy-accent">
+                {totalDonors ? `${totalDonors} នាក់បរិច្ចាគ` : "No donors yet"}
+              </h3>
+          </div>
+
+          <div className="flex items-center gap-1">
+            <CircleDollarSign className="h-5 w-5 text-iDonate-green-primary dark:text-iDonate-green-secondary" />
+            <p className="text-iDonate-green-primary font-medium text-[18px] dark:text-iDonate-green-secondary">
+              {currentRaised > 0 ? `${currentRaised.toFixed(2).toLocaleString()} USD` : "No funds raised yet"}
+            </p>
+          </div>
         </div>
       </CardContent>
     </Card>

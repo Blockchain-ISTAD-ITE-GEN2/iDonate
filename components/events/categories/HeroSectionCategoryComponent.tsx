@@ -29,9 +29,9 @@ export default function HeroSectionCategoryComponent() {
   };
 
   return (
-    <section className="w-full bg-gradient-to-br from-slate-100 to-slate-200">
+    <section className="w-full  from-slate-100 to-slate-200">
       <motion.div
-        className="container mx-auto px-4 sm:px-6 md:px-12 lg:px-20 xl:px-28 flex flex-wrap md:flex-nowrap items-start justify-between gap-8 sm:gap-10 py-9"
+        className="container mx-auto x px-4 sm:px-6 md:px-12 lg:px-20 xl:px-28 flex flex-wrap md:flex-nowrap items-start justify-between gap-8 sm:gap-10 py-9"
         variants={containerVariants}
         initial="hidden"
         animate="visible"
@@ -44,7 +44,7 @@ export default function HeroSectionCategoryComponent() {
           <motion.h1
             lang="km"
             style={{ lineHeight: "1.3" }}
-            className="text-2xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-iDonate-navy-secondary lg:leading-normal"
+            className="text-2xl sm:text-4xl dark:text-iDonate-green-secondary lg:text-5xl xl:text-6xl font-bold text-iDonate-navy-secondary lg:leading-normal"
             variants={itemVariants}
           >
             ជួយកុមារសម្រេចអនាគតដ៏ភ្លឺស្វាង
@@ -52,7 +52,7 @@ export default function HeroSectionCategoryComponent() {
 
           <motion.p
             lang="km"
-            className="text-iDonate-gray text-sm sm:text-base lg:text-lg xl:text-xl 2xl:text-2xl leading-relaxed"
+            className="text-iDonate-gray dark:text-iDonate-light-gray l text-sm sm:text-base lg:text-lg xl:text-xl 2xl:text-2xl leading-relaxed"
             variants={itemVariants}
           >
             ការអប់រំគឺជាវិធីដ៏ល្អបំផុតដើម្បីផ្លាស់ប្តូរចិត្តស្មារតី និង
