@@ -239,7 +239,7 @@ export function DonationForm() {
         <Card className="flex flex-col bg-transparent rounded-lg border-2 border-iDonate-navy-accent gap-6 p-9">
           <div className="flex flex-col gap-6">
             <CardHeader className="flex flex-row items-center justify-between p-0 m-0 pb-2 border-b-[2px] border-dashed border-b-iDonate-navy-primary">
-              <CardTitle className="text-2xl font-medium text-iDonate-navy-secondary">
+              <CardTitle className="text-2xl font-medium text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
                 Donation Information
               </CardTitle>
             </CardHeader>
@@ -251,7 +251,7 @@ export function DonationForm() {
                 render={({ field }) => (
                   <FormItem className="w-full h-full">
                     <FormLabel
-                      className="text-iDonate-navy-secondary text-sm"
+                      className="text-iDonate-navy-secondary text-sm dark:text-iDonate-navy-accent"
                       htmlFor="amount"
                     >
                       Amount

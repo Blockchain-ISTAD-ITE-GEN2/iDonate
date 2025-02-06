@@ -79,7 +79,7 @@ export function CommonEventCard({ event }: { event: EventType }) {
                 <FaRegCalendarAlt />
               </span>
               <p className="text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
-                Start date
+                ថ្ងៃចាប់ផ្ដើម
               </p>
             </div>
             <p className="text-iDonate-green-primary dark:text-iDonate-green-secondary">
@@ -92,7 +92,7 @@ export function CommonEventCard({ event }: { event: EventType }) {
                 <HiCalendarDateRange />
               </span>
               <p className="text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
-                End date
+                ថ្ងៃបញ្ចប់
               </p>
             </div>
             <p className="text-iDonate-green-primary dark:text-iDonate-green-secondary">
