@@ -3,20 +3,17 @@ import { Users, CircleDollarSign, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import Image from "next/image";
-import { useGetDraftEventsFalseQuery, useGetEventsQuery } from "@/redux/services/event-service";
+import { useGetEventsQuery } from "@/redux/services/event-service";
 import { EventType } from "@/difinitions/types/event/EventType";
 import { useEffect, useState } from "react";
-import SockJS from "sockjs-client";
-import { Client } from "@stomp/stompjs";
 import { useRouter } from "next/navigation";
 
 export default function LatestDonationCard() {
-
   const router = useRouter();
   const [typedEvents, setTypedEvents] = useState<EventType[]>([]);
-  const [hoveredCard, setHoveredCard] = useState<string | null | any>(null);
+
   // Fetch data from RTK
-  const { data: apiEventResponse = { content: [] } } = useGetDraftEventsFalseQuery({});
+  const { data: apiEventResponse = { content: [] } } = useGetEventsQuery({});
 
   useEffect(() => {
     // Sort and slice the events
@@ -29,43 +26,39 @@ export default function LatestDonationCard() {
     setTypedEvents(sortedEvents);
   }, [apiEventResponse]);
 
-  // WebSocket subscription for totalAmountOfEvent
   useEffect(() => {
     const socket = new SockJS(`${process.env.NEXT_PUBLIC_IDONATE_API_URL}/websocket`);
     const stompClient = new Client({
       webSocketFactory: () => socket,
-      debug: (str) => console.log(str),
       reconnectDelay: 5000,
-      heartbeatIncoming: 4000,
-      heartbeatOutgoing: 4000,
     });
 
-    stompClient.onConnect = (frame) => {
-      console.log("Connected: " + frame);
+    stompClient.onConnect = () => {
+      typedEvents.forEach((event) => {
+        stompClient.subscribe(`/topic/totalAmountByEvent/${event.uuid}`, (message) => {
+          setTypedEvents((prevEvents) =>
+            prevEvents.map((e) =>
+              e.uuid === event.uuid ? { ...e, currentRaised: parseFloat(message.body) || 0 } : e
+            )
+          );
+        });
 
-      // Subscribe to /topic/totalAmountOfEvent
-      stompClient.subscribe("/topic/totalAmountOfEvent", (message) => {
-        const data = JSON.parse(message.body);
-        const { eventId, amount } = data;
-
-        // Update the currentRaised value for the specific event
-        setTypedEvents((prevEvents) =>
-          prevEvents.map((event) =>
-            event.uuid === eventId ? { ...event, currentRaised: amount } : event
-          )
-        );
+        stompClient.subscribe(`/topic/totalDonorsByEvent/${event.uuid}`, (message) => {
+          setTypedEvents((prevEvents) =>
+            prevEvents.map((e) =>
+              e.uuid === event.uuid ? { ...e, totalDonors: parseInt(message.body) || 0 } : e
+            )
+          );
+        });
       });
     };
 
     stompClient.activate();
-
-    // Cleanup on unmount
     return () => {
       stompClient.deactivate();
     };
-  }, []);
+  }, [typedEvents]);
 
-  // Format amount for display
   const formatAmount = (amount: any) => {
     return new Intl.NumberFormat("en-US", {
       style: "decimal",
