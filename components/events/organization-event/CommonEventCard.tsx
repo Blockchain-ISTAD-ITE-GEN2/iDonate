@@ -54,7 +54,7 @@ export function CommonEventCard({ event }: { event: EventType }) {
   return (
     <Card
       onClick={() => router.push(`/event-detail/${event?.uuid}`)}
-      className="w-full rounded-[10px] bg-iDonate-light-gray border-0 cursor-pointer shadow-md hover:scale-[1.02]"
+      className="w-full rounded-[10px]  border-0 cursor-pointer shadow-md hover:scale-[1.02]  dark:bg-iDonate-bg-dark-mode"
     >
       <CardHeader className="w-full h-[180px] p-0 overflow-hidden rounded-t-[10px]">
         <Image
