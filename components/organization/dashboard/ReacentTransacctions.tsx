@@ -16,6 +16,19 @@ export function ReacentTransacctions({ transactions }: RecentSalesProps) {
     return <p className="text-gray-500">No transactions available.</p>;
   }
 
+  const formatDateTime = (timestamp: string) => {
+    if (!timestamp) return "N/A";
+    const date = new Date(timestamp);
+    return date.toLocaleString("en-GB", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    });
+  };
+
   return (
     <div className="flex flex-col h-full items-center">
       {transactions.map((transaction, index) => (
@@ -28,7 +41,7 @@ export function ReacentTransacctions({ transactions }: RecentSalesProps) {
               {transaction.avatar ? (
                 <img
                   src={transaction.avatar}
-                  alt={`${transaction.username} Avatar`}
+                  alt={`${transaction.donor} Avatar`}
                   className="h-full w-full object-cover"
                 />
               ) : (
@@ -36,17 +49,17 @@ export function ReacentTransacctions({ transactions }: RecentSalesProps) {
                   width={40}
                   height={40}
                   src={donateIcon}
-                  alt={`${transaction.username} Avatar`}
+                  alt={`${transaction.donor} Avatar`}
                 />
               )}
             </Avatar>
 
             <div className="space-y-1">
               <p className="text-sm sm:text-base font-medium text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
-                {transaction.username}
+                {transaction.donor}
               </p>
               <p className="text-xs sm:text-sm text-iDonate-gray">
-                {transaction.timestamp}
+                {formatDateTime(transaction.timestamp)}
               </p>
             </div>
           </div>

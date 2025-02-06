@@ -4,6 +4,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { useRouter } from "next/navigation";
+import categoryImageHeroSection from "@/public/images/image (8).png"
 
 export default function HeroSectionCategoryComponent() {
   const router = useRouter();
@@ -93,11 +94,13 @@ export default function HeroSectionCategoryComponent() {
             transition={{ duration: 0.3 }}
           >
             <Image
-              src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQMeP0gO3Ehq579SLu1kjUuT9fHJtWO4XfBFn7zIGT1VVJAIMx0"
+              width={1000}
+              height={1000}
+              src={categoryImageHeroSection}
               alt="Slide 1"
-              fill
               className="w-full h-full object-cover"
               priority
+              unoptimized
               quality={100}
             />
           </motion.div>

@@ -12,11 +12,26 @@ type RecentTransactionProps = {
 export function DonorReacentTransacctions({
   transactions,
 }: RecentTransactionProps) {
+
+  const formatDateTime = (timestamp: string) => {
+    if (!timestamp) return "N/A";
+    const date = new Date(timestamp);
+    return date.toLocaleString("en-GB", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    });
+  };
+
   return (
     <div className="flex flex-col items-center px-0 sm:px-2 lg:px-8">
     {transactions.length > 0 ? (
 
       transactions.map((transaction, index) => (
+        
         <div
           key={index}
           className="flex w-full justify-between items-center border-b border-iDonate-navy-accent py-3 gap-4"
@@ -62,7 +77,6 @@ export function DonorReacentTransacctions({
               {transaction.amount}
             </span>
           </div>
-
         </div>
       ))
       

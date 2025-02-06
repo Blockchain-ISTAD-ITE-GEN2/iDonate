@@ -97,11 +97,12 @@ export default function LatestDonationCard() {
               <div lang="km" className="p-4 bg-iDonate-navy-accent rounded-lg flex flex-col sm:flex-row items-center justify-between gap-4">
                 <div className="flex items-center gap-2 p-1">
                   <span className="text-iDonate-navy-primary p-1 text-[16px]">
-                    អ្នកបរិច្ចាគ: {item?.totalDonors || "0"} នាក់
+                    អ្នកបរិច្ចាគ: <span className=" font-semibold text-[18px] text-iDonate-navy-primary">{item?.totalDonors || "0"}</span> នាក់
                   </span>
                 </div>
                 <div className="text-iDonate-navy-primary text-[16px]">
-                  ​​ទឹកប្រាក់ទទួលបាន: ${formatAmount(item?.currentRaised) || "0"}
+            
+            ​​ទឹកប្រាក់ទទួលបាន: <span className=" font-semibold text-[18px] text-iDonate-navy-primary">${formatAmount(item?.currentRaised) || "0"}</span>
                 </div>
               </div>
               <Button

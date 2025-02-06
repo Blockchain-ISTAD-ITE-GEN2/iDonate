@@ -70,8 +70,7 @@ export function BarAndLineChartLanding() {
       }
     };
     
-    
-
+  
     fetchTransactions();
 
     // Set up WebSocket connection
