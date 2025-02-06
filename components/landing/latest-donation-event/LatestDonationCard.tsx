@@ -1,19 +1,23 @@
 "use client";
 import { Users, CircleDollarSign, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import Image from "next/image";
-import { useGetEventsQuery } from "@/redux/services/event-service";
+import { useGetDraftEventsFalseQuery, useGetEventsQuery } from "@/redux/services/event-service";
 import { EventType } from "@/difinitions/types/event/EventType";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import SockJS from "sockjs-client";
+import { Client } from "@stomp/stompjs";
+import { FaRegCalendarAlt } from "react-icons/fa";
+import { HiCalendarDateRange } from "react-icons/hi2";
 
 export default function LatestDonationCard() {
   const router = useRouter();
   const [typedEvents, setTypedEvents] = useState<EventType[]>([]);
 
   // Fetch data from RTK
-  const { data: apiEventResponse = { content: [] } } = useGetEventsQuery({});
+  const { data: apiEventResponse = { content: [] } } = useGetDraftEventsFalseQuery({});
 
   useEffect(() => {
     // Sort and slice the events
@@ -66,6 +70,17 @@ export default function LatestDonationCard() {
     }).format(amount);
   };
 
+  // Function to format the date
+function formatDate(dateString: string | undefined): string {
+  if (!dateString) return "N/A";
+  const date = new Date(dateString);
+  return date.toLocaleDateString("en-GB", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  });
+}
+
   return (
     <div className="w-full h-auto bg-transparent flex flex-col gap-6 lg:pb-[500px]">
       {/* The Big Card of Lastest Event  */}
@@ -80,7 +95,7 @@ export default function LatestDonationCard() {
                 className="w-full overflow-hidden cursor-pointer h-auto lg:h-[660px] p-0 m-0 border-none grid lg:grid-cols-2 item-center lg:relative"
               >
                 {/* Image Section */}
-                <div className="relative min-h-[660px]">
+                <CardHeader className="relative min-h-[660px]">
                   <Image
                     src={
                       Array.isArray(item?.images) && item.images[0]
@@ -91,10 +106,40 @@ export default function LatestDonationCard() {
                     alt="Community support image"
                     className="absolute inset-0 w-full h-full object-cover"
                   />
-                </div>
+                </CardHeader>
 
                 {/* Content Section */}
-                <div className="p-9 bg-iDonate-navy-primary text-iDonate-white-space flex flex-grow flex-col gap-4 dark:bg-iDonate-dark-mode">
+                <CardContent className="p-9 bg-iDonate-navy-primary text-iDonate-white-space flex flex-grow flex-col gap-4 dark:bg-iDonate-dark-mode">
+                  {/* Dates */}
+                  <div className="flex justify-between text-sm">
+                    <div className="flex flex-col">
+                      <div className="flex items-center mb-4">
+                        <span className="text-iDonate-navy-accent dark:text-iDonate-navy-accent mr-1 text-[18px]">
+                          <FaRegCalendarAlt />
+                        </span>
+                        <p className="text-iDonate-navy-accent dark:text-iDonate-navy-accent text-[18px]">
+                          Start date
+                        </p>
+                      </div>
+                      <p className="text-iDonate-green-primary dark:text-iDonate-green-secondary text-[18px]">
+                      {formatDate(typedEvents?.[0]?.startDate) || "12 Dec 2024"}
+                      </p>
+                    </div>
+                    <div className="flex flex-col">
+                      <div className="flex items-center mb-4">
+                        <span className="text-iDonate-navy-accent dark:text-iDonate-navy-accent mr-1 text-[22px]">
+                          <HiCalendarDateRange />
+                        </span>
+                        <p className="text-iDonate-navy-accent dark:text-iDonate-navy-accent text-[18px]">
+                          End date
+                        </p>
+                      </div>
+                      <p className="text-iDonate-green-primary dark:text-iDonate-green-secondary text-[18px]">
+                      {formatDate(typedEvents?.[0]?.endDate) || "12 Dec 2024"}
+                      </p>
+                    </div>
+                  </div>
+                  
                   <div>
                     <h2
                       lang="km"
@@ -128,6 +173,7 @@ export default function LatestDonationCard() {
                     </div>
 
                     <Button
+                    lang="kh"
                       onClick={(e) => {
                         e.stopPropagation();
                         router.push(`/event-detail/${item?.uuid}`);
@@ -138,10 +184,10 @@ export default function LatestDonationCard() {
                         style={{ width: "25px", height: "25px" }}
                         className="bg-iDonate-navy-primary rounded-full p-1 fill-white group-hover:fill-iDonate-navy-primary group-hover:text-iDonate-navy-primary hover:bg-iDonate-green-secondary group-hover:bg-iDonate-green-secondary dark:bg-iDonate-navy-primary dark:text-iDonate-navy-primary dark:fill-white"
                       />
-                      Donate Now
+                      បរិច្ចាគឡួវនេះ
                     </Button>
                   </div>
-                </div>
+                </CardContent>
               </Card>
           ))}
       </div>
@@ -170,17 +216,46 @@ export default function LatestDonationCard() {
                   />
                 </div>
 
-                <div className="p-4 space-y-4">
+                <CardContent className="p-4 space-y-4">
+                    {/* Dates */}
+                    <div className="flex justify-between text-sm">
+                      <div className="flex flex-col">
+                        <div className="flex items-center">
+                          <span className="text-iDonate-navy-secondary dark:text-iDonate-navy-accent mr-1">
+                            <FaRegCalendarAlt />
+                          </span>
+                          <p className="text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
+                            Start date
+                          </p>
+                        </div>
+                        <p className="text-iDonate-green-primary dark:text-iDonate-green-secondary">
+                        {formatDate(typedEvents?.[0]?.startDate) || "12 Dec 2024"}
+                        </p>
+                      </div>
+                      <div className="flex flex-col">
+                        <div className="flex items-center">
+                          <span className="text-iDonate-navy-secondary dark:text-iDonate-navy-accent mr-1">
+                            <HiCalendarDateRange />
+                          </span>
+                          <p className="text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
+                            End date
+                          </p>
+                        </div>
+                        <p className="text-iDonate-green-primary dark:text-iDonate-green-secondary">
+                        {formatDate(typedEvents?.[0]?.endDate) || "12 Dec 2024"}
+                        </p>
+                      </div>
+                    </div>
                   <div>
-                    <h3 className="font-bold text-medium-khmer text-iDonate-navy-primary line-clamp-2 dark:text-iDonate-navy-accent">
+                    <h3 className="font-bold text-medium-khmer  text-iDonate-navy-primary line-clamp-1 dark:text-iDonate-navy-accent">
                       {item.name}
                     </h3>
-                    <p className="font-light text-description-khmer text-iDonate-navy-secondary line-clamp-2 dark:text-iDonate-navy-accent">
+                    <p className="font-light  text-description-khmer text-iDonate-navy-secondary line-clamp-1 dark:text-iDonate-navy-accent">
                       {item.description}
                     </p>
                   </div>
 
-                  <div className="flex flex-col sm:flex-row items-center justify-between text-sm gap-4">
+                  <div className="lg:flex flex-col sm:flex-row items-center justify-between text-sm gap-4">
                     <div className="flex items-center gap-2 font-light text-iDonate-navy-secondary line-clamp-2 dark:text-iDonate-navy-accent h-12">
                       <Users className="h-4 w-4 text-iDonate-navy-primary" />
                       <span className="khmer-font">
@@ -196,6 +271,7 @@ export default function LatestDonationCard() {
                   </div>
 
                   <Button
+                  lang="km"
                     onClick={() => router.push(`/event-detail/${item?.uuid}`)}
                     className="w-full bg-iDonate-green-secondary hover:bg-[#22c55e] text-[#1e2c49] font-semibold"
                   >
@@ -203,22 +279,22 @@ export default function LatestDonationCard() {
                         style={{ width: "25px", height: "25px" }}
                         className="bg-iDonate-navy-primary rounded-full p-1 fill-white group-hover:fill-iDonate-navy-primary group-hover:text-iDonate-navy-primary hover:bg-iDonate-green-secondary group-hover:bg-iDonate-green-secondary dark:bg-iDonate-navy-primary dark:text-iDonate-navy-primary dark:fill-white"
                       />
-                    Donate Now
+                    បរិច្ចាគឡួវនេះ
                   </Button>
-                </div>
+                </CardContent>
               </Card>
             ))}
           </div>
         ) : (
           <Card className="p-8 text-center w-full container mx-auto flex flex-col gap-4">
             <h3
-              lang="km"
+              lang="kh"
               className="text-medium-khmer font-medium text-iDonate-navy-primary khmer-font dark:text-iDonate-green-secondary"
             >
               បច្ចុប្បន្នមិនមានព្រឹត្តិការណ៍បរិច្ចាគទេ
             </h3>
             <p
-              lang="km"
+              lang="kh"
               className="text-iDonate-gray khmer-font dark:text-iDonate-navy-accent"
             >
               សូមត្រឡប់មកម្តងទៀតនៅពេលក្រោយ ដើម្បីពិនិត្យមើលឱកាសបរិច្ចាគថ្មីៗ។
