@@ -116,7 +116,7 @@ export function EventDetailBanner({ uuid }: EventDetailBannerProps) {
     <Card className="w-[440px] h-full border-2 border-iDonate-navy-accent shadow-light">
       <CardHeader className="flex flex-col gap-6">
         <div className="flex flex-col gap-1">
-          <CardTitle className="flex gap-3 text-iDonate-gray text-lg  dark:text-iDonate-navy-accent">
+          <CardTitle className="flex gap-3 text-iDonate-navy-primary text-lg  dark:text-iDonate-navy-accent">
             <Users className="text-iDonate-navy-primary dark:text-iDonate-navy-accent" />
             ចំនួនអ្នកបរិច្ចាគសរុប
           </CardTitle>
@@ -125,7 +125,7 @@ export function EventDetailBanner({ uuid }: EventDetailBannerProps) {
           </CardDescription>
         </div>
         <div className="flex flex-col gap-1">
-          <CardTitle className="flex gap-3 text-iDonate-gray text-lg  dark:text-iDonate-navy-accent">
+          <CardTitle className="flex gap-3 text-lg text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
             <HandCoins className="text-iDonate-navy-primary dark:text-iDonate-navy-accent" />
             ចំនួនថវិការទទួលបាន
           </CardTitle>
