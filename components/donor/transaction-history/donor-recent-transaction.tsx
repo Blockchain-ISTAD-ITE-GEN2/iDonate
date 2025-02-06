@@ -70,7 +70,7 @@ export function DonorReacentTransacctions({
               </div>
           </div>
 
-          {/* Amount */}
+          {/* ចំនួនថវិការបរិច្ចាគ */}
           <div className="flex justify-center items-center gap-1">
             <CircleDollarSign className="h-6 w-6 text-iDonate-green-primary dark:text-iDonate-green-secondary" />
             <span className="text-iDonate-green-primary text-sm sm:text-base font-medium ml-auto dark:text-iDonate-green-secondary">

@@ -84,7 +84,7 @@ export default function EventQrDialog({
               <span className="text-gray-600 text-end">{donor}</span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="font-semibold text-start">Amount:</span>
+              <span className="font-semibold text-start">ចំនួនថវិការបរិច្ចាគ:</span>
               <span className="text-gray-600 text-end">
                 {amount} {currency}
               </span>

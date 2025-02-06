@@ -35,7 +35,7 @@ export default function Contributor() {
 
     {
       columnKey: "donationAmount",
-      title: "Amount Range",
+      title: "ចំនួនថវិការបរិច្ចាគ Range",
       options: Array.from(
         new Set(
           typedTransactions?.map((transaction) => transaction.donationAmount),

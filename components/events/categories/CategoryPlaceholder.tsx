@@ -44,7 +44,7 @@ export function CategoryPlaceholder() {
               <Skeleton className="h-4 w-4/5" />
             </div>
 
-            {/* Donor and Amount Information */}
+            {/* Donor and ចំនួនថវិការបរិច្ចាគ Information */}
             <div className="flex flex-col gap-3">
               <div className="flex items-center gap-2">
                 <Skeleton className="h-6 w-6 rounded-full" />

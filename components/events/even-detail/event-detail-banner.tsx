@@ -16,6 +16,9 @@ import { TransactionType } from "@/difinitions/types/table-type/transaction";
 import { useGetEventByUuidQuery } from "@/redux/services/event-service"; // Adjust the import path as needed
 import Image from "next/image";
 import donateIcon from "@/public/images/give-and-recieve.png";
+import SockJS from "sockjs-client";
+import { Client } from "@stomp/stompjs";
+import { date } from "zod";
 
 type EventDetailBannerProps = {
   uuid: string; // Accept UUID as a prop
@@ -35,6 +38,16 @@ export function EventDetailBanner({ uuid }: EventDetailBannerProps) {
     isError: isEventError,
     error: eventError,
   } = useGetEventByUuidQuery(uuid);
+
+  const [totalDonors, setTotalDonors] = useState<number>(0);
+  const [currentRaised, setCurrentRaised] = useState<number>(0);
+
+  useEffect(() => {
+    if (event) {
+      setTotalDonors(event.totalDonors ?? 0);
+      setCurrentRaised(event.currentRaised ?? 0);
+    }
+  }, [event]);
 
   useEffect(() => {
     const fetchTransactions = async () => {
@@ -65,10 +78,37 @@ export function EventDetailBanner({ uuid }: EventDetailBannerProps) {
     fetchTransactions();
   }, [uuid]); // Depend on `uuid` to fetch data when it changes
 
+  useEffect(() => {
+      if (!event?.uuid) return;
+    
+      const socket = new SockJS(`${process.env.NEXT_PUBLIC_IDONATE_API_URL}/websocket`);
+      const stompClient = new Client({
+        webSocketFactory: () => socket,
+        reconnectDelay: 5000,
+      });
+  
+      stompClient.onConnect = () => {
+        // Subscribe to event-specific updates
+        stompClient.subscribe(`/topic/totalAmountByEvent/${event.uuid}`, (message) => {
+          setCurrentRaised(parseFloat(message.body) || 0);
+        });
+  
+        stompClient.subscribe(`/topic/totalDonorsByEvent/${event.uuid}`, (message) => {
+          setTotalDonors(parseInt(message.body, 10) || 0);
+        });
+      };
+  
+      stompClient.activate();
+  
+      return () => {
+        stompClient.deactivate();
+      };
+    }, [event?.uuid]);
+
   // Format the currentRaised amount as $100,000
   const formattedCurrentRaised = event?.currentRaised
-    ? `$${event.currentRaised.toLocaleString()}`
-    : "$0";
+    ? `${event.currentRaised.toLocaleString()}`
+    : "0";
 
   return (
     <Card className="w-[440px] h-full border-2 border-iDonate-navy-accent shadow-light">
@@ -79,7 +119,7 @@ export function EventDetailBanner({ uuid }: EventDetailBannerProps) {
             ចំនួនអ្នកបរិច្ចាគសរុប
           </CardTitle>
           <CardDescription className="text-iDonate-navy-primary text-2xl font-medium  dark:text-iDonate-navy-accent">
-            {isEventLoading ? "Loading..." : event?.totalDonors || 0} Donors
+            {isEventLoading ? "Loading..." : totalDonors || 0} នាក់
           </CardDescription>
         </div>
         <div className="flex flex-col gap-1">
@@ -88,7 +128,9 @@ export function EventDetailBanner({ uuid }: EventDetailBannerProps) {
             ចំនួនថវិការទទួលបាន
           </CardTitle>
           <CardDescription className="text-iDonate-navy-primary text-2xl font-medium dark:text-iDonate-green-secondary">
-            {isEventLoading ? "Loading..." : formattedCurrentRaised}
+          <div className="flex items-center gap-1">
+          <CircleDollarSign/><span>{isEventLoading ? "Loading..." : formattedCurrentRaised}</span>
+          </div>
           </CardDescription>
         </div>
       </CardHeader>
@@ -148,7 +190,7 @@ export function EventDetailBanner({ uuid }: EventDetailBannerProps) {
           <div className="flex items-center gap-1 h-full">
           <CircleDollarSign className="h-5 w-5 text-iDonate-green-primary dark:text-iDonate-green-secondary align-middle" />
           <p className="text-iDonate-green-primary font-medium text-[17px] leading-none dark:text-iDonate-navy-accent">
-            {transaction.amount ? `${transaction.amount.toLocaleString()}` : "មិនទាន់ទទួលបានថវិការ"}
+            {currentRaised ? `${currentRaised.toLocaleString()}` : "មិនទាន់ទទួលបានថវិការ"}
           </p>
         </div>
         </div>

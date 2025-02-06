@@ -22,7 +22,7 @@ type TransactionProps = {
 
 const chartConfig = {
   amount: {
-    label: "Amount",
+    label: "ចំនួនថវិការបរិច្ចាគ",
     color: "iDonate-navy-primary",
   },
   date: {

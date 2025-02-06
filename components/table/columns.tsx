@@ -76,7 +76,7 @@ export const transactionColumns: ColumnDef<TransactionType>[] = [
   {
     accessorKey: "donationAmount",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Amount" />
+      <DataTableColumnHeader column={column} title="ចំនួនថវិការបរិច្ចាគ" />
     ),
     cell: ({ row }) => {
       const amount = parseFloat(row.getValue("donationAmount"));

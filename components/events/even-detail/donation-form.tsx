@@ -36,6 +36,7 @@ import { use, useEffect, useState } from "react";
 import EventQrDialog from "@/components/events/even-detail/event-qr-dialog";
 import { useParams } from "next/navigation";
 import SuccessDialog from "./Success-dialog";
+import { CircleDollarSign } from "lucide-react";
 
 export function DonationForm() {
   const uuid = useParams();
@@ -240,7 +241,7 @@ export function DonationForm() {
           <div className="flex flex-col gap-6">
             <CardHeader className="flex flex-row items-center justify-between p-0 m-0 pb-2 border-b-[2px] border-dashed border-b-iDonate-navy-primary">
               <CardTitle className="text-2xl font-medium text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
-                Donation Information
+                ព័ត៌មានអំពីការបរិច្ចាគ
               </CardTitle>
             </CardHeader>
 
@@ -251,10 +252,13 @@ export function DonationForm() {
                 render={({ field }) => (
                   <FormItem className="w-full h-full">
                     <FormLabel
-                      className="text-iDonate-navy-secondary text-sm dark:text-iDonate-navy-accent"
+                      className="text-iDonate-navy-secondary text-md dark:text-iDonate-navy-accent"
                       htmlFor="amount"
                     >
-                      Amount
+                      <div className="flex items-center gap-1 m-2">
+                      <span>ចំនួនថវិការបរិច្ចាគ</span>
+                      <span><CircleDollarSign className="h-5 w-5 text-iDonate-green-primary dark:text-iDonate-green-secondary" /></span>
+                      </div>
                     </FormLabel>
                     <FormControl className="w-full h-full">
                       <Input

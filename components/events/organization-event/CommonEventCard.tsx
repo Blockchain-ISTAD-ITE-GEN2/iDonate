@@ -55,7 +55,7 @@ export function CommonEventCard({ event }: { event: EventType }) {
   return (
     <Card
       onClick={() => router.push(`/event-detail/${event?.uuid}`)}
-      className="w-full rounded-[10px]  border-0 cursor-pointer shadow-md transition-transform hover:scale-[1.02] dark:bg-iDonate-dark-mode  dark:bg-iDonate-bg-dark-mode"
+      className="w-full rounded-[10px]  border-0 cursor-pointer shadow-md transition-transform hover:scale-[1.02] dark:bg-iDonate-dark-mode "
     >
       <CardHeader className="w-full h-[180px] p-0 overflow-hidden rounded-t-[10px]">
         <Image
@@ -117,7 +117,7 @@ export function CommonEventCard({ event }: { event: EventType }) {
           </p>
         </div>
 
-          {/* Donor and Amount Information */}
+          {/* Donor and ចំនួនថវិការបរិច្ចាគ Information */}
         <div className="flex flex-col gap-2">
           <div className="flex items-center gap-2">
               <Users className="h-5 w-5 text-iDonate-navy-primary dark:text-iDonate-navy-accent" />
