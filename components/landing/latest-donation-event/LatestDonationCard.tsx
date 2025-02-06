@@ -84,7 +84,7 @@ function formatDate(dateString: string | undefined): string {
   return (
     <div className="w-full h-auto bg-transparent flex flex-col gap-6 lg:pb-[500px]">
       {/* The Big Card of Lastest Event  */}
-      <div className="lg:relative z-[10] lg:hover:z-[40] pointer-events-auto transition-transform duration-200 lg:hover:scale-95">
+      <div className="lg:relative z-[10] lg:hover:z-[10] pointer-events-auto transition-transform duration-200 lg:hover:scale-95">
           {typedEvents.slice(3, 4).map((item) => (
               <Card
                 onClick={(e) => {
@@ -193,7 +193,7 @@ function formatDate(dateString: string | undefined): string {
       </div>
 
       {/* The Small 3 Event  Donations Section */}
-      <div className="w-full flex flex-col z-10 gap-2 lg:absolute ">
+      <div className="w-full flex flex-col gap-2 lg:absolute ">
         {typedEvents.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2  z-2 lg:hover:z-[30]   items-center justify-center mx-auto lg:grid-cols-3 gap-6 p-2 lg:mt-[500px]">
             {typedEvents.slice(0, 3).map((item) => (
@@ -257,7 +257,7 @@ function formatDate(dateString: string | undefined): string {
 
                   <div className="lg:flex flex-col sm:flex-row items-center justify-between text-sm gap-4">
                     <div className="flex items-center gap-2 font-light text-iDonate-navy-secondary line-clamp-2 dark:text-iDonate-navy-accent h-12">
-                      <Users className="h-4 w-4 text-iDonate-navy-primary" />
+                      <Users className="h-4 w-4 text-iDonate-navy-primary dark:text-iDonate-navy-accent" />
                       <span className="khmer-font">
                         អ្នកបរិច្ចាគ៖ <span className="font-medium text-[16px]">{item?.totalDonors || "0"}</span> នាក់
                       </span>
