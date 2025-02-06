@@ -60,6 +60,11 @@ const nextConfig = {
         pathname: "/**",
       },
       {
+        protocol: "https",
+        hostname: "idonateapi.kangtido.life",
+        pathname: "/media/**",
+      },
+      {
         protocol: "http",
         hostname: "**",
         pathname: "/**",
@@ -148,9 +153,9 @@ const nextConfig = {
       },
     ];
   },
-  // hide all the console when production 
+  // hide all the console when production
   compiler: {
-    removeConsole: process.env.NODE_ENV === 'production',
+    removeConsole: process.env.NODE_ENV === "production",
   },
 };
 

@@ -1,28 +1,28 @@
 export const NavMenulist = [
   {
     path: "/search",
-    title: "Search",
+    title: "ស្វែងរក",
     active: false,
   },
   {
     path: "",
-    title: "Events",
+    title: "កម្មវិធីបរិច្ចាគ",
     active: false,
   },
   {
     path: "",
-    title: "Contributors",
+    title: "អ្នកចូលរួម",
     active: false,
   },
   {
     path: "",
-    title: "About",
+    title: "អំពីយើង",
     active: false,
   },
 
   {
     path: "/how-it-works",
-    title: "How it works",
+    title: "ដំណើរការ",
     active: false,
   },
 ];

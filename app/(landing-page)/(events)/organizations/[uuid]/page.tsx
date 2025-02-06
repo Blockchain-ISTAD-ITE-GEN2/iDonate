@@ -9,11 +9,11 @@ type OrganizationDetail = {
   };
 };
 
-
 // get Event  Detail
 async function getOrganizationDetails(uuid: string) {
-
-  const response = await fetch(`https://idonateapi.kangtido.life/api/v1/events/get-event-by-organization/${uuid}`);
+  const response = await fetch(
+    `https://idonateapi.kangtido.life/api/v1/events/get-event-by-organization/${uuid}`,
+  );
 
   const data = await response.json();
 
@@ -23,8 +23,9 @@ async function getOrganizationDetails(uuid: string) {
   };
 }
 // Generate metadata dynamically
-export async function generateMetadata({ params }: OrganizationDetail): Promise<Metadata> {
-
+export async function generateMetadata({
+  params,
+}: OrganizationDetail): Promise<Metadata> {
   const organization = await getOrganizationDetails(params.uuid);
 
   return {
@@ -50,22 +51,13 @@ export async function generateMetadata({ params }: OrganizationDetail): Promise<
   };
 }
 
-export default function Page({params}:OrganizationDetail) {
+export default function Page({ params }: OrganizationDetail) {
   return (
     <section className="flex flex-col gap-9 py-9 justify-center">
       {/*Start Hero Section*/}
       <OrganizationDetailHeroSection />
 
       <OrganizationDetail uuid={params.uuid} />
-      
     </section>
   );
 }
-
-
-
-
-
-
-
-

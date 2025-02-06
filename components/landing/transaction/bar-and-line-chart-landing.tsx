@@ -44,17 +44,24 @@ export function BarAndLineChartLanding() {
           throw new Error("Failed to fetch transactions");
         }
         const data = await response.json();
-
+    
         console.log("Data transactions: ", data);
-
-        // Map the API response to TransactionType format
-        const formattedTransactions = data.content.map((transaction: any) => ({
-          avatar: transaction.avatar || "",
-          donor: transaction.username,
-          amount: transaction.donationAmount,
-          timestamp: transaction.timestamp,
-        }));
-
+    
+        // Map and sort transactions by timestamp (newest first)
+        const formattedTransactions: TransactionType[] = data.content
+          .map((txn: any) => ({
+            id: crypto.randomUUID(), // Generate a unique ID
+            avatar: txn.avatar || "", // Ensure avatar is a string
+            username: txn.username || "Anonymous", // Map to `username`
+            event: txn.event,
+            organization: txn.organization,
+            amount: txn.donationAmount, // Map to `amount`
+            timestamp: new Date(txn.timestamp).toISOString(), // Ensure timestamp is a formatted string
+          })
+        );
+          
+        formattedTransactions.sort((a: any, b: any) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()); // Sort newest first
+    
         setRecentTransactions(formattedTransactions);
       } catch (err: any) {
         setError(err.message || "Something went wrong");
@@ -62,11 +69,13 @@ export function BarAndLineChartLanding() {
         setLoading(false);
       }
     };
+    
+    
 
     fetchTransactions();
 
     // Set up WebSocket connection
-    const socket = new SockJS(`${process.env.NEXT_PUBLIC_IDONATE_API_URL}/websockket`);
+    const socket = new SockJS(`${process.env.NEXT_PUBLIC_IDONATE_API_URL}/websocket`);
     const stompClient = new Client({
       webSocketFactory: () => socket,
       reconnectDelay: 5000,
@@ -78,21 +87,22 @@ export function BarAndLineChartLanding() {
       console.log("WebSocket connected");
       stompClient.subscribe("/topic/recentDonationTransaction", (message) => {
         const newTransaction = JSON.parse(message.body);
-
-        // Map the new transaction to TransactionType format
+      
         const formattedTransaction: TransactionType = {
-          avatar: newTransaction.avatar || "",
+          avatar: newTransaction.avatar,
           donor: newTransaction.username,
           amount: newTransaction.donationAmount,
-          timestamp: newTransaction.timestamp,
+          timestamp: new Date(newTransaction.timestamp).toISOString(), // Convert to string
         };
-
-        // Update the recentTransactions state
-        setRecentTransactions((prevTransactions) => [
-          formattedTransaction,
-          ...prevTransactions,
-        ]);
+      
+        // Update state and keep the transactions sorted
+        setRecentTransactions((prevTransactions) => 
+          [formattedTransaction, ...prevTransactions]
+            .sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()) // Sort newest first
+        );
       });
+      
+      
     };
 
     stompClient.onStompError = (frame) => {
@@ -129,18 +139,18 @@ export function BarAndLineChartLanding() {
         <CardsMetric data={recentTransactions} />
       </div>
 
-      {/* Recent Transactions Card */}
+      {/* ប្រតិបត្តិការថ្មីៗ Card */}
       <Card className="md:w-full lg:w-[480px] bg-iDonate-light-gray rounded-lg border border-iDonate-navy-accent dark:bg-iDonate-dark-mode">
         <CardHeader>
           <CardTitle className="text-medium-eng font-normal text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
-            Recent Transactions
+            ប្រតិបត្តិការថ្មីៗ
           </CardTitle>
-          <CardDescription className="text-sub-description-eng text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
-            You received {recentTransactions.length} donations this week.
+          <CardDescription className="text-sub-description-eng py-2 text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
+          អ្នកទទួលបានការបរិច្ចាគចំនួន {recentTransactions.length}​ ក្នុងសប្តាហ៍នេះ។
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <ReacentTransacctions transactions={recentTransactions} />
+          <ReacentTransacctions transactions={recentTransactions.slice(0, 5)} />
         </CardContent>
       </Card>
     </div>

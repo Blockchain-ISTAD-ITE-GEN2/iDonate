@@ -12,50 +12,62 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SquarePen, Upload } from "lucide-react";
-import Image from "next/image";
-import payment from "@/public/images/payment.jpg";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { organizationPaymentSchema } from "@/components/schema/schema";
 import { AlertComfirmDialog } from "@/components/Alert/Alert-Dialog";
-import { OrganizationType } from "@/difinitions/types/organization/OrganizationType";
-import { useGetOrganizationByuuidQuery } from "@/redux/services/organization-service";
+import { useGetOrganizationByuuidQuery, useSetBankAccountMutation } from "@/redux/services/organization-service";
+import { Input } from "@/components/ui/input";
+import { toast } from "@/hooks/use-toast";
 
 export function OrganizationPaymentForm({ uuid }: { uuid: string }) {
   const { data: organization } = useGetOrganizationByuuidQuery(uuid);
 
-  const typeOrganization: OrganizationType = organization || {};
+  const [setOrganizationBank] = useSetBankAccountMutation();
 
   const [isEditing, setIsEditing] = useState(false);
-  const [previewImage, setPreviewImage] = useState<string | null>(null);
 
   const form = useForm<z.infer<typeof organizationPaymentSchema>>({
     resolver: zodResolver(organizationPaymentSchema),
     defaultValues: {
-      image: "",
+      bankAccountNumber: "",
     },
   });
 
-  function handleFileChange(
-    event: React.ChangeEvent<HTMLInputElement>,
-    onChange: (value: string) => void,
-  ) {
-    const file = event.target.files?.[0];
-    if (file) {
-      if (!file.name.match(/\.(jpg|jpeg|png)$/i)) {
-        alert("Only JPG or PNG files are allowed.");
-        return;
-      }
-      const previewURL = URL.createObjectURL(file);
-      setPreviewImage(previewURL);
-      onChange(previewURL);
+  useEffect(() => {
+    if (organization) {
+      form.reset({
+        bankAccountNumber: organization?.bankAccountNumber || "",
+      });
     }
-  }
+  }, [organization, form]);
 
-  function onSubmit(values: z.infer<typeof organizationPaymentSchema>) {
-    console.log(values);
-    setIsEditing(false);
+
+  async function onSubmit(values: z.infer<typeof organizationPaymentSchema>) {
+    if (!organization?.uuid) return;
+  
+    try {
+      const bankAccountNumber = {
+        bankAccountNumber: values.bankAccountNumber
+      };
+  
+      await setOrganizationBank({ orgUuid: uuid, bankAccount: bankAccountNumber}).unwrap();
+  
+      toast({
+        title: "Organization Updated",
+        description: "The organization details have been updated successfully.",
+        variant: "default",
+      });
+  
+      setIsEditing(false);
+    } catch (error) {
+      toast({
+        title: "Update Failed",
+        description: "Failed to update the organization details.",
+        variant: "destructive",
+      });
+    }
   }
 
   function handleCancel() {
@@ -65,39 +77,40 @@ export function OrganizationPaymentForm({ uuid }: { uuid: string }) {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
+     <form onSubmit={form.handleSubmit(onSubmit)}>
+        {/* View Mode */}
         {!isEditing && (
           <Card className="flex flex-col rounded-lg border-2 border-iDonate-navy-accent gap-6 p-9">
             <CardHeader className="flex flex-row items-center justify-between p-0 m-0">
               <CardTitle className="text-2xl font-medium text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
-                Payment Method
+                Bank Account Number
               </CardTitle>
 
               <Button
                 onClick={() => setIsEditing(true)}
-                className="bg-iDonate-white-space border-2 hover:bg-iDonate-light-gray border-iDonate-navy-accent text-iDonate-navy-primary dark:text-iDonate-navy-accent dark:bg-iDonate-dark-mode"
+                className="bg-iDonate-white-space border-2 hover:bg-iDonate-light-gray border-iDonate-navy-accent text-iDonate-navy-primary dark:text-iDonate-navy-accent dark:bg-iDonate-dark-mode dark:hover:bg-black"
               >
                 <SquarePen />
                 Edit
               </Button>
             </CardHeader>
 
-            <CardContent className="flex p-0 m-0">
-              <Image
-                src={payment}
-                alt="Organization"
-                width={200}
-                height={400}
-              />
+            <CardContent className="flex w-fle gap-9 p-0 m-0">
+              <div className="flex flex-col space-y-3">
+                <CardDescription className="text-xl bg-gray-100 p-2 rounded-lg text-iDonate-navy-primary dark:text-iDonate-navy-accent">
+                  {organization?.bankAccountNumber || "No bank account number provided"}
+                </CardDescription>
+              </div>
             </CardContent>
           </Card>
         )}
 
+        {/* Edit Mode */}
         {isEditing && (
-          <Card className="flex flex-col bg-iDonate-light-gray rounded-lg border-2 border-iDonate-navy-accent gap-6 p-9  dark:bg-iDonate-dark-mode">
+          <Card className="flex flex-col bg-iDonate-light-gray rounded-lg border-2 border-iDonate-navy-accent gap-6 p-9 dark:bg-iDonate-dark-mode">
             <CardHeader className="flex flex-row items-center justify-between p-0 m-0">
-              <CardTitle className="text-2xl font-medium text-iDonate-navy-secondary dark:text-iDonate-navy-accent ">
-                Payment Method
+              <CardTitle className="text-2xl font-medium text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
+                Organization Information
               </CardTitle>
 
               <div className="flex gap-3">
@@ -107,7 +120,7 @@ export function OrganizationPaymentForm({ uuid }: { uuid: string }) {
                     trigger={
                       <Button
                         type="button"
-                        className="bg-iDonate-white-space border-2 hover:bg-red-50 border-iDonate-error text-iDonate-error"
+                        className="bg-iDonate-white-space border-2 hover:bg-red-50 border-iDonate-error text-iDonate-error "
                       >
                         Cancel
                       </Button>
@@ -131,77 +144,30 @@ export function OrganizationPaymentForm({ uuid }: { uuid: string }) {
                 {/* Submit Button */}
                 <Button
                   type="submit"
-                  className="bg-iDonate-white-space border-2 hover:bg-iDonate-light-gray border-iDonate-navy-accent text-iDonate-navy-primary dark:text-iDonate-navy-accent dark:bg-iDonate-dark-mode dark:hover:bg-black"
+                  className="bg-iDonate-white-space border-2 hover:bg-iDonate-light-gray border-iDonate-navy-accent text-iDonate-navy-primary dark:bg-iDonate-dark-mode dark:hover:bg-black dark:text-iDonate-navy-accent"
                 >
-                  Submit
+                   {form.formState.isSubmitting ? "Submitting..." : "Submit"}
                 </Button>
               </div>
             </CardHeader>
 
-            <div className="flex items-start gap-9">
-              <CardContent className="flex p-0 m-0">
-                {previewImage ? (
-                  <Image
-                    src={previewImage}
-                    alt="Preview"
-                    width={150}
-                    height={150}
-                    className="rounded-md"
-                  />
-                ) : (
-                  <Image
-                    src={payment}
-                    alt="Organization"
-                    width={150}
-                    height={150}
-                  />
+            <CardContent className="flex w-fle gap-9 p-0 m-0">
+              <FormField
+                control={form.control}
+                name="bankAccountNumber"
+                render={({ field }) => (
+                  <FormItem className="w-full">
+                    <FormControl className="w-full">
+                      <Input placeholder="Elizabeth Joe" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                    <FormDescription className="text-iDonate-gray text-sm">
+                      This is your organization's address.
+                    </FormDescription>
+                  </FormItem>
                 )}
-              </CardContent>
-
-              <CardContent className="flex flex-col gap-9 p-0 m-0">
-                <FormField
-                  control={form.control}
-                  name="image"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormControl>
-                        <div className="relative">
-                          <input
-                            id="file-input"
-                            type="file"
-                            accept=".jpg, .jpeg, .png"
-                            className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
-                            onChange={(e) =>
-                              handleFileChange(e, field.onChange)
-                            } // Pass field.onChange
-                            ref={field.ref}
-                          />
-                          <Button
-                            type="button"
-                            className="bg-iDonate-white-space border-2 hover:bg-iDonate-light-gray border-iDonate-navy-accent text-iDonate-navy-primary dark:text-iDonate-navy-accent dark:bg-iDonate-dark-mode dark:hover:bg-black"
-                            onClick={() => {
-                              document.getElementById("file-input")?.click();
-                            }}
-                          >
-                            <Upload />
-                            New KHQR
-                          </Button>
-                        </div>
-                      </FormControl>
-                      <FormMessage />
-                      <div>
-                        <FormDescription className="text-iDonate-gray text-sm">
-                          JPG or PNG is allowed.
-                        </FormDescription>
-                        <FormDescription className="text-iDonate-gray text-sm">
-                          At least 800x800 px recommended.
-                        </FormDescription>
-                      </div>
-                    </FormItem>
-                  )}
-                />
-              </CardContent>
-            </div>
+              />
+            </CardContent>
           </Card>
         )}
       </form>

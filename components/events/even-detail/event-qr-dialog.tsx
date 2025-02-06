@@ -9,13 +9,13 @@ import {
 import { X } from "lucide-react";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import Image from "next/image";
-import { DonationType } from "@/difinitions/types/donation/donation";
+import { DonationDataType } from "@/difinitions/types/donation/donation";
 
 type EventQrDialogProps = {
   qrcode: string;
   isOpen: boolean;
   onClose: () => void;
-  paymentData?: DonationType;
+  paymentData?: DonationDataType;
 };
 
 export default function EventQrDialog({
@@ -31,7 +31,7 @@ export default function EventQrDialog({
     : `data:image/png;base64,${qrcode}`;
 
   const {
-    donationEventID,
+    eventUuid,
     donor,
     amount,
     recipient,
@@ -77,7 +77,7 @@ export default function EventQrDialog({
               <span className="font-semibold text-start">
                 Donation Event ID:
               </span>
-              <span className="text-gray-600 text-end">{donationEventID}</span>
+              <span className="text-gray-600 text-end">{eventUuid}</span>
             </div>
             <div className="flex justify-between items-center">
               <span className="font-semibold text-start">Donor:</span>

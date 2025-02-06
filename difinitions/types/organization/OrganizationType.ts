@@ -26,7 +26,8 @@ export type OrganizationType = {
   email: string;
   phone: string;
   address: string;
-  image: string;
+  image: File | string;
+  bankAccountNumber: string;
   isApproved: boolean;
   fileReferences: string | null;
   user: UserType;

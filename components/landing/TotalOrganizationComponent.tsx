@@ -6,14 +6,19 @@ import { frame, motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { Building2, Gift, Users, HandHeartIcon } from "lucide-react";
 import SockJS from "sockjs-client";
-import {Client } from "@stomp/stompjs"
+import { Client } from "@stomp/stompjs";
 
 // Data for the organization statistics
 const initialOrganizationData = [
   { amount: 0, desc: "ចំនួនសរុប", title: "អង្គការភាព", icon: Building2 },
   { amount: 0, desc: "ចំនួនសរុប", title: "កម្មវិធីបរិច្ចាគ", icon: Gift },
   { amount: 0, desc: "ចំនួនសរុប", title: "អ្នកស្ម័គ្រចិត្ត", icon: Users },
-  { amount: 0, desc: "ចំនួនថវិការ", title: "ដែលបានបរិច្ចាគ", icon: HandHeartIcon },
+  {
+    amount: 0,
+    desc: "ចំនួនថវិការ",
+    title: "ដែលបានបរិច្ចាគ",
+    icon: HandHeartIcon,
+  },
 ];
 
 const CounterAnimation = ({ target }: { target: number }) => {
@@ -46,7 +51,13 @@ const CounterAnimation = ({ target }: { target: number }) => {
     }
   }, [inView, target]);
 
-  return <span ref={ref}>{new Intl.NumberFormat("en-US", { maximumFractionDigits: 2 }).format(count)}</span>;
+  return (
+    <span ref={ref}>
+      {new Intl.NumberFormat("en-US", { maximumFractionDigits: 2 }).format(
+        count,
+      )}
+    </span>
+  );
 };
 
 const formatAmount = (amount: number) => {
@@ -57,7 +68,13 @@ const formatAmount = (amount: number) => {
 };
 
 // Organization Stat Card Component
-const StatCard = ({ item, index }: { item: typeof initialOrganizationData[0]; index: number }) => {
+const StatCard = ({
+  item,
+  index,
+}: {
+  item: (typeof initialOrganizationData)[0];
+  index: number;
+}) => {
   return (
     <motion.div
       key={index}
@@ -99,18 +116,19 @@ const StatCard = ({ item, index }: { item: typeof initialOrganizationData[0]; in
   );
 };
 
-
-
 // Main Component
 export default function TotalOrganizationComponent() {
-
-  const [organizationData, setOrganizationData] = useState(initialOrganizationData);
+  const [organizationData, setOrganizationData] = useState(
+    initialOrganizationData,
+  );
 
   useEffect(() => {
     // Initialize WebSocket connection
-    const socket = new SockJS(`${process.env.NEXT_PUBLIC_IDONATE_API_URL}/websocket`)
+    const socket = new SockJS(
+      `${process.env.NEXT_PUBLIC_IDONATE_API_URL}/websocket`,
+    );
     // const socket = new SockJS("http://localhost:9999/websocket")
-    
+
     const stompClient = new Client({
       webSocketFactory: () => socket,
       debug: (str) => console.log(str),
@@ -125,57 +143,60 @@ export default function TotalOrganizationComponent() {
     };
 
     stompClient.onConnect = (frame) => {
-
       console.log("Connected: " + frame);
-      
+
       stompClient.subscribe("/topic/totalDonors", (message) => {
         const totalDonors = JSON.parse(message.body);
-        setOrganizationData((prevData) => prevData.map((item, i) => 
-          i === 2 ? {...item, amount: totalDonors } : item
-        ))
+        setOrganizationData((prevData) =>
+          prevData.map((item, i) =>
+            i === 2 ? { ...item, amount: totalDonors } : item,
+          ),
+        );
       });
 
       stompClient.subscribe("/topic/totalOrganizations", (message) => {
         const totalOrganizations = JSON.parse(message.body);
-        setOrganizationData((prevData) => prevData.map((item, i) => 
-          i === 0 ? {...item, amount: totalOrganizations } : item
-        ))
+        setOrganizationData((prevData) =>
+          prevData.map((item, i) =>
+            i === 0 ? { ...item, amount: totalOrganizations } : item,
+          ),
+        );
       });
 
       stompClient.subscribe("/topic/totalEvents", (message) => {
         const totalEvents = JSON.parse(message.body);
-        setOrganizationData((prevData) => prevData.map((item, i) => 
-          i === 1 ? {...item, amount: totalEvents } : item
-        ))
+        setOrganizationData((prevData) =>
+          prevData.map((item, i) =>
+            i === 1 ? { ...item, amount: totalEvents } : item,
+          ),
+        );
       });
 
       stompClient.subscribe("/topic/totalDonationAmount", (message) => {
         let totalDonationAmount = JSON.parse(message.body);
-      
+
         // Ensure it's a valid number and format it properly
         if (typeof totalDonationAmount === "string") {
           totalDonationAmount = parseFloat(totalDonationAmount);
         }
-      
+
         console.log("Received total donation amount", totalDonationAmount);
-        
+
         setOrganizationData((prevData) =>
           prevData.map((item, i) =>
-            i === 3 ? { ...item, amount: totalDonationAmount } : item
-          )
+            i === 3 ? { ...item, amount: totalDonationAmount } : item,
+          ),
         );
       });
-      
     };
 
-      stompClient.activate();
+    stompClient.activate();
 
-      // Cleanup on unmount
-      return () => {
-        stompClient.deactivate();
-      };
-
-    }, []);
+    // Cleanup on unmount
+    return () => {
+      stompClient.deactivate();
+    };
+  }, []);
 
   return (
     <motion.div
@@ -184,7 +205,7 @@ export default function TotalOrganizationComponent() {
     >
       {/* Heading */}
       <h2 className="text-2xl sm:text-3xl md:text-4xl font-medium text-center dark:text-white text-iDonate-navy-primary mb-8 sm:mb-12 leading-tight">
-        យើងរួមគ្នា កសាងសហគមន៍ដ៏រឹងមាំ
+        យើងរួមគ្នា កសាងសហគមន៍ដ៏រឹងមាំមួយ
       </h2>
 
       {/* Grid Layout for Stats */}

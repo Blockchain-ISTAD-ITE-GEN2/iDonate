@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 export async function POST() {
   const cookieRefreshTokenName =
     process.env.COOKIE_REFRESH_TOKEN_NAME || "idonate-refresh-token";
-  // const cookieAccessTokenName = "access";
+  const cookieAccessTokenName = "access";
   const cookieAuthName =
     process.env.COOKIE_AUTH_TOKEN_NAME || "authjs.session-token";
   const cookieStore = cookies();
@@ -27,6 +27,7 @@ export async function POST() {
   if (refreshToken) {
     cookieStore.delete(cookieRefreshTokenName);
     cookieStore.delete(cookieAuthName);
+    cookieStore.delete(cookieAccessTokenName);
 
     return NextResponse.json(
       {

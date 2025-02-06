@@ -34,7 +34,7 @@ export const formSchema = z.object({
 });
 
 export const organizationInfomationSchema = z.object({
-  fullName: z
+  name: z
     .string()
     .min(1, { message: "Name of organization is required" })
     .max(100, { message: "Name of organization cannot exceed 100 characters" }),
@@ -42,13 +42,13 @@ export const organizationInfomationSchema = z.object({
     .string()
     .email({ message: "Invalid email address" })
     .min(1, { message: "Email is required" }),
-  contact: z.string().regex(/^\+?\d{10,15}$/, {
+  phone: z.string().regex(/^\+?\d{10,15}$/, {
     message: "Contact must be a valid phone number with 10-15 digits",
   }),
 });
 
 export const organizationAddressSchema = z.object({
-  address: z.string().url("Please provide a valid URL."),
+  address: z.string(),
 });
 
 export const organizationBioSchema = z.object({
@@ -59,25 +59,38 @@ export const organizationBioSchema = z.object({
 });
 
 export const organizationPaymentSchema = z.object({
-  image: z.string().url("Invalid image URL.").optional().or(z.literal("")), // Allow empty string as default value
+  bankAccountNumber: z.string(), // Allow empty string as default value
 });
 
+
 export const organizationMediaSchema = z.object({
-  image: z.string().url("Invalid image URL.").optional().or(z.literal("")), // Allow empty string as default value
+  image: z
+    .any()
+    // .refine((file) => file instanceof File, {
+    //   message: "Invalid file format. Please upload an image.",
+    // })
+    // .refine((file) => file.type?.startsWith("image/"), {
+    //   message: "Only image files are allowed.",
+    // })
+    // .refine((file) => file.size <= 2 * 1024 * 1024, {
+    //   message: "File size must be 2MB or less.",
+    // })
+    // .optional(), // Allows empty input initially
 });
+
 
 export const organizationReferenceSchema = z.object({
   images: z.array(z.instanceof(File)),
 });
 
 export const donationSchema = z.object({
-  donationEventID: z
+  eventUuid: z
     .string()
     .uuid("Invalid donation event ID. Must be a valid UUID."),
-  donor: z.string().uuid("Invalid donor ID. Must be a valid UUID."),
+  // donor: z.string().uuid("Invalid donor ID. Must be a valid UUID."),
   amount: z.number().positive("Amount must be greater than zero."),
   // .min(0.01, "Minimum amount is 0.01."),
-  recipient: z.string().uuid("Invalid recipient ID. Must be a valid UUID."),
+  // recipient: z.string().uuid("Invalid recipient ID. Must be a valid UUID."),
   acquiringBank: z
     .string()
     .min(1, "Acquiring bank cannot be empty.")
@@ -89,7 +102,7 @@ export const donationSchema = z.object({
       /^[A-Z]{3}$/,
       "Currency must consist of uppercase letters (e.g., USD).",
     ),
-  timezone: z.string().min(1, "Timezone cannot be empty."),
+  // timezone: z.string().min(1, "Timezone cannot be empty."),
   city: z
     .string()
     .min(1, "City cannot be empty.")

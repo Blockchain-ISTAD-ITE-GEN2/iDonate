@@ -45,7 +45,7 @@ export function BarAndLineChart({ orgUuid }: { orgUuid: string }) {
 
         // Format transactions
         const formattedTransactions = data.content.map((transaction: any) => ({
-          avatar: transaction.avatar || "",
+          avatar: transaction.avatar,
           donor: transaction.username,
           amount: transaction.donationAmount,
           timestamp: transaction.timestamp,
@@ -86,26 +86,25 @@ export function BarAndLineChart({ orgUuid }: { orgUuid: string }) {
       <div className="flex flex-col gap-4">
         {/* ✅ Render CardsMetric with computed average data */}
         <CardsMetric data={averageData} />
-
       </div>
 
-      {/* Recent Transactions Card */}
+      {/* ប្រតិបត្តិការថ្មីៗ Card */}
       <Card className="md:w-full xl:w-[480px] bg-iDonate-light-gray rounded-lg border border-iDonate-navy-accent dark:bg-iDonate-dark-mode">
         <CardHeader>
           <CardTitle className="text-medium-eng font-normal text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
-            Recent Transactions
+            ប្រតិបត្តិការថ្មីៗ
           </CardTitle>
 
-          <CardDescription className="text-sub-description-eng text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
-            You received {recentTransactions.length} donations this week.
+          <CardDescription className="text-sub-description-eng py-2 text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
+            អ្នកទទួលបានការបរិច្ចាគចំនួន {recentTransactions.length}​ ក្នុងសប្តាហ៍នេះ។
           </CardDescription>
         </CardHeader>
 
-        <CardContent>
+        <CardContent className="">
           <div>
             {loading && <p>Loading transactions...</p>}
             {error && <p className="text-red-500">{error}</p>}
-            {!loading && !error && <ReacentTransacctions transactions={recentTransactions} />}
+            {!loading && !error && <ReacentTransacctions transactions={recentTransactions.slice(0, 5)} />}
           </div>
         </CardContent>
       </Card>

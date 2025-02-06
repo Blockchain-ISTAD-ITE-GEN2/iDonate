@@ -3,6 +3,7 @@ import { TransactionType } from "@/difinitions/types/table-type/transaction";
 import { Label } from "@/components/ui/label";
 import donateIcon from "@/public/images/give-and-recieve.png";
 import Image from "next/image";
+import { CircleDollarSign } from "lucide-react";
 
 type RecentTransactionProps = {
   transactions: TransactionType[];
@@ -24,7 +25,9 @@ export function DonorReacentTransacctions({
           <div className="flex items-center gap-3 w-full sm:w-auto">
             <Avatar className="h-12 w-12 sm:h-16 sm:w-16 flex items-center justify-center border bg-iDonate-green-accent">
               {transaction.avatar ? (
-                <img
+                <Image
+                  width={40}
+                  height={40}
                   src={transaction.avatar}
                   alt={`${transaction.username} Avatar`}
                   className="h-full w-full object-cover"
@@ -39,23 +42,27 @@ export function DonorReacentTransacctions({
               )}
             </Avatar>
             <div className="space-y-1">
-            <p className="text-sm line-clamp-1 lg:text-description-eng sm:line-clamp-none lg:line-clamp-1 font-normal text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
-  Donated to{" "}
-  <span className="font-medium text-iDonate-navy-primary dark:text-iDonate-navy-accent">
-    {transaction.event?.name || "Unknown Event"}
-  </span>
-</p>
-<p className="text-xs line-clamp-1 sm:text-sub-description-eng sm:line-clamp-none lg:line-clamp-1 text-iDonate-gray">
-  {transaction.organization?.name || "Unknown Organization"}
-</p>
+              <p className="text-sm line-clamp-1 lg:text-description-eng sm:line-clamp-none lg:line-clamp-1 font-normal text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
+                  បានបរិច្ចាគទៅ{" "}
+                  <span className="font-medium text-iDonate-navy-primary dark:text-iDonate-navy-accent">
+                    {transaction.event?.name || "Unknown Event"}
+                  </span>
+                </p>
+                <p className="text-xs line-clamp-1 sm:text-sub-description-eng sm:line-clamp-none lg:line-clamp-1 text-iDonate-gray">
+                  {transaction.organization?.name || "Unknown Organization"}
+                </p>
 
-            </div>
+              </div>
           </div>
 
           {/* Amount */}
-          <span className="ml-auto text-iDonate-green-primary text-sm sm:text-medium-eng text-text-start dark:text-iDonate-green-secondary">
-            ${transaction.amount}
-          </span>
+          <div className="flex justify-center items-center gap-1">
+            <CircleDollarSign className="h-6 w-6 text-iDonate-green-primary dark:text-iDonate-green-secondary" />
+            <span className="text-iDonate-green-primary text-sm sm:text-base font-medium ml-auto dark:text-iDonate-green-secondary">
+              {transaction.amount}
+            </span>
+          </div>
+
         </div>
       ))
       
@@ -65,7 +72,7 @@ export function DonorReacentTransacctions({
 
       {/* View All Transactions */}
       <Label className="flex items-center py-4 text-sm sm:text-medium-eng text-iDonate-navy-secondary cursor-pointer dark:text-iDonate-navy-accent">
-        View all transactions
+        មើលប្រតិបត្តិការទាំងអស់
       </Label>
     </div>
   );

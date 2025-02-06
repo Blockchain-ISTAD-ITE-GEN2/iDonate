@@ -10,7 +10,7 @@ import {
 import { Heart, LogOut, Search, User } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { selectToken } from "@/redux/features/auth/authSlice";
 import { useAppSelector } from "@/redux/hooks";
 import AvartarPlaceHolder from "@/public/images/user-idonate.png";
@@ -132,7 +132,7 @@ export const ProfileDropdown = ({
               style={{ width: "25px", height: "25px" }}
               className="bg-iDonate-navy-primary rounded-full p-1 fill-white group-hover:fill-iDonate-navy-primary group-hover:text-iDonate-navy-primary group-hover:bg-iDonate-green-secondary"
             />
-            <span className="text-lg">Donate Now</span>
+            <span className="text-lg">បរិច្ចាគឥឡូវនេះ</span>
           </Button>
         </div>
 

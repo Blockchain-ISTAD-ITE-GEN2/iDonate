@@ -34,7 +34,7 @@ export default function CategoryOnPageComponent() {
       {isLoadingCategory ? (
         <p></p>
       ) : (
-        apiReponseCategory.map((category: any) => (
+        apiReponseCategory.map((category: CategoryType) => (
           <CategoryWithEventComponent key={category.uuid} category={category} />
         ))
       )}

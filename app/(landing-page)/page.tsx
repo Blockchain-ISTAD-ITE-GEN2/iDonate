@@ -42,7 +42,9 @@ export const metadata: Metadata = {
     title: "iDonate - Empowering Transparent Donations",
     description:
       "Make donations you can trust with iDonate. Explore verified organizations and causes.",
-    images: ["https://idonateapi.kangtido.life/media/819e4d30-4bcd-4f23-a004-744075dbecbf.png"],
+    images: [
+      "https://idonateapi.kangtido.life/media/819e4d30-4bcd-4f23-a004-744075dbecbf.png",
+    ],
   },
   icons: {
     icon: "/favicon.ico",
@@ -62,14 +64,6 @@ export const metadata: Metadata = {
 };
 
 export default function Homepage() {
-  // update thsi for debugging
-
-  console.log(
-    "NEXT_PUBLIC_IDONATE_API_URL:",
-    process.env.NEXT_PUBLIC_IDONATE_API_URL,
-  );
-
-  // const typedCategory: CategoryType[] = categories;
   return (
     <section className="flex flex-col items-center gap-9">
       {/* Here section */}
@@ -80,13 +74,13 @@ export default function Homepage() {
         <div className="space-y-2">
           <h2
             lang="km"
-            className="text-xl font-medium text-iDonate-green-primary dark:text-iDonate-green-secondary "
+            className="p-2 text-xl font-medium text-iDonate-green-primary dark:text-iDonate-green-secondary "
           >
             តើអ្វីខ្លះដែលយើងត្រូវធ្វើ?
           </h2>
           <h3
             lang="km"
-            className="text-2xl font-medium text-iDonate-navy-primary dark:text-iDonate-navy-accent"
+            className="p-3 text-2xl font-medium text-iDonate-navy-primary dark:text-iDonate-navy-accent"
           >
             ការបរិច្ចាគរបស់អ្នក ជាសេចក្តីអំណរបស់អ្នកដទៃ !
           </h3>
@@ -112,7 +106,7 @@ export default function Homepage() {
           {/*Test Github actions 3 */}
           <h3
             lang="km"
-            className="text-2xl text-iDonate-navy-primary text-center dark:text-iDonate-navy-accent"
+            className="mb-5 p-2 text-2xl text-iDonate-navy-primary text-center dark:text-iDonate-navy-accent"
           >
             កម្មវិធីបរិច្ចាគចុងក្រោយបំផុត
           </h3>

@@ -61,7 +61,26 @@ export const organizatioApi = idonateApi.injectEndpoints({
         method: "POST",
         body: newOrganization,
       }),
+      invalidatesTags: [{ type: "organization" }]
     }),
+    useUploadOrganizationImage: builder.mutation({
+      query: ({ orgUuid, fileData }) => ({
+        url: `/organizations/${orgUuid}/upload-org-image`,
+        method: "PUT",
+        body: fileData,  // No need to stringify FormData
+        formData: true,  // Ensures proper handling of FormData
+      }),
+      invalidatesTags: [{ type: "organization" }]
+    }),
+    setBankAccount: builder.mutation({
+      query: ({ orgUuid, bankAccount }) => ({
+        url: `/organizations/set-bank-account/${orgUuid}`,
+        method: "PUT",
+        body: bankAccount,
+      }),
+      invalidatesTags: [{ type: "organization" }]
+    }),
+    
   }),
 });
 
@@ -73,4 +92,7 @@ export const {
   useCreateOrganizationMutation,
   useGetOrganizationByuuidQuery,
   useGetOrganizationByUserQuery,
+  useGetPendingOrganizationsQuery,
+  useUseUploadOrganizationImageMutation,
+  useSetBankAccountMutation,
 } = organizatioApi;

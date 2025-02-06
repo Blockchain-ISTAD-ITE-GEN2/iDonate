@@ -8,15 +8,17 @@ import { useEffect, useState } from "react";
 export default function TransactionCardHistory() {
   const typedTransactions: TransactionType[] = transactions.map((t) => ({
     ...t,
-    event: typeof t.event === "string" ? { name: t.event } : t.event,
+    event: typeof t.event === "string" ? { name: t.event, media: "", description: "", location: "", startDate: "", endDate: "", type: "", images: [], isDraft: false, isVisible: true } : t.event,
   }));
-  
 
-  const [filteredtransactions, setFilteredtransactions] =
-    useState<TransactionType[]>(transactions.map((t) => ({
+  const [filteredtransactions, setFilteredtransactions] = useState<
+    TransactionType[]
+  >(
+    transactions.map((t) => ({
       ...t,
-      event: typeof t.event === "string" ? { name: t.event } : t.event,
-    })));
+      event: typeof t.event === "string" ? { name: t.event, media: "", description: "", location: "", startDate: "", endDate: "", type: "", images: [], isDraft: false, isVisible: true } : t.event,
+    })),
+  );
 
   useEffect(() => {
     setFilteredtransactions(typedTransactions); // Reset filtered transactions whenever `transactions` prop changes
@@ -27,25 +29,26 @@ export default function TransactionCardHistory() {
       key: "event",
       title: "Events",
       options: Array.from(
-        new Set(typedTransactions.map((transaction) => transaction.event?.name)) // Extract event name
+        new Set(
+          typedTransactions.map((transaction) => transaction.event?.name),
+        ), // Extract event name
       ).map((eventName) => ({
         label: eventName ?? "",
         value: eventName ?? "",
       })),
     },
-  
+
     {
       key: "amount",
       title: "Amount Range",
       options: Array.from(
-        new Set(typedTransactions.map((transaction) => transaction.amount))
+        new Set(typedTransactions.map((transaction) => transaction.amount)),
       ).map((amount) => ({
         label: amount?.toString() ?? "",
         value: amount?.toString() ?? "",
       })),
     },
   ];
-  
 
   const filtersDateRange = [
     {

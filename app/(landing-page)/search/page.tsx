@@ -32,7 +32,9 @@ export const metadata: Metadata = {
     title: "Search - iDonate",
     description:
       "Discover donation opportunities, organizations, and events on iDonate.",
-    images: ["https://idonateapi.kangtido.life/media/a1108ea2-b140-4a4c-b07d-21aa141853f5.png"],
+    images: [
+      "https://idonateapi.kangtido.life/media/a1108ea2-b140-4a4c-b07d-21aa141853f5.png",
+    ],
   },
   icons: {
     icon: "/favicon.ico",

@@ -7,14 +7,11 @@ import FooterComponent from "@/components/footer/FooterComopent";
 import { usePathname } from "next/navigation";
 import { Loader } from "lucide-react";
 
-
-
 type RootLayoutProps = {
   children: ReactNode;
 };
 
 export default function LayoutCompnent({ children }: RootLayoutProps) {
-  
   const pathname = usePathname();
   const showSidebar = pathname.startsWith("/organization-dashboard/");
 

@@ -9,13 +9,13 @@ export const ContributorMenulist = () => {
   return [
     {
       path: `/donor-dashboard/${user?.uuid}`,
-      title: "Donor",
+      title: "អ្នកបរិច្ចាគ",
       icon: icons.User,
       active: false,
     },
     {
       path: `/organization-list/${user?.uuid}`,
-      title: "Organization",
+      title: "អង្គភាព",
       icon: icons.Building2,
       active: false,
     },

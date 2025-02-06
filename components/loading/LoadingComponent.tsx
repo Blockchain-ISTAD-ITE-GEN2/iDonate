@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 const LoadingInsidePage = () => {
   return (
-    <StyledWrapper>
+    <StyledWrapper className="w-full h-full items-center justify-center">
       <div className="loading">
         <span />
         <span />
@@ -18,7 +18,7 @@ const LoadingInsidePage = () => {
 const StyledWrapper = styled.div`
   .loading {
     --speed-of-animation: 0.9s;
-    --gap: 6px;
+    --gap: 8px;
     --first-color: #1e2e4e;
     --second-color: #55a44a;
     --third-color: #f6bb02;
@@ -27,14 +27,14 @@ const StyledWrapper = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100px;
-    gap: 6px;
-    height: 100px;
+    width: 140px; /* Increased width */
+    height: 140px; /* Increased height */
+    gap: var(--gap);
   }
 
   .loading span {
-    width: 4px;
-    height: 50px;
+    width: 6px; /* Increased width */
+    height: 80px; /* Increased height */
     background: var(--first-color);
     animation: scale var(--speed-of-animation) ease-in-out infinite;
   }
