@@ -28,7 +28,7 @@ export function FileUploader(props: FileUploaderProps) {
   } = props;
 
   const [files, setFiles] = useControllableState({
-    prop: valueProp,
+    prop: Array.isArray(valueProp) ? valueProp : valueProp ? [valueProp] : undefined,
     onChange: onValueChange,
   });
 
