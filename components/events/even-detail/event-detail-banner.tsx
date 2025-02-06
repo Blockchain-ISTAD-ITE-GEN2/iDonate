@@ -60,12 +60,14 @@ export function EventDetailBanner({ uuid }: EventDetailBannerProps) {
         }
         const data = await response.json();
 
-        const formattedTransactions = data.content.map((transaction: any) => ({
+        const formattedTransactions: TransactionType[] = data.content.map((transaction: any) => ({
           avatar: transaction.avatar || "",
           name: transaction.username || "anonymous",
           amount: transaction.donationAmount || 0,
           timestamp: transaction.timestamp,
         }));
+
+        formattedTransactions.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
 
         setRecentTransactions(formattedTransactions);
       } catch (err: any) {
@@ -190,7 +192,7 @@ export function EventDetailBanner({ uuid }: EventDetailBannerProps) {
           <div className="flex items-center gap-1 h-full">
           <CircleDollarSign className="h-5 w-5 text-iDonate-green-primary dark:text-iDonate-green-secondary align-middle" />
           <p className="text-iDonate-green-primary font-medium text-[17px] leading-none dark:text-iDonate-navy-accent">
-            {currentRaised ? `${currentRaised.toLocaleString()}` : "មិនទាន់ទទួលបានថវិការ"}
+            {transaction.amount ? `${transaction.amount}` : "មិនទាន់ទទួលបានថវិការ"}
           </p>
         </div>
         </div>
