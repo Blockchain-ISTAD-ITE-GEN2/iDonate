@@ -3,7 +3,7 @@ import { Users, CircleDollarSign, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import Image from "next/image";
-import { useGetEventsQuery } from "@/redux/services/event-service";
+import { useGetDraftEventsFalseQuery, useGetEventsQuery } from "@/redux/services/event-service";
 import { EventType } from "@/difinitions/types/event/EventType";
 import { useEffect, useState } from "react";
 import SockJS from "sockjs-client";
@@ -14,9 +14,9 @@ export default function LatestDonationCard() {
 
   const router = useRouter();
   const [typedEvents, setTypedEvents] = useState<EventType[]>([]);
-
+  const [hoveredCard, setHoveredCard] = useState<string | null | any>(null);
   // Fetch data from RTK
-  const { data: apiEventResponse = { content: [] } } = useGetEventsQuery({});
+  const { data: apiEventResponse = { content: [] } } = useGetDraftEventsFalseQuery({});
 
   useEffect(() => {
     // Sort and slice the events
@@ -75,85 +75,88 @@ export default function LatestDonationCard() {
 
   return (
     <div className="w-full h-auto bg-transparent flex flex-col gap-6 lg:pb-[500px]">
-      {typedEvents.slice(3, 4).map((item) => (
-        <Card
-          onClick={(e) => {
-            e.stopPropagation();
-            router.push(`/event-detail/${item?.uuid}`);
-          }}
-          key={item.uuid}
-          className="w-full h-auto lg:h-[660px] z-2 p-0 m-0 border-none grid lg:grid-cols-2 item-center lg:z-0 lg:relative"
-        >
-          {/* Image Section */}
-          <div className="relative min-h-[660px]">
-            <Image
-              src={
-                Array.isArray(item?.images) && item.images[0]
-                  ? item.images[0]
-                  : "https://i.pinimg.com/736x/2a/86/a5/2a86a560f0559704310d98fc32bd3d32.jpg"
-              }
-              fill
-              alt="Community support image"
-              className="absolute inset-0 w-full h-full object-cover"
-            />
-          </div>
-
-          {/* Content Section */}
-          <div className="p-9 bg-iDonate-navy-primary text-iDonate-white-space flex flex-grow flex-col gap-4 dark:bg-iDonate-dark-mode">
-            <div>
-              <h2
-                lang="km"
-                className="text-title-khmer md:text-heading-one-khmer font-semibold leading-relaxed"
-              >
-                {item.name}
-              </h2>
-
-              {/* Description */}
-              <p
-                lang="km"
-                className="flex-1 mb-[36px] text-description-khmer md:text-medium-khmer leading-relaxed"
-              >
-                {item.description}
-              </p>
-
-              {/* Donation Info */}
-              <div
-                lang="km"
-                className="p-4 bg-iDonate-navy-accent rounded-lg flex flex-col sm:flex-row items-center justify-between gap-4"
-              >
-                <div className="flex items-center gap-2 p-1">
-                  <span className="text-iDonate-navy-primary p-1">
-                    អ្នកបរិច្ចាគ: {item?.totalDonors || "0"} ពាន់នាក់
-                  </span>
-                </div>
-
-                <div className="text-iDonate-navy-primary">
-                  ​​ទឹកប្រាក់ទទួលបាន: ${formatAmount(item?.currentRaised) || "0"}
-                </div>
-              </div>
-
-              <Button
+      {/* The Big Card of Lastest Event  */}
+      <div className="lg:relative z-[10] lg:hover:z-[40] pointer-events-auto transition-transform duration-200 lg:hover:scale-95">
+          {typedEvents.slice(3, 4).map((item) => (
+              <Card
                 onClick={(e) => {
                   e.stopPropagation();
                   router.push(`/event-detail/${item?.uuid}`);
                 }}
-                className="w-full my-[36px] bg-iDonate-green-secondary hover:bg-iDonate-green-primary text-iDonate-navy-primary font-semibold"
+                key={item.uuid}
+                className="w-full overflow-hidden cursor-pointer h-auto lg:h-[660px] p-0 m-0 border-none grid lg:grid-cols-2 item-center lg:relative"
               >
-                <Heart
-                  style={{ width: "25px", height: "25px" }}
-                  className="bg-iDonate-navy-primary rounded-full p-1 fill-white group-hover:fill-iDonate-navy-primary group-hover:text-iDonate-navy-primary hover:bg-iDonate-green-secondary group-hover:bg-iDonate-green-secondary dark:bg-iDonate-green-secondary  dark:text-iDonate-navy-primary dark:fill-iDonate-navy-primary"
-                />
-                Donate Now
-              </Button>
-            </div>
-          </div>
-        </Card>
-      ))}
+                {/* Image Section */}
+                <div className="relative min-h-[660px]">
+                  <Image
+                    src={
+                      Array.isArray(item?.images) && item.images[0]
+                        ? item.images[0]
+                        : "https://i.pinimg.com/736x/2a/86/a5/2a86a560f0559704310d98fc32bd3d32.jpg"
+                    }
+                    fill
+                    alt="Community support image"
+                    className="absolute inset-0 w-full h-full object-cover"
+                  />
+                </div>
 
-      {/* Current Donations Section */}
-      <div className="w-full flex flex-col gap-2 z-2 Lg:z-1 lg:absolute">
+                {/* Content Section */}
+                <div className="p-9 bg-iDonate-navy-primary text-iDonate-white-space flex flex-grow flex-col gap-4 dark:bg-iDonate-dark-mode">
+                  <div>
+                    <h2
+                      lang="km"
+                      className="text-title-khmer md:text-heading-one-khmer font-semibold leading-relaxed"
+                    >
+                      {item.name}
+                    </h2>
+
+                    {/* Description */}
+                    <p
+                      lang="km"
+                      className="flex-1 mb-[36px] text-description-khmer md:text-medium-khmer leading-relaxed"
+                    >
+                      {item.description}
+                    </p>
+
+                    {/* Donation Info */}
+                    <div
+                      lang="km"
+                      className="p-4 bg-iDonate-navy-accent rounded-lg flex flex-col sm:flex-row items-center justify-between gap-4"
+                    >
+                      <div className="flex items-center gap-2 p-1">
+                        <span className="text-iDonate-navy-primary p-1">
+                          អ្នកបរិច្ចាគ: {item?.totalDonors || "0"} ពាន់នាក់
+                        </span>
+                      </div>
+
+                      <div className="text-iDonate-navy-primary">
+                        ​​ទឹកប្រាក់ទទួលបាន: ${formatAmount(item?.currentRaised) || "0"}
+                      </div>
+                    </div>
+
+                    <Button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        router.push(`/event-detail/${item?.uuid}`);
+                      }}
+                      className="w-full my-[36px] bg-iDonate-green-secondary hover:bg-iDonate-green-primary text-iDonate-navy-primary font-semibold z-3 pointer-events-auto"
+                    >
+                      <Heart
+                        style={{ width: "25px", height: "25px" }}
+                        className="bg-iDonate-navy-primary rounded-full p-1 fill-white group-hover:fill-iDonate-navy-primary group-hover:text-iDonate-navy-primary hover:bg-iDonate-green-secondary group-hover:bg-iDonate-green-secondary dark:bg-iDonate-navy-primary dark:text-iDonate-navy-primary dark:fill-white"
+                      />
+                      Donate Now
+                    </Button>
+                  </div>
+                </div>
+              </Card>
+          ))}
+      </div>
+
+      {/* The Small 3 Event  Donations Section */}
+      <div className="w-full flex flex-col gap-2  lg:absolute ">
         {typedEvents.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 items-center justify-center mx-auto lg:grid-cols-3 gap-6 p-2 lg:mt-[500px]">
+          <div className="grid grid-cols-1 sm:grid-cols-2  z-2 lg:hover:z-[30]   items-center justify-center mx-auto lg:grid-cols-3 gap-6 p-2 lg:mt-[500px]">
             {typedEvents.slice(0, 3).map((item) => (
               <Card
                 onClick={() => router.push(`/event-detail/${item?.uuid}`)}
@@ -203,10 +206,10 @@ export default function LatestDonationCard() {
                     onClick={() => router.push(`/event-detail/${item?.uuid}`)}
                     className="w-full bg-iDonate-green-secondary hover:bg-[#22c55e] text-[#1e2c49] font-semibold"
                   >
-                    <Heart
-                      style={{ width: "25px", height: "25px" }}
-                      className="bg-iDonate-navy-primary rounded-full p-1 fill-white group-hover:fill-iDonate-navy-primary group-hover:text-iDonate-navy-primary hover:bg-iDonate-green-secondary group-hover:bg-iDonate-green-secondary dark:bg-iDonate-green-secondary  dark:text-iDonate-navy-primary dark:fill-iDonate-navy-primary"
-                    />
+                      <Heart
+                        style={{ width: "25px", height: "25px" }}
+                        className="bg-iDonate-navy-primary rounded-full p-1 fill-white group-hover:fill-iDonate-navy-primary group-hover:text-iDonate-navy-primary hover:bg-iDonate-green-secondary group-hover:bg-iDonate-green-secondary dark:bg-iDonate-navy-primary dark:text-iDonate-navy-primary dark:fill-white"
+                      />
                     Donate Now
                   </Button>
                 </div>
