@@ -41,7 +41,6 @@ export function BarAndLineChartLanding() {
   });
 
   useEffect(() => {
-    // Fetch initial transactions
     const fetchTransactions = async () => {
       try {
         const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/v1/donation`);
@@ -52,7 +51,7 @@ export function BarAndLineChartLanding() {
         console.log("Data transactions: ", data);
 
         const formattedTransactions: TransactionType[] = data.content.map((txn: any) => ({
-          id: crypto.randomUUID(), // Generate a unique ID
+          id: crypto.randomUUID(),
           avatar: txn.avatar || "",
           donor: txn.username || "Anonymous",
           event: txn.event,
@@ -71,11 +70,10 @@ export function BarAndLineChartLanding() {
 
     fetchTransactions();
 
-    // Set up WebSocket connection
     const socket = new SockJS(`${process.env.NEXT_PUBLIC_IDONATE_API_URL}/websocket`);
     const stompClient = new Client({
       webSocketFactory: () => socket,
-      reconnectDelay: 5000, // Retry connection every 5s if disconnected
+      reconnectDelay: 5000,
       heartbeatIncoming: 4000,
       heartbeatOutgoing: 4000,
     });
@@ -86,11 +84,16 @@ export function BarAndLineChartLanding() {
         try {
           const newTransaction = JSON.parse(message.body);
 
+          if (!newTransaction.content || newTransaction.content.length === 0) return;
+
           const formattedTransaction: TransactionType = {
-            avatar: newTransaction.avatar || "",
-            donor: newTransaction.username || "Anonymous",
-            amount: newTransaction.donationAmount,
-            timestamp: new Date(newTransaction.timestamp).toISOString(),
+            // id: crypto.randomUUID(),
+            avatar: newTransaction.content[0].avatar || "",
+            donor: newTransaction.content[0].username || "Anonymous",
+            event: newTransaction.content[0].event,
+            organization: newTransaction.content[0].organization,
+            amount: newTransaction.content[0].donationAmount,
+            timestamp: new Date(newTransaction.content[0].timestamp).toISOString(),
           };
 
           dispatch({ type: "ADD_TRANSACTION", payload: formattedTransaction });
@@ -107,7 +110,6 @@ export function BarAndLineChartLanding() {
 
     stompClient.activate();
 
-    // Cleanup WebSocket connection on unmount
     return () => {
       stompClient.deactivate();
     };
