@@ -59,7 +59,9 @@ export function RecentTransactionsLanding() {
           <div className="flex items-center gap-2 sm:gap-4">
           <Avatar className="h-12 w-12 sm:h-16 sm:w-16 flex items-center justify-center border bg-iDonate-green-accent">
               {transaction.avatar ? (
-                <img
+                <Image
+                  width={300}
+                  height={300}
                   src={transaction.avatar}
                   alt={`${transaction.donor} Avatar`}
                   className="h-full w-full object-cover"
