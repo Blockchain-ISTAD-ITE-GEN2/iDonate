@@ -112,47 +112,49 @@ export function EventDetailBanner({ uuid }: EventDetailBannerProps) {
             <p className="text-center text-red-500">{error}</p>
           ) : (
             <div className="flex flex-col gap-2">
-              {recentTransactions.slice(0,5).map((transaction, index) => (
-        <div
-          key={index}
-          className="flex flex-wrap sm:flex-nowrap w-full justify-between items-center border-b border-iDonate-navy-accent py-2 gap-2"
-        >
-          <div className="flex items-center gap-2 sm:gap-4">
-          <Avatar className="h-12 w-12 sm:h-16 sm:w-16 flex items-center justify-center border bg-iDonate-green-accent">
-              {transaction.avatar ? (
-                <img
-                  src={transaction.avatar}
-                  alt={`${transaction.username} Avatar`}
-                  className="h-full w-full object-cover"
-                />
-              ) : (
-                <Image
-                  width={40}
-                  height={40}
-                  src={donateIcon}
-                  alt={`${transaction.username} Avatar`}
-                />
-              )}
-            </Avatar>
+              {recentTransactions.slice(0, 5).map((transaction, index) => (
+                <div
+                  key={index}
+                  className="flex flex-wrap sm:flex-nowrap w-full justify-between items-center border-b border-iDonate-navy-accent py-2 gap-2"
+                >
+                  <div className="flex items-center gap-2 sm:gap-4">
+                    <Avatar className="h-12 w-12 sm:h-16 sm:w-16 flex items-center justify-center border bg-iDonate-green-accent">
+                      {transaction.avatar ? (
+                        <img
+                          src={transaction.avatar}
+                          alt={`${transaction.username} Avatar`}
+                          className="h-full w-full object-cover"
+                        />
+                      ) : (
+                        <Image
+                          width={40}
+                          height={40}
+                          src={donateIcon}
+                          alt={`${transaction.username} Avatar`}
+                        />
+                      )}
+                    </Avatar>
 
-            <div className="space-y-1">
-              <p className="text-sm sm:text-base font-medium text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
-                {transaction.username}
-              </p>
-              <p className="text-xs sm:text-sm text-iDonate-gray  dark:text-iDonate-navy-accent">
-                {transaction.timestamp}
-              </p>
-            </div>
-          </div>
+                    <div className="space-y-1">
+                      <p className="text-sm sm:text-base font-medium text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
+                        {transaction.username}
+                      </p>
+                      <p className="text-xs sm:text-sm text-iDonate-gray  dark:text-iDonate-navy-accent">
+                        {transaction.timestamp}
+                      </p>
+                    </div>
+                  </div>
 
-          <div className="flex items-center gap-1 h-full">
-          <CircleDollarSign className="h-5 w-5 text-iDonate-green-primary dark:text-iDonate-green-secondary align-middle" />
-          <p className="text-iDonate-green-primary font-medium text-[17px] leading-none dark:text-iDonate-navy-accent">
-            {transaction.amount ? `${transaction.amount.toLocaleString()}` : "មិនទាន់ទទួលបានថវិការ"}
-          </p>
-        </div>
-        </div>
-      ))}
+                  <div className="flex items-center gap-1 h-full">
+                    <CircleDollarSign className="h-5 w-5 text-iDonate-green-primary dark:text-iDonate-green-secondary align-middle" />
+                    <p className="text-iDonate-green-primary font-medium text-[17px] leading-none dark:text-iDonate-navy-accent">
+                      {transaction.amount
+                        ? `${transaction.amount.toLocaleString()}`
+                        : "មិនទាន់ទទួលបានថវិការ"}
+                    </p>
+                  </div>
+                </div>
+              ))}
             </div>
           )}
         </div>

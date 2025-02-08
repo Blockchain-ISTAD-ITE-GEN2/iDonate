@@ -32,4 +32,5 @@ export type OrganizationType = {
   fileReferences: string | null;
   user: UserType;
   bio: string;
+  onClick?: () => void;
 };

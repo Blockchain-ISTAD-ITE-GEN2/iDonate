@@ -32,19 +32,36 @@ import {
 import { format } from "date-fns";
 import { Calendar } from "@/components/ui/calendar";
 import { cn } from "@/lib/utils";
-
+import { FileUploader } from "@/components/fileupload/file-uploader";
+import { UploadedFilesCard } from "@/components/fileupload/uploaded-files-card";
 import {
   useEditEventsMutation,
   useGetEventByUuidQuery,
 } from "@/redux/services/event-service";
 import { EventType } from "@/difinitions/types/event/EventType";
 import { useToast } from "@/hooks/use-toast";
+import { UploadedFile } from "@/difinitions/types/fileupload";
+import { ScrollArea } from "@radix-ui/react-scroll-area";
+import { FileCard } from "@/components/fileupload/file-card";
+import Image from "next/image";
 
-export function EventInfoFormEdition({ uuid }: { uuid: string }) {
+const placeholderImage =
+  "https://i.pinimg.com/736x/2a/86/a5/2a86a560f0559704310d98fc32bd3d32.jpg";
+
+export function EventImagesFormEdition({ uuid }: { uuid: string }) {
   const [isEditing, setIsEditing] = useState(false);
 
   const { data: event } = useGetEventByUuidQuery(uuid);
   const [updateEvent, { isLoading }] = useEditEventsMutation();
+  const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
+  const [uploadProgresses, setUploadProgresses] = useState<
+    Record<string, number>
+  >({});
+
+  const [imageErrors, setImageErrors] = useState<{ [key: number]: boolean }>(
+    {},
+  );
+  // const [previewImage, setPreviewImage] = useState<string | null>(null);
   const { toast } = useToast();
 
   const typedEvent: EventType = event || {};
@@ -74,48 +91,17 @@ export function EventInfoFormEdition({ uuid }: { uuid: string }) {
     }
   }, [typedEvent?.uuid, form]);
 
-  const { watch, reset, control, formState } = form;
+  const { reset, control, formState } = form;
 
-  const name = watch("name");
-  const description = watch("description");
-  const location = watch("location");
-  const orderDate = watch("startDate");
-  const endDate = watch("endDate");
-
-  const isFormFilled = {
-    name: !!name,
-    description: !!description,
-    location: !!location,
-    orderDate: !!orderDate,
-    endDate: !!endDate,
+  const handleImageError = (index: number) => {
+    setImageErrors((prev) => ({ ...prev, [index]: true }));
   };
-
-  useEffect(() => {
-    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
-      // Check if any field is filled before showing the warning
-      if (
-        isFormFilled.name ||
-        isFormFilled.description ||
-        isFormFilled.orderDate ||
-        isFormFilled.endDate
-      ) {
-        event.preventDefault();
-        event.returnValue =
-          "You have unsaved changes. Are you sure you want to leave?";
-      }
-    };
-
-    window.addEventListener("beforeunload", handleBeforeUnload);
-
-    return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-    };
-  }, [isFormFilled]);
 
   async function onSubmit(values: z.infer<typeof eventSchemaEdition>) {
     if (!typedEvent || !typedEvent?.uuid) return;
 
     try {
+      // Prepare updated event object with selected category UUID
       const updatedEvent = {
         name: values.name,
         description: values.description,
@@ -151,6 +137,8 @@ export function EventInfoFormEdition({ uuid }: { uuid: string }) {
     setIsEditing(false); // Switch back to view mode
   }
 
+  console.log("Uploaded Files:", typedEvent?.images);
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -159,7 +147,7 @@ export function EventInfoFormEdition({ uuid }: { uuid: string }) {
           <Card className="flex flex-col rounded-lg border-2 border-iDonate-navy-accent gap-6 p-9">
             <CardHeader className="flex flex-row items-center justify-between p-0 m-0">
               <CardTitle className="text-2xl font-medium text-iDonate-navy-secondary">
-                Basic Information
+                Event Images
               </CardTitle>
 
               <Button
@@ -172,94 +160,44 @@ export function EventInfoFormEdition({ uuid }: { uuid: string }) {
             </CardHeader>
 
             <CardContent className="flex gap-6 p-0 m-0">
-              {/* Basic */}
-              <div className="flex flex-col gap-6 flex-1">
-                <div className="flex flex-col space-y-3">
-                  <CardDescription className="text-lg text-iDonate-gray">
-                    Event Title
-                  </CardDescription>
-                  <CardDescription className="text-xl text-iDonate-navy-primary">
-                    {typedEvent?.name}
-                  </CardDescription>
-                </div>
+              {/* media */}
 
-                <div className="flex flex-col space-y-3">
-                  <CardDescription className="text-lg text-iDonate-gray">
-                    Event Description
-                  </CardDescription>
-                  <CardDescription className="text-xl text-iDona text-iDonate-navy-primary">
-                    {typedEvent?.description}
-                  </CardDescription>
-                </div>
-
-                <div className="flex gap-6">
-                  <div className="flex flex-col flex-1 space-y-3">
-                    <CardDescription className="text-lg text-iDonate-gray">
-                      Start Date
-                    </CardDescription>
-
-                    <CardDescription className="text-xl text-iDonate-navy-primary">
-                      {typedEvent?.startDate
-                        ? new Intl.DateTimeFormat("en-US", {
-                            day: "2-digit",
-                            month: "long",
-                            year: "numeric",
-                          }).format(new Date(typedEvent.startDate))
-                        : ""}
-                    </CardDescription>
-                  </div>
-
-                  <div className="flex flex-col flex-1 space-y-3">
-                    <CardDescription className="text-lg text-iDonate-gray">
-                      End Date
-                    </CardDescription>
-                    <CardDescription className="text-xl text-iDonate-navy-primary">
-                      {typedEvent?.endDate
-                        ? new Intl.DateTimeFormat("en-US", {
-                            day: "2-digit",
-                            month: "long",
-                            year: "numeric",
-                          }).format(new Date(typedEvent?.endDate))
-                        : ""}
-                    </CardDescription>
-                  </div>
-
-                  <div className="flex flex-col flex-1 space-y-3">
-                    <CardDescription className="text-lg text-iDonate-gray">
-                      Organization
-                    </CardDescription>
-                    <CardDescription className="text-xl text-iDonate-navy-primary line-clamp-1">
-                      {typedEvent?.organization?.name}
-                    </CardDescription>
-                  </div>
-
-                  <div className="flex flex-col flex-1 space-y-3">
-                    <CardDescription className="text-lg text-iDonate-gray">
-                      Category
-                    </CardDescription>
-                    <CardDescription className="text-xl text-iDonate-navy-primary line-clamp-1">
-                      {typedEvent?.category?.name}
-                    </CardDescription>
-                  </div>
-
-                  <div className="flex flex-col flex-1 space-y-3">
-                    <CardDescription className="text-lg text-iDonate-gray">
-                      Total Raised
-                    </CardDescription>
-                    <CardDescription className="text-xl text-iDonate-navy-primary line-clamp-1">
-                      {typedEvent?.currentRaised}
-                    </CardDescription>
-                  </div>
-
-                  <div className="flex flex-col flex-1 space-y-3">
-                    <CardDescription className="text-lg text-iDonate-gray">
-                      Total Donors
-                    </CardDescription>
-                    <CardDescription className="text-xl text-iDonate-navy-primary line-clamp-1">
-                      {typedEvent?.totalDonors}
-                    </CardDescription>
-                  </div>
-                </div>
+              <div className="flex flex-1 flex-col space-y-3">
+                {typedEvent?.images?.length ? (
+                  <ScrollArea className="h-fit w-full px-3">
+                    <div className="w-full grid grid-cols-4 gap-6">
+                      {typedEvent.images.map((file, index) => {
+                        if (typeof file === "string") {
+                          return (
+                            <Image
+                              key={index}
+                              src={
+                                imageErrors[index]
+                                  ? placeholderImage
+                                  : file || placeholderImage
+                              }
+                              width={index === 0 ? 480 : 240}
+                              height={index === 0 ? 480 : 240}
+                              alt={`Event ${index}`}
+                              className={`${"object-cover rounded-md w-full h-full"}`}
+                              onError={() => handleImageError(index)}
+                            />
+                          );
+                        } else {
+                          return (
+                            <FileCard
+                              key={index}
+                              file={file}
+                              onRemove={() => {}}
+                            />
+                          );
+                        }
+                      })}
+                    </div>
+                  </ScrollArea>
+                ) : (
+                  <p className="text-gray-500">No images available.</p>
+                )}
               </div>
             </CardContent>
           </Card>
@@ -270,7 +208,7 @@ export function EventInfoFormEdition({ uuid }: { uuid: string }) {
           <Card className="flex flex-col bg-iDonate-light-gray rounded-lg border-2 border-iDonate-navy-accent gap-6 p-9">
             <CardHeader className="flex flex-row items-center justify-between p-0 m-0">
               <CardTitle className="text-2xl font-medium text-iDonate-navy-secondary">
-                Basic Information
+                Event Images
               </CardTitle>
               <div className="flex gap-3">
                 {formState.isDirty ? (

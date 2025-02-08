@@ -29,7 +29,6 @@ export function MobileSubmenu({
       isActive ? "text-iDonate-green-primary" : "text-iDonate-navy-primary"
     }`;
 
-
   return (
     <div className="fixed h-20 inset-0 bg-white dark:bg-iDonate-bg-dark-mode z-50  lg:hidden">
       <div className="w-full h-[72px] flex items-center justify-between shadow-sm px-4 2xl:px-[100px] dark:border-b">

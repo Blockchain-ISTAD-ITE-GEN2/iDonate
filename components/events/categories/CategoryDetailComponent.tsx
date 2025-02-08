@@ -36,9 +36,6 @@ export default function CategoryDetailComponent() {
 
   const typedEvents: EventType[] = events.slice(0, page) || [];
 
-  // console.log("============> uuid: ",uuid);
-  // console.log("============> Event: ",typedEvents);
-  // console.log("============> Category: ",category);
 
   // Add pagination
   const handleShowMore = () => {
@@ -48,7 +45,7 @@ export default function CategoryDetailComponent() {
   // Random image
   // Extract images from all getEventby UUID
   const allEventImages: string[] = events.flatMap(
-    (event) => event.images ?? [],
+    (event) => (event.images as string[]) ?? [],
   );
 
   // Select a random image from event images

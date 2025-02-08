@@ -56,6 +56,20 @@ export const eventApi = idonateApi.injectEndpoints({
       }),
       invalidatesTags: [{ type: "event", id: "LIST" }],
     }),
+    comfirmEvent: builder.mutation({
+      query: (uuid) => ({
+        url: `/events/confirm-draft/${uuid}`,
+        method: "PUT",
+      }),
+      invalidatesTags: [{ type: "event", id: "LIST" }],
+    }),
+    hideEvent: builder.mutation({
+      query: (uuid) => ({
+        url: `/events/${uuid}/hide-event`,
+        method: "PUT",
+      }),
+      invalidatesTags: [{ type: "event", id: "LIST" }],
+    }),
   }),
 });
 
@@ -69,4 +83,6 @@ export const {
   useDeleteEventsMutation,
   useEditEventsMutation,
   useCreateEventsMutation,
+  useComfirmEventMutation,
+  useHideEventMutation,
 } = eventApi;

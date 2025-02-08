@@ -40,20 +40,25 @@ export function UploadedFilesCard({ uploadedFiles }: UploadedFilesCardProps) {
   return (
     <Card className="flex-1 p-0 m-0 border-0 shadow-none">
       <CardContent className="p-0 m-0 border-0 h-full">
-        {uploadedFiles.length > 0 ? (
+        {uploadedFiles?.length > 0 ? (
           <div className="flex flex-col w-full gap-2">
             {uploadedFiles.map((file, index) => (
               <div
-                key={"key" in file ? (file.key as React.Key) : index}
+                key={
+                  typeof file === "object" && file !== null && "key" in file
+                    ? (file.key as React.Key)
+                    : index
+                }
                 className="relative flex items-center h-20 gap-2 border-[1.5px] w-full p-4 rounded-lg border-iDonate-navy-accent"
               >
                 <FilePreview
                   file={
-                    "file" in file
+                    typeof file === "object" && file !== null && "file" in file
                       ? (file.file as File & { preview: string })
                       : undefined
                   }
                 />
+
                 <div className="flex flex-col">
                   <CardDescription className="text-iDonate-navy-primary text-lg">
                     {file.name}

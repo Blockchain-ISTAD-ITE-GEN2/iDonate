@@ -53,7 +53,7 @@ export async function generateMetadata({
 
 export default function Page({ params }: OrganizationDetail) {
   return (
-    <section className="flex flex-col gap-9 py-9 justify-center">
+    <section className="flex flex-col gap-9 justify-center">
       {/*Start Hero Section*/}
       <OrganizationDetailHeroSection />
 

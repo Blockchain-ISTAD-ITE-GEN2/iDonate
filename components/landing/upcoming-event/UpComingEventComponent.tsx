@@ -74,15 +74,20 @@ export default function UpcomingEvents() {
 
       <div className="grid lg:grid-cols-2 gap-6 bg-transparent">
         {/* Featured Big Event Card */}
-        {events[0] && (
+        {events && (
           <Card className="overflow-hidden transition-transform hover:scale-[1.01] cursor-pointer flex flex-col">
             <div className="flex-1 aspect-video relative">
               <Image
-                src={
-                  Array.isArray(events[0]?.images) && events[0].images[0]
-                    ? events[0].images[0]
-                    : "https://t4.ftcdn.net/jpg/06/71/92/37/360_F_671923740_x0zOL3OIuUAnSF6sr7PuznCI5bQFKhI0.jpg"
-                }
+              src={
+                typeof events[0]?.images?.[0] === "string"
+                  ? events[0]?.images[0]
+                  : "/fallback-placeholder.jpg"
+              }
+                // src={
+                //   Array.isArray(events[0]?.images) && events[0].images[0]
+                //     ? events[0].images[0]
+                //     : "https://t4.ftcdn.net/jpg/06/71/92/37/360_F_671923740_x0zOL3OIuUAnSF6sr7PuznCI5bQFKhI0.jpg"
+                // }
                 alt={events[0]?.name || "event_image"}
                 fill
                 className="object-cover w-full h-full"

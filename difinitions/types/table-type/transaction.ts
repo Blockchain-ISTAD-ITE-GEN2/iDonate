@@ -15,7 +15,7 @@ export type TransactionType = {
   email?: string;
   event?: EventType;
   username?: string;
-  organization?: OrganizationType
+  organization?: OrganizationType;
   amount?: number;
   image?: string;
   description?: string;

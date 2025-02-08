@@ -25,7 +25,10 @@ export default function CategoryWithEventComponent({
   } = useGetEventByCategoryQuery({ uuid }); // Ensure UUID is always passed
 
   const events: EventType[] = eventsApiResponse.content || [];
-  const typedEvents: EventType[] = events.slice(0, Math.min(page, events.length));
+  const typedEvents: EventType[] = events.slice(
+    0,
+    Math.min(page, events.length),
+  );
 
   // Ensure category UUID exists
   if (!category?.uuid) {
@@ -34,7 +37,7 @@ export default function CategoryWithEventComponent({
   }
 
   console.log("Fetched events:", events); // Debugging
-  console.log("Log uuid : ",category?.uuid);
+  console.log("Log uuid : ", category?.uuid);
 
   return (
     <section className="flex flex-col gap-6 container mx-auto">
@@ -73,5 +76,3 @@ export default function CategoryWithEventComponent({
     </section>
   );
 }
-
-

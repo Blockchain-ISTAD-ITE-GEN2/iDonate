@@ -2,9 +2,9 @@
 
 import { Card, CardContent } from "@/components/ui/card";
 import Image from "next/image";
-import { OrganizationParam } from "@/difinitions/types/media/organization";
 import { MapPinned } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { OrganizationType } from "@/difinitions/types/organization/OrganizationType";
 
 export function OrganizationCardComponent({
   image,
@@ -12,7 +12,7 @@ export function OrganizationCardComponent({
   description,
   address,
   onClick,
-}: OrganizationParam) {
+}: OrganizationType) {
   // const router = useRouter();
 
   return (
@@ -25,7 +25,7 @@ export function OrganizationCardComponent({
         <div className="relative aspect-square min-w-[160px] h-full flex-shrink-0 rounded-lg">
           {image ? (
             <Image
-              src={image}
+              src={typeof image === "string" ? image : ""}
               alt={name || "Media"}
               fill
               className="object-cover rounded-lg"

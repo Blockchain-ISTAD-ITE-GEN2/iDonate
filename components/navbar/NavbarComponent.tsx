@@ -28,7 +28,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Separator } from "../ui/separator";
 
 export default function NavbarComponent() {
-  const pathname = usePathname(); 
+  const pathname = usePathname();
   const [menuList] = useState<NavMenuType[]>(NavMenulist);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSubmenu, setActiveSubmenu] = useState<string | null>(null);
@@ -39,10 +39,8 @@ export default function NavbarComponent() {
   const router = useRouter();
   const { menuList: contributorList } = useContributorMenuList();
 
-
   useEffect(() => {}, [accessTokenValue, session]);
   const uuid = getUuidFromToken(accessTokenValue as string);
-
 
   useEffect(() => {
     const handleResize = () => {
@@ -50,7 +48,7 @@ export default function NavbarComponent() {
         setIsMobileMenuOpen(false);
       }
     };
-  
+
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
@@ -66,9 +64,6 @@ export default function NavbarComponent() {
   ) {
     return null;
   }
-
- 
-  
 
   const handleLogout = () => {
     //  alert("Logout successful");
@@ -145,13 +140,35 @@ export default function NavbarComponent() {
           <ThemeSwitch />
         </div>
 
-          <div className="flex   items-center justify-center">
-            {accessTokenValue ? (
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Avatar className="w-10 h-10 cursor-pointer">
+        <div className="flex   items-center justify-center">
+          {accessTokenValue ? (
+            <Popover>
+              <PopoverTrigger asChild>
+                <Avatar className="w-10 h-10 cursor-pointer">
+                  {userProfile?.avatar ? (
+                    <AvatarImage
+                      src={userProfile?.avatar}
+                      className="object-cover w-full h-full rounded-full ring-2 ring-iDonate-navy-primary"
+                      alt={`${userProfile?.username || "User"}'s avatar`}
+                      onError={(e) => {
+                        e.currentTarget.style.display = "none";
+                      }}
+                    />
+                  ) : (
+                    <AvatarFallback className="text-gray-700">
+                      {userProfile?.username?.[0]?.toUpperCase() || "?"}
+                    </AvatarFallback>
+                  )}
+                </Avatar>
+              </PopoverTrigger>
+
+              <PopoverContent className="w-72 p-3">
+                <div className="flex items-center space-x-3">
+                  <Avatar className="w-10 h-10">
                     {userProfile?.avatar ? (
                       <AvatarImage
+                        width={500}
+                        height={500}
                         src={userProfile?.avatar}
                         className="object-cover w-full h-full rounded-full ring-2 ring-iDonate-navy-primary"
                         alt={`${userProfile?.username || "User"}'s avatar`}
@@ -165,81 +182,58 @@ export default function NavbarComponent() {
                       </AvatarFallback>
                     )}
                   </Avatar>
-                </PopoverTrigger>
-
-                <PopoverContent className="w-72 p-3">
-                  <div className="flex items-center space-x-3">
-                    <Avatar className="w-10 h-10">
-                      {userProfile?.avatar ? (
-                        <AvatarImage
-                          width={500}
-                          height={500}
-                          src={userProfile?.avatar}
-                          className="object-cover w-full h-full rounded-full ring-2 ring-iDonate-navy-primary"
-                          alt={`${userProfile?.username || "User"}'s avatar`}
-                          onError={(e) => {
-                            e.currentTarget.style.display = "none";
-                          }}
-                        />
-                      ) : (
-                        <AvatarFallback className="text-gray-700">
-                          {userProfile?.username?.[0]?.toUpperCase() || "?"}
-                        </AvatarFallback>
-                      )}
-                    </Avatar>
-                    <div className="text-sm">
-                      <div className="font-medium text-gray-900">
-                        {session?.user?.name || userProfile?.username || "Guest User"}
-                      </div>
-                      <div className="text-gray-500">
-                        {session?.user?.email || userProfile?.email || "No Email"}
-                      </div>
+                  <div className="text-sm">
+                    <div className="font-medium text-gray-900">
+                      {session?.user?.name ||
+                        userProfile?.username ||
+                        "Guest User"}
+                    </div>
+                    <div className="text-gray-500">
+                      {session?.user?.email || userProfile?.email || "No Email"}
                     </div>
                   </div>
+                </div>
 
-                  <Separator className="my-2" />
+                <Separator className="my-2" />
 
-                  <Link
-                    href={`/donor-dashboard/${uuid}`}
-                    className="flex items-center space-x-2 py-2 cursor-pointer hover:bg-gray-100 rounded-md px-2"
-                  >
-                    <User className="text-iDonate-navy-primary" size={20} />
-                    <span>Profile Settings</span>
-                  </Link>
+                <Link
+                  href={`/donor-dashboard/${uuid}`}
+                  className="flex items-center space-x-2 py-2 cursor-pointer hover:bg-gray-100 rounded-md px-2"
+                >
+                  <User className="text-iDonate-navy-primary" size={20} />
+                  <span>Profile Settings</span>
+                </Link>
 
-                  <Separator className="my-2" />
+                <Separator className="my-2" />
 
-                  <button
-                    onClick={handleLogout}
-                    className="flex items-center space-x-2 text-red-600 hover:text-red-700 hover:bg-red-50 w-full text-left py-2 rounded-md px-2"
-                  >
-                    <LogOut className="h-4 w-4" />
-                    <span>Sign Out</span>
-                  </button>
-                </PopoverContent>
-              </Popover>
-            ) : (
-              <Button
-                onClick={() => {
-                  router.push("/login");
-                }}
-                className="w-28 h-10 bg-transparent text-iDonate-navy-primary hover:bg-iDonate-light-gray font-medium dark:text-iDonate-navy-accent dark:hover:bg-iDonate-dark-mode"
-              >
-                Sign in
-              </Button>
-            )}
-          </div>
-
-          <Button
-            className=" w-10 h-10 bg-transparent text-iDonate-gray hover:bg-iDonate-light-gray hover:text-iDonate-navy-primary rounded-[12px] dark:text-iDonate-white-space dark:hover:bg-iDonate-dark-mode flex items-center justify-center"
-            onClick={() => setIsMobileMenuOpen(true)}
-          >
-            <Menu className="w-6 h-6" />
-          </Button>
+                <button
+                  onClick={handleLogout}
+                  className="flex items-center space-x-2 text-red-600 hover:text-red-700 hover:bg-red-50 w-full text-left py-2 rounded-md px-2"
+                >
+                  <LogOut className="h-4 w-4" />
+                  <span>Sign Out</span>
+                </button>
+              </PopoverContent>
+            </Popover>
+          ) : (
+            <Button
+              onClick={() => {
+                router.push("/login");
+              }}
+              className="w-28 h-10 bg-transparent text-iDonate-navy-primary hover:bg-iDonate-light-gray font-medium dark:text-iDonate-navy-accent dark:hover:bg-iDonate-dark-mode"
+            >
+              Sign in
+            </Button>
+          )}
         </div>
 
-
-
+        <Button
+          className=" w-10 h-10 bg-transparent text-iDonate-gray hover:bg-iDonate-light-gray hover:text-iDonate-navy-primary rounded-[12px] dark:text-iDonate-white-space dark:hover:bg-iDonate-dark-mode flex items-center justify-center"
+          onClick={() => setIsMobileMenuOpen(true)}
+        >
+          <Menu className="w-6 h-6" />
+        </Button>
+      </div>
 
       <DesktopNavbar
         menuItems={menuList}

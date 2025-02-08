@@ -1,7 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { CardsMetric } from "./metric";
 import { Overview } from "./overview";
 import { TransactionType } from "@/difinitions/types/table-type/transaction";
@@ -16,7 +22,9 @@ import { RecentTransactionsSkeleton } from "./RecentTransactionsSkeleton";
 import { LoadingTrasaction } from "./LoadingTrasaction";
 
 export function BarAndLineChartLanding() {
-  const [recentTransactions, setRecentTransactions] = useState<TransactionType[]>([]);
+  const [recentTransactions, setRecentTransactions] = useState<
+    TransactionType[]
+  >([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<null | string>(null);
 
@@ -44,12 +52,12 @@ export function BarAndLineChartLanding() {
           throw new Error("Failed to fetch transactions");
         }
         const data = await response.json();
-    
+
         console.log("Data transactions: ", data);
-    
+
         // Map and sort transactions by timestamp (newest first)
-        const formattedTransactions: TransactionType[] = data.content
-          .map((txn: any) => ({
+        const formattedTransactions: TransactionType[] = data.content.map(
+          (txn: any) => ({
             id: crypto.randomUUID(), // Generate a unique ID
             avatar: txn.avatar || "", // Ensure avatar is a string
             donor: txn.username || "Anonymous", // Map to `username`
@@ -57,11 +65,14 @@ export function BarAndLineChartLanding() {
             organization: txn.organization,
             amount: txn.donationAmount, // Map to `amount`
             timestamp: new Date(txn.timestamp).toISOString(), // Ensure timestamp is a formatted string
-          })
+          }),
         );
-          
-        formattedTransactions.sort((a: any, b: any) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()); // Sort newest first
-    
+
+        formattedTransactions.sort(
+          (a: any, b: any) =>
+            new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime(),
+        ); // Sort newest first
+
         setRecentTransactions(formattedTransactions);
       } catch (err: any) {
         setError(err.message || "Something went wrong");
@@ -69,12 +80,13 @@ export function BarAndLineChartLanding() {
         setLoading(false);
       }
     };
-    
-  
+
     fetchTransactions();
 
     // Set up WebSocket connection
-    const socket = new SockJS(`${process.env.NEXT_PUBLIC_IDONATE_API_URL}/websocket`);
+    const socket = new SockJS(
+      `${process.env.NEXT_PUBLIC_IDONATE_API_URL}/websocket`,
+    );
     const stompClient = new Client({
       webSocketFactory: () => socket,
       reconnectDelay: 5000,
@@ -86,22 +98,24 @@ export function BarAndLineChartLanding() {
       console.log("WebSocket connected");
       stompClient.subscribe("/topic/recentDonationTransaction", (message) => {
         const newTransaction = JSON.parse(message.body);
-      
+
         const formattedTransaction: TransactionType = {
           avatar: newTransaction.avatar,
           donor: newTransaction.username,
           amount: newTransaction.donationAmount,
           timestamp: new Date(newTransaction.timestamp).toISOString(), // Convert to string
         };
-      
+
         // Update state and keep the transactions sorted
-        setRecentTransactions((prevTransactions) => 
-          [formattedTransaction, ...prevTransactions]
-            .sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()) // Sort newest first
+        setRecentTransactions(
+          (prevTransactions) =>
+            [formattedTransaction, ...prevTransactions].sort(
+              (a, b) =>
+                new Date(b.timestamp).getTime() -
+                new Date(a.timestamp).getTime(),
+            ), // Sort newest first
         );
       });
-      
-      
     };
 
     stompClient.onStompError = (frame) => {
@@ -117,13 +131,12 @@ export function BarAndLineChartLanding() {
     };
   }, []);
 
-
   if (loading) {
-    return(
+    return (
       <>
-      <LoadingTrasaction/>
+        <LoadingTrasaction />
       </>
-    )
+    );
   }
 
   // if (error) {
@@ -145,7 +158,8 @@ export function BarAndLineChartLanding() {
             ប្រតិបត្តិការថ្មីៗ
           </CardTitle>
           <CardDescription className="text-sub-description-eng py-2 text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
-          អ្នកទទួលបានការបរិច្ចាគចំនួន {recentTransactions.length}​ ក្នុងសប្តាហ៍នេះ។
+            អ្នកទទួលបានការបរិច្ចាគចំនួន {recentTransactions.length}​
+            ក្នុងសប្តាហ៍នេះ។
           </CardDescription>
         </CardHeader>
         <CardContent>

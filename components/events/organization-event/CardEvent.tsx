@@ -18,7 +18,12 @@ export function CardEvent({ events }: { events: EventType[] }) {
                 className="object-cover w-full h-full"
                 width={280}
                 height={180}
-                src={item.images[0]}
+                src={
+                  typeof item?.images?.[0] === "string"
+                    ? item.images[0]
+                    : "/fallback-placeholder.jpg"
+                }
+                // src={item.images[0]}
                 alt={item.name || "Event"}
               />
             )}
