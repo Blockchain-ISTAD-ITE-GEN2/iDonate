@@ -30,7 +30,8 @@ export default function AboutUsComponent() {
         <Image
           src={AboutUsHeroSection}
           alt="Hero background"
-          layout="fill"
+          fill
+          unoptimized
           className="object-cover"
         />
 

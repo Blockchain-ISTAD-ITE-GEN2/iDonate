@@ -94,8 +94,7 @@ export default function HeroSectionCategoryComponent() {
             transition={{ duration: 0.3 }}
           >
             <Image
-              width={1000}
-              height={1000}
+              fill
               src={categoryImageHeroSection}
               alt="Slide 1"
               className="w-full h-full object-cover"
