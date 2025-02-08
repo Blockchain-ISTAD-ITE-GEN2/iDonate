@@ -3,7 +3,7 @@ import { OrganizationCardComponent } from "@/components/events/organization-even
 import { OrganizationParam } from "@/difinitions/types/media/organization";
 import { Button } from "@/components/ui/button";
 import OrganizationDetailHeroSection from "@/components/herosection/OrganizationDetailHeroSection";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Toolbar } from "@/components/filter/toolbar";
 import { useGetOrganizationsQuery } from "@/redux/services/organization-service";
 import { OrganizationPlaceholderComponent } from "./OrganizationPlaceholerComponent";
@@ -29,23 +29,23 @@ export default function OrganizationOnPageComponent() {
   const [filteredOrganizations, setFilteredOrganizations] =
     useState<OrganizationParam[]>(organizationData);
 
-  const filtersFace = [
-    {
-      key: "name",
-      title: "Organizations",
-      options: Array.from(
-        new Set(organizationData.map((org) => org.name || "Untitled")),
-      ).map((name) => ({
-        label: name,
-        value: name,
-      })),
-    },
-  ];
+    const filtersFace = useMemo(() => [
+      {
+        key: "name",
+        title: "Organizations",
+        options: Array.from(
+          new Set(organizationData.map((org) => org.name || "Untitled"))
+        ).map((name) => ({
+          label: name,
+          value: name,
+        })),
+      },
+    ], [organizationData]);    
 
   // add all  to the filter state
-  useEffect(() => {
-    setFilteredOrganizations(organizationData);
-  }, [organizationData]);
+  // useEffect(() => {
+  //   setFilteredOrganizations(organizationData);
+  // }, [organizationData]);
 
   const handleFilterChange = useCallback(
     (filteredData: OrganizationParam[]) => {
@@ -57,7 +57,7 @@ export default function OrganizationOnPageComponent() {
   // show by count add
   useEffect(() => {
     setFilteredOrganizations(organizationData.slice(0, visibleCount));
-  }, [organizationData, visibleCount]);
+  }, [organizationData, visibleCount]);  
 
   // handle show Organization
   const handleShowMore = () => {
