@@ -111,12 +111,12 @@ export default function UpcomingEvents() {
               <div className="flex flex-wrap justify-between gap-4 pt-4">
                 <div className="flex items-center justify-center gap-2 text-iDonate-navy-secondary dark:text-iDonate-green-secondary">
                   <CalendarDays className="h-4 w-4 flex-shrink-0" />
-                  <span>{formatDate(events[0].startDate) || "N/A"}</span>
+                  <span>{formatDate(events[0]?.startDate) || "N/A"}</span>
                 </div>
 
                 <div className="flex items-center justify-center gap-2 text-iDonate-navy-primary dark:text-iDonate-green-secondary">
                   <School className="h-4 w-4 flex-shrink-0" />
-                  <span>{events[0].category?.name || ""}</span>
+                  <span>{events[0]?.category?.name || ""}</span>
                 </div>
               </div>
             </CardContent>
