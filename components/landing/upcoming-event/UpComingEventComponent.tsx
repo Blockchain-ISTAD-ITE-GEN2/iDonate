@@ -74,15 +74,20 @@ export default function UpcomingEvents() {
 
       <div className="grid lg:grid-cols-2 gap-6 bg-transparent">
         {/* Featured Big Event Card */}
-        {events[0] && (
+        {events && (
           <Card className="overflow-hidden transition-transform hover:scale-[1.01] cursor-pointer flex flex-col">
             <div className="flex-1 aspect-video relative">
               <Image
-                src={
-                  Array.isArray(events[0]?.images) && events[0].images[0]
-                    ? events[0].images[0]
-                    : "https://t4.ftcdn.net/jpg/06/71/92/37/360_F_671923740_x0zOL3OIuUAnSF6sr7PuznCI5bQFKhI0.jpg"
-                }
+              src={
+                typeof events[0]?.images?.[0] === "string"
+                  ? events[0]?.images[0]
+                  : "/fallback-placeholder.jpg"
+              }
+                // src={
+                //   Array.isArray(events[0]?.images) && events[0].images[0]
+                //     ? events[0].images[0]
+                //     : "https://t4.ftcdn.net/jpg/06/71/92/37/360_F_671923740_x0zOL3OIuUAnSF6sr7PuznCI5bQFKhI0.jpg"
+                // }
                 alt={events[0]?.name || "event_image"}
                 fill
                 className="object-cover w-full h-full"
@@ -106,12 +111,12 @@ export default function UpcomingEvents() {
               <div className="flex flex-wrap justify-between gap-4 pt-4">
                 <div className="flex items-center justify-center gap-2 text-iDonate-navy-secondary dark:text-iDonate-green-secondary">
                   <CalendarDays className="h-4 w-4 flex-shrink-0" />
-                  <span>{formatDate(events[0].startDate) || "N/A"}</span>
+                  <span>{formatDate(events[0]?.startDate) || "N/A"}</span>
                 </div>
 
                 <div className="flex items-center justify-center gap-2 text-iDonate-navy-primary dark:text-iDonate-green-secondary">
                   <School className="h-4 w-4 flex-shrink-0" />
-                  <span>{events[0].category?.name || ""}</span>
+                  <span>{events[0]?.category?.name || ""}</span>
                 </div>
               </div>
             </CardContent>

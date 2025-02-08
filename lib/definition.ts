@@ -114,14 +114,21 @@ export type ReviewsType = {
 
 // User type
 export type UserType = {
+  uuid: string;
   firstName: string;
   lastName: string;
+  gender?: string;
   username: string;
+  password?: string;
+  phoneNumber?: string;
   email: string;
-  avatar: string;
-  position: string;
-  role: [string];
+  avatar?: string | null;
+  dateOfBirth?: string | null;
+  address?: string | null;
+  isProfiledVisibility: boolean;
+  isEmailVerified: boolean;
 };
+
 // Upload file type
 export type UploadFileType = {
   schemaName: string;

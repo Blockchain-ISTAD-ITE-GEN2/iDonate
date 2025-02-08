@@ -1,6 +1,5 @@
 "use client";
 import { OrganizationCardComponent } from "@/components/events/organization-event/OrganizationCardComponent";
-import { OrganizationParam } from "@/difinitions/types/media/organization";
 import { Button } from "@/components/ui/button";
 import OrganizationDetailHeroSection from "@/components/herosection/OrganizationDetailHeroSection";
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -8,26 +7,34 @@ import { Toolbar } from "@/components/filter/toolbar";
 import { useGetOrganizationsQuery } from "@/redux/services/organization-service";
 import { OrganizationPlaceholderComponent } from "./OrganizationPlaceholerComponent";
 import { useRouter } from "next/navigation";
+import { OrganizationType } from "@/difinitions/types/organization/OrganizationType";
+import { OrganizationParam } from "@/difinitions/types/media/organization";
 
 export default function OrganizationOnPageComponent() {
   const router = useRouter();
+  const [visibleCount, setVisibleCount] = useState(3);
 
-  // Add  state
-  const [visibleCount, setVisibleCount] = useState(6);
-
-  // navigate  to detail org
-
-  // fetch all data
-  const {
-    data: apiResponse,
-    isLoading: isLoadingOrg,
-    isError,
-  } = useGetOrganizationsQuery({});
-
-  const organizationData: OrganizationParam[] = apiResponse?.content || [];
+  // Fetch organization data
+  const { data: apiResponse, isLoading: isLoadingOrg } = useGetOrganizationsQuery({});
+  const organizationData: OrganizationType[] = apiResponse?.content || [];
 
   const [filteredOrganizations, setFilteredOrganizations] =
-    useState<OrganizationParam[]>(organizationData);
+  useState<OrganizationParam[]>([]);
+
+  // useEffect(() => {
+  //   setFilteredOrganizations(
+  //     organizationData.map((org) => ({
+  //       uuid: org.uuid,
+  //       image: org.image ?? "", // Ensure `image` is never null
+  //       name: org.name,
+  //       description: org.description ?? "", // Ensure `description` is never null
+  //       address: org.address,
+  //       onClick: () => handleClick(org.uuid), // Ensure `onClick` is always defined
+  //     }))
+  //   );
+  // }, [organizationData]);  
+
+  
 
     const filtersFace = useMemo(() => [
       {
@@ -47,99 +54,118 @@ export default function OrganizationOnPageComponent() {
   //   setFilteredOrganizations(organizationData);
   // }, [organizationData]);
 
-  const handleFilterChange = useCallback(
-    (filteredData: OrganizationParam[]) => {
-      setFilteredOrganizations(filteredData.slice(0, visibleCount));
-    },
-    [visibleCount],
-  );
-
-  // show by count add
+  // Handle filter changes
+  const handleFilterChange = useCallback((filteredData: any) => {
+    setFilteredOrganizations(
+      filteredData.map((org: any) => ({
+        uuid: org.uuid,
+        image: org.image ?? "",
+        name: org.name,
+        description: org.description ?? "",
+        address: org.address ?? undefined,
+        email: org.email,
+        phone: org.phone,
+        bankAccountNumber: org.bankAccountNumber ?? null,
+        isApproved: org.isApproved,
+        fileReferences: Array.isArray(org.fileReferences) 
+          ? org.fileReferences.join(", ")  // Ensure it's a string
+          : org.fileReferences ?? "",  // Default empty string if null or undefined
+        user: org.user,
+        bio: org.bio ?? undefined,
+        onClick: () => handleClick(org.uuid),
+      }))
+    );
+  }, []);
+  
   useEffect(() => {
-    setFilteredOrganizations(organizationData.slice(0, visibleCount));
-  }, [organizationData, visibleCount]);  
+    const updatedOrganizations: any = organizationData.map((org) => ({
+      uuid: org.uuid,
+      image: org.image ?? "",
+      name: org.name,
+      description: org.description ?? "",
+      address: org.address ?? undefined,
+      email: org.email,
+      phone: org.phone,
+      bankAccountNumber: org.bankAccountNumber ?? null,
+      isApproved: org.isApproved,
+      fileReferences: Array.isArray(org.fileReferences) 
+        ? org.fileReferences.join(", ")  // Ensure it's a string
+        : org.fileReferences ?? "",  // Default empty string if null or undefined
+      user: org.user,
+      bio: org.bio ?? undefined,
+      onClick: () => handleClick(org.uuid),
+    }));
+  
+    setFilteredOrganizations(updatedOrganizations.slice(0, visibleCount));
+  }, [organizationData, visibleCount]);
 
   // handle show Organization
   const handleShowMore = () => {
     setVisibleCount((prev) => prev + 3);
   };
 
-  // handle the error
-  if (isError) {
-    console.error("Error fetching organizations");
-    // return <div className="text-center m-12">Something went Wrong!</div>;
-  }
-
-  // const handleClick = (uuid?:any) => {
-  //   if (!uuid) {
-  //     console.error("UUID is missing, cannot navigate.");
-  //     return;
-  //   }
-  //   console.log("Navigating to:", `/organizations/${uuid}`);
-  //   router.push(`/organizations/${uuid}`);
-  // };
-
-  const handleClick = (uuid?: any) => {
+  // Navigate to organization details
+  const handleClick = (uuid?: string) => {
     if (!uuid) {
       console.error("UUID is missing, cannot navigate.");
       return;
     }
-    console.log("Navigating to:", `/organizations/${uuid}`);
-    window.location.href = `/organizations/${uuid}`; // Instead of router.push()
+    router.push(`/organizations/${uuid}`);
   };
 
   return (
-    <section className="flex flex-col py-9 gap-9 items-center">
-      {/* Hero */}
+    <section className="flex flex-col items-center">
+      {/* Hero Section */}
       <OrganizationDetailHeroSection />
 
-      <div className="container mx-auto px-6 md:px-6 lg:px-8 xl:px-10 flex flex-col gap-6">
+      <div className="py-9 container mx-auto px-6 md:px-6 lg:px-8 xl:px-10 flex flex-col gap-6">
         <h2 className="text-2xl font-semibold text-center text-iDonate-navy-primary dark:text-iDonate-navy-accent">
           អង្គការភាពដែលបាន ចូលរួមជាមួយពួកយើង
         </h2>
 
         <Toolbar
-          events={filteredOrganizations}
+          events={organizationData} // Always use full data for filtering
           filtersFace={filtersFace}
           searchKey={"name"}
           onFilterChange={handleFilterChange}
         />
 
-        {/* <Button onClick={() => testing()}>this is for testing</Button>  */}
-
         <div className="grid gap-6 grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
           {isLoadingOrg
-            ? Array(visibleCount) // 06 as the defualt
+            ? Array(visibleCount)
                 .fill(null)
-                .map((_, index) => (
-                  <OrganizationPlaceholderComponent key={index} />
-                ))
-            : filteredOrganizations.map(
-                (org: OrganizationParam, index: number) => (
-                  <OrganizationCardComponent
-                    onClick={() => handleClick(org?.uuid)}
-                    key={index}
-                    uuid={org.uuid}
-                    image={org.image || ""}
-                    name={org.name}
-                    description={org.description}
-                    address={org.address}
-                  />
-                ),
-              )}
+                .map((_, index) => <OrganizationPlaceholderComponent key={index} />)
+            : filteredOrganizations.slice(0, visibleCount).map((org) => (
+                <OrganizationCardComponent
+                  key={org.uuid}
+                  uuid={org.uuid}
+                  image={org.image}
+                  name={org.name}
+                  description={org.description}
+                  address={org.address}
+                  email={org.email}
+                  phone={org.phone}
+                  bankAccountNumber={org.bankAccountNumber}
+                  isApproved={org.isApproved}
+                  fileReferences={org.fileReferences}
+                  user={org.user}
+                  bio={org.bio}
+                  onClick={() => handleClick(org.uuid)}
+                />
+              ))}
         </div>
 
-        <div className="flex justify-end">
-          <Button
-            className="text-medium-eng text-iDonate-navy-primary bg-iDonate-white-space border-2 border-iDonate-navy-accent hover:bg-iDonate-navy-accent"
-            onClick={handleShowMore}
-          >
-            Show more
-          </Button>
-        </div>
+        {filteredOrganizations.length > visibleCount && (
+          <div className="flex justify-end">
+            <Button
+              className="text-medium-eng text-iDonate-navy-primary bg-iDonate-white-space border-2 border-iDonate-navy-accent hover:bg-iDonate-navy-accent"
+              onClick={handleShowMore}
+            >
+              Show more
+            </Button>
+          </div>
+        )}
       </div>
     </section>
   );
 }
-
-// new code

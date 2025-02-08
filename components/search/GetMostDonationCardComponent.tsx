@@ -31,7 +31,8 @@ export function GetMostDonationCardComponent({
                     ? "w-full h-[520px]"
                     : "h-[520px] md:h-[520px] lg:h-[170px] w-full"
                 }`}
-                src={item.images[0]}
+                
+                src={typeof item.images[0] === 'string' ? item.images[0] : ''}
                 alt={item.name || "Media"}
                 width={index === 0 ? 636 : 280}
                 height={index === 0 ? 470 : 170} // 459

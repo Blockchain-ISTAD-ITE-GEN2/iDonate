@@ -1,4 +1,5 @@
 import { CategoryType } from "../components-type/CategoryType";
+import { UploadedFile } from "../fileupload";
 import { OrganizationType } from "../organization/OrganizationType";
 
 export type EventType = {
@@ -13,7 +14,7 @@ export type EventType = {
   key?: number;
   category?: CategoryType;
   organization?: OrganizationType;
-  images: string[];
+  images: File[] | string[];
   currentRaised?: number;
   totalDonors?: number;
   isDraft: boolean;

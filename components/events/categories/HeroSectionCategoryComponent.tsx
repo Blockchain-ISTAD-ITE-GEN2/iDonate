@@ -4,7 +4,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { useRouter } from "next/navigation";
-import categoryImageHeroSection from "@/public/images/image (8).png"
+import categoryImageHeroSection from "@/public/images/image (8).png";
 
 export default function HeroSectionCategoryComponent() {
   const router = useRouter();

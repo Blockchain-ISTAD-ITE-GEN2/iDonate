@@ -54,13 +54,12 @@ export function EventInfoFormCreation() {
   const orgUuid = String(org.uuid);
   const { data: categoriesData } = useGetCategoriesQuery({});
   const typeCategories: CategoryType[] = categoriesData || [];
-  const [isUploading, setIsUploading] = useState(false);
-  // const [uploadedFiles, setUploadedFiles] = useState<UploadedFile[]>([]);
   const [uploadProgresses, setUploadProgresses] = useState<
     Record<string, number>
   >({});
 
   const [createSingleFile] = useUploadSingleMediaMutation();
+  const [createMultipleFiles] = useUploadMultipleMediaMutation();
   const [createEvent] = useCreateEventsMutation();
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
 
@@ -137,17 +136,29 @@ export function EventInfoFormCreation() {
       let uploadedUris: string[] = [];
 
       if (uploadedFiles.length > 0) {
-        setIsUploading(true);
-        uploadedUris = await Promise.all(
-          uploadedFiles.map(async (file) => {
-            const formData = new FormData();
-            formData.append("file", file);
+        setUploadProgresses({}); // Reset progress before upload
 
-            const response = await createSingleFile(formData).unwrap();
-            return response.uri; // Assuming response contains a `uri` field
-          }),
-        );
-        setIsUploading(false);
+        if (uploadedFiles.length === 1) {
+          // Upload a single file
+          const formData = new FormData();
+          formData.append("file", uploadedFiles[0]);
+
+          const response = await createSingleFile(formData).unwrap();
+          uploadedUris = [response.uri]; // Store single file URI
+        } else {
+          // Upload multiple files INDIVIDUALLY if the API does not accept an array
+          const uploadedResults = await Promise.all(
+            uploadedFiles.map(async (file) => {
+              const formData = new FormData();
+              formData.append("file", file);
+
+              const response = await createSingleFile(formData).unwrap();
+              return response.uri; // Assuming response contains a `uri` field
+            }),
+          );
+
+          uploadedUris = uploadedResults; // Store all URIs
+        }
       }
 
       const newEvent = {
@@ -169,6 +180,7 @@ export function EventInfoFormCreation() {
 
       reset();
       setUploadedFiles([]); // Clear selected files after successful submission
+      setUploadProgresses({}); // Reset upload progress
     } catch (err) {
       console.error("Failed to create event:", err);
       toast({
@@ -176,8 +188,6 @@ export function EventInfoFormCreation() {
         description: "Failed to create event. Please try again.",
         variant: "destructive",
       });
-    } finally {
-      setIsUploading(false);
     }
   }
 

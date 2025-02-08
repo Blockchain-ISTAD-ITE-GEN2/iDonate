@@ -74,7 +74,7 @@ export function OrganizationEventPage() {
 
   return (
     <>
-      <div className="flex justify-between items-start">
+      <div className="flex justify-between items-start gap-2">
         <Toolbar
           events={typedEvents}
           filtersFace={[
@@ -118,9 +118,12 @@ export function OrganizationEventPage() {
         </Button>
       </div>
 
-      {filteredEvents.map((event) => (
-        <OrganizationEventCard key={event.uuid} event={event} />
-      ))}
+      {/* Fixed Grid Layout */}
+      <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        {filteredEvents.map((event) => (
+          <OrganizationEventCard key={event.uuid} event={event} />
+        ))}
+      </div>
     </>
   );
 }

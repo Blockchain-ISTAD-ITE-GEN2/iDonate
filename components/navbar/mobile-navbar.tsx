@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { NavMenuType } from "@/difinitions/types/components-type/NavMenuType";
 import { usePathname, useRouter } from "next/navigation";
-import {  useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import logo from "@/public/logo/logodesign no background.png";
 import Link from "next/link";
 import { useAppSelector } from "@/redux/hooks";
@@ -84,7 +84,6 @@ export function MobileMenu({
             <span className="hidden sm:block text-medium-eng xl:text-title-eng text-iDonate-navy-primary font-medium dark:text-iDonate-navy-accent">
               iDONATE
             </span>
-
           </section>
 
           {/* Theme Mode */}

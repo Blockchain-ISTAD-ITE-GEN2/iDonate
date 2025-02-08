@@ -2,6 +2,7 @@
 import { EventCategoryFormEdition } from "@/components/organization/event-edition/event-category-form";
 import { EventInfoFormEdition } from "@/components/organization/event-edition/event-info-form";
 import { useParams } from "next/navigation";
+import { EventImagesFormEdition } from "./event-image-form";
 
 export function EventFormEdition() {
   const params = useParams();
@@ -11,12 +12,16 @@ export function EventFormEdition() {
 
   return (
     <section className="w-full flex flex-col gap-6 rounded-lg border-2 border-iDonate-navy-accent shadow-light p-6">
-      <div className="w-full flex flex-col gap-6 border-iDonate-navy-accent">
+      {/* <div className="w-full flex flex-col gap-6 border-iDonate-navy-accent">
         <EventCategoryFormEdition uuid={eventUuid} />
-      </div>
+      </div> */}
 
       <div className="w-full flex flex-col gap-6 border-iDonate-navy-accent">
         <EventInfoFormEdition uuid={eventUuid} />
+      </div>
+
+      <div className="w-full flex flex-col gap-6 border-iDonate-navy-accent">
+        <EventImagesFormEdition uuid={eventUuid} />
       </div>
     </section>
   );
