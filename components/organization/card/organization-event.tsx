@@ -88,7 +88,7 @@ export function OrganizationEventPage() {
             },
             {
               key: "currentRaised",
-              title: "Amount Range",
+              title: "ចំនួនថវិការបរិច្ចាគ Range",
               options: typedEvents.map((event: any) => ({
                 label: event.currentRaised.toString(),
                 value: event.currentRaised.toString(),

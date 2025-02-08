@@ -85,7 +85,7 @@ export const donationSchema = z.object({
     .string()
     .uuid("Invalid donation event ID. Must be a valid UUID."),
   // donor: z.string().uuid("Invalid donor ID. Must be a valid UUID."),
-  amount: z.number().positive("Amount must be greater than zero."),
+  amount: z.number().positive("ចំនួនថវិការបរិច្ចាគ must be greater than zero."),
   // .min(0.01, "Minimum amount is 0.01."),
   // recipient: z.string().uuid("Invalid recipient ID. Must be a valid UUID."),
   acquiringBank: z

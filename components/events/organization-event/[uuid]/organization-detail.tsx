@@ -78,7 +78,7 @@ export function OrganizationDetail({ uuid }: OrganizationDetailProps) {
     },
     {
       key: "total_amount",
-      title: "Amount Range",
+      title: "ចំនួនថវិការបរិច្ចាគ Range",
       options: Array.from(
         new Set(
           typedEvents

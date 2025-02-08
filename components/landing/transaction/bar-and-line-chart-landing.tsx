@@ -1,92 +1,76 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { useEffect, useReducer } from "react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { CardsMetric } from "./metric";
-import { Overview } from "./overview";
-import { TransactionType } from "@/difinitions/types/table-type/transaction";
-import barchart from "@/data/barchart.json";
-import averages from "@/data/average-data.json";
 import { ReacentTransacctions } from "@/components/organization/dashboard/ReacentTransacctions";
-import { AverageType, BarchartType } from "@/difinitions/types/chart/barchart";
 import SockJS from "sockjs-client";
 import { Client } from "@stomp/stompjs";
-import { CardsMetricSkeleton } from "./CardsMetricSkeleton";
-import { RecentTransactionsSkeleton } from "./RecentTransactionsSkeleton";
 import { LoadingTrasaction } from "./LoadingTrasaction";
+import { TransactionType } from "@/difinitions/types/table-type/transaction";
+
+// Define action types
+type ActionType =
+  | { type: "FETCH_SUCCESS"; payload: TransactionType[] }
+  | { type: "FETCH_ERROR"; payload: string }
+  | { type: "ADD_TRANSACTION"; payload: TransactionType };
+
+// Reducer function for state management
+const transactionsReducer = (state: { transactions: TransactionType[]; loading: boolean; error: string | null }, action: ActionType) => {
+  switch (action.type) {
+    case "FETCH_SUCCESS":
+      return { transactions: action.payload, loading: false, error: null };
+    case "FETCH_ERROR":
+      return { transactions: [], loading: false, error: action.payload };
+    case "ADD_TRANSACTION":
+      return {
+        transactions: [action.payload, ...state.transactions].slice(0, 10), // Keep max 10 recent transactions
+        loading: false,
+        error: null,
+      };
+    default:
+      return state;
+  }
+};
 
 export function BarAndLineChartLanding() {
-  const [recentTransactions, setRecentTransactions] = useState<
-    TransactionType[]
-  >([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<null | string>(null);
-
-  const barchartdata: BarchartType[] = Object.entries(barchart).map(
-    ([name, values]) => ({
-      name,
-      ...values,
-    }),
-  );
-
-  const averageDate: AverageType[] = averages.map((item) => ({
-    ...item,
-    revenue_growth: 0,
-    total_revenue: 0,
-  }));
+  const [state, dispatch] = useReducer(transactionsReducer, {
+    transactions: [],
+    loading: true,
+    error: null,
+  });
 
   useEffect(() => {
-    // Fetch initial transactions
     const fetchTransactions = async () => {
       try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_BASE_URL}/v1/donation`,
-        );
-        if (!response.ok) {
-          throw new Error("Failed to fetch transactions");
-        }
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/v1/donation`);
+        if (!response.ok) throw new Error("Failed to fetch transactions");
+
         const data = await response.json();
 
         console.log("Data transactions: ", data);
 
-        // Map and sort transactions by timestamp (newest first)
-        const formattedTransactions: TransactionType[] = data.content.map(
-          (txn: any) => ({
-            id: crypto.randomUUID(), // Generate a unique ID
-            avatar: txn.avatar || "", // Ensure avatar is a string
-            donor: txn.username || "Anonymous", // Map to `username`
-            event: txn.event,
-            organization: txn.organization,
-            amount: txn.donationAmount, // Map to `amount`
-            timestamp: new Date(txn.timestamp).toISOString(), // Ensure timestamp is a formatted string
-          }),
-        );
+        const formattedTransactions: TransactionType[] = data.content.map((txn: any) => ({
+          id: crypto.randomUUID(),
+          avatar: txn.avatar || "",
+          donor: txn.username || "Anonymous",
+          event: txn.event,
+          organization: txn.organization,
+          amount: txn.donationAmount,
+          timestamp: new Date(txn.timestamp).toISOString(),
+        }));
 
-        formattedTransactions.sort(
-          (a: any, b: any) =>
-            new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime(),
-        ); // Sort newest first
+        formattedTransactions.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
 
-        setRecentTransactions(formattedTransactions);
-      } catch (err: any) {
-        setError(err.message || "Something went wrong");
-      } finally {
-        setLoading(false);
+        dispatch({ type: "FETCH_SUCCESS", payload: formattedTransactions });
+      } catch (error: any) {
+        dispatch({ type: "FETCH_ERROR", payload: error.message || "Something went wrong" });
       }
     };
 
     fetchTransactions();
 
-    // Set up WebSocket connection
-    const socket = new SockJS(
-      `${process.env.NEXT_PUBLIC_IDONATE_API_URL}/websocket`,
-    );
+    const socket = new SockJS(`${process.env.NEXT_PUBLIC_IDONATE_API_URL}/websocket`);
     const stompClient = new Client({
       webSocketFactory: () => socket,
       reconnectDelay: 5000,
@@ -96,74 +80,62 @@ export function BarAndLineChartLanding() {
 
     stompClient.onConnect = () => {
       console.log("WebSocket connected");
-      stompClient.subscribe("/topic/recentDonationTransaction", (message) => {
-        const newTransaction = JSON.parse(message.body);
+      stompClient.subscribe("/topic/recentTransactions", (message) => {
+        try {
+          const newTransaction = JSON.parse(message.body);
 
-        const formattedTransaction: TransactionType = {
-          avatar: newTransaction.avatar,
-          donor: newTransaction.username,
-          amount: newTransaction.donationAmount,
-          timestamp: new Date(newTransaction.timestamp).toISOString(), // Convert to string
-        };
+          if (!newTransaction.content || newTransaction.content.length === 0) return;
 
-        // Update state and keep the transactions sorted
-        setRecentTransactions(
-          (prevTransactions) =>
-            [formattedTransaction, ...prevTransactions].sort(
-              (a, b) =>
-                new Date(b.timestamp).getTime() -
-                new Date(a.timestamp).getTime(),
-            ), // Sort newest first
-        );
+          const formattedTransaction: TransactionType = {
+            // id: crypto.randomUUID(),
+            avatar: newTransaction.content[0].avatar || "",
+            donor: newTransaction.content[0].username || "Anonymous",
+            event: newTransaction.content[0].event,
+            organization: newTransaction.content[0].organization,
+            amount: newTransaction.content[0].donationAmount,
+            timestamp: new Date(newTransaction.content[0].timestamp).toISOString(),
+          };
+
+          dispatch({ type: "ADD_TRANSACTION", payload: formattedTransaction });
+        } catch (error) {
+          console.error("Error parsing WebSocket message:", error);
+        }
       });
     };
 
     stompClient.onStompError = (frame) => {
       console.error("WebSocket error:", frame.headers.message);
-      setError("WebSocket connection error");
+      dispatch({ type: "FETCH_ERROR", payload: "WebSocket connection error" });
     };
 
     stompClient.activate();
 
-    // Cleanup WebSocket connection on unmount
     return () => {
       stompClient.deactivate();
     };
   }, []);
 
-  if (loading) {
-    return (
-      <>
-        <LoadingTrasaction />
-      </>
-    );
-  }
-
-  // if (error) {
-  //   return <div>Error: {error}</div>;
-  // }
+  if (state.loading) return <LoadingTrasaction />;
+  if (state.error) return <div className="text-red-500">Error: {state.error}</div>;
 
   return (
     <div className="container mx-auto px-4 md:w-full grid gap-4 lg:grid-cols-[1fr_480px] grid-cols-1">
       <div className="flex flex-col gap-4">
-        {/* Cards for metrics */}
-        {/* <CardsMetricSkeleton/> */}
-        <CardsMetric data={recentTransactions} />
+        <CardsMetric data={state.transactions} />
       </div>
 
-      {/* ប្រតិបត្តិការថ្មីៗ Card */}
+      {/* Recent Transactions Card */}
       <Card className="md:w-full lg:w-[480px] bg-iDonate-light-gray rounded-lg border border-iDonate-navy-accent dark:bg-iDonate-dark-mode">
         <CardHeader>
           <CardTitle className="text-medium-eng font-normal text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
             ប្រតិបត្តិការថ្មីៗ
           </CardTitle>
           <CardDescription className="text-sub-description-eng py-2 text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
-            អ្នកទទួលបានការបរិច្ចាគចំនួន {recentTransactions.length}​
-            ក្នុងសប្តាហ៍នេះ។
+            អ្នកទទួលបានការបរិច្ចាគចំនួន {state.transactions.length} ក្នុងសប្តាហ៍នេះ។
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <ReacentTransacctions transactions={recentTransactions.slice(0, 5)} />
+          <ReacentTransacctions transactions={state.transactions.slice(0, 5)} />
         </CardContent>
       </Card>
     </div>

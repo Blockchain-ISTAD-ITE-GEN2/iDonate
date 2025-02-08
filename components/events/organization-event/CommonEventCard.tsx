@@ -78,6 +78,8 @@ export function CommonEventCard({ event }: { event: EventType }) {
         />
       </CardHeader>
 
+      
+
       {/* Content */}
       <CardContent className="px-4 py-4 flex flex-col gap-4">
         {/* Dates */}
@@ -126,7 +128,7 @@ export function CommonEventCard({ event }: { event: EventType }) {
           </p>
         </div>
 
-        {/* Donor and Amount Information */}
+          {/* Donor and ចំនួនថវិការបរិច្ចាគ Information */}
         <div className="flex flex-col gap-2">
           <div className="flex items-center gap-2">
             <Users className="h-5 w-5 text-iDonate-navy-primary dark:text-iDonate-navy-accent" />

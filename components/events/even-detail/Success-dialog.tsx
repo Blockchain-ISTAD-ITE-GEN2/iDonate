@@ -52,7 +52,7 @@ export default function SuccessDialog({
               <span>{transactionData?.data?.toAccountId}</span>
             </div>
             <div className="flex justify-between">
-              <span className="font-medium text-gray-700">Amount:</span>
+              <span className="font-medium text-gray-700">ចំនួនថវិការបរិច្ចាគ:</span>
               <span>
                 {transactionData?.data?.amount?.toFixed(2)} {currency}
               </span>

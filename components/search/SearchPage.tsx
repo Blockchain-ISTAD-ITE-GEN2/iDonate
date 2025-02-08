@@ -34,7 +34,7 @@
 
 //     {
 //       key: "total_amount",
-//       title: "Amount Range",
+//       title: "ចំនួនថវិការបរិច្ចាគ Range",
 //       options: Array.from(
 //         new Set(typedEvents.map((event) => event.total_amount)),
 //       ).map((amount) => ({
