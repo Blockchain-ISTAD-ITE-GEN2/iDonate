@@ -255,7 +255,8 @@ export function EventInfoFormCreation() {
               >
                 <div className="w-[100px] h-[100px] bg-iDonate-navy-accent rounded-full border flex items-center justify-center">
                   <Image
-                    fill
+                    width={200}
+                    height={200}
                     unoptimized
                     src={
                       item.media ||
