@@ -215,7 +215,7 @@ export default function LatestDonationCard() {
       </div>
 
       {/* The Small 3 Event  Donations Section */}
-      <div className="w-full z-30 flex flex-col gap-2  lg:absolute ">
+      <div className="w-full flex flex-col gap-2  lg:absolute ">
         {typedEvents.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2  z-2 lg:hover:z-[30]   items-center justify-center mx-auto lg:grid-cols-3 gap-6 p-2 lg:mt-[500px]">
             {typedEvents.slice(0, 3).map((item) => (
