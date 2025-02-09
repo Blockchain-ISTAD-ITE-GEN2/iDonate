@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     description:
       "Find the causes and organizations that matter to you in the iDonate categories.",
     images: [
-      "https://idonateapi.kangtido.life/media/819e4d30-4bcd-4f23-a004-744075dbecbf.png",
+      "https://idonateapi.kangtido.life/media/8b894c24-57a5-42ff-8293-313e50b7aa32.png",
     ],
   },
   robots: {

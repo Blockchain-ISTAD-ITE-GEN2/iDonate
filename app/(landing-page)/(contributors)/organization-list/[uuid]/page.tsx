@@ -45,7 +45,7 @@ export default function OrganizationDashboard({
           Organizations
         </h1>
 
-        <div className="flex flex-col gap-6 border-2 border-iDonate-navy-accent p-16 rounded-lg bg-iDonate-light-gray dark:bg-iDonate-light-gray">
+        <div className="flex flex-col gap-6 border-2 border-iDonate-navy-accent p-16 rounded-lg bg-iDonate-light-gray dark:bg-iDonate-gray">
           {typeOrganizations.map((org) => (
             <Card
               key={org.uuid}

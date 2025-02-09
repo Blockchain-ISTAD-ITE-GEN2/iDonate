@@ -255,8 +255,9 @@ export function EventInfoFormCreation() {
               >
                 <div className="w-[100px] h-[100px] bg-iDonate-navy-accent rounded-full border flex items-center justify-center">
                   <Image
-                    width={60}
-                    height={60}
+                    width={200}
+                    height={200}
+                    unoptimized
                     src={
                       item.media ||
                       "https://charius-next.netlify.app/_next/static/media/3.0714cc33.svg"
@@ -387,9 +388,7 @@ export function EventInfoFormCreation() {
                                 date ? date.toISOString().split("T")[0] : "",
                               )
                             }
-                            disabled={(date) =>
-                              date > new Date() || date < new Date("1900-01-01")
-                            }
+                            disabled={(date) => date < new Date("1900-01-01")}
                             initialFocus
                           />
                         </PopoverContent>
@@ -442,9 +441,7 @@ export function EventInfoFormCreation() {
                                 date ? date.toISOString().split("T")[0] : "",
                               )
                             }
-                            disabled={(date) =>
-                              date > new Date() || date < new Date("1900-01-01")
-                            }
+                            disabled={(date) => date < new Date("1900-01-01")}
                             initialFocus
                           />
                         </PopoverContent>

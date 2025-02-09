@@ -28,6 +28,14 @@ export type DonationRecordType = {
   amount: number;
 };
 
+export type ReceiptType = {
+  userUuid: string;
+  eventUuid: string;
+  remark?: string; // Optional if nullable in backend
+  amount: number;
+};
+
+
 export type TransactionDataType = {
   responseCode: number;
   responseMessage: string;

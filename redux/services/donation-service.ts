@@ -1,3 +1,4 @@
+import { ReceiptType } from '@/difinitions/types/donation/donation';
 import {
   DonationRecordType,
   DonationType,
@@ -42,6 +43,13 @@ export const donationApi = idonateApi.injectEndpoints({
         body: record,
       }),
     }),
+    sendReceipt: builder.mutation({
+      query: (record: ReceiptType) => ({
+        url: "/receipts/send-receipt",
+        method: "POST",
+        body: record,
+      })
+    })
   }),
 });
 
@@ -50,4 +58,5 @@ export const {
   useGenerateQrCodeMutation,
   useGetOrgTransactionsQuery,
   useSaveRecordMutation,
+  useSendReceiptMutation
 } = donationApi;

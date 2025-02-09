@@ -2,51 +2,104 @@
 import { OrganizationCardComponent } from "@/components/events/organization-event/OrganizationCardComponent";
 import { Button } from "@/components/ui/button";
 import OrganizationDetailHeroSection from "@/components/herosection/OrganizationDetailHeroSection";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Toolbar } from "@/components/filter/toolbar";
 import { useGetOrganizationsQuery } from "@/redux/services/organization-service";
 import { OrganizationPlaceholderComponent } from "./OrganizationPlaceholerComponent";
 import { useRouter } from "next/navigation";
 import { OrganizationType } from "@/difinitions/types/organization/OrganizationType";
+import { OrganizationParam } from "@/difinitions/types/media/organization";
 
 export default function OrganizationOnPageComponent() {
   const router = useRouter();
   const [visibleCount, setVisibleCount] = useState(3);
 
   // Fetch organization data
-  const { data: apiResponse, isLoading: isLoadingOrg } =
-    useGetOrganizationsQuery({});
+  const { data: apiResponse, isLoading: isLoadingOrg } = useGetOrganizationsQuery({});
   const organizationData: OrganizationType[] = apiResponse?.content || [];
 
-  // Memoized filter options to prevent unnecessary calculations on re-renders
-  const filtersFace = useMemo(
-    () => [
+  const [filteredOrganizations, setFilteredOrganizations] =
+  useState<OrganizationParam[]>([]);
+
+  // useEffect(() => {
+  //   setFilteredOrganizations(
+  //     organizationData.map((org) => ({
+  //       uuid: org.uuid,
+  //       image: org.image ?? "", // Ensure `image` is never null
+  //       name: org.name,
+  //       description: org.description ?? "", // Ensure `description` is never null
+  //       address: org.address,
+  //       onClick: () => handleClick(org.uuid), // Ensure `onClick` is always defined
+  //     }))
+  //   );
+  // }, [organizationData]);
+
+
+
+    const filtersFace = useMemo(() => [
       {
         key: "name",
         title: "Organizations",
         options: Array.from(
-          new Set(
-            organizationData?.filter((org) => org?.name).map((org) => org.name),
-          ),
+          new Set(organizationData.map((org) => org.name || "Untitled"))
         ).map((name) => ({
           label: name,
           value: name,
         })),
       },
-    ],
-    [organizationData],
-  );
+    ], [organizationData]);
 
-  // State to hold filtered organizations
-  const [filteredOrganizations, setFilteredOrganizations] =
-    useState<OrganizationType[]>(organizationData);
+  // add all  to the filter state
+  // useEffect(() => {
+  //   setFilteredOrganizations(organizationData);
+  // }, [organizationData]);
 
   // Handle filter changes
-  const handleFilterChange = useCallback((filteredData: OrganizationType[]) => {
-    setFilteredOrganizations(filteredData);
+  const handleFilterChange = useCallback((filteredData: any) => {
+    setFilteredOrganizations(
+      filteredData.map((org: any) => ({
+        uuid: org.uuid,
+        image: org.image ?? "",
+        name: org.name,
+        description: org.description ?? "",
+        address: org.address ?? undefined,
+        email: org.email,
+        phone: org.phone,
+        bankAccountNumber: org.bankAccountNumber ?? null,
+        isApproved: org.isApproved,
+        fileReferences: Array.isArray(org.fileReferences)
+          ? org.fileReferences.join(", ")  // Ensure it's a string
+          : org.fileReferences ?? "",  // Default empty string if null or undefined
+        user: org.user,
+        bio: org.bio ?? undefined,
+        onClick: () => handleClick(org.uuid),
+      }))
+    );
   }, []);
 
-  // Show more organizations
+  useEffect(() => {
+    const updatedOrganizations: any = organizationData.map((org) => ({
+      uuid: org.uuid,
+      image: org.image ?? "",
+      name: org.name,
+      description: org.description ?? "",
+      address: org.address ?? undefined,
+      email: org.email,
+      phone: org.phone,
+      bankAccountNumber: org.bankAccountNumber ?? null,
+      isApproved: org.isApproved,
+      fileReferences: Array.isArray(org.fileReferences)
+        ? org.fileReferences.join(", ")  // Ensure it's a string
+        : org.fileReferences ?? "",  // Default empty string if null or undefined
+      user: org.user,
+      bio: org.bio ?? undefined,
+      onClick: () => handleClick(org.uuid),
+    }));
+
+    setFilteredOrganizations(updatedOrganizations.slice(0, visibleCount));
+  }, [organizationData, visibleCount]);
+
+  // handle show Organization
   const handleShowMore = () => {
     setVisibleCount((prev) => prev + 3);
   };
@@ -81,29 +134,25 @@ export default function OrganizationOnPageComponent() {
           {isLoadingOrg
             ? Array(visibleCount)
                 .fill(null)
-                .map((_, index) => (
-                  <OrganizationPlaceholderComponent key={index} />
-                ))
-            : filteredOrganizations
-                .slice(0, visibleCount)
-                .map((org) => (
-                  <OrganizationCardComponent
-                    key={org.uuid}
-                    uuid={org.uuid}
-                    image={org.image}
-                    name={org.name}
-                    description={org.description}
-                    address={org.address}
-                    email={org.email}
-                    phone={org.phone}
-                    bankAccountNumber={org.bankAccountNumber}
-                    isApproved={org.isApproved}
-                    fileReferences={org.fileReferences}
-                    user={org.user}
-                    bio={org.bio}
-                    onClick={() => handleClick(org.uuid)}
-                  />
-                ))}
+                .map((_, index) => <OrganizationPlaceholderComponent key={index} />)
+            : filteredOrganizations.slice(0, visibleCount).map((org) => (
+                <OrganizationCardComponent
+                  key={org.uuid}
+                  uuid={org.uuid}
+                  image={org.image}
+                  name={org.name}
+                  description={org.description}
+                  address={org.address}
+                  email={org.email}
+                  phone={org.phone}
+                  bankAccountNumber={org.bankAccountNumber}
+                  isApproved={org.isApproved}
+                  fileReferences={org.fileReferences}
+                  user={org.user}
+                  bio={org.bio}
+                  onClick={() => handleClick(org.uuid)}
+                />
+              ))}
         </div>
 
         {filteredOrganizations.length > visibleCount && (
