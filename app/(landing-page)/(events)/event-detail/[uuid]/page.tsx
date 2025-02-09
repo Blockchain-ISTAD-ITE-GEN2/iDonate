@@ -2,14 +2,12 @@ import { Metadata } from "next";
 import EventDetail from "@/components/events/even-detail/[uuid]/event-detail";
 
 type EventDetailProps = {
-  params: {
-    uuid: string;
-  };
+  params: { uuid: string };
 };
-// get Event  Detail
+
 async function getEventDetails(uuid: string) {
   const response = await fetch(
-    `https://idonateapi.kangtido.life/api/v1/events/get-event-by-uuid/${uuid}`,
+    `https://idonateapi.kangtido.life/api/v1/events/get-event-by-uuid/${uuid}`
   );
 
   const data = await response.json();
@@ -17,16 +15,15 @@ async function getEventDetails(uuid: string) {
   return {
     name: data.name || `Event ${uuid}`,
     description: data.description || `Details about Event ${uuid}`,
+    image: data.images?.[0] || "https://i.pinimg.com/736x/2a/86/a5/2a86a560f0559704310d98fc32bd3d32.jpg",
   };
 }
-// Generate metadata dynamically
-export async function generateMetadata({
-  params,
-}: EventDetailProps): Promise<Metadata> {
+
+export async function generateMetadata({ params }: EventDetailProps): Promise<Metadata> {
   const event = await getEventDetails(params.uuid);
 
   return {
-    title: `${event.name} - Event Details`,
+    title: `${event.name} - iDonate`,
     description: event.description,
     keywords: [
       "IDONATE",
@@ -42,8 +39,16 @@ export async function generateMetadata({
     openGraph: {
       title: event.name,
       description: event.description,
-      url: `/get-event-by-uuid/${params.uuid}`,
+      url: `https://idata.istad.co/event/${params.uuid}`, // ✅ Full URL
       type: "website",
+      images: [
+        {
+          url: event?.image[0], // ✅ Ensure an image is always included
+          width: 1200,
+          height: 630,
+          alt: event.name,
+        },
+      ],
     },
   };
 }
