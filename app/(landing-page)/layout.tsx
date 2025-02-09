@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "kh_KH",
     images:
-      "https://idonateapi.kangtido.life/media/8b894c24-57a5-42ff-8293-313e50b7aa32.png",
+      `${process.env.NEXT_PUBLIC_IDONATE_API_URL}/media/8b894c24-57a5-42ff-8293-313e50b7aa32.png`,
   },
 };
 

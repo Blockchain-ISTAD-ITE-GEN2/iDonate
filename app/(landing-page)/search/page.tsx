@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     url: "https://idonate.istad.co/search",
     images: [
       {
-        url: "https://idonateapi.kangtido.life/media/8b894c24-57a5-42ff-8293-313e50b7aa32.png",
+        url: `${process.env.NEXT_PUBLIC_IDONATE_API_URL}/media/8b894c24-57a5-42ff-8293-313e50b7aa32.png`,
         width: 1200,
         height: 630,
         alt: "Search - iDonate",
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     description:
       "Discover donation opportunities, organizations, and events on iDonate.",
     images: [
-      "https://idonateapi.kangtido.life/media/8b894c24-57a5-42ff-8293-313e50b7aa32.png",
+      `${process.env.NEXT_PUBLIC_IDONATE_API_URL}/media/8b894c24-57a5-42ff-8293-313e50b7aa32.png`,
     ],
   },
   robots: {

@@ -7,7 +7,7 @@ type EventDetailProps = {
 
 async function getEventDetails(uuid: string) {
   const response = await fetch(
-    `https://idonateapi.kangtido.life/api/v1/events/get-event-by-uuid/${uuid}`
+    `${process.env.NEXT_PUBLIC_IDONATE_API_URL}/api/v1/events/get-event-by-uuid/${uuid}`
   );
 
   const data = await response.json();
@@ -15,7 +15,7 @@ async function getEventDetails(uuid: string) {
   return {
     name: data.name || `Event ${uuid}`,
     description: data.description || `Details about Event ${uuid}`,
-    image: data.images?.[0] || "https://idonateapi.kangtido.life/media/8b894c24-57a5-42ff-8293-313e50b7aa32.png",
+    image: data.images?.[0] || `${process.env.NEXT_PUBLIC_IDONATE_API_URL}/media/8b894c24-57a5-42ff-8293-313e50b7aa32.png`,
   };
 }
 
