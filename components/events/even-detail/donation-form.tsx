@@ -262,8 +262,10 @@ export function DonationForm() {
                       htmlFor="amount"
                     >
                       <div className="flex items-center gap-1 m-2">
-                      <span>ចំនួនថវិការបរិច្ចាគ</span>
-                      <span><CircleDollarSign className="h-5 w-5 text-iDonate-green-primary dark:text-iDonate-green-secondary" /></span>
+                        <span>ចំនួនថវិការបរិច្ចាគ</span>
+                        <span>
+                          <CircleDollarSign className="h-5 w-5 text-iDonate-green-primary dark:text-iDonate-green-secondary" />
+                        </span>
                       </div>
                     </FormLabel>
                     <FormControl className="w-full h-full">

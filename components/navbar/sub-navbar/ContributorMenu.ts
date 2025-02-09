@@ -20,7 +20,7 @@ export const useContributorMenuList = () => {
         active: false,
       },
     ],
-    [user]
+    [user],
   );
 
   return { menuList, isLoading };

@@ -46,14 +46,19 @@ export function BarAndLineChart({ orgUuid }: { orgUuid: string }) {
         console.log("Fetched transactions data:", data);
 
         // Format transactions
-        const formattedTransactions: TransactionType[] = data.content.map((transaction: any) => ({
-          avatar: transaction.avatar,
-          donor: transaction.username,
-          amount: transaction.donationAmount,
-          timestamp: transaction.timestamp,
-        }));
+        const formattedTransactions: TransactionType[] = data.content.map(
+          (transaction: any) => ({
+            avatar: transaction.avatar,
+            donor: transaction.username,
+            amount: transaction.donationAmount,
+            timestamp: transaction.timestamp,
+          }),
+        );
 
-        formattedTransactions.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
+        formattedTransactions.sort(
+          (a, b) =>
+            new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime(),
+        );
 
         setRecentTransactions(formattedTransactions);
 

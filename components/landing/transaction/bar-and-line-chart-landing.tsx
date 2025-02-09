@@ -1,7 +1,13 @@
 "use client";
 
 import { useEffect, useReducer } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { CardsMetric } from "./metric";
 import { ReacentTransacctions } from "@/components/organization/dashboard/ReacentTransacctions";
 import SockJS from "sockjs-client";
@@ -16,7 +22,14 @@ type ActionType =
   | { type: "ADD_TRANSACTION"; payload: TransactionType };
 
 // Reducer function for state management
-const transactionsReducer = (state: { transactions: TransactionType[]; loading: boolean; error: string | null }, action: ActionType) => {
+const transactionsReducer = (
+  state: {
+    transactions: TransactionType[];
+    loading: boolean;
+    error: string | null;
+  },
+  action: ActionType,
+) => {
   switch (action.type) {
     case "FETCH_SUCCESS":
       return { transactions: action.payload, loading: false, error: null };
@@ -43,34 +56,46 @@ export function BarAndLineChartLanding() {
   useEffect(() => {
     const fetchTransactions = async () => {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/v1/donation`);
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/v1/donation`,
+        );
         if (!response.ok) throw new Error("Failed to fetch transactions");
 
         const data = await response.json();
 
         console.log("Data transactions: ", data);
 
-        const formattedTransactions: TransactionType[] = data.content.map((txn: any) => ({
-          id: crypto.randomUUID(),
-          avatar: txn.avatar || "",
-          donor: txn.username || "Anonymous",
-          event: txn.event,
-          organization: txn.organization,
-          amount: txn.donationAmount,
-          timestamp: new Date(txn.timestamp).toISOString(),
-        }));
+        const formattedTransactions: TransactionType[] = data.content.map(
+          (txn: any) => ({
+            id: crypto.randomUUID(),
+            avatar: txn.avatar || "",
+            donor: txn.username || "Anonymous",
+            event: txn.event,
+            organization: txn.organization,
+            amount: txn.donationAmount,
+            timestamp: new Date(txn.timestamp).toISOString(),
+          }),
+        );
 
-        formattedTransactions.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
+        formattedTransactions.sort(
+          (a, b) =>
+            new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime(),
+        );
 
         dispatch({ type: "FETCH_SUCCESS", payload: formattedTransactions });
       } catch (error: any) {
-        dispatch({ type: "FETCH_ERROR", payload: error.message || "Something went wrong" });
+        dispatch({
+          type: "FETCH_ERROR",
+          payload: error.message || "Something went wrong",
+        });
       }
     };
 
     fetchTransactions();
 
-    const socket = new SockJS(`${process.env.NEXT_PUBLIC_IDONATE_API_URL}/websocket`);
+    const socket = new SockJS(
+      `${process.env.NEXT_PUBLIC_IDONATE_API_URL}/websocket`,
+    );
     const stompClient = new Client({
       webSocketFactory: () => socket,
       reconnectDelay: 5000,
@@ -84,7 +109,8 @@ export function BarAndLineChartLanding() {
         try {
           const newTransaction = JSON.parse(message.body);
 
-          if (!newTransaction.content || newTransaction.content.length === 0) return;
+          if (!newTransaction.content || newTransaction.content.length === 0)
+            return;
 
           const formattedTransaction: TransactionType = {
             // id: crypto.randomUUID(),
@@ -93,7 +119,9 @@ export function BarAndLineChartLanding() {
             event: newTransaction.content[0].event,
             organization: newTransaction.content[0].organization,
             amount: newTransaction.content[0].donationAmount,
-            timestamp: new Date(newTransaction.content[0].timestamp).toISOString(),
+            timestamp: new Date(
+              newTransaction.content[0].timestamp,
+            ).toISOString(),
           };
 
           dispatch({ type: "ADD_TRANSACTION", payload: formattedTransaction });
@@ -116,7 +144,8 @@ export function BarAndLineChartLanding() {
   }, []);
 
   if (state.loading) return <LoadingTrasaction />;
-  if (state.error) return <div className="text-red-500">Error: {state.error}</div>;
+  if (state.error)
+    return <div className="text-red-500">Error: {state.error}</div>;
 
   return (
     <div className="container mx-auto px-4 md:w-full grid gap-4 lg:grid-cols-[1fr_480px] grid-cols-1">
@@ -131,7 +160,8 @@ export function BarAndLineChartLanding() {
             ប្រតិបត្តិការថ្មីៗ
           </CardTitle>
           <CardDescription className="text-sub-description-eng py-2 text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
-            អ្នកទទួលបានការបរិច្ចាគចំនួន {state.transactions.length} ក្នុងសប្តាហ៍នេះ។
+            អ្នកទទួលបានការបរិច្ចាគចំនួន {state.transactions.length}{" "}
+            ក្នុងសប្តាហ៍នេះ។
           </CardDescription>
         </CardHeader>
         <CardContent>

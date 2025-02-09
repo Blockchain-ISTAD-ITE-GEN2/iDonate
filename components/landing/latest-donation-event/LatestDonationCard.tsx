@@ -113,12 +113,11 @@ export default function LatestDonationCard() {
             {/* Image Section */}
             <CardHeader className="relative min-h-[660px]">
               <Image
-
-                  src={
-                    typeof item?.images?.[0] === "string"
-                      ? item.images[0]
-                      : "/fallback-placeholder.jpg"
-                  }
+                src={
+                  typeof item?.images?.[0] === "string"
+                    ? item.images[0]
+                    : "/fallback-placeholder.jpg"
+                }
                 // src={
                 //   Array.isArray(item?.images) && item.images[0]
                 //     ? item.images[0]
@@ -130,45 +129,45 @@ export default function LatestDonationCard() {
               />
             </CardHeader>
 
-                {/* Content Section */}
-                <CardContent className="p-9 bg-iDonate-navy-primary text-iDonate-white-space flex flex-grow flex-col gap-4 dark:bg-iDonate-dark-mode">
-                  {/* Dates */}
-                  <div className="flex justify-between text-sm">
-                    <div className="flex flex-col">
-                      <div className="flex items-center mb-4">
-                        <span className="text-iDonate-navy-accent dark:text-iDonate-navy-accent mr-1 text-[18px]">
-                          <FaRegCalendarAlt />
-                        </span>
-                        <p className="text-iDonate-navy-accent dark:text-iDonate-navy-accent text-[18px]">
-                          ថ្ងៃចាប់ផ្ដើម
-                        </p>
-                      </div>
-                      <p className="text-iDonate-green-primary dark:text-iDonate-green-secondary text-[18px]">
-                      {formatDate(typedEvents?.[0]?.startDate) || "12 Dec 2024"}
-                      </p>
-                    </div>
-                    <div className="flex flex-col">
-                      <div className="flex items-center mb-4">
-                        <span className="text-iDonate-navy-accent dark:text-iDonate-navy-accent mr-1 text-[22px]">
-                          <HiCalendarDateRange />
-                        </span>
-                        <p className="text-iDonate-navy-accent dark:text-iDonate-navy-accent text-[18px]">
-                          ថ្ងៃបញ្ចប់
-                        </p>
-                      </div>
-                      <p className="text-iDonate-green-primary dark:text-iDonate-green-secondary text-[18px]">
-                      {formatDate(typedEvents?.[0]?.endDate) || "12 Dec 2024"}
-                      </p>
-                    </div>
+            {/* Content Section */}
+            <CardContent className="p-9 bg-iDonate-navy-primary text-iDonate-white-space flex flex-grow flex-col gap-4 dark:bg-iDonate-dark-mode">
+              {/* Dates */}
+              <div className="flex justify-between text-sm">
+                <div className="flex flex-col">
+                  <div className="flex items-center mb-4">
+                    <span className="text-iDonate-navy-accent dark:text-iDonate-navy-accent mr-1 text-[18px]">
+                      <FaRegCalendarAlt />
+                    </span>
+                    <p className="text-iDonate-navy-accent dark:text-iDonate-navy-accent text-[18px]">
+                      ថ្ងៃចាប់ផ្ដើម
+                    </p>
                   </div>
-                  
-                  <div>
-                    <h2
-                      lang="km"
-                      className="text-title-khmer md:text-heading-one-khmer font-semibold leading-relaxed"
-                    >
-                      {item.name}
-                    </h2>
+                  <p className="text-iDonate-green-primary dark:text-iDonate-green-secondary text-[18px]">
+                    {formatDate(typedEvents?.[0]?.startDate) || "12 Dec 2024"}
+                  </p>
+                </div>
+                <div className="flex flex-col">
+                  <div className="flex items-center mb-4">
+                    <span className="text-iDonate-navy-accent dark:text-iDonate-navy-accent mr-1 text-[22px]">
+                      <HiCalendarDateRange />
+                    </span>
+                    <p className="text-iDonate-navy-accent dark:text-iDonate-navy-accent text-[18px]">
+                      ថ្ងៃបញ្ចប់
+                    </p>
+                  </div>
+                  <p className="text-iDonate-green-primary dark:text-iDonate-green-secondary text-[18px]">
+                    {formatDate(typedEvents?.[0]?.endDate) || "12 Dec 2024"}
+                  </p>
+                </div>
+              </div>
+
+              <div>
+                <h2
+                  lang="km"
+                  className="text-title-khmer md:text-heading-one-khmer font-semibold leading-relaxed"
+                >
+                  {item.name}
+                </h2>
 
                 {/* Description */}
                 <p
@@ -227,11 +226,11 @@ export default function LatestDonationCard() {
               >
                 <div className="h-[55%]">
                   <Image
-                  src={
-                    typeof item?.images?.[0] === "string"
-                      ? item.images[0]
-                      : "/fallback-placeholder.jpg"
-                  }
+                    src={
+                      typeof item?.images?.[0] === "string"
+                        ? item.images[0]
+                        : "/fallback-placeholder.jpg"
+                    }
                     // src={
                     //   Array.isArray(item?.images) && item.images[0]
                     //     ? item.images[0]
