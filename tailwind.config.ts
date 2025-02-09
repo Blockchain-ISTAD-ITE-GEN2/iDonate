@@ -25,6 +25,7 @@ const config: Config = {
           gray: "#808080",
           "light-gray": "#F6F6F6",
           error: "#FF0000",
+          "light-red": "#f9bfbf",
         },
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",

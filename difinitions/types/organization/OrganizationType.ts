@@ -20,16 +20,17 @@ export type OrganizationResponse = {
 };
 
 export type OrganizationType = {
-  uuid: string;
+  uuid?: string;
   name: string;
-  description: string | null;
+  description?: string | null;
   email: string;
   phone: string;
-  address: string;
-  image: File | string;
-  bankAccountNumber: string;
+  address?: string;
+  image?: string | File | null;
+  bankAccountNumber?: string | null;
   isApproved: boolean;
-  fileReferences: string | null;
-  user: UserType;
-  bio: string;
+  fileReferences?: string | File | null;
+  user?: UserType;
+  bio?: string;
+  onClick?: () => void;
 };

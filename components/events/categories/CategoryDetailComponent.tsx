@@ -25,7 +25,7 @@ export default function CategoryDetailComponent() {
     isLoading: isLoadingByUuid
   } = useGetCategoryByUuidQuery(uuid, { skip: !uuid });
 
-  const { 
+  const {
     data: eventsApiResponse = { content: [] },
     isLoading: isEventsLoading,
   } = useGetEventByCategoryQuery(uuid, { skip: !uuid });
@@ -34,30 +34,25 @@ export default function CategoryDetailComponent() {
 
   const typedEvents: EventType[] = events.slice(0, page) || [];
 
-  // console.log("============> uuid: ",uuid);
-  // console.log("============> Event: ",typedEvents);
-  // console.log("============> Category: ",category);
-
-  // Add pagination 
   const handleShowMore = () => {
     setPage((pre) => pre + 3 )
   }
 
-  // Random image 
-  // Extract images from all getEventby UUID 
-const allEventImages: string[] = events.flatMap(event => event.images ?? []);
+const allEventImages: string[] = events.flatMap(event => 
+  (event.images ?? []).filter((image): image is string => typeof image === 'string')
+);
 
 // Select a random image from event images
 const randomImage = allEventImages.length > 0
   ? allEventImages[Math.floor(Math.random() * allEventImages.length)]
-  : "https://i.pinimg.com/736x/2a/86/a5/2a86a560f0559704310d98fc32bd3d32.jpg"; 
+  : "https://i.pinimg.com/736x/2a/86/a5/2a86a560f0559704310d98fc32bd3d32.jpg";
 
   if (isLoadingByUuid && isEventsLoading){
     return (
       <CategoryPlaceholerDetailComponent />
     )
   }
-  
+
   return (
     <section className="flex flex-col md:flex-row gap-9 px-9">
       {/* Left Section */}
@@ -100,7 +95,7 @@ const randomImage = allEventImages.length > 0
           </div>
 
           <div className="flex justify-end">
-            <Button 
+            <Button
             onClick={handleShowMore}
             className="text-medium-eng text-iDonate-navy-primary bg-iDonate-white-space border-2 border-iDonate-navy-accent hover:bg-iDonate-navy-accent">
               Show more

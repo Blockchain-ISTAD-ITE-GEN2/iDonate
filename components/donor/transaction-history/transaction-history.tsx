@@ -34,7 +34,7 @@ export default function TransactionHistory() {
     const fetchTransactions = async () => {
       try {
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_IDONATE_API_URL}/api/v1/donation/${donorUuid}`
+          `${process.env.NEXT_PUBLIC_IDONATE_API_URL}/api/v1/donation/${donorUuid}`,
         );
         if (!response.ok) {
           throw new Error("Failed to fetch transactions");
@@ -53,11 +53,12 @@ export default function TransactionHistory() {
             organization: txn.organization,
             amount: txn.donationAmount, // Map to `amount`
             timestamp: new Date(txn.timestamp).toISOString(), // Ensure timestamp is a formatted string
-          })
+          }),
         );
 
         formattedTransactions.sort(
-          (a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
+          (a, b) =>
+            new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime(),
         );
 
         // Update state and keep the transactions sorted
@@ -104,7 +105,9 @@ export default function TransactionHistory() {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <DonorReacentTransacctions transactions={transactions.slice(0, 5)} />
+              <DonorReacentTransacctions
+                transactions={transactions.slice(0, 5)}
+              />
             </CardContent>
           </Card>
         )}
