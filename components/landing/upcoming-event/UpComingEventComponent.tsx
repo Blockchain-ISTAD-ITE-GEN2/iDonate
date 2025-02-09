@@ -78,11 +78,11 @@ export default function UpcomingEvents() {
           <Card className="overflow-hidden transition-transform hover:scale-[1.01] cursor-pointer flex flex-col">
             <div className="flex-1 aspect-video relative">
               <Image
-              src={
-                typeof events[0]?.images?.[0] === "string"
-                  ? events[0]?.images[0]
-                  : "/fallback-placeholder.jpg"
-              }
+                src={
+                  typeof events[0]?.images?.[0] === "string"
+                    ? events[0]?.images[0]
+                    : "/fallback-placeholder.jpg"
+                }
                 // src={
                 //   Array.isArray(events[0]?.images) && events[0].images[0]
                 //     ? events[0].images[0]

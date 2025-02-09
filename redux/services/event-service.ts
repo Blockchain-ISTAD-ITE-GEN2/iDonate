@@ -15,6 +15,10 @@ export const eventApi = idonateApi.injectEndpoints({
         `/events/get-draft-events?isDraft=${isDraft}`,
       providesTags: [{ type: "event", id: "LIST" }],
     }),
+    getVisibleEvents: builder.query({
+      query: ({ isVisible = true }) => `/events?isVisible=${isVisible}`,
+      providesTags: [{ type: "event", id: "LIST" }],
+    }),
     getDraftEventsTrue: builder.query({
       query: ({ isDraft = true }) =>
         `/events/get-draft-events?isDraft=${isDraft}`,

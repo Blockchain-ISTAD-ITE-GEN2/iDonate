@@ -19,8 +19,6 @@ import Image from "next/image";
 import donateIcon from "@/public/images/give-and-recieve.png";
 import SockJS from "sockjs-client";
 import { Client } from "@stomp/stompjs";
-import { date } from "zod";
-
 import {
   FacebookShareButton,
   TwitterShareButton,
@@ -35,7 +33,7 @@ type EventDetailBannerProps = {
 };
 
 export function EventDetailBanner({ uuid }: EventDetailBannerProps) {
-  // handle when user click on the share buttom 
+  // handle when user click on the share buttom
   const [shareOpen, setShareOpen] = useState(false)
   const [recentTransactions, setRecentTransactions] = useState<
     TransactionType[]
@@ -159,7 +157,7 @@ export function EventDetailBanner({ uuid }: EventDetailBannerProps) {
 
       <CardContent className="flex flex-col gap-9">
         <div className="flex flex-col gap-3​​">
-          <Button 
+          <Button
            onClick={() => setShareOpen(true)}
           className="w-full text-[16px] rounded-lg bg-iDonate-green-secondary hover:bg-iDonate-green-secondary text-iDonate-navy-primary font-semibold">
             <Share2Icon />
@@ -248,13 +246,13 @@ export function EventDetailBanner({ uuid }: EventDetailBannerProps) {
         <DialogHeader>
           <DialogTitle>ចែករំលែក កម្មវិធីបរិច្ចាគ</DialogTitle>
         </DialogHeader>
-        
+
         <Card className="shadow-lg border rounded-lg overflow-hidden">
-          <Image 
-            src={event?.images?.[0] || "https://i.pinimg.com/736x/2a/86/a5/2a86a560f0559704310d98fc32bd3d32.jpg"} 
-            width={400} height={250} 
-            alt="Event Image" 
-            className="w-full object-cover" 
+          <Image
+            src={event?.images?.[0] || "https://i.pinimg.com/736x/2a/86/a5/2a86a560f0559704310d98fc32bd3d32.jpg"}
+            width={400} height={250}
+            alt="Event Image"
+            className="w-full object-cover"
           />
           <CardContent className="p-4">
             <CardTitle className="text-lg font-bold">
@@ -268,25 +266,25 @@ export function EventDetailBanner({ uuid }: EventDetailBannerProps) {
           {/* Share to social */}
           <CardFooter className="flex justify-around p-4">
             {/* Facebook Share */}
-            <FacebookShareButton 
+            <FacebookShareButton
              url={shareUrl}
              hashtag={"#iDonate istad"}>
               <FacebookIcon size={40} round />
             </FacebookShareButton>
 
             {/* Twitter (X) Share */}
-            <TwitterShareButton 
-              url={shareUrl} 
-              title={shareTitle} 
+            <TwitterShareButton
+              url={shareUrl}
+              title={shareTitle}
               hashtags={["iDonate", "charity", "donation"]}
             >
               <TwitterIcon size={40} round />
             </TwitterShareButton>
 
             {/* Email Share */}
-            <EmailShareButton 
-              url={shareUrl} 
-              subject={`Join this amazing event: ${shareTitle}`} 
+            <EmailShareButton
+              url={shareUrl}
+              subject={`Join this amazing event: ${shareTitle}`}
               body={`Hey,\n\nI found this event: "${shareTitle}".\n\n${shareDescription}\n\nCheck it out here: ${shareUrl}\n\nLet's support a great cause!`}
             >
               <EmailIcon size={40} round />
