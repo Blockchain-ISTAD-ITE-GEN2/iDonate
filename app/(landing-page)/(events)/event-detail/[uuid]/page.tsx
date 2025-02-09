@@ -39,7 +39,7 @@ export async function generateMetadata({ params }: EventDetailProps): Promise<Me
     openGraph: {
       title: event.name,
       description: event.description,
-      url: `https://idata.istad.co/event/${params.uuid}`, // ✅ Full URL
+      url: `https://idata.istad.co/event-detail/${params.uuid}`, // ✅ Full URL
       type: "website",
       images: [
         {

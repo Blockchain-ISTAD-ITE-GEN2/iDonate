@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     description:
       "Explore iDonate’s mission and vision, ensuring trust and impactful giving.",
     images: [
-      "https://idonateapi.kangtido.life/media/819e4d30-4bcd-4f23-a004-744075dbecbf.png",
+      "https://idonateapi.kangtido.life/media/8b894c24-57a5-42ff-8293-313e50b7aa32.png",
     ],
   },
   icons: {
