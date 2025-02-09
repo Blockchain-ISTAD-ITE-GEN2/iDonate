@@ -6,6 +6,11 @@ export const metadata: Metadata = {
   description:
     "Learn more about the team and mentors behind iDonate, ensuring transparency and credibility in donation requests.",
   keywords: ["iDonate", "About Us", "Team", "Mentors", "Donation Platform"],
+  icons: {
+    icon: "/public/logo.png",
+    shortcut: "/public/logo.png",
+    apple: "/public/logo.png",
+  },
   openGraph: {
     title: "About Us - iDonate",
     description:

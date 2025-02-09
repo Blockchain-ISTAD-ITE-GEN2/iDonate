@@ -15,7 +15,7 @@ async function getEventDetails(uuid: string) {
   return {
     name: data.name || `Event ${uuid}`,
     description: data.description || `Details about Event ${uuid}`,
-    image: data.images?.[0] || "https://i.pinimg.com/736x/2a/86/a5/2a86a560f0559704310d98fc32bd3d32.jpg",
+    image: data.images?.[0] || "https://idonateapi.kangtido.life/media/8b894c24-57a5-42ff-8293-313e50b7aa32.png",
   };
 }
 
@@ -36,14 +36,19 @@ export async function generateMetadata({ params }: EventDetailProps): Promise<Me
       "charity",
       "Charity",
     ],
+    icons: {
+      icon: "/public/logo.png",
+      shortcut: "/public/logo.png",
+      apple: "/public/logo.png",
+    },
     openGraph: {
       title: event.name,
       description: event.description,
-      url: `https://idata.istad.co/event-detail/${params.uuid}`, // ✅ Full URL
+      url: `https://idonate.istad.co/event-detail/${params.uuid}`, // ✅ Full URL
       type: "website",
       images: [
         {
-          url: event?.image[0], // ✅ Ensure an image is always included
+          url: event?.image, // ✅ Ensure an image is always included
           width: 1200,
           height: 630,
           alt: event.name,

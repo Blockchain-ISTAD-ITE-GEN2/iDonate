@@ -13,6 +13,11 @@ export const metadata: Metadata = {
     "Charity Causes",
     "Nonprofit Organizations",
   ],
+  icons: {
+    icon: "/public/logo.png",
+    shortcut: "/public/logo.png",
+    apple: "/public/logo.png",
+  },
   openGraph: {
     title: "Categories - iDonate",
     description:

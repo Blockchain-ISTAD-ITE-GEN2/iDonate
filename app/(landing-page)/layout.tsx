@@ -24,6 +24,11 @@ export const metadata: Metadata = {
     "charity",
     "Charity",
   ],
+  icons: {
+    icon: "/public/logo.png",
+    shortcut: "/public/logo.png",
+    apple: "/public/logo.png",
+  },
   openGraph: {
     title: {
       template: "%s - iDATA",
