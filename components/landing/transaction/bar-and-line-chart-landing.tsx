@@ -113,7 +113,7 @@ export function BarAndLineChartLanding() {
             return;
 
           const formattedTransaction: TransactionType = {
-            // id: crypto.randomUUID(),
+            id: crypto.randomUUID(),
             avatar: newTransaction.content[0].avatar || "",
             donor: newTransaction.content[0].username || "Anonymous",
             event: newTransaction.content[0].event,
@@ -156,7 +156,7 @@ export function BarAndLineChartLanding() {
       {/* Recent Transactions Card */}
       <Card className="md:w-full lg:w-[480px] bg-iDonate-light-gray rounded-lg border border-iDonate-navy-accent dark:bg-iDonate-dark-mode">
         <CardHeader>
-          <CardTitle className="text-medium-eng font-normal text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
+          <CardTitle lang="km" className="text-medium-eng font-normal text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
             ប្រតិបត្តិការថ្មីៗ
           </CardTitle>
           <CardDescription className="text-sub-description-eng py-2 text-iDonate-navy-secondary dark:text-iDonate-navy-accent">

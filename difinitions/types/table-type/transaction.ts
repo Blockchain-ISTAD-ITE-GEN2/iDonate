@@ -10,6 +10,7 @@ import { OrganizationType } from "../organization/OrganizationType";
 //   organization?: OrganizationType
 // };
 export type TransactionType = {
+  id?: string;
   date?: string;
   donor?: string;
   email?: string;
