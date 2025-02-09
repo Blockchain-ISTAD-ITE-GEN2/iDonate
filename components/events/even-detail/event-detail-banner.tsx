@@ -25,7 +25,7 @@ import {
   EmailShareButton,
   FacebookIcon,
   TwitterIcon,
-  EmailIcon,
+  EmailIcon, TelegramShareButton, TelegramIcon,
 } from "react-share";
 
 type EventDetailBannerProps = {
@@ -131,7 +131,7 @@ export function EventDetailBanner({ uuid }: EventDetailBannerProps) {
   const shareImage = event?.images[0] || "";
   return (
     <>
-    <Card className="w-[440px] h-full border-2 border-iDonate-navy-accent shadow-light">
+    <Card className="w-auto sm:w-auto lg:w-[440px] h-full border-2 border-iDonate-navy-accent shadow-light">
       <CardHeader className="flex flex-col gap-6">
         <div className="flex flex-col gap-1">
           <CardTitle className="flex gap-3 text-iDonate-navy-primary text-lg  dark:text-iDonate-navy-accent">
@@ -282,13 +282,12 @@ export function EventDetailBanner({ uuid }: EventDetailBannerProps) {
             </TwitterShareButton>
 
             {/* Email Share */}
-            <EmailShareButton
+            <TelegramShareButton
               url={shareUrl}
-              subject={`Join this amazing event: ${shareTitle}`}
-              body={`Hey,\n\nI found this event: "${shareTitle}".\n\n${shareDescription}\n\nCheck it out here: ${shareUrl}\n\nLet's support a great cause!`}
+              title={shareTitle}
             >
-              <EmailIcon size={40} round />
-            </EmailShareButton>
+              <TelegramIcon size={40} round />
+            </TelegramShareButton>
           </CardFooter>
         </Card>
       </DialogContent>

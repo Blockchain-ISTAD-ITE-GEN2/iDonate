@@ -7,13 +7,13 @@ export function TabEventDetail() {
     <Tabs defaultValue="event-description" className="w-full h-full">
       <TabsList className="flex h-auto bg-transparent w-full border-2 border-iDonate-navy-accent py-6 gap-6 rounded-lg">
         <TabsTrigger
-          className="border-2 rounded-lg px-9 border-iDonate-navy-accent data-[state=active]:bg-iDonate-navy-accent data-[state=active]:text-iDonate-navy-secondary dat`a-[state=active]:shadow-none"
+          className="border-2 rounded-lg  lg:px-9 border-iDonate-navy-accent data-[state=active]:bg-iDonate-navy-accent data-[state=active]:text-iDonate-navy-secondary dat`a-[state=active]:shadow-none"
           value="event-description"
         >
           ការពិពណ៌នា
         </TabsTrigger>
         <TabsTrigger
-          className="border-2 rounded-lg px-9  border-iDonate-navy-accent data-[state=active]:bg-iDonate-navy-accent data-[state=active]:text-iDonate-navy-secondary dat`a-[state=active]:shadow-none"
+          className="border-2 rounded-lg lg:px-9  border-iDonate-navy-accent data-[state=active]:bg-iDonate-navy-accent data-[state=active]:text-iDonate-navy-secondary dat`a-[state=active]:shadow-none"
           value="make-donation"
         >
           ធ្វើការបរិច្ចាគ
