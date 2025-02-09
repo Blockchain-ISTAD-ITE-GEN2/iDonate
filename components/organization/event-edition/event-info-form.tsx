@@ -58,6 +58,7 @@ export function EventInfoFormEdition({ uuid }: { uuid: string }) {
       location: typedEvent?.location,
       startDate: typedEvent?.startDate,
       endDate: typedEvent?.endDate,
+      images: typedEvent?.images,
     },
   });
 
@@ -70,6 +71,7 @@ export function EventInfoFormEdition({ uuid }: { uuid: string }) {
         location: typedEvent.location || "",
         startDate: typedEvent.startDate || "",
         endDate: typedEvent.endDate || "",
+        images: typedEvent.images || [],
       });
     }
   }, [typedEvent?.uuid, form]);
@@ -81,6 +83,7 @@ export function EventInfoFormEdition({ uuid }: { uuid: string }) {
   const location = watch("location");
   const orderDate = watch("startDate");
   const endDate = watch("endDate");
+  const images = watch("images");
 
   const isFormFilled = {
     name: !!name,
@@ -88,6 +91,7 @@ export function EventInfoFormEdition({ uuid }: { uuid: string }) {
     location: !!location,
     orderDate: !!orderDate,
     endDate: !!endDate,
+    images: !!images,
   };
 
   useEffect(() => {
@@ -97,7 +101,8 @@ export function EventInfoFormEdition({ uuid }: { uuid: string }) {
         isFormFilled.name ||
         isFormFilled.description ||
         isFormFilled.orderDate ||
-        isFormFilled.endDate
+        isFormFilled.endDate ||
+        isFormFilled.images
       ) {
         event.preventDefault();
         event.returnValue =
@@ -122,6 +127,7 @@ export function EventInfoFormEdition({ uuid }: { uuid: string }) {
         location: values.location,
         startDate: values.startDate,
         endDate: values.endDate,
+        images: values.images,
       };
 
       // Send PUT request with full event data
@@ -189,6 +195,15 @@ export function EventInfoFormEdition({ uuid }: { uuid: string }) {
                   </CardDescription>
                   <CardDescription className="text-xl text-iDona text-iDonate-navy-primary">
                     {typedEvent?.description}
+                  </CardDescription>
+                </div>
+
+                <div className="flex flex-col space-y-3">
+                  <CardDescription className="text-lg text-iDonate-gray">
+                    Event Location
+                  </CardDescription>
+                  <CardDescription className="text-xl text-iDona text-iDonate-navy-primary">
+                    {typedEvent?.location || "No location specified"}
                   </CardDescription>
                 </div>
 
@@ -340,6 +355,26 @@ export function EventInfoFormEdition({ uuid }: { uuid: string }) {
                         <Textarea
                           className="h-auto overflow-auto scrollbar-hide"
                           placeholder="Description"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={control}
+                  name="location"
+                  render={({ field }) => (
+                    <FormItem className="flex-1">
+                      <FormLabel className="text-sm text-iDonate-navy-secondary">
+                        Location
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Enter event location"
+                          className="w-full"
                           {...field}
                         />
                       </FormControl>

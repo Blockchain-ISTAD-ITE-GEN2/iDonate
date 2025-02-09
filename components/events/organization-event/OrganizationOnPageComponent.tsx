@@ -32,9 +32,9 @@ export default function OrganizationOnPageComponent() {
   //       onClick: () => handleClick(org.uuid), // Ensure `onClick` is always defined
   //     }))
   //   );
-  // }, [organizationData]);  
+  // }, [organizationData]);
 
-  
+
 
     const filtersFace = useMemo(() => [
       {
@@ -47,7 +47,7 @@ export default function OrganizationOnPageComponent() {
           value: name,
         })),
       },
-    ], [organizationData]);    
+    ], [organizationData]);
 
   // add all  to the filter state
   // useEffect(() => {
@@ -67,7 +67,7 @@ export default function OrganizationOnPageComponent() {
         phone: org.phone,
         bankAccountNumber: org.bankAccountNumber ?? null,
         isApproved: org.isApproved,
-        fileReferences: Array.isArray(org.fileReferences) 
+        fileReferences: Array.isArray(org.fileReferences)
           ? org.fileReferences.join(", ")  // Ensure it's a string
           : org.fileReferences ?? "",  // Default empty string if null or undefined
         user: org.user,
@@ -76,7 +76,7 @@ export default function OrganizationOnPageComponent() {
       }))
     );
   }, []);
-  
+
   useEffect(() => {
     const updatedOrganizations: any = organizationData.map((org) => ({
       uuid: org.uuid,
@@ -88,14 +88,14 @@ export default function OrganizationOnPageComponent() {
       phone: org.phone,
       bankAccountNumber: org.bankAccountNumber ?? null,
       isApproved: org.isApproved,
-      fileReferences: Array.isArray(org.fileReferences) 
+      fileReferences: Array.isArray(org.fileReferences)
         ? org.fileReferences.join(", ")  // Ensure it's a string
         : org.fileReferences ?? "",  // Default empty string if null or undefined
       user: org.user,
       bio: org.bio ?? undefined,
       onClick: () => handleClick(org.uuid),
     }));
-  
+
     setFilteredOrganizations(updatedOrganizations.slice(0, visibleCount));
   }, [organizationData, visibleCount]);
 

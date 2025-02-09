@@ -15,6 +15,11 @@ export const metadata: Metadata = {
     "Charity Organizations",
     "Support",
   ],
+  icons: {
+    icon: "/public/logo.png",
+    shortcut: "/public/logo.png",
+    apple: "/public/logo.png",
+  },
   openGraph: {
     title: "Organizations - iDonate",
     description:

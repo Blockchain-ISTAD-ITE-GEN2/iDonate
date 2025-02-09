@@ -1,5 +1,6 @@
 "use client";
 
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -18,13 +19,22 @@ import Image from "next/image";
 import donateIcon from "@/public/images/give-and-recieve.png";
 import SockJS from "sockjs-client";
 import { Client } from "@stomp/stompjs";
-import { date } from "zod";
+import {
+  FacebookShareButton,
+  TwitterShareButton,
+  EmailShareButton,
+  FacebookIcon,
+  TwitterIcon,
+  EmailIcon,
+} from "react-share";
 
 type EventDetailBannerProps = {
   uuid: string; // Accept UUID as a prop
 };
 
 export function EventDetailBanner({ uuid }: EventDetailBannerProps) {
+  // handle when user click on the share buttom
+  const [shareOpen, setShareOpen] = useState(false)
   const [recentTransactions, setRecentTransactions] = useState<
     TransactionType[]
   >([]);
@@ -114,7 +124,13 @@ export function EventDetailBanner({ uuid }: EventDetailBannerProps) {
     ? `${event.currentRaised.toLocaleString()}`
     : "0";
 
+  // const shareUrl = typeof window !== "undefined" ? window.location.href : "";
+  const shareUrl = `${process.env.NEXT_PUBLIC_URL}/event-detail/${uuid}`;
+  const shareTitle = event?.name || "Check out this event!";
+  const shareDescription = event?.description || "Join this amazing event and support the cause!";
+  const shareImage = event?.images[0] || "";
   return (
+    <>
     <Card className="w-[440px] h-full border-2 border-iDonate-navy-accent shadow-light">
       <CardHeader className="flex flex-col gap-6">
         <div className="flex flex-col gap-1">
@@ -141,7 +157,9 @@ export function EventDetailBanner({ uuid }: EventDetailBannerProps) {
 
       <CardContent className="flex flex-col gap-9">
         <div className="flex flex-col gap-3​​">
-          <Button className="w-full text-[16px] rounded-lg bg-iDonate-green-secondary hover:bg-iDonate-green-secondary text-iDonate-navy-primary font-semibold">
+          <Button
+           onClick={() => setShareOpen(true)}
+          className="w-full text-[16px] rounded-lg bg-iDonate-green-secondary hover:bg-iDonate-green-secondary text-iDonate-navy-primary font-semibold">
             <Share2Icon />
             ចែករំលែក
           </Button>
@@ -221,5 +239,60 @@ export function EventDetailBanner({ uuid }: EventDetailBannerProps) {
         </Button>
       </CardFooter>
     </Card>
+
+    {/* Share Modal */}
+    <Dialog open={shareOpen} onOpenChange={setShareOpen}>
+      <DialogContent className="max-w-md">
+        <DialogHeader>
+          <DialogTitle>ចែករំលែក កម្មវិធីបរិច្ចាគ</DialogTitle>
+        </DialogHeader>
+
+        <Card className="shadow-lg border rounded-lg overflow-hidden">
+          <Image
+            src={event?.images?.[0] || "https://i.pinimg.com/736x/2a/86/a5/2a86a560f0559704310d98fc32bd3d32.jpg"}
+            width={400} height={250}
+            alt="Event Image"
+            className="w-full object-cover"
+          />
+          <CardContent className="p-4">
+            <CardTitle className="text-lg font-bold">
+              {event?.name || "Untitled Event"}
+              </CardTitle>
+            <CardDescription className="text-sm text-gray-600 mt-2">
+              {event?.description || "No description available"}
+            </CardDescription>
+          </CardContent>
+
+          {/* Share to social */}
+          <CardFooter className="flex justify-around p-4">
+            {/* Facebook Share */}
+            <FacebookShareButton
+             url={shareUrl}
+             hashtag={"#iDonate istad"}>
+              <FacebookIcon size={40} round />
+            </FacebookShareButton>
+
+            {/* Twitter (X) Share */}
+            <TwitterShareButton
+              url={shareUrl}
+              title={shareTitle}
+              hashtags={["iDonate", "charity", "donation"]}
+            >
+              <TwitterIcon size={40} round />
+            </TwitterShareButton>
+
+            {/* Email Share */}
+            <EmailShareButton
+              url={shareUrl}
+              subject={`Join this amazing event: ${shareTitle}`}
+              body={`Hey,\n\nI found this event: "${shareTitle}".\n\n${shareDescription}\n\nCheck it out here: ${shareUrl}\n\nLet's support a great cause!`}
+            >
+              <EmailIcon size={40} round />
+            </EmailShareButton>
+          </CardFooter>
+        </Card>
+      </DialogContent>
+    </Dialog>
+ </>
   );
 }

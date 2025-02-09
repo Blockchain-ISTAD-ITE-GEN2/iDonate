@@ -125,6 +125,10 @@ export const eventSchemaCreation = z.object({
   images: z.any().nullable(),
 });
 
+export const deleteMediaSchema = z.object({
+  medias: z.array(z.string().url()),
+});
+
 export const eventSchemaEdition = z.object({
   name: z.string().min(1, { message: "Name is required" }),
   description: z.string().min(10, { message: "Description is required" }),
@@ -135,7 +139,9 @@ export const eventSchemaEdition = z.object({
   endDate: z.string().refine((date) => !isNaN(Date.parse(date)), {
     message: "Invalid date format",
   }),
+  images: z.any().nullable(),
 });
+
 
 export const eventInfoSchema = z.object({
   name: z.string().min(1, { message: "Name is required" }),

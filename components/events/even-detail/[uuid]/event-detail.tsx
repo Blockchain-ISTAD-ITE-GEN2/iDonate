@@ -61,10 +61,12 @@ export default function EventDetail() {
       </div>
 
       {/* Tab and Banner */}
-      <div className="flex gap-9 w-full h-full">
-        <TabEventDetail />
-        {uuid && <EventDetailBanner uuid={uuid} />}
-      </div>
+      {/* Tab and Banner */}
+    <div className="flex gap-9 w-full h-full items-stretch">
+      <TabEventDetail />
+      {uuid && <EventDetailBanner uuid={uuid} />}
+    </div>
+
     </section>
   );
 }

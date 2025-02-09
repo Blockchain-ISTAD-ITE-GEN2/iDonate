@@ -9,6 +9,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { OrganizationType } from "@/difinitions/types/organization/OrganizationType";
 import LoadingInsidePage from "@/components/loading/LoadingComponent";
+import { Button } from "@/components/ui/button";
 
 export default function OrganizationDashboard({
   params,
@@ -92,7 +93,18 @@ export default function OrganizationDashboard({
               </CardContent>
             </Card>
           ))}
+
+        <Button
+          variant="outline"
+          onClick={() =>
+            router.push(`/organization-registration`)
+          }
+        >
+          New Organization
+        </Button>
         </div>
+
+        
       </section>
     );
   }

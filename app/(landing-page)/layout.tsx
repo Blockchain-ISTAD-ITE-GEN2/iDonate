@@ -24,6 +24,11 @@ export const metadata: Metadata = {
     "charity",
     "Charity",
   ],
+  icons: {
+    icon: "/public/logo.png",
+    shortcut: "/public/logo.png",
+    apple: "/public/logo.png",
+  },
   openGraph: {
     title: {
       template: "%s - iDATA",
@@ -35,7 +40,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "kh_KH",
     images:
-      "https://idonateapi.kangtido.life/media/819e4d30-4bcd-4f23-a004-744075dbecbf.png",
+      "https://idonateapi.kangtido.life/media/8b894c24-57a5-42ff-8293-313e50b7aa32.png",
   },
 };
 

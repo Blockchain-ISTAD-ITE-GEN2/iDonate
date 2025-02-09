@@ -113,12 +113,11 @@ export default function LatestDonationCard() {
             {/* Image Section */}
             <CardHeader className="relative min-h-[660px]">
               <Image
-
-                  src={
-                    typeof item?.images?.[0] === "string"
-                      ? item.images[0]
-                      : "/fallback-placeholder.jpg"
-                  }
+                src={
+                  typeof item?.images?.[0] === "string"
+                    ? item.images[0]
+                    : "/fallback-placeholder.jpg"
+                }
                 // src={
                 //   Array.isArray(item?.images) && item.images[0]
                 //     ? item.images[0]

@@ -132,7 +132,7 @@ export function OrganizationEventCard({ event }: EventCardProps) {
 
       <CardContent className="px-4 py-4 flex flex-col gap-4">
         {/* Dates */}
-        <div className="flex justify-between text-sm">
+        <div className="flex justify-between text-sm flex-wrap">
           <div className="flex flex-col">
             <div className="flex items-center">
               <span className="text-iDonate-navy-secondary dark:text-iDonate-navy-accent mr-1">
@@ -222,7 +222,7 @@ export function OrganizationEventCard({ event }: EventCardProps) {
               cancelText="No, Keep as Draft"
               onAction={handleConfirmEvent}
             />
-          ) : (
+          ) : event?.isVisible ? (
             <AlertComfirmDialog
               trigger={
                 <Button
@@ -240,6 +240,8 @@ export function OrganizationEventCard({ event }: EventCardProps) {
               cancelText="No, Keep as visible"
               onAction={handleHideEvent}
             />
+          ) : (
+            ""
           )}
 
           <AlertComfirmDialog

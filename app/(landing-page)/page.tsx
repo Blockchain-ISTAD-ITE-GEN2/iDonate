@@ -43,12 +43,13 @@ export const metadata: Metadata = {
     description:
       "Make donations you can trust with iDonate. Explore verified organizations and causes.",
     images: [
-      "https://idonateapi.kangtido.life/media/819e4d30-4bcd-4f23-a004-744075dbecbf.png",
+      "https://idonateapi.kangtido.life/media/8b894c24-57a5-42ff-8293-313e50b7aa32.png",
     ],
   },
   icons: {
-    icon: "/favicon.ico",
-    apple: "/apple-touch-icon.png",
+    icon: "/public/logo.png",
+    shortcut: "/public/logo.png",
+    apple: "/public/logo.png",
   },
   robots: {
     index: true,
