@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     url: "https://idonate.istad.co/donor-dashboard",
     images: [
       {
-        url: "https://idonateapi.kangtido.life/media/819e4d30-4bcd-4f23-a004-744075dbecbf.png",
+        url: `${process.env.NEXT_PUBLIC_IDONATE_API_URL}/media/819e4d30-4bcd-4f23-a004-744075dbecbf.png`,
         width: 1200,
         height: 630,
         alt: "Donor Dashboard Preview",
