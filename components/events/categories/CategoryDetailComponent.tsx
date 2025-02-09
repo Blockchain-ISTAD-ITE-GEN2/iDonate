@@ -5,11 +5,8 @@ import { AccordionCategory } from "./AccordionCategory";
 import { AllCategoriesButton } from "./AllCategoriesAccordion";
 import { useParams } from "next/navigation";
 import { useGetCategoryByUuidQuery } from "@/redux/services/category-service";
-import { CategoryType } from "@/difinitions/types/components-type/CategoryType";
 import {
-  useGetDraftEventsFalseQuery,
   useGetEventByCategoryQuery,
-  useGetEventByUuidQuery,
 } from "@/redux/services/event-service";
 import { CommonEventCard } from "@/components/events/organization-event/CommonEventCard";
 import { Button } from "@/components/ui/button";
@@ -22,6 +19,7 @@ export default function CategoryDetailComponent() {
   const params = useParams();
   const uuid = params.uuid as string;
   const [page, setPage] = useState(3);
+  // const uuid = "3d1c076c-d007-45cd-ac99-552cf7f8312e";
 
   // Fetch category by UUID
   const { data: category = null, isLoading: isLoadingByUuid } =
@@ -30,7 +28,7 @@ export default function CategoryDetailComponent() {
   const {
     data: eventsApiResponse = { content: [] },
     isLoading: isEventsLoading,
-  } = useGetEventByCategoryQuery(uuid, { skip: !uuid });
+  } = useGetEventByCategoryQuery({uuid});
 
   const events: EventType[] = eventsApiResponse?.content ?? [];
 

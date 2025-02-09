@@ -44,13 +44,13 @@ export default function CategoryWithEventComponent({
       {/* Event Category Title */}
       <h2
         lang="km"
-        className="text-title-khmer text-iDonate-navy-primary md:flex md:items-center md:justify-center lg:flex lg:items-center lg:justify-start dark:text-iDonate-navy-accent"
+        className="text-title-khmer text-iDonate-navy-primary md:flex md:items-center md:justify-center lg:flex lg:items-center lg:justify-start dark:text-iDonate-navy-accent lg:mx-[100px]"
       >
         {category.name}
       </h2>
 
       {/* Events */}
-      <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 lg:mx-[100px]">
         {isEventsLoading ? (
           <CategoryPlaceholder />
         ) : typedEvents.length > 0 ? (
@@ -64,7 +64,7 @@ export default function CategoryWithEventComponent({
 
       {/* Show More Button */}
       {typedEvents.length < events.length && (
-        <div className="flex justify-end">
+        <div className="flex justify-end lg:mx-[100px]">
           <Button
             onClick={() => setPage((prev) => prev + 4)}
             className="text-medium-eng text-iDonate-navy-primary bg-iDonate-white-space border-2 border-iDonate-navy-accent hover:bg-iDonate-navy-accent dark:bg-iDonate-dark-mode dark:text-iDonate-navy-accent dark:hover:text-iDonate-navy-secondary dark:hover:border-iDonate-navy-secondary"
