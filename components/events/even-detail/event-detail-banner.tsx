@@ -91,10 +91,12 @@ export function EventDetailBanner({ uuid }: EventDetailBannerProps) {
   
       stompClient.onConnect = () => {
         // Subscribe to event-specific updates
-        stompClient.subscribe(`/topic/totalAmountByEvent/${event.uuid}`, (message) => {
-          setCurrentRaised(parseFloat(message.body) || 0);
-        });
-  
+        stompClient.subscribe(
+          `/topic/totalAmountByEvent/${event.uuid}`,
+          (message) => {
+            setCurrentRaised(parseFloat(message.body) || 0);
+          },
+        );
         stompClient.subscribe(`/topic/totalDonorsByEvent/${event.uuid}`, (message) => {
           setTotalDonors(parseInt(message.body, 10) || 0);
         });
@@ -194,7 +196,7 @@ export function EventDetailBanner({ uuid }: EventDetailBannerProps) {
           <div className="flex items-center gap-1 h-full">
           <CircleDollarSign className="h-5 w-5 text-iDonate-green-primary dark:text-iDonate-green-secondary align-middle" />
           <p className="text-iDonate-green-primary font-medium text-[17px] leading-none dark:text-iDonate-navy-accent">
-            {transaction.amount ? `${transaction.amount}` : "មិនទាន់ទទួលបានថវិការ"}
+            {currentRaised ? `${currentRaised}` : "មិនទាន់ទទួលបានថវិការ"}
           </p>
         </div>
         </div>

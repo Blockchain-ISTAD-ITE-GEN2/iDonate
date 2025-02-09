@@ -32,6 +32,7 @@ import {
   DonationDataType,
   DonationRecordType,
   DonationType,
+  ReceiptType,
   TransactionDataType,
 } from "@/difinitions/types/donation/donation";
 import { useToast } from "@/hooks/use-toast";
@@ -41,6 +42,7 @@ import EventQrDialog from "@/components/events/even-detail/event-qr-dialog";
 import { useParams } from "next/navigation";
 import SuccessDialog from "./Success-dialog";
 import { CircleDollarSign } from "lucide-react";
+import { useSendReceiptMutation } from "@/redux/services/donation-service";
 
 export function DonationForm() {
   const uuid = useParams();
@@ -63,6 +65,7 @@ export function DonationForm() {
   const typedEvents: EventType = events;
   const [md5, setMd5] = useState();
   const [generatedQr] = useGenerateQrCodeMutation();
+  const [sendReceipt, { isLoading, isError, isSuccess }] = useSendReceiptMutation();
 
   console.log("md5", md5);
 
@@ -81,6 +84,40 @@ export function DonationForm() {
   });
 
   console.log("Transaction Data: ", transactionData);
+
+  const handleSendReceipt = async () => {
+    try {
+      if (!userProfile || !events) {
+        console.error("User profile or event data is missing");
+        return;
+      }
+  
+      const receiptData: ReceiptType = {
+        userUuid: userProfile.uuid,
+        eventUuid: events.uuid,
+        remark: "Thank you for your donation!", // Add a meaningful message
+        amount: form.getValues("amount"), // Fetch amount from form
+      };
+  
+      const response = await sendReceipt(receiptData).unwrap();
+      console.log("Receipt sent successfully:", response);
+  
+      toast({
+        title: "Success",
+        description: "Receipt has been sent successfully!",
+        variant: "default",
+      });
+    } catch (error) {
+      console.error("Failed to send receipt:", error);
+      
+      toast({
+        title: "Error",
+        description: "Failed to send receipt. Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
+  
 
   const {
     handleSubmit,
@@ -149,6 +186,7 @@ export function DonationForm() {
         .unwrap()
         .then(() => {
           console.log("Record saved successfully");
+          handleSendReceipt();
         })
         .catch((error) => {
           console.error("Error saving record:", error);
