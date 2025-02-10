@@ -175,13 +175,13 @@ export function DonationForm() {
   }, [md5]);
 
   useEffect(() => {
-    if (transactionData?.responseCode === 0) {
+    if (transactionData?.responseCode === 0 && !isSuccessDialogOpen) {
       const record: DonationRecordType = {
         donationEventID: typedEvents?.uuid || "",
         amount: transactionData?.data?.amount,
         timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
       };
-
+  
       saveRecord(record)
         .unwrap()
         .then(() => {
@@ -191,40 +191,20 @@ export function DonationForm() {
         .catch((error) => {
           console.error("Error saving record:", error);
         });
-
+  
       setIsSuccessDialogOpen(true);
     }
   }, [transactionData]);
+  
+  
 
   // Submit handler for the donation form
   async function onSubmit(values: z.infer<typeof donationSchema>) {
-
-    if (isSubmitting) return;
-
+    if (isSubmitting) return; // Prevent double submissions
+  
     try {
-      // Build the donation object
-      const donation: DonationType = {
-        eventUuid: typedEvents?.uuid || "",
-        amount: values.amount,
-        acquiringBank: values.acquiringBank,
-        currency: values.currency,
-        city: values.city,
-      };
-
-      // Save payment data for QR dialog
-      setPaymentData({
-        eventUuid: typedEvents?.uuid || "",
-        donor: userProfile?.username,
-        amount: values.amount,
-        recipient: typedEvents?.organization?.name || "",
-        acquiringBank: values.acquiringBank,
-        currency: values.currency,
-        city: values.city,
-        visibily: true, // Add the missing visibily property
-      });
-
-      // Validate donation amount
-      if (values.amount <= 0) {
+      // Prevent duplicate donation calls
+      if (!values.amount || values.amount <= 0) {
         toast({
           title: "Error",
           description: "Donation amount must be greater than 0.",
@@ -232,47 +212,25 @@ export function DonationForm() {
         });
         return;
       }
-
-      // Make donation API call
+  
+      // Ensure amount is not changed or doubled
+      console.log("Submitting donation:", values.amount);
+  
+      const donation: DonationType = {
+        eventUuid: typedEvents?.uuid || "",
+        amount: values.amount,
+        acquiringBank: values.acquiringBank,
+        currency: values.currency,
+        city: values.city,
+      };
+  
       const donateResponse = await donate({
         donation: donation,
         organizationUuid: typedEvents?.organization?.uuid || "",
       }).unwrap();
-      console.log("Donation API Response:", donateResponse);
-
-      const md5Value = donateResponse?.data?.md5;
-      if (md5Value) {
-        setMd5(md5Value); // Set md5 value
-      } else {
-        throw new Error("MD5 value missing in donation response.");
-      }
-
-      // Fetch the QR code manually
-      const qrResponse = generatedQr(donateResponse?.data?.qr || "").unwrap();
-
-      const qrData = await qrResponse;
-      setQrCode(qrData?.base64QRCode); // Save QR code
-      setIsOpened(true); // Open QR dialog
-
-      // Success dialog - check transaction
-      const successResponse = await fetch(
-        `https://api-bakong.nbc.gov.kh/v1/check_transaction_by_md5`,
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjoiYzIwOWMwNDYzNjBlNDEwMSJ9LCJpYXQiOjE3MzczNTg3NTcsImV4cCI6MTc0NTEzNDc1N30.8CdSi4fVh_b1bT-pjEN0peTi_ws4K4AOKGCxrrH0EYE`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            md5: donateResponse?.dataKHQRResponse?.data?.md5,
-          }),
-        },
-      );
-
-      const successData = await successResponse.json();
-      setTransactionData(successData); // Save transaction data
+  
+      console.log("Donation Response Amount:", donateResponse?.data?.amount);
     } catch (error: any) {
-      // console.error("Error during submission:", error);
       toast({
         title: "Error",
         description: error.message || "An unexpected error occurred.",
@@ -280,6 +238,7 @@ export function DonationForm() {
       });
     }
   }
+  
 
   return (
     <Form {...form}>
@@ -318,8 +277,11 @@ export function DonationForm() {
                         value={field.value || ""} // Prevent null/undefined values
                         onChange={(e) => {
                           const value = e.target.value;
-                          field.onChange(value ? parseFloat(value) : ""); // Convert to number or set empty string
+                          if (!isNaN(Number(value))) {
+                            field.onChange(Number(value)); // Ensure correct type conversion
+                          }
                         }}
+                        
                       />
                     </FormControl>
                     <FormMessage />
