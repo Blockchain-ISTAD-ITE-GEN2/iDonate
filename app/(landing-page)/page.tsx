@@ -27,14 +27,7 @@ export const metadata: Metadata = {
     description:
       "Join iDonate to make impactful and transparent donations. Explore verified organizations and trusted causes.",
     url: "https://idonate.istad.co",
-    images: [
-      {
-        url: `${process.env.NEXT_PUBLIC_IDONATE_API_URL}/media/819e4d30-4bcd-4f23-a004-744075dbecbf.png`,
-        width: 1200,
-        height: 630,
-        alt: "iDonate Home Banner",
-      },
-    ],
+    images:"https://idonateapi.kangtido.life/media/22404496-37b3-4b2d-9209-73a38c9efc71.png",
     type: "website",
   },
   twitter: {

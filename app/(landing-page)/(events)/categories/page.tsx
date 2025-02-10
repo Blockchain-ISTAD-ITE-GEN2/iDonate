@@ -23,14 +23,7 @@ export const metadata: Metadata = {
     description:
       "Explore categories on iDonate and find organizations and causes that matter to you.",
     url: "https://yourwebsite.com/categories",
-    images: [
-      {
-        url: `${process.env.NEXT_PUBLIC_IDONATE_API_URL}/media/819e4d30-4bcd-4f23-a004-744075dbecbf.png`,
-        width: 1200,
-        height: 630,
-        alt: "iDonate Categories Banner",
-      },
-    ],
+    images:"https://idonateapi.kangtido.life/media/22404496-37b3-4b2d-9209-73a38c9efc71.png",
     type: "website",
   },
   twitter: {

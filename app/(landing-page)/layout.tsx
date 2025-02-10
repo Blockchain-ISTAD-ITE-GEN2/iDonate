@@ -39,8 +39,7 @@ export const metadata: Metadata = {
     url: "https://idonate.istad.co",
     type: "website",
     locale: "kh_KH",
-    images:
-      `${process.env.NEXT_PUBLIC_IDONATE_API_URL}/media/8b894c24-57a5-42ff-8293-313e50b7aa32.png`,
+    images:"https://idonateapi.kangtido.life/media/22404496-37b3-4b2d-9209-73a38c9efc71.png"
   },
 };
 

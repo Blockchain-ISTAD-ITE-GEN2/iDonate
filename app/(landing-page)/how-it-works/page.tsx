@@ -24,14 +24,7 @@ export const metadata: Metadata = {
     description:
       "Learn the steps behind the iDonate platform, ensuring transparency and credibility in every donation.",
     url: "https://idonate.istad.co/how-it-works",
-    images: [
-      {
-        url: `${process.env.NEXT_PUBLIC_IDONATE_API_URL}/media/8b894c24-57a5-42ff-8293-313e50b7aa32.png`,
-        width: 1200,
-        height: 630,
-        alt: "How It Works - iDonate",
-      },
-    ],
+    images:"https://idonateapi.kangtido.life/media/22404496-37b3-4b2d-9209-73a38c9efc71.png",
     type: "website",
   },
   twitter: {
