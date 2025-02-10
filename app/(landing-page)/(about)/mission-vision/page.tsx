@@ -19,14 +19,7 @@ export const metadata: Metadata = {
     description:
       "Learn about iDonate’s mission to ensure transparency and our vision for creating a world of impactful donations.",
     url: "https://idonate.istad.co/mission-vision",
-    images: [
-      {
-        url: `${process.env.NEXT_PUBLIC_IDONATE_API_URL}/media/0b967dfd-0897-4197-b631-c24affbd812b.png`,
-        width: 1200,
-        height: 630,
-        alt: "iDonate Mission and Vision Banner",
-      },
-    ],
+    images:"https://idonateapi.kangtido.life/media/22404496-37b3-4b2d-9209-73a38c9efc71.png",
     type: "website",
   },
   twitter: {
@@ -39,9 +32,9 @@ export const metadata: Metadata = {
     ],
   },
   icons: {
-    icon: "/public/logo.png",
-    shortcut: "/public/logo.png",
-    apple: "/public/logo.png",
+    icon: "/logo.png",
+    shortcut: "/logo.png",
+    apple: "/logo.png",
   },
   robots: {
     index: true,
