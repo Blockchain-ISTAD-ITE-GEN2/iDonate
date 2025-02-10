@@ -34,12 +34,12 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: {
-      template: "%s - iDATA",
-      default: "iDATA",
+      template: "%s - iDonate",
+      default: "iDonate",
     },
     description:
       "iDonate is a blockchain-based donation platform designed to enhance transparency, accountability, and efficiency in charitable giving",
-    url: "https://idata.istad.co",
+    url: "https://idonate.istad.co",
     type: "website",
     locale: "kh_KH",
     images: [
