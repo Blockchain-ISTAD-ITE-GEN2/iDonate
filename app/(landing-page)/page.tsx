@@ -109,7 +109,7 @@ export default function Homepage() {
             lang="km"
             className="mb-5 p-2 text-2xl text-iDonate-navy-primary text-center dark:text-iDonate-navy-accent"
           >
-            កម្មវិធីបរិច្ចាគចុងក្រោយបំផុត
+            កម្មវិធីបរិច្ចាគបន្ទាន់
           </h3>
           <LatestDonationCard />
         </div>

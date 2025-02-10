@@ -48,6 +48,7 @@ import {
   useUploadMultipleMediaMutation,
   useUploadSingleMediaMutation,
 } from "@/redux/services/media";
+import { Checkbox } from "@/components/ui/checkbox";
 
 export function EventInfoFormCreation() {
   const org = useParams();
@@ -71,6 +72,7 @@ export function EventInfoFormCreation() {
       location: "",
       startDate: "",
       endDate: "",
+      isUrgent: false,
       // timezone: "",
       images: [],
     },
@@ -455,6 +457,28 @@ export function EventInfoFormCreation() {
                   )}
                 />
               </div>
+
+              <FormField
+                control={control}
+                name="isUrgent"
+                render={({ field }) => (
+                  <FormItem className="pt-3">
+                    <div className="flex items-center gap-2">
+                      <FormControl>
+                        <Checkbox
+                          id="isUrgent"
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
+                        />
+                      </FormControl>
+                      <FormLabel htmlFor="isUrgent" className="text-sm text-iDonate-navy-secondary">
+                        Mark as Urgent Event
+                      </FormLabel>
+                    </div>
+                  </FormItem>
+                )}
+              />
+
             </CardContent>
 
             <CardContent className="flex relative flex-1 p-0 m-0">

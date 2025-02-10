@@ -4,8 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import Image from "next/image";
 import {
-  useGetDraftEventsFalseQuery,
-  useGetEventsQuery,
+  useGetUrgentEventsQuery
 } from "@/redux/services/event-service";
 import { EventType } from "@/difinitions/types/event/EventType";
 import { useEffect, useState } from "react";
@@ -21,7 +20,7 @@ export default function LatestDonationCard() {
 
   // Fetch data from RTK
   const { data: apiEventResponse = { content: [] } } =
-    useGetDraftEventsFalseQuery({});
+    useGetUrgentEventsQuery({});
 
   useEffect(() => {
     // Sort and slice the events
