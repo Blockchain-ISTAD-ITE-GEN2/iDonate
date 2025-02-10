@@ -15,9 +15,9 @@ export const metadata: Metadata = {
     "Support",
   ],
   icons: {
-    icon: "/public/logo.png",
-    shortcut: "/public/logo.png",
-    apple: "/public/logo.png",
+    icon: "/logo.png",
+    shortcut: "/logo.png",
+    apple: "/logo.png",
   },
   openGraph: {
     title: "How It Works - iDonate",

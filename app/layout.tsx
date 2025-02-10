@@ -28,9 +28,9 @@ export const metadata: Metadata = {
     "Charity",
   ],
   icons: {
-    icon: "/public/logo.png", // Path to your favicon file
-    shortcut: "/public/logo.png",
-    apple: "/public/logo.png",
+    icon: "/logo.png", // Path to your favicon file
+    shortcut: "/logo.png",
+    apple: "/logo.png",
   },
   openGraph: {
     title: {
