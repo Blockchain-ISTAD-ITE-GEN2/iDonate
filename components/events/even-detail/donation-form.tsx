@@ -198,6 +198,9 @@ export function DonationForm() {
 
   // Submit handler for the donation form
   async function onSubmit(values: z.infer<typeof donationSchema>) {
+
+    if (isSubmitting) return;
+
     try {
       // Build the donation object
       const donation: DonationType = {

@@ -35,49 +35,40 @@ export default function LatestDonationCard() {
   }, [apiEventResponse]);
 
   useEffect(() => {
-    const socket = new SockJS(
-      `${process.env.NEXT_PUBLIC_IDONATE_API_URL}/websocket`,
-    );
+    const socket = new SockJS(`${process.env.NEXT_PUBLIC_IDONATE_API_URL}/websocket`);
     const stompClient = new Client({
       webSocketFactory: () => socket,
       reconnectDelay: 5000,
     });
 
     stompClient.onConnect = () => {
+      console.log("WebSocket connected!");
       typedEvents.forEach((event) => {
-        stompClient.subscribe(
-          `/topic/totalAmountByEvent/${event.uuid}`,
-          (message) => {
-            setTypedEvents((prevEvents) =>
-              prevEvents.map((e) =>
-                e.uuid === event.uuid
-                  ? { ...e, currentRaised: parseFloat(message.body) || 0 }
-                  : e,
-              ),
-            );
-          },
-        );
+        stompClient.subscribe(`/topic/totalAmountByEvent/${event.uuid}`, (message) => {
+          setTypedEvents((prevEvents) =>
+            prevEvents.map((e) =>
+              e.uuid === event.uuid ? { ...e, currentRaised: parseFloat(message.body) || 0 } : e,
+            ),
+          );
+        });
 
-        stompClient.subscribe(
-          `/topic/totalDonorsByEvent/${event.uuid}`,
-          (message) => {
-            setTypedEvents((prevEvents) =>
-              prevEvents.map((e) =>
-                e.uuid === event.uuid
-                  ? { ...e, totalDonors: parseInt(message.body) || 0 }
-                  : e,
-              ),
-            );
-          },
-        );
+        stompClient.subscribe(`/topic/totalDonorsByEvent/${event.uuid}`, (message) => {
+          setTypedEvents((prevEvents) =>
+            prevEvents.map((e) =>
+              e.uuid === event.uuid ? { ...e, totalDonors: parseInt(message.body) || 0 } : e,
+            ),
+          );
+        });
       });
     };
 
     stompClient.activate();
+    // stompClientRef.current = stompClient;
+
     return () => {
       stompClient.deactivate();
     };
-  }, [typedEvents]);
+  }, []); // ✅ Only runs once on mount
 
   const formatAmount = (amount: any) => {
     return new Intl.NumberFormat("en-US", {
@@ -300,7 +291,7 @@ export default function LatestDonationCard() {
                         <span className="khmer-font">
                           ទឹកប្រាក់ទទួលបាន៖​​{" "}
                           <span className="font-medium text-[16px]">
-                            {formatAmount(item.currentRaised) || "0"}
+                            {formatAmount(item?.currentRaised) || "0"}
                           </span>
                         </span>
                       </div>

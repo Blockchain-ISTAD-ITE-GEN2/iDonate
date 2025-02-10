@@ -102,7 +102,7 @@ export function EventDetailBanner({ uuid }: EventDetailBannerProps) {
       stompClient.onConnect = () => {
         // Subscribe to event-specific updates
         stompClient.subscribe(
-          `/topic/totalAmountOfEvent/${event.uuid}`,
+          `/topic/totalAmountByEvent/${event.uuid}`,
           (message) => {
             setCurrentRaised(parseFloat(message.body) || 0.00);
           },
