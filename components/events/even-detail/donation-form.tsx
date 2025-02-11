@@ -176,9 +176,11 @@ export function DonationForm() {
 
   useEffect(() => {
     if (transactionData?.responseCode === 0 && !isSuccessDialogOpen) {
+      if (!typedEvents?.uuid || !transactionData?.data?.amount) return;
+  
       const record: DonationRecordType = {
-        donationEventID: typedEvents?.uuid || "",
-        amount: transactionData?.data?.amount,
+        donationEventID: typedEvents.uuid,
+        amount: transactionData.data.amount, // Ensure correct amount
         timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
       };
   
@@ -195,15 +197,12 @@ export function DonationForm() {
       setIsSuccessDialogOpen(true);
     }
   }, [transactionData]);
-  
-  
 
   // Submit handler for the donation form
   async function onSubmit(values: z.infer<typeof donationSchema>) {
     if (isSubmitting) return; // Prevent double submissions
   
     try {
-      // Prevent duplicate donation calls
       if (!values.amount || values.amount <= 0) {
         toast({
           title: "Error",
@@ -213,12 +212,11 @@ export function DonationForm() {
         return;
       }
   
-      // Ensure amount is not changed or doubled
       console.log("Submitting donation:", values.amount);
   
       const donation: DonationType = {
         eventUuid: typedEvents?.uuid || "",
-        amount: values.amount,
+        amount: Number(values.amount), // Ensure amount is a number
         acquiringBank: values.acquiringBank,
         currency: values.currency,
         city: values.city,
@@ -236,9 +234,8 @@ export function DonationForm() {
         description: error.message || "An unexpected error occurred.",
         variant: "destructive",
       });
-    }
+    } 
   }
-  
 
   return (
     <Form {...form}>
@@ -269,20 +266,19 @@ export function DonationForm() {
                       </div>
                     </FormLabel>
                     <FormControl className="w-full h-full">
-                      <Input
-                        type="number" // Ensure the input is numeric
-                        className="h-auto overflow-auto scrollbar-hide"
-                        placeholder="Enter your amount"
-                        {...field}
-                        value={field.value || ""} // Prevent null/undefined values
-                        onChange={(e) => {
-                          const value = e.target.value;
-                          if (!isNaN(Number(value))) {
-                            field.onChange(Number(value)); // Ensure correct type conversion
-                          }
-                        }}
-                        
-                      />
+                    <Input
+                      type="number"
+                      className="h-auto overflow-auto scrollbar-hide"
+                      placeholder="Enter your amount"
+                      {...field}
+                      value={field.value || ""}
+                      onChange={(e) => {
+                        const value = Number(e.target.value);
+                        if (!isNaN(value)) {
+                          field.onChange(value); // Ensure it's correctly set
+                        }
+                      }}
+                    />
                     </FormControl>
                     <FormMessage />
                     <FormDescription className="text-iDonate-gray text-sm">

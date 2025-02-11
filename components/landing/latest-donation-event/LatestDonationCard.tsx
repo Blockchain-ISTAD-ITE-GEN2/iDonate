@@ -4,19 +4,27 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import Image from "next/image";
 import {
+  useGetEventByUuidQuery,
   useGetUrgentEventsQuery
 } from "@/redux/services/event-service";
 import { EventType } from "@/difinitions/types/event/EventType";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import SockJS from "sockjs-client";
 import { Client } from "@stomp/stompjs";
 import { FaRegCalendarAlt } from "react-icons/fa";
 import { HiCalendarDateRange } from "react-icons/hi2";
 
 export default function LatestDonationCard() {
+  const uuid = useParams();
   const router = useRouter();
   const [typedEvents, setTypedEvents] = useState<EventType[]>([]);
+
+  const { data: events } = useGetEventByUuidQuery(uuid?.uuid);
+  const typedEvent: EventType = events;
+
+  const [totalDonors, setTotalDonors] = useState(typedEvent.totalDonors ?? 0);
+  const [currentRaised, setCurrentRaised] = useState(typedEvent.currentRaised ?? 0);
 
   // Fetch data from RTK
   const { data: apiEventResponse = { content: [] } } =
@@ -34,40 +42,39 @@ export default function LatestDonationCard() {
   }, [apiEventResponse]);
 
   useEffect(() => {
-    const socket = new SockJS(`${process.env.NEXT_PUBLIC_IDONATE_API_URL}/websocket`);
-    const stompClient = new Client({
-      webSocketFactory: () => socket,
-      reconnectDelay: 5000,
-    });
-
-    stompClient.onConnect = () => {
-      console.log("WebSocket connected!");
-      typedEvents.forEach((event) => {
-        stompClient.subscribe(`/topic/totalAmountByEvent/${event.uuid}`, (message) => {
-          setTypedEvents((prevEvents) =>
-            prevEvents.map((e) =>
-              e.uuid === event.uuid ? { ...e, currentRaised: parseFloat(message.body) || 0 } : e,
-            ),
-          );
-        });
-
-        stompClient.subscribe(`/topic/totalDonorsByEvent/${event.uuid}`, (message) => {
-          setTypedEvents((prevEvents) =>
-            prevEvents.map((e) =>
-              e.uuid === event.uuid ? { ...e, totalDonors: parseInt(message.body) || 0 } : e,
-            ),
-          );
-        });
+      if (!typedEvent?.uuid) return;
+  
+      const socket = new SockJS(
+        `${process.env.NEXT_PUBLIC_IDONATE_API_URL}/websocket`,
+      );
+      const stompClient = new Client({
+        webSocketFactory: () => socket,
+        reconnectDelay: 5000,
       });
-    };
-
-    stompClient.activate();
-    // stompClientRef.current = stompClient;
-
-    return () => {
-      stompClient.deactivate();
-    };
-  }, []); // ✅ Only runs once on mount
+  
+      stompClient.onConnect = () => {
+        // Subscribe to event-specific updates
+        stompClient.subscribe(
+          `/topic/totalAmountByEvent/${typedEvent.uuid}`,
+          (message) => {
+            setCurrentRaised(parseFloat(message.body) || 0);
+          },
+        );
+  
+        stompClient.subscribe(
+          `/topic/totalDonorsByEvent/${typedEvent.uuid}`,
+          (message) => {
+            setTotalDonors(parseInt(message.body, 10) || 0);
+          },
+        );
+      };
+  
+      stompClient.activate();
+  
+      return () => {
+        stompClient.deactivate();
+      };
+    }, [typedEvent?.uuid]);
 
   const formatAmount = (amount: any) => {
     return new Intl.NumberFormat("en-US", {
@@ -279,7 +286,7 @@ export default function LatestDonationCard() {
                       <span className="khmer-font">
                         អ្នកបរិច្ចាគ៖{" "}
                         <span className="font-medium text-[16px]">
-                          {item?.totalDonors || "0"}
+                          {totalDonors || "0"}
                         </span>{" "}
                         នាក់
                       </span>
@@ -290,7 +297,7 @@ export default function LatestDonationCard() {
                         <span className="khmer-font">
                           ទឹកប្រាក់ទទួលបាន៖​​{" "}
                           <span className="font-medium text-[16px]">
-                            {formatAmount(item?.currentRaised) || "0"}
+                            {formatAmount(currentRaised) || "0"}
                           </span>
                         </span>
                       </div>
