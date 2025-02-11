@@ -57,11 +57,11 @@ export function DonorReacentTransacctions({
                 <p className="text-sm line-clamp-1 lg:text-description-eng sm:line-clamp-none lg:line-clamp-1 font-normal text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
                   បានបរិច្ចាគទៅ{" "}
                   <span className="font-medium text-iDonate-navy-primary dark:text-iDonate-navy-accent">
-                    {transaction.event?.name || "Unknown Event"}
+                    {transaction.event?.eventName || "Unknown Event"}
                   </span>
                 </p>
                 <p className="text-xs line-clamp-1 sm:text-sub-description-eng sm:line-clamp-none lg:line-clamp-1 text-iDonate-gray">
-                  {transaction.organization?.name || "Unknown Organization"}
+                  {transaction.event?.orgName || "Unknown Organization"}
                 </p>
               </div>
             </div>

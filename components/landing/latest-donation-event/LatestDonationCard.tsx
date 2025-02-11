@@ -23,8 +23,8 @@ export default function LatestDonationCard() {
   const { data: events } = useGetEventByUuidQuery(uuid?.uuid);
   const typedEvent: EventType = events;
 
-  const [totalDonors, setTotalDonors] = useState(typedEvent.totalDonors ?? 0);
-  const [currentRaised, setCurrentRaised] = useState(typedEvent.currentRaised ?? 0);
+  const [totalDonors, setTotalDonors] = useState(typedEvent?.totalDonors ?? 0);
+  const [currentRaised, setCurrentRaised] = useState(typedEvent?.currentRaised ?? 0);
 
   // Fetch data from RTK
   const { data: apiEventResponse = { content: [] } } =
