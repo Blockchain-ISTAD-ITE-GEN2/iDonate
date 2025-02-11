@@ -1,55 +1,31 @@
 "use client";
+
 import transactions from "@/data/transactions.json";
 import { TransactionHistoryCard } from "./transaction-card";
 import { TransactionType } from "@/difinitions/types/table-type/transaction";
 import { Toolbar } from "@/components/filter/toolbar";
 import { useEffect, useState } from "react";
 
-export default function TransactionCardHistory() {
-  const typedTransactions: TransactionType[] = transactions.map((t) => ({
-    ...t,
-    event:
-      typeof t.event === "string"
-        ? {
-            name: t.event,
-            media: "",
-            description: "",
-            location: "",
-            startDate: "",
-            endDate: "",
-            type: "",
-            images: [],
-            isDraft: false,
-            isVisible: true,
-          }
-        : t.event,
-  }));
+/**
+ * Formats transaction data to match the TransactionType structure
+ */
+const formatTransaction = (t: any): TransactionType => ({
+  ...t,
+  event: typeof t.event === "string"
+    ? { eventName: t.event, orgName: "Unknown Organization" } // Ensuring event matches the type
+    : {
+        eventName: t.event?.eventName || "Unknown Event",
+        orgName: t.event?.orgName || "Unknown Organization",
+      }
+});
 
-  const [filteredtransactions, setFilteredtransactions] = useState<
-    TransactionType[]
-  >(
-    transactions.map((t) => ({
-      ...t,
-      event:
-        typeof t.event === "string"
-          ? {
-              name: t.event,
-              media: "",
-              description: "",
-              location: "",
-              startDate: "",
-              endDate: "",
-              type: "",
-              images: [],
-              isDraft: false,
-              isVisible: true,
-            }
-          : t.event,
-    })),
-  );
+export default function TransactionCardHistory() {
+  const typedTransactions: TransactionType[] = transactions.map(formatTransaction);
+
+  const [filteredTransactions, setFilteredTransactions] = useState<TransactionType[]>(typedTransactions);
 
   useEffect(() => {
-    setFilteredtransactions(typedTransactions); // Reset filtered transactions whenever `transactions` prop changes
+    setFilteredTransactions(typedTransactions); // Reset filtered transactions whenever transactions change
   }, [typedTransactions]);
 
   const filtersFace = [
@@ -57,20 +33,17 @@ export default function TransactionCardHistory() {
       key: "event",
       title: "Events",
       options: Array.from(
-        new Set(
-          typedTransactions.map((transaction) => transaction.event?.name),
-        ), // Extract event name
+        new Set(typedTransactions.map((transaction) => transaction.event?.eventName))
       ).map((eventName) => ({
         label: eventName ?? "",
         value: eventName ?? "",
       })),
     },
-
     {
       key: "amount",
       title: "ចំនួនថវិការបរិច្ចាគ Range",
       options: Array.from(
-        new Set(typedTransactions.map((transaction) => transaction.amount)),
+        new Set(typedTransactions.map((transaction) => transaction.amount))
       ).map((amount) => ({
         label: amount?.toString() ?? "",
         value: amount?.toString() ?? "",
@@ -91,12 +64,11 @@ export default function TransactionCardHistory() {
         events={typedTransactions}
         filtersFace={filtersFace}
         searchKey={"event"}
-        onFilterChange={setFilteredtransactions}
-        // filtersDateRange={filtersDateRange}
+        onFilterChange={setFilteredTransactions}
       />
 
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-        {filteredtransactions.map((transaction, index) => (
+        {filteredTransactions.map((transaction, index) => (
           <TransactionHistoryCard key={index} transaction={transaction} />
         ))}
       </div>

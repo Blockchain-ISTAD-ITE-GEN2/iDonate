@@ -11,9 +11,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { TransactionType } from "@/difinitions/types/table-type/transaction"; // Ensure this import is correct
+import { TransactionType } from "@/difinitions/types/table-type/transaction";
 import { CardsMetricSkeleton } from "@/components/landing/transaction/CardsMetricSkeleton";
-import { LoadingTrasaction } from "@/components/landing/transaction/LoadingTrasaction";
 import { RecentTransactionsSkeleton } from "@/components/landing/transaction/RecentTransactionsSkeleton";
 
 export default function TransactionHistory() {
@@ -26,44 +25,63 @@ export default function TransactionHistory() {
 
   const [transactions, setTransactions] = useState<TransactionType[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<null | string>(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (!donorUuid) return;
 
+    const controller = new AbortController();
+    const signal = controller.signal;
+
     const fetchTransactions = async () => {
       try {
+        setLoading(true);
+        setError(null);
+
         const response = await fetch(
           `${process.env.NEXT_PUBLIC_IDONATE_API_URL}/api/v1/donation/${donorUuid}`,
+          { signal }
         );
-        if (!response.ok) {
-          throw new Error("Failed to fetch transactions");
-        }
-        const data = await response.json();
 
+        if (!response.ok) {
+          throw new Error(`Failed to fetch transactions: ${response.statusText}`);
+        }
+
+        const data = await response.json();
         console.log("User Transaction Data: ", JSON.stringify(data));
+
+        if (!data?.content || !Array.isArray(data.content)) {
+          throw new Error("Invalid transaction data format");
+        }
 
         // Transform API response to match `TransactionType`
         const formattedTransactions: TransactionType[] = data.content.map(
           (txn: any) => ({
-            id: crypto.randomUUID(), // Generate a unique ID
-            avatar: txn.avatar || "", // Ensure avatar is a string
-            donor: txn.username || "Anonymous", // Map to `username`
-            event: txn.event,
-            organization: txn.organization,
-            amount: txn.donationAmount, // Map to `amount`
-            timestamp: new Date(txn.timestamp).toISOString(), // Ensure timestamp is a formatted string
-          }),
+            id: txn.id || crypto.randomUUID(),
+            avatar: txn.avatar || "",
+            donor: txn.username || "Anonymous",
+            email: txn.email || "",
+            event: {
+              eventName: txn.event?.eventName || "Unknown Event",
+              orgName: txn.event?.orgName || "Unknown Organization",
+            },
+            organization: txn.organization || null, // Keeping full organization object
+            amount: Number(txn.donationAmount) || 0, // Ensure it's a number
+            timestamp: txn.timestamp ? new Date(txn.timestamp).toISOString() : null,
+            description: txn.description || "No description available",
+            order_date: txn.order_date || "",
+            end_date: txn.end_date || "",
+          })
         );
 
+        // Sort transactions by most recent
         formattedTransactions.sort(
-          (a, b) =>
-            new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime(),
+          (a, b) => new Date(b.timestamp!).getTime() - new Date(a.timestamp!).getTime()
         );
 
-        // Update state and keep the transactions sorted
         setTransactions(formattedTransactions);
       } catch (err: any) {
+        if (err.name === "AbortError") return; // Prevent state updates after unmount
         setError(err.message || "Something went wrong");
       } finally {
         setLoading(false);
@@ -71,6 +89,8 @@ export default function TransactionHistory() {
     };
 
     fetchTransactions();
+
+    return () => controller.abort(); // Cleanup function to avoid memory leaks
   }, [donorUuid]);
 
   return (
@@ -78,9 +98,7 @@ export default function TransactionHistory() {
       {/* Cards for metrics */}
       <div className="flex-1">
         {loading ? (
-          <div>
-            <CardsMetricSkeleton />
-          </div>
+          <CardsMetricSkeleton />
         ) : error ? (
           <p className="text-red-500">{error}</p>
         ) : (
@@ -88,12 +106,10 @@ export default function TransactionHistory() {
         )}
       </div>
 
-      {/* ប្រតិបត្តិការថ្មីៗ */}
+      {/* Recent Transactions */}
       <div>
         {loading ? (
-          <div>
-            <RecentTransactionsSkeleton />
-          </div>
+          <RecentTransactionsSkeleton />
         ) : (
           <Card className="w-full xl:w-[480px] bg-iDonate-light-gray rounded-lg border border-iDonate-navy-accent dark:bg-iDonate-dark-mode">
             <CardHeader>
@@ -105,9 +121,7 @@ export default function TransactionHistory() {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <DonorReacentTransacctions
-                transactions={transactions.slice(0, 5)}
-              />
+              <DonorReacentTransacctions transactions={transactions.slice(0, 5)} />
             </CardContent>
           </Card>
         )}
