@@ -131,7 +131,6 @@ export default function TotalOrganizationComponent() {
 
     const stompClient = new Client({
       webSocketFactory: () => socket,
-      debug: (str) => console.log(str),
       reconnectDelay: 5000,
       heartbeatIncoming: 4000,
       heartbeatOutgoing: 4000,
@@ -143,7 +142,6 @@ export default function TotalOrganizationComponent() {
     };
 
     stompClient.onConnect = (frame) => {
-      console.log("Connected: " + frame);
 
       stompClient.subscribe("/topic/totalDonors", (message) => {
         const totalDonors = JSON.parse(message.body);
@@ -180,7 +178,6 @@ export default function TotalOrganizationComponent() {
           totalDonationAmount = parseFloat(totalDonationAmount);
         }
 
-        console.log("Received total donation amount", totalDonationAmount);
 
         setOrganizationData((prevData) =>
           prevData.map((item, i) =>

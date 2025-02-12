@@ -63,7 +63,6 @@ export function BarAndLineChartLanding() {
 
         const data = await response.json();
 
-        console.log("Data transactions: ", data);
 
         const formattedTransactions: TransactionType[] = data.content.map(
           (txn: any) => ({
@@ -104,7 +103,6 @@ export function BarAndLineChartLanding() {
     });
 
     stompClient.onConnect = () => {
-      console.log("WebSocket connected");
       stompClient.subscribe("/topic/recentTransactions", (message) => {
         try {
           const newTransaction = JSON.parse(message.body);
@@ -126,13 +124,11 @@ export function BarAndLineChartLanding() {
 
           dispatch({ type: "ADD_TRANSACTION", payload: formattedTransaction });
         } catch (error) {
-          console.error("Error parsing WebSocket message:", error);
         }
       });
     };
 
     stompClient.onStompError = (frame) => {
-      console.error("WebSocket error:", frame.headers.message);
       dispatch({ type: "FETCH_ERROR", payload: "WebSocket connection error" });
     };
 
