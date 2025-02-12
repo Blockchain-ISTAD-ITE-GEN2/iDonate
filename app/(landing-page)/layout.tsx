@@ -24,18 +24,22 @@ export const metadata: Metadata = {
     "charity",
     "Charity",
   ],
+  icons: {
+    icon: "/logo.png",
+    shortcut: "/logo.png",
+    apple: "/logo.png",
+  },
   openGraph: {
     title: {
-      template: "%s - iDATA",
-      default: "iDATA",
+      template: "%s - iDonate",
+      default: "iDonate",
     },
     description:
       "iDonate is a blockchain-based donation platform designed to enhance transparency, accountability, and efficiency in charitable giving",
-    url: "https://idata.istad.co",
+    url: "https://idonate.istad.co",
     type: "website",
     locale: "kh_KH",
-    images:
-      "https://idonateapi.kangtido.life/media/8b894c24-57a5-42ff-8293-313e50b7aa32.png",
+    images:"https://idonateapi.kangtido.life/media/22404496-37b3-4b2d-9209-73a38c9efc71.png"
   },
 };
 

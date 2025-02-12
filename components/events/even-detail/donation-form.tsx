@@ -32,7 +32,6 @@ import {
   DonationDataType,
   DonationRecordType,
   DonationType,
-  ReceiptType,
   TransactionDataType,
 } from "@/difinitions/types/donation/donation";
 import { useToast } from "@/hooks/use-toast";
@@ -41,8 +40,6 @@ import { use, useEffect, useState } from "react";
 import EventQrDialog from "@/components/events/even-detail/event-qr-dialog";
 import { useParams } from "next/navigation";
 import SuccessDialog from "./Success-dialog";
-import { CircleDollarSign } from "lucide-react";
-import { useSendReceiptMutation } from "@/redux/services/donation-service";
 
 export function DonationForm() {
   const uuid = useParams();
@@ -65,7 +62,6 @@ export function DonationForm() {
   const typedEvents: EventType = events;
   const [md5, setMd5] = useState();
   const [generatedQr] = useGenerateQrCodeMutation();
-  const [sendReceipt, { isLoading, isError, isSuccess }] = useSendReceiptMutation();
 
   console.log("md5", md5);
 
@@ -84,40 +80,6 @@ export function DonationForm() {
   });
 
   console.log("Transaction Data: ", transactionData);
-
-  const handleSendReceipt = async () => {
-    try {
-      if (!userProfile || !events) {
-        console.error("User profile or event data is missing");
-        return;
-      }
-  
-      const receiptData: ReceiptType = {
-        userUuid: userProfile.uuid,
-        eventUuid: events.uuid,
-        remark: "Thank you for your donation!", // Add a meaningful message
-        amount: form.getValues("amount"), // Fetch amount from form
-      };
-  
-      const response = await sendReceipt(receiptData).unwrap();
-      console.log("Receipt sent successfully:", response);
-  
-      toast({
-        title: "Success",
-        description: "Receipt has been sent successfully!",
-        variant: "default",
-      });
-    } catch (error) {
-      console.error("Failed to send receipt:", error);
-      
-      toast({
-        title: "Error",
-        description: "Failed to send receipt. Please try again.",
-        variant: "destructive",
-      });
-    }
-  };
-  
 
   const {
     handleSubmit,
@@ -186,7 +148,6 @@ export function DonationForm() {
         .unwrap()
         .then(() => {
           console.log("Record saved successfully");
-          handleSendReceipt();
         })
         .catch((error) => {
           console.error("Error saving record:", error);
@@ -285,7 +246,7 @@ export function DonationForm() {
           <div className="flex flex-col gap-6">
             <CardHeader className="flex flex-row items-center justify-between p-0 m-0 pb-2 border-b-[2px] border-dashed border-b-iDonate-navy-primary">
               <CardTitle className="text-2xl font-medium text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
-                ព័ត៌មានអំពីការបរិច្ចាគ
+                Donation Information
               </CardTitle>
             </CardHeader>
 
@@ -296,15 +257,10 @@ export function DonationForm() {
                 render={({ field }) => (
                   <FormItem className="w-full h-full">
                     <FormLabel
-                      className="text-iDonate-navy-secondary text-md dark:text-iDonate-navy-accent"
+                      className="text-iDonate-navy-secondary text-sm dark:text-iDonate-navy-accent"
                       htmlFor="amount"
                     >
-                      <div className="flex items-center gap-1 m-2">
-                        <span>ចំនួនថវិការបរិច្ចាគ</span>
-                        <span>
-                          <CircleDollarSign className="h-5 w-5 text-iDonate-green-primary dark:text-iDonate-green-secondary" />
-                        </span>
-                      </div>
+                      Amount
                     </FormLabel>
                     <FormControl className="w-full h-full">
                       <Input

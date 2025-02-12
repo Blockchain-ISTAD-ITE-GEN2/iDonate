@@ -48,7 +48,7 @@ export function TransactionHistoryCard({
                   transaction?.avatar ||
                   "https://i.pinimg.com/236x/a9/9e/ff/a99eff25eb1ba71647fcd884c15c035a.jpg"
                 }
-                alt={transaction?.event?.name || ""}
+                alt={transaction?.event?.eventName || ""}
                 className="w-full h-full object-cover rounded-lg"
               />
             ) : (

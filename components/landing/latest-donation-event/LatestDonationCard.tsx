@@ -4,39 +4,53 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import Image from "next/image";
 import {
-  useGetDraftEventsFalseQuery,
-  useGetEventsQuery,
+  useGetEventByUuidQuery,
+  useGetUrgentEventsQuery,
 } from "@/redux/services/event-service";
 import { EventType } from "@/difinitions/types/event/EventType";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import SockJS from "sockjs-client";
 import { Client } from "@stomp/stompjs";
 import { FaRegCalendarAlt } from "react-icons/fa";
 import { HiCalendarDateRange } from "react-icons/hi2";
+import { ArrowDownToDot } from "lucide-react";
 
 export default function LatestDonationCard() {
+  const uuid = useParams();
   const router = useRouter();
+  const [page, setPage] = useState(3);
   const [typedEvents, setTypedEvents] = useState<EventType[]>([]);
 
+  const { data: events } = useGetEventByUuidQuery(uuid?.uuid);
+  const typedEvent: EventType = events;
+
+  const [totalDonors, setTotalDonors] = useState(typedEvent?.totalDonors ?? 0);
+  const [currentRaised, setCurrentRaised] = useState(
+    typedEvent?.currentRaised ?? 0
+  );
+
   // Fetch data from RTK
-  const { data: apiEventResponse = { content: [] } } =
-    useGetDraftEventsFalseQuery({});
+  const { data: apiEventResponse = { content: [] } } = useGetUrgentEventsQuery(
+    {}
+  );
 
   useEffect(() => {
     // Sort and slice the events
     const sortedEvents = apiEventResponse.content
       .toSorted(
         (a: any, b: any) =>
-          new Date(b.startDate).getTime() - new Date(a.startDate).getTime(),
+          new Date(b.startDate).getTime() - new Date(a.startDate).getTime()
       )
       .slice(0, 4);
     setTypedEvents(sortedEvents);
   }, [apiEventResponse]);
 
   useEffect(() => {
+    if (!typedEvent?.uuid) return;
+
     const socket = new SockJS(
-      `${process.env.NEXT_PUBLIC_IDONATE_API_URL}/websocket`,
+      `${process.env.NEXT_PUBLIC_IDONATE_API_URL}/websocket`
     );
     const stompClient = new Client({
       webSocketFactory: () => socket,
@@ -44,40 +58,28 @@ export default function LatestDonationCard() {
     });
 
     stompClient.onConnect = () => {
-      typedEvents.forEach((event) => {
-        stompClient.subscribe(
-          `/topic/totalAmountByEvent/${event.uuid}`,
-          (message) => {
-            setTypedEvents((prevEvents) =>
-              prevEvents.map((e) =>
-                e.uuid === event.uuid
-                  ? { ...e, currentRaised: parseFloat(message.body) || 0 }
-                  : e,
-              ),
-            );
-          },
-        );
+      // Subscribe to event-specific updates
+      stompClient.subscribe(
+        `/topic/totalAmountByEvent/${typedEvent.uuid}`,
+        (message) => {
+          setCurrentRaised(parseFloat(message.body) || 0);
+        }
+      );
 
-        stompClient.subscribe(
-          `/topic/totalDonorsByEvent/${event.uuid}`,
-          (message) => {
-            setTypedEvents((prevEvents) =>
-              prevEvents.map((e) =>
-                e.uuid === event.uuid
-                  ? { ...e, totalDonors: parseInt(message.body) || 0 }
-                  : e,
-              ),
-            );
-          },
-        );
-      });
+      stompClient.subscribe(
+        `/topic/totalDonorsByEvent/${typedEvent.uuid}`,
+        (message) => {
+          setTotalDonors(parseInt(message.body, 10) || 0);
+        }
+      );
     };
 
     stompClient.activate();
+
     return () => {
       stompClient.deactivate();
     };
-  }, [typedEvents]);
+  }, [typedEvent?.uuid]);
 
   const formatAmount = (amount: any) => {
     return new Intl.NumberFormat("en-US", {
@@ -97,10 +99,16 @@ export default function LatestDonationCard() {
     });
   }
 
+  //NOTED:  ADD  pagination
+  const handleShowMore = () => {
+    setPage((pre) => pre + 3);
+  };
+
+  // FIXME: this is currently not implemented
   return (
-    <div className="w-full h-auto bg-transparent flex flex-col gap-6 lg:pb-[500px]">
+    <div className="w-full h-auto bg-transparent flex flex-col gap-6">
       {/* The Big Card of Lastest Event  */}
-      <div className="lg:relative z-10 lg:hover:z-[10] pointer-events-auto transition-transform duration-200 lg:hover:scale-95">
+      <div className="pointer-events-auto transition-transform">
         {typedEvents.slice(3, 4).map((item) => (
           <Card
             onClick={(e) => {
@@ -108,7 +116,7 @@ export default function LatestDonationCard() {
               router.push(`/event-detail/${item?.uuid}`);
             }}
             key={item.uuid}
-            className="w-full overflow-hidden cursor-pointer h-auto lg:h-[660px] p-0 m-0 border-none grid lg:grid-cols-2 item-center lg:relative"
+            className="w-full overflow-hidden cursor-pointer h-auto lg:h-[660px] p-0 m-0 border-none grid lg:grid-cols-2 item-center "
           >
             {/* Image Section */}
             <CardHeader className="relative min-h-[660px]">
@@ -118,56 +126,51 @@ export default function LatestDonationCard() {
                     ? item.images[0]
                     : "/fallback-placeholder.jpg"
                 }
-                // src={
-                //   Array.isArray(item?.images) && item.images[0]
-                //     ? item.images[0]
-                //     : "https://i.pinimg.com/736x/2a/86/a5/2a86a560f0559704310d98fc32bd3d32.jpg"
-                // }
                 fill
                 alt="Community support image"
                 className="absolute inset-0 w-full h-full object-cover"
               />
             </CardHeader>
 
-                {/* Content Section */}
-                <CardContent className="p-9 z-10 bg-iDonate-navy-primary text-iDonate-white-space flex flex-grow flex-col gap-4 dark:bg-iDonate-dark-mode">
-                  {/* Dates */}
-                  <div className="flex justify-between text-sm">
-                    <div className="flex flex-col">
-                      <div className="flex items-center mb-4">
-                        <span className="text-iDonate-navy-accent dark:text-iDonate-navy-accent mr-1 text-[18px]">
-                          <FaRegCalendarAlt />
-                        </span>
-                        <p className="text-iDonate-navy-accent dark:text-iDonate-navy-accent text-[18px]">
-                          ថ្ងៃចាប់ផ្ដើម
-                        </p>
-                      </div>
-                      <p className="text-iDonate-green-primary dark:text-iDonate-green-secondary text-[18px]">
-                      {formatDate(typedEvents?.[0]?.startDate) || "12 Dec 2024"}
-                      </p>
-                    </div>
-                    <div className="flex flex-col">
-                      <div className="flex items-center mb-4">
-                        <span className="text-iDonate-navy-accent dark:text-iDonate-navy-accent mr-1 text-[22px]">
-                          <HiCalendarDateRange />
-                        </span>
-                        <p className="text-iDonate-navy-accent dark:text-iDonate-navy-accent text-[18px]">
-                          ថ្ងៃបញ្ចប់
-                        </p>
-                      </div>
-                      <p className="text-iDonate-green-primary dark:text-iDonate-green-secondary text-[18px]">
-                      {formatDate(typedEvents?.[0]?.endDate) || "12 Dec 2024"}
-                      </p>
-                    </div>
+            {/* Content Section */}
+            <CardContent className="p-9 z-10 bg-iDonate-navy-primary text-iDonate-white-space flex flex-grow flex-col gap-4 dark:bg-iDonate-dark-mode">
+              {/* Dates */}
+              <div className="flex justify-between text-sm">
+                <div className="flex flex-col">
+                  <div className="flex items-center mb-4">
+                    <span className="text-iDonate-navy-accent dark:text-iDonate-navy-accent mr-1 text-[18px]">
+                      <FaRegCalendarAlt />
+                    </span>
+                    <p className="text-iDonate-navy-accent dark:text-iDonate-navy-accent text-[18px]">
+                      ថ្ងៃចាប់ផ្ដើម
+                    </p>
                   </div>
-                  
-                  <div>
-                    <h2
-                      lang="km"
-                      className="text-title-khmer md:text-heading-one-khmer font-semibold leading-relaxed"
-                    >
-                      {item.name}
-                    </h2>
+                  <p className="text-iDonate-green-primary dark:text-iDonate-green-secondary text-[18px]">
+                    {formatDate(typedEvents?.[0]?.startDate) || "12 Dec 2024"}
+                  </p>
+                </div>
+                <div className="flex flex-col">
+                  <div className="flex items-center mb-4">
+                    <span className="text-iDonate-navy-accent dark:text-iDonate-navy-accent mr-1 text-[22px]">
+                      <HiCalendarDateRange />
+                    </span>
+                    <p className="text-iDonate-navy-accent dark:text-iDonate-navy-accent text-[18px]">
+                      ថ្ងៃបញ្ចប់
+                    </p>
+                  </div>
+                  <p className="text-iDonate-green-primary dark:text-iDonate-green-secondary text-[18px]">
+                    {formatDate(typedEvents?.[0]?.endDate) || "12 Dec 2024"}
+                  </p>
+                </div>
+              </div>
+
+              <div>
+                <h2
+                  lang="km"
+                  className="text-title-khmer md:text-heading-one-khmer font-semibold leading-relaxed"
+                >
+                  {item.name}
+                </h2>
 
                 {/* Description */}
                 <p
@@ -215,10 +218,10 @@ export default function LatestDonationCard() {
       </div>
 
       {/* The Small 3 Event  Donations Section */}
-      <div className="w-full z-30 flex flex-col gap-2  lg:absolute ">
+      <div className="w-full flex flex-col gap-2">
         {typedEvents.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2  z-2 lg:hover:z-[30]   items-center justify-center mx-auto lg:grid-cols-3 gap-6 p-2 lg:mt-[500px]">
-            {typedEvents.slice(0, 3).map((item) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 items-center justify-center mx-auto lg:grid-cols-3 gap-6 p-2 ">
+            {typedEvents.slice(0, page).map((item) => (
               <Card
                 onClick={() => router.push(`/event-detail/${item?.uuid}`)}
                 key={item?.uuid}
@@ -226,16 +229,11 @@ export default function LatestDonationCard() {
               >
                 <div className="h-[55%]">
                   <Image
-                  src={
-                    typeof item?.images?.[0] === "string"
-                      ? item.images[0]
-                      : "/fallback-placeholder.jpg"
-                  }
-                    // src={
-                    //   Array.isArray(item?.images) && item.images[0]
-                    //     ? item.images[0]
-                    //     : "https://i.pinimg.com/736x/2a/86/a5/2a86a560f0559704310d98fc32bd3d32.jpg"
-                    // }
+                    src={
+                      typeof item?.images?.[0] === "string"
+                        ? item.images[0]
+                        : "/fallback-placeholder.jpg"
+                    }
                     alt={item.name}
                     width={5000}
                     height={5000}
@@ -289,7 +287,7 @@ export default function LatestDonationCard() {
                       <span className="khmer-font">
                         អ្នកបរិច្ចាគ៖{" "}
                         <span className="font-medium text-[16px]">
-                          {item?.totalDonors || "0"}
+                          {totalDonors || "0"}
                         </span>{" "}
                         នាក់
                       </span>
@@ -300,7 +298,7 @@ export default function LatestDonationCard() {
                         <span className="khmer-font">
                           ទឹកប្រាក់ទទួលបាន៖​​{" "}
                           <span className="font-medium text-[16px]">
-                            {formatAmount(item.currentRaised) || "0"}
+                            {formatAmount(currentRaised) || "0"}
                           </span>
                         </span>
                       </div>
@@ -340,6 +338,21 @@ export default function LatestDonationCard() {
           </Card>
         )}
       </div>
+
+      {/* //NOTE: button panigation  */}
+
+      {/* Pagination Button */}
+      {page < typedEvents.length && (
+        <div className="flex items-center justify-center p-2">
+          <Button
+            onClick={handleShowMore}
+            className="text-medium-eng text-iDonate-navy-primary bg-iDonate-white-space border-2 border-iDonate-navy-accent hover:bg-iDonate-navy-accent"
+          >
+            Show more
+            <ArrowDownToDot className="bold" />
+          </Button>
+        </div>
+      )}
     </div>
   );
 }

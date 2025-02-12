@@ -121,6 +121,7 @@ export const eventSchemaCreation = z.object({
   endDate: z.string().refine((date) => !isNaN(Date.parse(date)), {
     message: "Invalid date format",
   }),
+  isUrgent: z.boolean().default(false),
   // timezone: z.string(),
   images: z.any().nullable(),
 });

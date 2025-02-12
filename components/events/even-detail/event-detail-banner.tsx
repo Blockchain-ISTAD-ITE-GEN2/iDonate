@@ -25,7 +25,7 @@ import {
   EmailShareButton,
   FacebookIcon,
   TwitterIcon,
-  EmailIcon,
+  EmailIcon, TelegramShareButton, TelegramIcon,
 } from "react-share";
 
 type EventDetailBannerProps = {
@@ -50,12 +50,12 @@ export function EventDetailBanner({ uuid }: EventDetailBannerProps) {
   } = useGetEventByUuidQuery(uuid);
 
   const [totalDonors, setTotalDonors] = useState<number>(0);
-  const [currentRaised, setCurrentRaised] = useState<number>(0);
+  const [currentRaised, setCurrentRaised] = useState<number>(0.00);
 
   useEffect(() => {
     if (event) {
       setTotalDonors(event.totalDonors ?? 0);
-      setCurrentRaised(event.currentRaised ?? 0);
+      setCurrentRaised(event.currentRaised ?? 0.00);
     }
   }, [event]);
 
@@ -73,7 +73,7 @@ export function EventDetailBanner({ uuid }: EventDetailBannerProps) {
         const formattedTransactions: TransactionType[] = data.content.map((transaction: any) => ({
           avatar: transaction.avatar || "",
           name: transaction.username || "anonymous",
-          amount: transaction.donationAmount || 0,
+          amount: transaction.donationAmount || 0.00,
           timestamp: transaction.timestamp,
         }));
 
@@ -104,7 +104,7 @@ export function EventDetailBanner({ uuid }: EventDetailBannerProps) {
         stompClient.subscribe(
           `/topic/totalAmountByEvent/${event.uuid}`,
           (message) => {
-            setCurrentRaised(parseFloat(message.body) || 0);
+            setCurrentRaised(parseFloat(message.body) || 0.00);
           },
         );
         stompClient.subscribe(`/topic/totalDonorsByEvent/${event.uuid}`, (message) => {
@@ -120,9 +120,9 @@ export function EventDetailBanner({ uuid }: EventDetailBannerProps) {
     }, [event?.uuid]);
 
   // Format the currentRaised amount as $100,000
-  const formattedCurrentRaised = event?.currentRaised
-    ? `${event.currentRaised.toLocaleString()}`
-    : "0";
+  const formattedCurrentRaised = Number.isFinite(currentRaised)
+  ? currentRaised.toLocaleString()
+  : "0";
 
   // const shareUrl = typeof window !== "undefined" ? window.location.href : "";
   const shareUrl = `${process.env.NEXT_PUBLIC_URL}/event-detail/${uuid}`;
@@ -131,7 +131,7 @@ export function EventDetailBanner({ uuid }: EventDetailBannerProps) {
   const shareImage = event?.images[0] || "";
   return (
     <>
-    <Card className="w-[440px] h-full border-2 border-iDonate-navy-accent shadow-light">
+    <Card className="w-auto sm:w-auto lg:w-[440px] h-full border-2 border-iDonate-navy-accent shadow-light">
       <CardHeader className="flex flex-col gap-6">
         <div className="flex flex-col gap-1">
           <CardTitle className="flex gap-3 text-iDonate-navy-primary text-lg  dark:text-iDonate-navy-accent">
@@ -149,7 +149,7 @@ export function EventDetailBanner({ uuid }: EventDetailBannerProps) {
           </CardTitle>
           <CardDescription className="text-iDonate-navy-primary text-2xl font-medium dark:text-iDonate-green-secondary">
           <div className="flex items-center gap-1">
-          <CircleDollarSign/><span>{isEventLoading ? "Loading..." : formattedCurrentRaised}</span>
+          <CircleDollarSign/><span>{isEventLoading ? "Loading..." : formattedCurrentRaised || 0.00}</span>
           </div>
           </CardDescription>
         </div>
@@ -214,7 +214,7 @@ export function EventDetailBanner({ uuid }: EventDetailBannerProps) {
           <div className="flex items-center gap-1 h-full">
           <CircleDollarSign className="h-5 w-5 text-iDonate-green-primary dark:text-iDonate-green-secondary align-middle" />
           <p className="text-iDonate-green-primary font-medium text-[17px] leading-none dark:text-iDonate-navy-accent">
-            {currentRaised ? `${currentRaised}` : "មិនទាន់ទទួលបានថវិការ"}
+            {transaction.amount ? `${transaction.amount}` : "មិនទាន់ទទួលបានថវិការ"}
           </p>
         </div>
         </div>
@@ -282,13 +282,12 @@ export function EventDetailBanner({ uuid }: EventDetailBannerProps) {
             </TwitterShareButton>
 
             {/* Email Share */}
-            <EmailShareButton
+            <TelegramShareButton
               url={shareUrl}
-              subject={`Join this amazing event: ${shareTitle}`}
-              body={`Hey,\n\nI found this event: "${shareTitle}".\n\n${shareDescription}\n\nCheck it out here: ${shareUrl}\n\nLet's support a great cause!`}
+              title={shareTitle}
             >
-              <EmailIcon size={40} round />
-            </EmailShareButton>
+              <TelegramIcon size={40} round />
+            </TelegramShareButton>
           </CardFooter>
         </Card>
       </DialogContent>

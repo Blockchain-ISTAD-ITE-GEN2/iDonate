@@ -15,19 +15,17 @@ export const metadata: Metadata = {
     "Charity Organizations",
     "Support",
   ],
+  icons: {
+    icon: "/logo.png",
+    shortcut: "/logo.png",
+    apple: "/logo.png",
+  },
   openGraph: {
     title: "Organizations - iDonate",
     description:
       "Find nonprofit organizations on iDonate and learn about their missions and how you can contribute.",
     url: "https://idonate.istad.co/organizations",
-    images: [
-      {
-        url: "https://idonateapi.kangtido.life/media/50712731-758e-43bb-8d85-37483a95048b.png",
-        width: 1200,
-        height: 630,
-        alt: "categories Banner",
-      },
-    ],
+    images:"https://idonateapi.kangtido.life/media/22404496-37b3-4b2d-9209-73a38c9efc71.png",
     type: "website",
   },
   robots: {

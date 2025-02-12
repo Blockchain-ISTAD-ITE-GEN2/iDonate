@@ -1,3 +1,4 @@
+import { organizatioApi } from './../../../redux/services/organization-service';
 import { EventType } from "../event/EventType";
 import { OrganizationType } from "../organization/OrganizationType";
 
@@ -10,10 +11,14 @@ import { OrganizationType } from "../organization/OrganizationType";
 //   organization?: OrganizationType
 // };
 export type TransactionType = {
+  id?: string;
   date?: string;
   donor?: string;
   email?: string;
-  event?: EventType;
+  event?: {
+    eventName?: string,
+    orgName?: string
+  };
   username?: string;
   organization?: OrganizationType;
   amount?: number;

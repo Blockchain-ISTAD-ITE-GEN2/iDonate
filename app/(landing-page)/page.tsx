@@ -27,14 +27,7 @@ export const metadata: Metadata = {
     description:
       "Join iDonate to make impactful and transparent donations. Explore verified organizations and trusted causes.",
     url: "https://idonate.istad.co",
-    images: [
-      {
-        url: "https://idonateapi.kangtido.life/media/819e4d30-4bcd-4f23-a004-744075dbecbf.png",
-        width: 1200,
-        height: 630,
-        alt: "iDonate Home Banner",
-      },
-    ],
+    images:"https://idonateapi.kangtido.life/media/22404496-37b3-4b2d-9209-73a38c9efc71.png",
     type: "website",
   },
   twitter: {
@@ -43,12 +36,13 @@ export const metadata: Metadata = {
     description:
       "Make donations you can trust with iDonate. Explore verified organizations and causes.",
     images: [
-      "https://idonateapi.kangtido.life/media/8b894c24-57a5-42ff-8293-313e50b7aa32.png",
+      `${process.env.NEXT_PUBLIC_IDONATE_API_URL}/media/8b894c24-57a5-42ff-8293-313e50b7aa32.png`,
     ],
   },
   icons: {
-    icon: "/favicon.ico",
-    apple: "/apple-touch-icon.png",
+    icon: "/logo.png",
+    shortcut: "/logo.png",
+    apple: "/logo.png",
   },
   robots: {
     index: true,
@@ -108,7 +102,7 @@ export default function Homepage() {
             lang="km"
             className="mb-5 p-2 text-2xl text-iDonate-navy-primary text-center dark:text-iDonate-navy-accent"
           >
-            កម្មវិធីបរិច្ចាគចុងក្រោយបំផុត
+            កម្មវិធីបរិច្ចាគបន្ទាន់
           </h3>
           <LatestDonationCard />
         </div>

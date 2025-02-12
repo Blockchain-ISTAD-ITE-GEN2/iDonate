@@ -13,7 +13,7 @@ export async function POST(req: NextRequest) {
 
   // Make a POST request to the Our API
   const response = await fetch(
-    `https://idonateapi.kangtido.life/api/v1/auth/login`,
+    `${process.env.NEXT_PUBLIC_IDONATE_API_URL}/api/v1/auth/login`,
     {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -36,7 +36,7 @@ export async function POST(req: NextRequest) {
 
   // If the request is successful, parse the response body to get the data
   const data = await response.json();
-  console.log("data", data);
+  // console.log("data", data);
   const user = data?.user || null;
   const accessToken = data?.accessToken || null;
   const refreshToken = data?.refreshToken || null;

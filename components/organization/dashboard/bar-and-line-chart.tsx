@@ -47,12 +47,22 @@ export function BarAndLineChart({ orgUuid }: { orgUuid: string }) {
 
         // Format transactions
         const formattedTransactions: TransactionType[] = data.content.map(
-          (transaction: any) => ({
-            avatar: transaction.avatar,
-            donor: transaction.username,
-            amount: transaction.donationAmount,
-            timestamp: transaction.timestamp,
-          }),
+          (txn: any) => ({
+            id: txn.id || crypto.randomUUID(),
+            avatar: txn.avatar || "",
+            donor: txn.username || "Anonymous",
+            email: txn.email || "",
+            event: {
+              eventName: txn.event?.eventName || "Unknown Event",
+              orgName: txn.event?.orgName || "Unknown Organization",
+            },
+            organization: txn.organization || null, // Keeping full organization object
+            amount: Number(txn.donationAmount) || 0, // Ensure it's a number
+            timestamp: txn.timestamp ? new Date(txn.timestamp).toISOString() : null,
+            description: txn.description || "No description available",
+            order_date: txn.order_date || "",
+            end_date: txn.end_date || "",
+          })
         );
 
         formattedTransactions.sort(

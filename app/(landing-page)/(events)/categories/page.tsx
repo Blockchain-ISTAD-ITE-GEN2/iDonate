@@ -13,19 +13,17 @@ export const metadata: Metadata = {
     "Charity Causes",
     "Nonprofit Organizations",
   ],
+  icons: {
+    icon: "/public/logo.png",
+    shortcut: "/public/logo.png",
+    apple: "/public/logo.png",
+  },
   openGraph: {
     title: "Categories - iDonate",
     description:
       "Explore categories on iDonate and find organizations and causes that matter to you.",
     url: "https://yourwebsite.com/categories",
-    images: [
-      {
-        url: "https://idonateapi.kangtido.life/media/819e4d30-4bcd-4f23-a004-744075dbecbf.png",
-        width: 1200,
-        height: 630,
-        alt: "iDonate Categories Banner",
-      },
-    ],
+    images:"https://idonateapi.kangtido.life/media/22404496-37b3-4b2d-9209-73a38c9efc71.png",
     type: "website",
   },
   twitter: {
@@ -34,7 +32,7 @@ export const metadata: Metadata = {
     description:
       "Find the causes and organizations that matter to you in the iDonate categories.",
     images: [
-      "https://idonateapi.kangtido.life/media/8b894c24-57a5-42ff-8293-313e50b7aa32.png",
+      `${process.env.NEXT_PUBLIC_IDONATE_API_URL}/media/8b894c24-57a5-42ff-8293-313e50b7aa32.png`,
     ],
   },
   robots: {
