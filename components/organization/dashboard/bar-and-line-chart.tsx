@@ -108,13 +108,13 @@ export function BarAndLineChart({ orgUuid }: { orgUuid: string }) {
 
   return (
     <div className="md:w-full grid gap-4 xl:grid-cols-[1fr_480px] grid-cols-1">
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4 lg:w-[650px]">
         {/* ✅ Render CardsMetric with computed average data */}
         <CardsMetric data={averageData} />
       </div>
 
       {/* ប្រតិបត្តិការថ្មីៗ Card */}
-      <Card className="md:w-full xl:w-[480px] bg-iDonate-light-gray rounded-lg border border-iDonate-navy-accent dark:bg-iDonate-dark-mode">
+      <Card className="md:w-full xl:w-[400px] bg-iDonate-light-gray rounded-lg border border-iDonate-navy-accent dark:bg-iDonate-dark-mode">
         <CardHeader>
           <CardTitle className="text-medium-eng font-normal text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
             ប្រតិបត្តិការថ្មីៗ
