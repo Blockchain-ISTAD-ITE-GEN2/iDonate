@@ -9,27 +9,27 @@ import {
 } from "@/difinitions/types/fileupload/FileUploadType";
 
 export function isFileWithPreview(
-  file: File,
+  file: File | string,
 ): file is File & { preview: string } {
-  return "preview" in file && typeof file.preview === "string";
+  return (
+    typeof file !== "string" &&
+    "preview" in file &&
+    typeof file.preview === "string"
+  );
 }
 
 export function FilePreview({ file }: FilePreviewProps) {
-  if (file.type.startsWith("image/")) {
-    return (
-      <Image
-        src={file.preview}
-        alt={file.name}
-        width={48}
-        height={48}
-        loading="lazy"
-        className="aspect-square shrink-0 rounded-md object-cover"
-      />
-    );
-  }
+  const imageUrl = typeof file === "string" ? file : file.preview;
 
   return (
-    <FileText className="size-10 text-muted-foreground" aria-hidden="true" />
+    <Image
+      src={imageUrl}
+      alt={typeof file !== "string" ? file.name : "Uploaded image"}
+      width={48}
+      height={48}
+      loading="lazy"
+      className="aspect-square shrink-0 rounded-md object-cover"
+    />
   );
 }
 

@@ -4,9 +4,11 @@ import {
   ChangePasswordType,
   UpdateProfileImageType,
   userProfileinfoType,
+  EditUserBioType,
+  EditUserAddressType,
 } from "@/lib/definition";
 
-export type user = {
+export type User = {
   uuid: string | null;
 };
 
@@ -14,52 +16,66 @@ export const userProfileSettingApi = idonateApi.injectEndpoints({
   endpoints: (builder) => ({
     getUserProfile: builder.query({
       query: () => ({
-        url: `/api/v1/users/me`,
+        url: `/users/me`,
       }),
-
       providesTags: ["userProfile"],
     }),
 
-    // update user info
+    // Update user profile
     updateUserProfile: builder.mutation<
-      any,
-      { uuid: string; updatedUserProfile: userProfileinfoType }
+      userProfileinfoType,
+      { uuid: string; updatedUserProfile: EditprofileType }
     >({
       query: ({ uuid, updatedUserProfile }) => ({
-        url: `/api/v1/users/${uuid}`,
-        method: "PATCH",
+        url: `/users/${uuid}`,
+        method: "PUT",
         body: updatedUserProfile,
       }),
       invalidatesTags: ["userProfile"],
     }),
-    // update avatar user
+
+    // Update user avatar
+    // updateAvatar: builder.mutation<
+    // { file: FormData; uuid: string },
+    // { uuid: string }
+    // >({
+    //   query: ({ uuid, file:FormData }) => ({
+    //     url: `/users/${uuid}/upload-image`,
+    //     method: "PUT",
+    //     body: file,
+    //   }),
+    //   invalidatesTags: ["userProfile"],
+    // }),
     updateAvatar: builder.mutation<
-      any,
-      { uuid: any; updatedProfileImage: UpdateProfileImageType }
+      void, // Response type (assuming server returns nothing)
+      { file: FormData; uuid: string } // Request type
     >({
-      query: ({ uuid, updatedProfileImage }) => ({
-        url: `/api/v1/users/${uuid}/profile-image`,
+      query: ({ uuid, file }) => ({
+        // Destructure both parameters correctly
+        url: `/users/${uuid}/upload-image`,
         method: "PUT",
-        body: updatedProfileImage,
+        body: file,
       }),
       invalidatesTags: ["userProfile"],
     }),
 
-    // update password user
+    // Update user password
     updatePassWords: builder.mutation<
-      any,
+      void,
       { uuid: string; updatedPassword: ChangePasswordType }
     >({
       query: ({ uuid, updatedPassword }) => ({
-        url: `/api/v1/users/${uuid}/change-password`,
+        url: `/users/${uuid}/change-password`,
         method: "PATCH",
         body: updatedPassword,
       }),
       invalidatesTags: ["userProfile"],
     }),
-    getUserByUuid: builder.query<any, any>({
+
+    // Get user by UUID
+    getUserByUuid: builder.query<userProfileinfoType, string>({
       query: (uuid) => ({
-        url: `/api/v1/users/${uuid}/me`,
+        url: `/users/${uuid}/me`,
       }),
     }),
   }),

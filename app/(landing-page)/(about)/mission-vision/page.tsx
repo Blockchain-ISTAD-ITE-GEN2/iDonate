@@ -18,15 +18,8 @@ export const metadata: Metadata = {
     title: "Our Mission & Vision - iDonate",
     description:
       "Learn about iDonate’s mission to ensure transparency and our vision for creating a world of impactful donations.",
-    url: "https://yourwebsite.com/mission-vision",
-    images: [
-      {
-        url: "https://yourwebsite.com/static/mission-vision-banner.jpg",
-        width: 1200,
-        height: 630,
-        alt: "iDonate Mission and Vision Banner",
-      },
-    ],
+    url: "https://idonate.istad.co/mission-vision",
+    images:"https://idonateapi.kangtido.life/media/22404496-37b3-4b2d-9209-73a38c9efc71.png",
     type: "website",
   },
   twitter: {
@@ -34,21 +27,24 @@ export const metadata: Metadata = {
     title: "Our Mission & Vision - iDonate",
     description:
       "Explore iDonate’s mission and vision, ensuring trust and impactful giving.",
-    images: ["https://yourwebsite.com/static/mission-vision-banner.jpg"],
+    images: [
+      `${process.env.NEXT_PUBLIC_IDONATE_API_URL}/media/8b894c24-57a5-42ff-8293-313e50b7aa32.png`,
+    ],
   },
   icons: {
-    icon: "/favicon.ico",
-    apple: "/apple-touch-icon.png",
+    icon: "/logo.png",
+    shortcut: "/logo.png",
+    apple: "/logo.png",
   },
   robots: {
     index: true,
     follow: true,
   },
   alternates: {
-    canonical: "https://yourwebsite.com/mission-vision",
+    canonical: "https://idonate.istad.co/mission-vision",
     languages: {
-      en: "https://yourwebsite.com/mission-vision",
-      km: "https://yourwebsite.com/kh/mission-vision",
+      en: "https://idonate.istad.co/mission-vision",
+      km: "https://idonate.istad.co/mission-vision",
     },
   },
 };

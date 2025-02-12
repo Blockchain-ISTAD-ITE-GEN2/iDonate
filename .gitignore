@@ -26,10 +26,10 @@ yarn-debug.log*
 yarn-error.log*
 
 # local env files
-.env*.local
-.env.development
-.env.production
-.env.test  # Add this if you have a test environment file
+#.env*.local
+#.env.development
+#.env.production
+#.env.test  # Add this if you have a test environment file
 
 # vercel
 .vercel
@@ -39,4 +39,4 @@ yarn-error.log*
 next-env.d.ts
 
 # Ignore all .env files (optional, but recommended)
-.env*
+#.env*

@@ -45,12 +45,24 @@
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: "standalone",
+  // upddate this for runtime
+  env: {
+    NEXT_PUBLIC_IDONATE_API_URL:
+      process.env.NEXT_PUBLIC_IDONATE_API_URL || "http://localhost:3000",
+    NEXT_PUBLIC_URL: process.env.NEXT_PUBLIC_URL || "http://localhost:3000",
+  },
   images: {
     remotePatterns: [
       {
         protocol: "https",
         hostname: "**",
         pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "idonateapi.kangtido.life",
+        pathname: "/media/**",
       },
       {
         protocol: "http",
@@ -63,7 +75,7 @@ const nextConfig = {
     return [
       {
         // Add specific route for API requests
-        source: "/api/:path*",
+        source: "/api/v1:path*",
         headers: [
           {
             key: "Access-Control-Allow-Credentials",
@@ -114,13 +126,14 @@ const nextConfig = {
       {
         source: "/api/v1/:path*",
         destination: "https://idonateapi.kangtido.life/api/v1/:path*",
+        // destination: `${process.env.NEXT_PUBLIC_IDONATE_API_URL}/api/v1/:path*`,
       },
     ];
   },
   async headers() {
     return [
       {
-        source: "/api/:path*",
+        source: "/api/v1:path*",
         headers: [
           { key: "Access-Control-Allow-Credentials", value: "true" },
           {
@@ -139,6 +152,10 @@ const nextConfig = {
         ],
       },
     ];
+  },
+  // hide all the console when production
+  compiler: {
+    removeConsole: process.env.NODE_ENV === "production",
   },
 };
 

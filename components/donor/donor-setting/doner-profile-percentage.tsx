@@ -27,36 +27,6 @@ const chartConfig = {
   completion: {
     label: "Completion",
   },
-
-  image: {
-    label: "Image",
-    color: "hsl(var(--chart-1))",
-  },
-
-  fullName: {
-    label: "Full Name",
-    color: "hsl(var(--chart-2))",
-  },
-
-  email: {
-    label: "Email",
-    color: "hsl(var(--chart-3))",
-  },
-
-  contact: {
-    label: "Contact",
-    color: "hsl(var(--chart-4))",
-  },
-
-  address: {
-    label: "Address",
-    color: "hsl(var(--chart-5))",
-  },
-
-  bio: {
-    label: "Bio",
-    color: "hsl(var(--chart-6))",
-  },
 } satisfies ChartConfig;
 
 type DonorProfilePercentageProps = {
@@ -67,7 +37,6 @@ export function DonorProfilePercentage({
   percentages,
 }: DonorProfilePercentageProps) {
   // Merge static categories with dynamic percentages
-
   const chartData = useMemo(() => {
     // Normalize percentages to ensure they don't exceed 100
     const totalInput = percentages.reduce((acc, curr) => acc + curr, 0);
@@ -81,37 +50,20 @@ export function DonorProfilePercentage({
     const baseData = staticCategories.map((category, index) => ({
       ...category,
       completion: normalizedPercentages[index] || 0,
-      fill: normalizedPercentages[index] > 0 ? category.fill : "#FF0000", // Red for 0%
     }));
-
-    // Calculate remaining percentage
-    const totalCompletion = baseData.reduce(
-      (acc, curr) => acc + curr.completion,
-      0,
-    );
-    const remainingPercentage = Math.max(100 - totalCompletion, 0);
-
-    // Add "Remaining" category only if needed
-    if (remainingPercentage > 0) {
-      baseData.push({
-        category: "Remaining",
-        completion: remainingPercentage,
-        fill: "#DCE3F0",
-      });
-    }
 
     return baseData;
   }, [percentages]);
 
   return (
     <Card className="self-start w-full lg:w-auto flex flex-col rounded-lg border-2 border-iDonate-navy-accent shadow-light">
-      <CardHeader className="items-center pb-0 ">
-        <CardTitle className="w-full text-lg lg:text-2xl text-center leading-9 text-iDonate-navy-primary whitespace-nowrap">
+      <CardHeader className="items-center pb-0">
+        <CardTitle className="w-full text-lg lg:text-2xl text-center leading-9 text-iDonate-navy-primary whitespace-nowrap dark:text-iDonate-navy-accent">
           Profile Completion
         </CardTitle>
       </CardHeader>
 
-      <CardContent className=" p-0 m-0">
+      <CardContent className="p-0 m-0">
         <ChartContainer
           config={chartConfig}
           className="mx-auto aspect-square max-h-[250px]"
@@ -146,7 +98,7 @@ export function DonorProfilePercentage({
                         >
                           {Math.min(
                             percentages.reduce((acc, curr) => acc + curr, 0),
-                            100,
+                            100
                           )}
                           %
                         </tspan>
@@ -169,28 +121,26 @@ export function DonorProfilePercentage({
       </CardContent>
 
       <CardContent className="flex flex-col gap-2 md:gap-4 xl:gap-6">
-        {chartData
-          .filter((data) => data.category !== "Remaining") // Exclude "Remaining" from the list
-          .map((data, index) => (
-            <div
-              key={index}
-              className="flex items-center justify-between gap-6"
-            >
-              <div className="flex items-center gap-6">
-                {data.completion > 0 ? (
-                  <Check className="text-medium-eng text-iDonate-green-primary" />
-                ) : (
-                  <X className="text-medium-eng text-iDonate-error" />
-                )}
-                <span className="text-sm sm:text-description-eng lg:text-medium-eng text-iDonate-navy-primary text-left whitespace-nowrap">
-                  {data.category}
-                </span>
-              </div>
-              <span className="text-sm sm:text-description-eng lg:text-medium-eng  text-iDonate-green-primary text-left">
-                {data.completion > 0 ? `${data.completion}%` : ""}
+        {chartData.map((data, index) => (
+          <div
+            key={index}
+            className="flex items-center justify-between gap-6"
+          >
+            <div className="flex items-center gap-6">
+              {data.completion > 0 ? (
+                <Check className="text-medium-eng text-iDonate-green-primary" />
+              ) : (
+                <X className="text-medium-eng text-iDonate-error" />
+              )}
+              <span className="text-sm sm:text-description-eng lg:text-medium-eng text-iDonate-navy-primary text-left whitespace-nowrap dark:text-iDonate-navy-accent">
+                {data.category}
               </span>
             </div>
-          ))}
+            <span className="text-sm sm:text-description-eng lg:text-medium-eng text-iDonate-green-primary text-left">
+              {data.completion > 0 ? `${data.completion.toFixed(2)}%` : "0%"}
+            </span>
+          </div>
+        ))}
       </CardContent>
     </Card>
   );

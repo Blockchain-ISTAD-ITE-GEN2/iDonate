@@ -1,13 +1,8 @@
-export type UploadedFile<T = unknown> = {
-  key: string;
-  url: string;
-  appUrl: string;
-  fileHash: string;
-  customId: string | null;
-  name: string;
-  size: number;
-  type: string;
-  lastModified?: number;
-  serverData?: T;
-  file: (File & { preview: string }) | undefined;
+export type UploadedFile = {
+  uri: string; // URL or path to the uploaded file
+  name?: string; // Optional: File name
+  size?: number; // Optional: File size in bytes
+  type?: string; // Optional: MIME type (e.g., "image/png")
 };
+
+export type UploadedFileType = UploadedFile | UploadedFile[];

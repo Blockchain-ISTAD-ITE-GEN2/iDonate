@@ -4,6 +4,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Checkbox } from "@/components/ui/checkbox";
 import { DataTableColumnHeader } from "./data-table-column-header";
 import { DataTableRowActions } from "./data-table-row-actions";
+import { format } from "date-fns";
 
 export const transactionColumns: ColumnDef<TransactionType>[] = [
   {
@@ -30,11 +31,21 @@ export const transactionColumns: ColumnDef<TransactionType>[] = [
   },
 
   {
-    accessorKey: "date",
+    accessorKey: "timestamp",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Date" />
+      <DataTableColumnHeader column={column} title="Timestamp" />
     ),
-    cell: ({ row }) => <span>{row.getValue("date")}</span>,
+    cell: ({ row }) => {
+      const timestamp = row.getValue("timestamp");
+      const formattedDate = timestamp
+        ? format(
+            new Date(timestamp as string | number | Date),
+            "MMMM do, yyyy h:mm a",
+          ) // February 3rd, 2025 09:15 AM
+        : "N/A"; // Fallback if timestamp is missing
+
+      return <span>{formattedDate}</span>;
+    },
     filterFn: (row, columnId, filterValue) => {
       if (!filterValue) return true; // No filter applied
 
@@ -51,57 +62,25 @@ export const transactionColumns: ColumnDef<TransactionType>[] = [
     },
     enableSorting: true,
     enableHiding: true,
-
-    // header: ({ column }) => {
-    //     return (
-    //       <Button
-    //         variant="ghost"
-    //         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-    //       >
-    //         Date
-    //         <ArrowUpDown className="ml-2 h-4 w-4" />
-    //       </Button>
-    //     )
-    //   },
   },
 
   {
-    accessorKey: "donor",
+    accessorKey: "username",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Donor" />
     ),
-    cell: ({ row }) => <div>{row.getValue("donor")}</div>,
+    cell: ({ row }) => <div>{row.getValue("username")}</div>,
     enableSorting: true,
     enableHiding: true,
   },
 
   {
-    accessorKey: "email",
+    accessorKey: "donationAmount",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Email" />
-    ),
-    cell: ({ row }) => <div>{row.getValue("email")}</div>,
-    enableSorting: true,
-    enableHiding: true,
-  },
-
-  {
-    accessorKey: "event",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Event" />
-    ),
-    cell: ({ row }) => <div>{row.getValue("event")}</div>,
-    enableSorting: true,
-    enableHiding: true,
-  },
-
-  {
-    accessorKey: "amount",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Amount" />
+      <DataTableColumnHeader column={column} title="ចំនួនថវិការបរិច្ចាគ" />
     ),
     cell: ({ row }) => {
-      const amount = parseFloat(row.getValue("amount"));
+      const amount = parseFloat(row.getValue("donationAmount"));
       const formatted = new Intl.NumberFormat("en-US", {
         style: "currency",
         currency: "USD",
@@ -119,7 +98,33 @@ export const transactionColumns: ColumnDef<TransactionType>[] = [
   },
 
   {
-    id: "actions",
-    cell: ({ row }) => <DataTableRowActions row={row} />,
+    accessorKey: "organization",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Organization" />
+    ),
+    cell: ({ row }) => {
+      const organization = row.getValue("organization") as { name: string };
+      return <div>{organization?.name}</div>;
+    },
+    enableSorting: true,
+    enableHiding: true,
   },
+
+  {
+    accessorKey: "event",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Event" />
+    ),
+    cell: ({ row }) => {
+      const organization = row.getValue("event") as { name: string };
+      return <div>{organization?.name}</div>;
+    },
+    enableSorting: true,
+    enableHiding: true,
+  },
+
+  // {
+  //   id: "actions",
+  //   cell: ({ row }) => <DataTableRowActions row={row} />,
+  // },
 ];

@@ -12,13 +12,11 @@ export default function CategoryCardComponent() {
 
   const typeCategories: CategoryType[] = category?.currentData || [];
 
-  console.log("typeCategory", typeCategories);
-
   return (
     <>
       {typeCategories.map((item, index) => (
         <motion.div
-          onClick={() => router.push(`/categories/0`)}
+          onClick={() => router.push(`/categories/${item?.uuid}`)}
           lang="km"
           key={index}
           // className="lg:w-[300px] md:w-full h-[370px] flex flex-col items-center gap-6 px-10 py-12 rounded-[15px] shadow-light"
@@ -29,18 +27,17 @@ export default function CategoryCardComponent() {
           whileHover={{ scale: 1.03 }} // Hover effect: scale and shadow
         >
           <div className="w-[70px] h-[70px] sm:w-[100px] sm:h-[100px] bg-iDonate-navy-accent rounded-full border border-iDonate-light-gray flex items-center justify-center ">
-            {item.media && (
-              <Image
-                width={60}
-                height={60}
-                src={
-                  item.media ||
-                  "https://charius-next.netlify.app/_next/static/media/1.f81fd7b6.svg"
-                }
-                alt={item.name || "Media"}
-                className="w-10 h-10 sm:w-[60px] sm:h-[60px]"
-              />
-            )}
+            <Image
+              width={60}
+              height={60}
+              src={
+                item.media && item.media.trim() !== ""
+                  ? item.media
+                  : "https://charius-next.netlify.app/_next/static/media/1.f81fd7b6.svg"
+              }
+              alt={item.name || "Media"}
+              className="w-10 h-10 sm:w-[60px] sm:h-[60px]"
+            />
           </div>
 
           {item.name && (
@@ -54,7 +51,6 @@ export default function CategoryCardComponent() {
               {item.description}
             </p>
           )}
-          {/* {item.benefits && <span className="text-sm">{item.benefits}</span>} */}
         </motion.div>
       ))}
     </>

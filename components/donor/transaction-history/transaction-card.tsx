@@ -40,15 +40,15 @@ export function TransactionHistoryCard({
 
         <div className="flex gap-6">
           <CardContent className="p-0 w-auto h-auto rounded-lg">
-            {transaction?.image ? (
+            {transaction?.avatar ? (
               <Image
                 width={300}
                 height={300}
                 src={
-                  transaction?.image ||
+                  transaction?.avatar ||
                   "https://i.pinimg.com/236x/a9/9e/ff/a99eff25eb1ba71647fcd884c15c035a.jpg"
                 }
-                alt={transaction?.event}
+                alt={transaction?.event?.eventName || ""}
                 className="w-full h-full object-cover rounded-lg"
               />
             ) : (
@@ -61,43 +61,43 @@ export function TransactionHistoryCard({
                 src={
                   "https://i.pinimg.com/236x/a9/9e/ff/a99eff25eb1ba71647fcd884c15c035a.jpg"
                 }
-                alt={transaction?.event}
+                alt={transaction?.avatar || ""}
                 className="w-full h-full object-cover rounded-lg"
               />
             )}
           </CardContent>
 
           <div className="flex flex-col flex-1 justify-between h-full">
-            <CardContent className="p-0 flex flex-col gap-4 flex-grow">
+            {/* <CardContent className="p-0 flex flex-col gap-4 flex-grow">
               <CardTitle className="text-3xl font-medium text-iDonate-navy-secondary p-0">
-                {transaction?.event || "Untitled Event"}
+                {transaction?.event?.name || "Untitled Event"}
               </CardTitle>
 
               <CardDescription className="text-xl leading-loose text-iDonate-navy-secondary p-0 overflow-hidden">
-                {transaction?.description ||
+                {transaction?. ||
                   "កុមាររាល់គ្នាស្ថិតក្នុងសិទ្ធិសមស្របក្នុងការរស់នៅក្នុងបរិយាកាសដ៏សុវត្ថិភាពនិងការអភិរក្សសិទ្ធិរបស់ពួកគេ ដោយមានក្តីមេត្តាករុណា និងការទទួលស្គាល់សម្លេងរបស់ពួកគេ។ ដោយគាំទ្រដល់ការដឹកនាំដែលផ្តោតលើសុវត្ថិភាព ការអប់រំ និងសុខុមាលភាពនៃកុមារ យើងអាចបង្កើតពិភពលោកដែលកុមារទាំងអស់អាចរីកចម្រើនដោយគ្មានការភ័យខ្លាច ឬការគំរាមកំហែង។"}
               </CardDescription>
-            </CardContent>
+            </CardContent> */}
 
             <CardContent
               lang="en"
               className="p-0 flex gap-9 items-end flex-grow"
             >
-              <div className="flex flex-col gap-2">
+              {/* <div className="flex flex-col gap-2">
                 <CardTitle className="text-lg font-inter font-normal text-iDonate-green-primary p-0">
                   Order Date
                 </CardTitle>
                 <CardDescription className="text-xl font-inter text-iDonate-navy-primary p-0 whitespace-nowrap">
-                  {transaction?.order_date || "12 September 2024"}
+                  {transaction?. || "12 September 2024"}
                 </CardDescription>
-              </div>
+              </div> */}
 
               <div className="flex flex-col gap-2">
                 <CardTitle className="text-lg font-inter font-normal text-iDonate-green-primary p-0">
-                  End Date
+                  Time of donation
                 </CardTitle>
                 <CardDescription className="text-xl font-inter text-iDonate-navy-primary p-0 whitespace-nowrap">
-                  {transaction?.end_date || "12 September 2025"}
+                  {transaction?.timestamp || "12 September 2025"}
                 </CardDescription>
               </div>
 
@@ -106,7 +106,7 @@ export function TransactionHistoryCard({
                   Raised
                 </CardTitle>
                 <CardDescription className="text-xl font-inter text-iDonate-navy-primary p-0">
-                  ${transaction?.amount}
+                  ${transaction?.donationAmount}
                 </CardDescription>
               </div>
             </CardContent>

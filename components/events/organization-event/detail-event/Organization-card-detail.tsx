@@ -1,12 +1,24 @@
 "use client";
 import { useEffect, useState } from "react";
 import { Toolbar } from "@/components/filter/toolbar";
-import { EventType } from "@/difinitions/dto/EventType";
+import { EventType } from "@/difinitions/types/event/EventType";
 import { CommonEventCard } from "@/components/events/organization-event/CommonEventCard";
-import events from "@/data/events-data.json";
 import { Button } from "@/components/ui/button";
+import { useGetEventsQuery } from "@/redux/services/event-service";
 
 export function OrganizationDetail() {
+  // use static for testing
+
+  // const typedEvents: EventType[] = events.slice(0, 4);
+  const {
+    data: eventsApiResponse = { content: [] },
+    isLoading: isEventsLoading,
+  } = useGetEventsQuery({});
+
+  const events: EventType[] = eventsApiResponse.content || [];
+
+  // const typedEvents: EventType[] = events.slice(0, 4);
+
   const typedEvents: EventType[] = events.slice(0, 8);
 
   const [filteredEvents, setFilteredEvents] =
@@ -16,7 +28,7 @@ export function OrganizationDetail() {
     {
       key: "title",
       title: "Events",
-      options: Array.from(new Set(typedEvents.map((event) => event.title))).map(
+      options: Array.from(new Set(typedEvents.map((event) => event.name))).map(
         (event) => ({
           label: event,
           value: event,
@@ -27,20 +39,20 @@ export function OrganizationDetail() {
       key: "total_donor",
       title: "Donor Range",
       options: Array.from(
-        new Set(typedEvents.map((event) => event.total_donor)),
+        new Set(typedEvents.map((event) => event.totalDonors)),
       ).map((donor) => ({
-        label: donor.toString(),
-        value: donor.toString(),
+        label: (donor ?? "").toString(),
+        value: (donor ?? "").toString(),
       })),
     },
     {
       key: "total_amount",
-      title: "Amount Range",
+      title: "ចំនួនថវិការបរិច្ចាគ Range",
       options: Array.from(
-        new Set(typedEvents.map((event) => event.total_amount)),
+        new Set(typedEvents.map((event) => event.currentRaised)),
       ).map((amount) => ({
-        label: amount.toString(),
-        value: amount.toString(),
+        label: (amount ?? "").toString(),
+        value: (amount ?? "").toString(),
       })),
     },
   ];

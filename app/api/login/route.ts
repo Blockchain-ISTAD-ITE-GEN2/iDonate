@@ -8,16 +8,19 @@ export async function POST(req: NextRequest) {
   const body = await req.json();
   const { email, password } = body;
 
+  // console.log("Email: ", email);
+  // console.log("Password: ", password);
+
   // Make a POST request to the Our API
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_IDONATE_API_URL}/api/v1/auth/login/`,
+    `${process.env.NEXT_PUBLIC_IDONATE_API_URL}/api/v1/auth/login`,
     {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
+      credentials: "include",
     },
   );
-  console.log("Response: ", response);
 
   // If the request fails, return an error message to the client-side
   if (!response.ok) {
@@ -33,13 +36,10 @@ export async function POST(req: NextRequest) {
 
   // If the request is successful, parse the response body to get the data
   const data = await response.json();
-  console.log("data: ", data);
+  // console.log("data", data);
   const user = data?.user || null;
   const accessToken = data?.accessToken || null;
   const refreshToken = data?.refreshToken || null;
-  console.log("RefreshToken: ", refreshToken);
-
-  //  console.log("AcessToken: ", accessToken);
 
   // Serialize the refresh token and set it as a cookie with
   // (httpOnly, secure, path, and sameSite options) in the response headers to the client-side
@@ -51,7 +51,6 @@ export async function POST(req: NextRequest) {
     path: "/",
     sameSite: "lax", // or "strict" or "none"
   });
-  document.cookie = `idonate-refresh-token=${refreshToken};path=/;max-age=3600;`;
 
   // Return the access token and user data to the client-side
   // with the serialized refresh token as a cookie

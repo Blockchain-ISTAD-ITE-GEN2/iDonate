@@ -5,7 +5,9 @@ import { DateRangePicker } from "./date-range-picker";
 import { DateRange } from "react-day-picker";
 
 type ToolbarProps = {
-  events: { [key: string]: string | number | Date }[];
+  events: { [key: string]: any }[];
+  // events: { [key: string]: string | number | Date }[];
+  // events: { [key: string]: string | number | Date }[];
   searchKey: string;
   filtersFace: {
     key: string;
@@ -86,12 +88,12 @@ export function Toolbar({
 
   return (
     <div className="flex items-center justify-between">
-      <div className="flex flex-wrap lg:flex-nowrap items-center gap-2 ">
+      <div className="flex flex-wrap  items-center gap-2 ">
         <Input
           placeholder={`Search by ${searchKey}`}
           value={searchValue}
           onChange={handleSearchChange}
-          className="h-10 w-full md:w-[450px]"
+          className="h-10 w-auto md:w-[450px]"
         />
         {/* <div className="flex space-x-2 space-y-2 md:space-y-0"> */}
         {filtersFace?.map(({ key, title, options }) => (

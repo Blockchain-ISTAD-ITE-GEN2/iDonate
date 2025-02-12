@@ -22,7 +22,7 @@ type TransactionProps = {
 
 const chartConfig = {
   amount: {
-    label: "Amount",
+    label: "ចំនួនថវិការបរិច្ចាគ",
     color: "iDonate-navy-primary",
   },
   date: {
@@ -33,18 +33,18 @@ const chartConfig = {
 
 export function DonorCardsMetric({ data }: TransactionProps) {
   return (
-    <Card className="w-full bg-iDonate-light-gray rounded-lg border border-iDonate-navy-accent dark:bg-iDonate-dark-mode">
+    <Card className="w-full flex-1 bg-iDonate-light-gray rounded-lg border border-iDonate-navy-accent dark:bg-iDonate-dark-mode">
       <CardHeader>
         <CardTitle className="text-medium-eng font-normal text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
-          Overall Transaction
+          ប្រតិបត្តិការសរុប
         </CardTitle>
         <CardDescription className="text-sub-description-eng text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
-          All transactions made by you.
+          ប្រតិបត្តិការទាំងអស់ដែលបង្កើតដោយអ្នក
         </CardDescription>
       </CardHeader>
 
-      <CardContent className="pb-4">
-        <ChartContainer config={chartConfig} className="h-[200px] w-full">
+      <CardContent className="p-2">
+        <ChartContainer config={chartConfig} className="flex-1 w-full">
           <AreaChart
             accessibilityLayer
             data={data}
@@ -75,7 +75,8 @@ export function DonorCardsMetric({ data }: TransactionProps) {
 
             <Area
               type="monotone"
-              strokeWidth={2}
+              strokeWidth={1.5}
+              stroke="#263A61"
               dataKey="amount"
               fill="fill-iDonate-green-primary"
               className="fill-iDonate-green-primary"

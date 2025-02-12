@@ -76,14 +76,34 @@ export type EditprofileType = {
   username: string;
   firstName: string;
   lastName: string;
-  position: string;
-  avatar: string;
+  gender: string;
+  phoneNumber: string;
+  dateOfBirth: string;
+};
+
+export type EditUserAddressType = {
+  address: string;
+};
+
+export type EditUserBioType = {
+  bio: string;
 };
 export type userProfileinfoType = {
+  gender: string;
+  dateOfBirth: string;
+  phoneNumber: string;
   username: string;
   firstName: string;
   lastName: string;
+  avatar: string;
+  email: string;
   position: string;
+  role: [string];
+  isActive: boolean;
+  isFavourite: boolean;
+  createdAt: string;
+  updatedAt: string;
+  address: string;
 };
 
 // Review type
@@ -94,14 +114,21 @@ export type ReviewsType = {
 
 // User type
 export type UserType = {
+  uuid: string;
   firstName: string;
   lastName: string;
+  gender?: string;
   username: string;
+  password?: string;
+  phoneNumber?: string;
   email: string;
-  avatar: string;
-  position: string;
-  role: [string];
+  avatar?: string | null;
+  dateOfBirth?: string | null;
+  address?: string | null;
+  isProfiledVisibility: boolean;
+  isEmailVerified: boolean;
 };
+
 // Upload file type
 export type UploadFileType = {
   schemaName: string;
@@ -111,7 +138,7 @@ export type UploadFileType = {
 };
 
 export type UpdateProfileImageType = {
-  profile: string;
+  file: any;
 };
 
 // user data type

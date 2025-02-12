@@ -13,15 +13,30 @@ import { motion } from "framer-motion";
 import { usePathname } from "next/navigation";
 import logo from "@/public/logo/logodesign no background.png";
 
+const links = [
+  { name: "Home", href: "/" },
+  { name: "About Us", href: "/about-us" },
+  { name: "Contributors", href: "/donor-dashboard" },
+  { name: "Events", href: "/organizations" },
+];
+const links_suppoort = [
+  { name: "How It Works", href: "/how-it-works" },
+  { name: "Mission & Vision", href: "/mission-vision" },
+  { name: "Donor", href: "/donor-dashboard" },
+  { name: "Organization", href: "/organization-dashboard" },
+  { name: "Categories", href: "/categories" },
+];
 export default function FooterComponent() {
   const pathname = usePathname();
 
   if (
-    pathname === "/auth/login" ||
-    pathname === "/auth/sign-up" ||
-    pathname === "/auth/verification" ||
-    pathname === "/auth/forgot-password" ||
-    pathname === "/auth/reset-password"
+    pathname === "/login" ||
+    pathname === "/sign-up" ||
+    pathname === "/verification" ||
+    pathname === "/forgot-password" ||
+    pathname === "/reset-password" ||
+    pathname === "/profile" ||
+    pathname === "/waiting-verification"
   ) {
     return null;
   }
@@ -39,9 +54,9 @@ export default function FooterComponent() {
               transition={{ duration: 0.5 }}
               className="flex flex-col items-center md:items-start w-full md:w-auto"
             >
-              <span className="text-sm mb-1">Follow us on</span>
+              <span className="text-sm mb-1">តាមដានពួកយើងនៅលើ</span>
               <h2 className="text-xl md:text-2xl font-bold mb-3 text-center md:text-left">
-                Social Media Platform
+                បណ្ដាញសង្គមផ្សេងៗ
               </h2>
               <div className="flex gap-4">
                 {[
@@ -53,7 +68,7 @@ export default function FooterComponent() {
                     key={social.label}
                     href="#"
                     className="hover:text-gray-300 transition-colors rounded-full bg-gray-50 p-2"
-                    aria-label={`Follow us on ${social.label}`}
+                    aria-label={`តាមដានពួកយើងនៅលើ ${social.label}`}
                   >
                     <social.icon
                       size={18}
@@ -72,10 +87,10 @@ export default function FooterComponent() {
               className="text-center md:text-right"
             >
               <p className="text-base md:text-lg mb-1">
-                Donation Change their life
+                ការបរិច្ចាគផ្លាស់ប្តូរជីវិតរបស់ពួកគេ
               </p>
               <p className="text-lg md:text-xl">
-                who are <span className="font-bold">orphan and ILLITERATE</span>
+                ដែលជា​ <span className="font-bold">ក្មេងកំព្រានិងជនពិការ</span>
               </p>
             </motion.div>
           </div>
@@ -135,13 +150,13 @@ export default function FooterComponent() {
               Quick Link
             </h3>
             <ul className="space-y-2">
-              {["Home", "About Us", "Contributors", "Events"].map((item) => (
-                <li key={item}>
+              {links.map((link) => (
+                <li key={link.name}>
                   <Link
-                    href="#"
+                    href={link.href}
                     className="text-iDonate-navy-primary hover:text-iDonate-green-primary transition-colors dark:text-iDonate-navy-accent"
                   >
-                    {item}
+                    {link.name}
                   </Link>
                 </li>
               ))}
@@ -204,7 +219,7 @@ export default function FooterComponent() {
                   alt="MPTC Logo"
                   width={1000}
                   height={1000}
-                  className="p-2 w-full h-full object-cover"
+                  className="p-2 w-full h-full object-cover  "
                   onClick={() => window.open("https://www.mptc.gov.kh/")}
                 />
                 <Image

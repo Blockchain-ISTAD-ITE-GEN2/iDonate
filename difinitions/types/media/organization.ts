@@ -1,10 +1,22 @@
+import { UserType } from '@/lib/definition';
+import { Phone } from 'lucide-react';
 export type OrganizationParam = {
-  image: string;
-  title: string;
-  description: string;
-  key?: number;
-  location: string;
+  uuid?: string;
+  image: File | string | null;
+  name: string;
+  description: string | null;
+  key?: number | string;
+  address?: string;
+  email: string;
+  phone: string;
+  bankAccountNumber: string | null;
+  isApproved: boolean;
+  fileReferences: string;
+  bio?: string;
+  user: UserType;
+  onClick: () => void;
 };
+
 export type EventTypeParam = {
   image: string;
   title: string;

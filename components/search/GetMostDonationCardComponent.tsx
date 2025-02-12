@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { CircleDollarSign, Users } from "lucide-react";
-import { EventType } from "@/difinitions/dto/EventType";
+import { EventType } from "@/difinitions/types/event/EventType";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 
 export function GetMostDonationCardComponent({
@@ -24,15 +24,15 @@ export function GetMostDonationCardComponent({
               index === 0 ? "h-[520px]" : "h-[520px] md:h-[520px] lg:h-[141px]"
             }`}
           >
-            {item.image && (
+            {item.images && (
               <Image
                 className={`rounded-t-[10px] object-cover ${
                   index === 0
                     ? "w-full h-[520px]"
                     : "h-[520px] md:h-[520px] lg:h-[170px] w-full"
                 }`}
-                src={item.image}
-                alt={item.title || "Media"}
+                src={typeof item.images[0] === "string" ? item.images[0] : ""}
+                alt={item.name || "Media"}
                 width={index === 0 ? 636 : 280}
                 height={index === 0 ? 470 : 170} // 459
               />
@@ -45,7 +45,7 @@ export function GetMostDonationCardComponent({
             }`}
           >
             <div className={index === 0 ? "mt-[30px]" : "mt-[30px]"}>
-              {item.title && (
+              {item.name && (
                 <h3
                   className={`font-extrabold text-medium-khmer text-left ${
                     index === 0
@@ -53,12 +53,12 @@ export function GetMostDonationCardComponent({
                       : "line-clamp-1 text-iDonate-navy-primary"
                   }`}
                 >
-                  {item.title}
+                  {item.name}
                 </h3>
               )}
               {item.description && (
                 <p
-                  className={`font-thin text-iDonate-navy-secondary text-title-card text-start ${
+                  className={`font-thin text-iDonate-navy-secondary text-name-card text-start ${
                     index === 0 ? "line-clamp-3" : "line-clamp-2"
                   }`}
                 >
@@ -70,18 +70,18 @@ export function GetMostDonationCardComponent({
             <div className="flex flex-col gap-1 mt-auto">
               <div className="flex items-center gap-4">
                 <Users className="fill-iDonate-navy-primary h-6 w-6" />
-                {item.total_donor && (
+                {item.totalDonors && (
                   <h3 className="text-description-khmer line-clamp-1 text-center text-iDonate-navy-primary">
-                    {item.total_donor} នាក់បរិច្ចាគ
+                    {item.totalDonors} នាក់បរិច្ចាគ
                   </h3>
                 )}
               </div>
 
               <div className="flex items-center gap-4">
                 <CircleDollarSign className="fill-iDonate-navy-primary text-iDonate-white-space h-6 w-6" />
-                {item.total_amount && (
+                {item.currentRaised && (
                   <p className="text-medium-khmer line-clamp-2 text-center text-iDonate-navy-primary">
-                    {item.total_amount}
+                    {item.currentRaised}
                   </p>
                 )}
               </div>

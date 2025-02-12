@@ -1,3 +1,5 @@
+"use client";
+
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
@@ -7,7 +9,6 @@ import {
   FormDescription,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
@@ -23,6 +24,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import {
+  useGetUserProfileQuery,
+  useUpdateUserProfileMutation,
+} from "@/redux/services/user-profile";
 
 export function DonorAddressForm({
   onPercentageUpdate,
@@ -31,10 +36,16 @@ export function DonorAddressForm({
 }) {
   const [isEditing, setIsEditing] = useState(false);
 
+  // Fetch donor profile data
+  const { data: donorProfile } = useGetUserProfileQuery({});
+
+  // Mutation to update donor profile
+  const [updateUserProfile] = useUpdateUserProfileMutation();
+
   const form = useForm<z.infer<typeof organizationAddressSchema>>({
     resolver: zodResolver(organizationAddressSchema),
     defaultValues: {
-      address: "",
+      address: donorProfile?.address || "",
     },
   });
 
@@ -53,32 +64,38 @@ export function DonorAddressForm({
     }
   }, [isFormFilled, onPercentageUpdate]);
 
-  // Add beforeunload event listener
-  useEffect(() => {
-    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
-      if (isFormFilled) {
-        event.preventDefault();
-        event.returnValue =
-          "You have unsaved changes. Are you sure you want to leave?";
-      }
-    };
+  // Handle form submission
+  const onSubmit = async (
+    values: z.infer<typeof organizationAddressSchema>,
+  ) => {
+    try {
+      if (!donorProfile?.uuid) return;
 
-    window.addEventListener("beforeunload", handleBeforeUnload);
+      // Update the profile using RTK Mutation
+      await updateUserProfile({
+        uuid: donorProfile.uuid,
+        updatedUserProfile: {
+          username: "",
+          firstName: "",
+          lastName: "",
+          gender: "",
+          phoneNumber: "",
+          dateOfBirth: "",
+        },
+      }).unwrap();
 
-    return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-    };
-  }, [isFormFilled]);
+      console.log("Address updated successfully!");
+      setIsEditing(false);
+    } catch (error) {
+      console.error("Failed to update address:", error);
+    }
+  };
 
-  function onSubmit(values: z.infer<typeof organizationAddressSchema>) {
-    console.log(values);
+  // Handle cancel
+  const handleCancel = () => {
+    reset({ address: donorProfile?.address || "" });
     setIsEditing(false);
-  }
-
-  function handleCancel() {
-    reset();
-    setIsEditing(false);
-  }
+  };
 
   return (
     <Form {...form}>
@@ -99,8 +116,8 @@ export function DonorAddressForm({
             </CardHeader>
             <CardContent className="flex flex-wrap gap-4 sm:gap-6 lg:gap-9 p-0 m-0">
               <div className="flex flex-col md:space-y-1 ">
-                <CardDescription className="text-sm sm:text-description-eng lg:text-medium-eng text-iDonate-navy-primary">
-                  Norodom Blvd, 41, Phnom Penh
+                <CardDescription className="text-sm sm:text-description-eng lg:text-medium-eng text-iDonate-navy-primary ">
+                  {donorProfile?.address || "No address provided"}
                 </CardDescription>
               </div>
             </CardContent>
@@ -119,7 +136,7 @@ export function DonorAddressForm({
                     trigger={
                       <Button
                         type="button"
-                        className="bg-iDonate-white-space border-2lg:text-s hover:bg-red-50 border-iDonate-error text-iDonate-error"
+                        className="bg-iDonate-white-space border-2 hover:bg-red-50 border-iDonate-error text-iDonate-error"
                       >
                         Cancel
                       </Button>
@@ -134,14 +151,14 @@ export function DonorAddressForm({
                   <Button
                     type="button"
                     onClick={handleCancel}
-                    className="bg-iDonate-white-space border-2 text-xs lg:text-s hover:bg-red-50 border-iDonate-error text-iDonate-error"
+                    className="bg-iDonate-white-space border-2 text-xs lg:text-sm hover:bg-red-50 border-iDonate-error text-iDonate-error"
                   >
                     Cancel
                   </Button>
                 )}
                 <Button
                   type="submit"
-                  className="bg-iDonate-white-space border-2 text-xs lg:text-s hover:bg-iDonate-light-gray border-iDonate-navy-accent text-iDonate-navy-primary"
+                  className="bg-iDonate-white-space border-2 text-xs lg:text-sm hover:bg-iDonate-light-gray border-iDonate-navy-accent text-iDonate-navy-primary"
                 >
                   Submit
                 </Button>

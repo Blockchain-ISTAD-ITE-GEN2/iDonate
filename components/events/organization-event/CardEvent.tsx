@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { Users, CircleDollarSign } from "lucide-react";
-import { EventType } from "@/difinitions/dto/EventType";
+import { EventType } from "@/difinitions/types/event/EventType";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 
 export function CardEvent({ events }: { events: EventType[] }) {
@@ -13,13 +13,18 @@ export function CardEvent({ events }: { events: EventType[] }) {
         >
           {/* Image Section */}
           <CardHeader className="w-full h-[180px] p-0">
-            {item.image && (
+            {item.images && (
               <Image
                 className="object-cover w-full h-full"
                 width={280}
                 height={180}
-                src={item.image}
-                alt={item.title || "Event"}
+                src={
+                  typeof item?.images?.[0] === "string"
+                    ? item.images[0]
+                    : "/fallback-placeholder.jpg"
+                }
+                // src={item.images[0]}
+                alt={item.name || "Event"}
               />
             )}
           </CardHeader>
@@ -27,9 +32,9 @@ export function CardEvent({ events }: { events: EventType[] }) {
           {/* Content Section */}
           <CardContent className="p-4 flex flex-col gap-2">
             {/* Title */}
-            {item.title && (
+            {item.name && (
               <h3 className="text-base font-semibold text-gray-800 line-clamp-1">
-                {item.title}
+                {item.name}
               </h3>
             )}
 
@@ -44,11 +49,11 @@ export function CardEvent({ events }: { events: EventType[] }) {
             <div className="flex flex-col gap-1 mt-2">
               <div className="flex items-center gap-2 text-gray-700">
                 <Users className="h-5 w-5 text-blue-600" />
-                <span className="text-sm">{item.total_donor} នាក់បរិច្ចាគ</span>
+                <span className="text-sm">{item.totalDonors} នាក់បរិច្ចាគ</span>
               </div>
               <div className="flex items-center gap-2 text-gray-700">
                 <CircleDollarSign className="h-5 w-5 text-blue-600" />
-                <span className="text-sm">{item.total_amount}</span>
+                <span className="text-sm">{item.currentRaised}</span>
               </div>
             </div>
           </CardContent>

@@ -5,12 +5,9 @@ import { NextResponse } from "next/server";
 export async function POST() {
   const cookieStore = cookies();
   const cookieName =
-    process.env.COOKIE_REFRESH_TOKEN_NAME ||
-    "idonate-refresh-token" ||
-    "refresh";
-  const credential = cookieStore.get(cookieName);
+    process.env.COOKIE_REFRESH_TOKEN_NAME || "idonate-refresh-token";
 
-  console.log(credential?.name);
+  const credential = cookieStore.get("idonate-refresh-token");
 
   if (!credential) {
     return NextResponse.json(
@@ -23,10 +20,11 @@ export async function POST() {
     );
   }
 
-  const refreshToken = credential.value;
+  const refreshToken = credential?.value.toString();
+  console.log(refreshToken);
 
   const response = await fetch(
-    `${process.env.IDONATE_BASE_URL}/api/v1/auth/refresh`,
+    `${process.env.NEXT_PUBLIC_IDONATE_API_URL}/api/v1/auth/refresh`,
     {
       method: "POST",
       headers: { "Content-Type": "application/json" },

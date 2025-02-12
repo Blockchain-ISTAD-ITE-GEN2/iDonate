@@ -1,7 +1,6 @@
 "use client";
 
 import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -15,10 +14,19 @@ import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import { Upload } from "lucide-react";
 import Image from "next/image";
-import donor from "@/public/images/dornor.jpeg";
 import { organizationMediaSchema } from "@/components/schema/schema";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { AlertComfirmDialog } from "@/components/Alert/Alert-Dialog";
+import {
+  useGetUserProfileQuery,
+  useUpdateAvatarMutation,
+} from "@/redux/services/user-profile";
+import { useParams } from "next/navigation";
+import AvartarPlaceHolder from "@/public/images/placeholder.png";
+import { toast } from "react-hot-toast";
+import { UpdateProfileImageType } from "@/lib/definition";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useUploadSingleMediaMutation } from "@/redux/services/media";
 
 export function DonorMediaForm({
   onPercentageUpdate,
@@ -26,6 +34,7 @@ export function DonorMediaForm({
   onPercentageUpdate: (percentage: number) => void;
 }) {
   const [previewImage, setPreviewImage] = useState<string | null>(null);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   const form = useForm<z.infer<typeof organizationMediaSchema>>({
     resolver: zodResolver(organizationMediaSchema),
@@ -34,41 +43,81 @@ export function DonorMediaForm({
     },
   });
 
+  const { uuid } = useParams();
+  const [updateAvatar, { isLoading: isUpdating }] = useUpdateAvatarMutation();
+  const [uploadMedia] = useUploadSingleMediaMutation();
+  const { data: userProfile } = useGetUserProfileQuery({});
+
   const { watch, handleSubmit, reset, control, formState } = form;
   const mediaValue = watch("image");
 
   useEffect(() => {
-    if (mediaValue) {
-      onPercentageUpdate(20); // Address field filled, update percentage
-    } else {
-      onPercentageUpdate(0); // Address field empty, reset percentage
-    }
+    onPercentageUpdate(mediaValue ? 20 : 0);
   }, [mediaValue, onPercentageUpdate]);
 
-  function onSubmit(values: z.infer<typeof organizationMediaSchema>) {
-    console.log("Preview URL:", previewImage);
-  }
-
-  function handleFileChange(
+  const handleFileChange = (
     event: React.ChangeEvent<HTMLInputElement>,
     onChange: (value: string) => void,
-  ) {
+  ) => {
     const file = event.target.files?.[0];
-    if (file) {
-      if (!file.name.match(/\.(jpg|jpeg|png)$/i)) {
-        alert("Only JPG or PNG files are allowed.");
-        return;
-      }
-      const previewURL = URL.createObjectURL(file);
-      setPreviewImage(previewURL);
-      onChange(previewURL); // Notify form of the new value
-    }
-  }
+    if (!file) return;
 
-  function handleCancel() {
-    form.reset();
+    if (!file.name.match(/\.(jpg|jpeg|png)$/i)) {
+      toast.error("Only JPG or PNG files are allowed.");
+      return;
+    }
+
+    const previewURL = URL.createObjectURL(file);
+    setPreviewImage(previewURL);
+    setSelectedFile(file);
+    onChange(previewURL);
+  };
+
+  const handleCancel = () => {
+    reset();
     setPreviewImage(null);
-  }
+    setSelectedFile(null);
+    if (previewImage) {
+      URL.revokeObjectURL(previewImage);
+    }
+  };
+
+  const onSubmit = async (data: z.infer<typeof organizationMediaSchema>) => {
+    if (!selectedFile || !uuid) return;
+
+    try {
+      if (selectedFile instanceof File) {
+        console.log("file");
+        // Upload the file using RTK Query
+        const formData = new FormData();
+        formData.append("file", selectedFile);
+
+        console.log("Form Data value : ", formData);
+
+        const uploadResponse = await uploadMedia(formData).unwrap();
+
+        // Update the user's avatar
+        const imageUri: UpdateProfileImageType = {
+          file: uploadResponse?.name,
+        };
+
+        await updateAvatar({
+          uuid: uuid as string,
+          file: formData,
+        }).unwrap();
+
+        toast.success("Avatar updated successfully");
+        handleCancel();
+      }
+    } catch (error) {
+      console.error("Error while uploading avatar:", error);
+      toast.error("Error while uploading avatar");
+    }
+  };
+
+  const profileImageUrl = userProfile?.avatar || AvartarPlaceHolder;
+
+  console.log("Profile image api: ", userProfile);
 
   return (
     <Form {...form}>
@@ -78,7 +127,6 @@ export function DonorMediaForm({
             previewImage ? "bg-iDonate-light-gray" : ""
           }`}
         >
-          {/* Card Header: Conditionally rendered when previewImage exists */}
           {previewImage && (
             <CardHeader className="w-full flex flex-col sm:flex-row items-start justify-between p-0 m-0">
               <CardTitle className="text-lg lg:text-2xl font-medium text-iDonate-navy-secondary whitespace-nowrap">
@@ -86,7 +134,6 @@ export function DonorMediaForm({
               </CardTitle>
 
               <div className="flex w-full justify-end gap-3">
-                {/* Cancel Button */}
                 {formState.isDirty ? (
                   <AlertComfirmDialog
                     trigger={
@@ -107,39 +154,33 @@ export function DonorMediaForm({
                   <Button
                     type="button"
                     onClick={handleCancel}
-                    className="bg-iDonate-white-space border-2  text-xs lg:text-sm hover:bg-red-50 border-iDonate-error text-iDonate-error"
+                    className="bg-iDonate-white-space border-2 text-xs lg:text-sm hover:bg-red-50 border-iDonate-error text-iDonate-error"
                   >
                     Cancel
                   </Button>
                 )}
 
-                {/* Submit Button */}
                 <Button
                   type="submit"
-                  className="bg-iDonate-white-space border-2  text-xs lg:text-sm hover:bg-iDonate-light-gray border-iDonate-navy-accent text-iDonate-navy-primary"
+                  className="bg-iDonate-white-space border-2 text-xs lg:text-sm hover:bg-iDonate-light-gray border-iDonate-navy-accent text-iDonate-navy-primary"
+                  disabled={isUpdating}
                 >
-                  Submit
+                  {isUpdating ? "Submitting..." : "Submit"}
                 </Button>
               </div>
             </CardHeader>
           )}
 
           <div className="flex flex-col sm:flex-row items-start gap-6 md:gap-9">
-            {/* Card Content for Image */}
             <CardContent className="relative w-full sm:min-w-[300px] min-h-[300px] flex p-0 m-0">
-              {previewImage ? (
-                <Image
-                  src={previewImage}
-                  alt="Preview"
-                  fill
-                  className="rounded-md"
-                />
-              ) : (
-                <Image src={donor} alt="Organization" fill />
-              )}
+              <Image
+                src={previewImage || profileImageUrl}
+                alt="Profile"
+                fill
+                className="rounded-md object-cover"
+              />
             </CardContent>
 
-            {/* Card Content for Upload Button */}
             <CardContent className="flex flex-col p-0 m-0 gap-4">
               <FormField
                 control={control}
@@ -153,15 +194,12 @@ export function DonorMediaForm({
                           type="file"
                           accept=".jpg, .jpeg, .png"
                           className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
-                          onChange={(e) => handleFileChange(e, field.onChange)} // Pass field.onChange
+                          onChange={(e) => handleFileChange(e, field.onChange)}
                           ref={field.ref}
                         />
                         <Button
                           type="button"
                           className="bg-iDonate-white-space border-2 hover:bg-iDonate-light-gray border-iDonate-navy-accent text-iDonate-navy-primary"
-                          onClick={() => {
-                            document.getElementById("file-input")?.click();
-                          }}
                         >
                           <Upload />
                           New Media

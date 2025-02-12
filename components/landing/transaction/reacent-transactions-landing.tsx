@@ -1,14 +1,54 @@
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { TransactionType } from "@/difinitions/types/table-type/transaction";
-import { Label } from "@/components/ui/label";
+"use client";
 
-type RecentSalesProps = {
-  transactions: TransactionType[];
+import { useEffect, useState } from "react";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Label } from "@/components/ui/label";
+import Image from "next/image";
+import donateIcon from "@/public/images/give-and-recieve.png";
+
+type Donation = {
+  avatar: string;
+  donor: string;
+  donationAmount: number;
+  timestamp: string;
 };
 
-export function ReacentTransacctionsLanding({
-  transactions,
-}: RecentSalesProps) {
+export function RecentTransactionsLanding() {
+  const [transactions, setTransactions] = useState<Donation[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<null | string>(null);
+
+  useEffect(() => {
+    const fetchTransactions = async () => {
+      try {
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/v1/donation`,
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch transactions");
+        }
+        const data = await response.json();
+
+        console.log("User transaction data", data); // Debugging
+        setTransactions(data.content);
+      } catch (err: any) {
+        setError(err.message || "Something went wrong");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTransactions();
+  }, []);
+
+  // if (loading) {
+  //   return <div>Loading...</div>;
+  // }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
   return (
     <div className="flex flex-col h-full items-center">
       {transactions.map((transaction, index) => (
@@ -17,13 +57,23 @@ export function ReacentTransacctionsLanding({
           className="flex flex-wrap sm:flex-nowrap w-full justify-between items-center border-b border-iDonate-navy-accent py-2 gap-2"
         >
           <div className="flex items-center gap-2 sm:gap-4">
-            <Avatar className="h-12 w-12 sm:h-16 sm:w-16 flex items-center">
-              <AvatarFallback className="h-10 w-10 border border-iDonate-navy-primary dark:border-iDonate-navy-accent">
-                {transaction.donor
-                  .split(" ")
-                  .map((n) => n[0])
-                  .join("")}
-              </AvatarFallback>
+            <Avatar className="h-12 w-12 sm:h-16 sm:w-16 flex items-center justify-center border bg-iDonate-green-accent">
+              {transaction.avatar ? (
+                <Image
+                  width={300}
+                  height={300}
+                  src={transaction.avatar}
+                  alt={`${transaction.donor} Avatar`}
+                  className="h-full w-full object-cover"
+                />
+              ) : (
+                <Image
+                  width={40}
+                  height={40}
+                  src={donateIcon}
+                  alt={`${transaction.donor} Avatar`}
+                />
+              )}
             </Avatar>
 
             <div className="space-y-1">
@@ -37,13 +87,13 @@ export function ReacentTransacctionsLanding({
           </div>
 
           <span className="text-iDonate-green-primary text-sm sm:text-base font-medium ml-auto dark:text-iDonate-green-secondary">
-            ${transaction.amount}
+            {transaction.donationAmount.toFixed(2)}
           </span>
         </div>
       ))}
 
       <Label className="flex items-center py-4 text-sm sm:text-base dark:text-iDonate-navy-accent">
-        View all transactions
+        មើលប្រតិបត្តិការទាំងអស់
       </Label>
     </div>
   );

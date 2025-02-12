@@ -66,13 +66,13 @@ export default function DesktopNavbar({
                 </MenubarTrigger>
 
                 <MenubarContent className="p-4 bg-iDonate-white-space rounded-lg shadow-lg dark:bg-iDonate-bg-dark-mode">
-                  {item.title === "Events" && (
+                  {item.title === "កម្មវិធីបរិច្ចាគ" && (
                     <SubNavbarComponent menuList={eventMenulist} />
                   )}
-                  {item.title === "Contributors" && (
+                  {item.title === "អ្នកចូលរួម" && (
                     <SubNavbarComponent menuList={contributorMenulist} />
                   )}
-                  {item.title === "About" && (
+                  {item.title === "អំពីយើង" && (
                     <SubNavbarComponent menuList={aboutMenulist} />
                   )}
                 </MenubarContent>

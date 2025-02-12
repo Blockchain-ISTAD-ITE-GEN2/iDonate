@@ -2,23 +2,22 @@
 
 import { Card, CardContent } from "@/components/ui/card";
 import Image from "next/image";
-import { OrganizationParam } from "@/difinitions/types/media/organization";
 import { MapPinned } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { OrganizationType } from "@/difinitions/types/organization/OrganizationType";
 
 export function OrganizationCardComponent({
   image,
-  title,
+  name,
   description,
-  location,
-}: OrganizationParam) {
-  const router = useRouter();
+  address,
+  onClick,
+}: OrganizationType) {
+  // const router = useRouter();
 
   return (
     <Card
-      onClick={() => {
-        router.push("/organizations/0");
-      }}
+      onClick={onClick}
       className="w-full rounded-[10px] bg-iDonate-light-gray border-0 cursor-pointer shadow-md transition-transform hover:scale-[1.02] dark:bg-iDonate-dark-mode"
     >
       <CardContent className="flex flex-col sm:flex-row items-center justify-center p-4 gap-4">
@@ -26,8 +25,8 @@ export function OrganizationCardComponent({
         <div className="relative aspect-square min-w-[160px] h-full flex-shrink-0 rounded-lg">
           {image ? (
             <Image
-              src={image}
-              alt={title || "Media"}
+              src={typeof image === "string" ? image : ""}
+              alt={name || "Media"}
               fill
               className="object-cover rounded-lg"
             />
@@ -41,7 +40,7 @@ export function OrganizationCardComponent({
         {/* Description */}
         <div className="flex flex-col h-full gap-2 flex-1">
           <h2 className="text-description-eng sm:text-medium-eng font-semibold text-iDonate-navy-primary dark:text-iDonate-navy-accent">
-            {title}
+            {name}
           </h2>
 
           <p className="flex-1 text-sub-description-eng text-iDonate-navy-secondary  sm:line-clamp-4 dark:text-iDonate-navy-accent">
@@ -51,7 +50,7 @@ export function OrganizationCardComponent({
           {/* Location */}
           <div className="flex gap-2 text-iDonate-gray dark:text-iDonate-green-secondary">
             <MapPinned className="w-5" />
-            <p className=" line-clamp-1 flex gap-2 items-center ">{location}</p>
+            <p className=" line-clamp-1 flex gap-2 items-center ">{address}</p>
           </div>
         </div>
       </CardContent>

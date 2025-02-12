@@ -1,6 +1,4 @@
-import categories from "@/data/category.json";
 import CategoryCardComponent from "@/components/events/categories/CategoryCardComponent";
-import { CategoryType } from "@/difinitions/types/components-type/CategoryType";
 import HeroSectionComponent from "@/components/herosection/HeroSectionComponent";
 import TotalOrganizationComponent from "@/components/landing/TotalOrganizationComponent";
 import LatestDonationCard from "@/components/landing/latest-donation-event/LatestDonationCard";
@@ -17,6 +15,8 @@ export const metadata: Metadata = {
     "iDonate is a trusted platform connecting donors with verified organizations to ensure transparency and credibility in donations.",
   keywords: [
     "iDonate",
+    "idonate",
+    "idonate istad",
     "Donation Platform",
     "Transparent Donations",
     "Charity",
@@ -26,15 +26,8 @@ export const metadata: Metadata = {
     title: "iDonate - Empowering Transparent Donations",
     description:
       "Join iDonate to make impactful and transparent donations. Explore verified organizations and trusted causes.",
-    url: "https://yourwebsite.com",
-    images: [
-      {
-        url: "https://yourwebsite.com/static/home-banner.jpg",
-        width: 1200,
-        height: 630,
-        alt: "iDonate Home Banner",
-      },
-    ],
+    url: "https://idonate.istad.co",
+    images:"https://idonateapi.kangtido.life/media/22404496-37b3-4b2d-9209-73a38c9efc71.png",
     type: "website",
   },
   twitter: {
@@ -42,27 +35,29 @@ export const metadata: Metadata = {
     title: "iDonate - Empowering Transparent Donations",
     description:
       "Make donations you can trust with iDonate. Explore verified organizations and causes.",
-    images: ["https://yourwebsite.com/static/home-banner.jpg"],
+    images: [
+      `${process.env.NEXT_PUBLIC_IDONATE_API_URL}/media/8b894c24-57a5-42ff-8293-313e50b7aa32.png`,
+    ],
   },
   icons: {
-    icon: "/favicon.ico",
-    apple: "/apple-touch-icon.png",
+    icon: "/logo.png",
+    shortcut: "/logo.png",
+    apple: "/logo.png",
   },
   robots: {
     index: true,
     follow: true,
   },
   alternates: {
-    canonical: "https://yourwebsite.com",
+    canonical: "https://idonate.istad.co",
     languages: {
-      en: "https://yourwebsite.com",
-      km: "https://yourwebsite.com/kh",
+      en: "https://idonate.istad.co",
+      km: "https://idonate.istad.co",
     },
   },
 };
 
 export default function Homepage() {
-  // const typedCategory: CategoryType[] = categories;
   return (
     <section className="flex flex-col items-center gap-9">
       {/* Here section */}
@@ -73,13 +68,13 @@ export default function Homepage() {
         <div className="space-y-2">
           <h2
             lang="km"
-            className="text-xl font-medium text-iDonate-green-primary dark:text-iDonate-green-secondary "
+            className="p-2 text-xl font-medium text-iDonate-green-primary dark:text-iDonate-green-secondary "
           >
             តើអ្វីខ្លះដែលយើងត្រូវធ្វើ?
           </h2>
           <h3
             lang="km"
-            className="text-2xl font-medium text-iDonate-navy-primary dark:text-iDonate-navy-accent"
+            className="p-3 text-2xl font-medium text-iDonate-navy-primary dark:text-iDonate-navy-accent"
           >
             ការបរិច្ចាគរបស់អ្នក ជាសេចក្តីអំណរបស់អ្នកដទៃ !
           </h3>
@@ -105,9 +100,9 @@ export default function Homepage() {
           {/*Test Github actions 3 */}
           <h3
             lang="km"
-            className="text-2xl text-iDonate-navy-primary text-center dark:text-iDonate-navy-accent"
+            className="mb-5 p-2 text-2xl text-iDonate-navy-primary text-center dark:text-iDonate-navy-accent"
           >
-            កម្មវិធីបរិច្ចាគចុងក្រោយបំផុត
+            កម្មវិធីបរិច្ចាគបន្ទាន់
           </h3>
           <LatestDonationCard />
         </div>

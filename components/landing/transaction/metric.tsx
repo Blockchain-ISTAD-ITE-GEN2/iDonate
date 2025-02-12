@@ -14,15 +14,15 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { AverageType } from "@/difinitions/types/chart/barchart";
+import { TransactionType } from "@/difinitions/types/table-type/transaction";
 
-type AverageProps = {
-  data: AverageType[];
+type TransactionProps = {
+  data: TransactionType[];
 };
 
 const chartConfig = {
   today: {
-    label: "Amount",
+    label: "ចំនួនថវិការបរិច្ចាគ",
     color: "iDonate-navy-primary",
   },
   average: {
@@ -31,19 +31,21 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export function CardsMetric({ data }: AverageProps) {
+export function CardsMetric({ data }: TransactionProps) {
+  console.log("Chart Data:", data); // Debugging line
+
   return (
-    <Card className="w-full bg-iDonate-light-gray rounded-lg border border-iDonate-navy-accent dark:bg-iDonate-dark-mode">
+    <Card className="w-full flex-1 bg-iDonate-light-gray rounded-lg border border-iDonate-navy-accent dark:bg-iDonate-dark-mode">
       <CardHeader>
         <CardTitle className="text-medium-eng font-normal text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
-          Overall Transaction
+          ប្រតិបត្តិការសរុប
         </CardTitle>
         <CardDescription className="text-sub-description-eng text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
-          Total transactions caculated daily
+          ប្រតិបត្តិការសរុបគណនាប្រចាំថ្ងៃ
         </CardDescription>
       </CardHeader>
-      <CardContent className="pb-4">
-        <ChartContainer config={chartConfig} className="h-[200px] w-full">
+      <CardContent className="p-2">
+        <ChartContainer config={chartConfig} className="flex-1 w-full">
           <AreaChart
             accessibilityLayer
             data={data}
@@ -71,14 +73,15 @@ export function CardsMetric({ data }: AverageProps) {
             />
             <Area
               type="monotone"
-              strokeWidth={2}
+              strokeWidth={1.5}
+              stroke="#263A61"
               dataKey="amount"
               fill="fill-iDonate-green-primary"
               className="fill-iDonate-green-primary dark:fill-iDonate-green-secondary"
             />
             <ChartTooltip
               cursor={false}
-              content={<ChartTooltipContent indicator="dot" />}
+              content={<ChartTooltipContent indicator="line" />}
             />
           </AreaChart>
         </ChartContainer>

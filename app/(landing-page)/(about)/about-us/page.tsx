@@ -1,4 +1,4 @@
-import AboutUsComponent from "@/components/about-us/AboutUsComponen";
+import AboutUsComponent from "@/components/about-us/AboutUsComponent";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -6,14 +6,19 @@ export const metadata: Metadata = {
   description:
     "Learn more about the team and mentors behind iDonate, ensuring transparency and credibility in donation requests.",
   keywords: ["iDonate", "About Us", "Team", "Mentors", "Donation Platform"],
+  icons: {
+    icon: "/logo.png",
+    shortcut: "/logo.png",
+    apple: "/logo.png",
+  },
   openGraph: {
     title: "About Us - iDonate",
     description:
-      "Meet the passionate team and mentors who ensure transparency and credibility on iDonate.",
-    url: "https://yourwebsite.com/about",
+      "Meet the passionate  team and mentors who ensure transparency and credibility on iDonate.",
+    url: "https://idonate.istad.co/about-us",
     images: [
       {
-        url: "https://yourwebsite.com/static/team-photo.jpg",
+        url: `${process.env.NEXT_PUBLIC_IDONATE_API_URL}/media/8b894c24-57a5-42ff-8293-313e50b7aa32.png`,
         width: 1200,
         height: 630,
         alt: "iDonate Team Photo",
@@ -26,21 +31,17 @@ export const metadata: Metadata = {
     title: "About Us - iDonate",
     description:
       "Discover the team and mentors behind iDonate, ensuring trust and credibility in donations.",
-    images: ["https://yourwebsite.com/static/team-photo.jpg"],
-  },
-  icons: {
-    icon: "/favicon.ico",
-    apple: "/apple-touch-icon.png",
+    images:"https://idonateapi.kangtido.life/media/22404496-37b3-4b2d-9209-73a38c9efc71.png"
   },
   robots: {
     index: true,
     follow: true,
   },
   alternates: {
-    canonical: "https://yourwebsite.com/about",
+    canonical: "https://idonate.istad.co/about-us",
     languages: {
-      en: "https://yourwebsite.com/about",
-      km: "https://yourwebsite.com/kh/about",
+      en: "https://idonate.istad.co/about-us",
+      km: "https://idonate.istad.co/about-us",
     },
   },
 };

@@ -40,19 +40,19 @@ jobs:
         run: |
           echo "TAG=${GITHUB_SHA::8}" >> $GITHUB_ENV
       - name: Stop the container
-        run: sudo docker compose down
+        run: sudo docker-compose down
       - name: Update Docker Compose
         run: |
           yq eval ".services.reactjs-srv.image=\"kevintido/${{ env.IMAGE_NAME }}:$TAG\"" -i docker-compose.yaml
       - name: Run the container
-        run: sudo docker compose up -d
+        run: sudo docker-compose up -d
       - name: Send Telegram Notification on Deploy Success
         if: success()
         run: |
           curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
           -d chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" \
           -d parse_mode=Markdown \
-          -d text="*Idonate Deployment Successful:*\n\n- *Container:* kevintido/${{ env.IMAGE_NAME }}\n- *Tag:* $TAG\n- *Branch:* development\n- *Deployment URL:* [https://idonate.kangtido.life](https://idonate.kangtido.life)\n\n*Application URL:* [http://34.142.164.66:3000/](http://34.142.164.66:3000/)"
+          -d text="*Idonate Deployment Successful:*\n\n- *Container:* kevintido/${{ env.IMAGE_NAME }}\n- *Tag:* $TAG\n- *Branch:* development\n- *Deployment URL:* [https://idonate.istad.co](https://idonate.istad.co)\n\n*Application URL:* [http://34.87.176.40:3000/](http://34.87.176.40:3000/)"
       - name: Send Telegram Notification on Failure
         if: failure()
         run: |

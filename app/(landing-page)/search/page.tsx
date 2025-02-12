@@ -12,14 +12,19 @@ export const metadata: Metadata = {
     "Organizations",
     "Events",
   ],
+  icons: {
+    icon: "/logo.png", // Path to your favicon file
+    shortcut: "/logo.png",
+    apple: "/logo.png",
+  },
   openGraph: {
     title: "Search - iDonate",
     description:
       "Find donation requests, organizations, and events on iDonate.",
-    url: "https://yourwebsite.com/search",
+    url: "https://idonate.istad.co/search",
     images: [
       {
-        url: "https://yourwebsite.com/static/search-banner.jpg",
+        url: `${process.env.NEXT_PUBLIC_IDONATE_API_URL}/media/8b894c24-57a5-42ff-8293-313e50b7aa32.png`,
         width: 1200,
         height: 630,
         alt: "Search - iDonate",
@@ -30,23 +35,18 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Search - iDonate",
-    description:
-      "Discover donation opportunities, organizations, and events on iDonate.",
-    images: ["https://yourwebsite.com/static/search-banner.jpg"],
-  },
-  icons: {
-    icon: "/favicon.ico",
-    apple: "/apple-touch-icon.png",
+    description:"Discover donation opportunities, organizations, and events on iDonate.",
+    images:"https://idonateapi.kangtido.life/media/22404496-37b3-4b2d-9209-73a38c9efc71.png"
   },
   robots: {
     index: true,
     follow: true,
   },
   alternates: {
-    canonical: "https://yourwebsite.com/search",
+    canonical: "https://idonate.istad.co/search",
     languages: {
-      en: "https://yourwebsite.com/search",
-      km: "https://yourwebsite.com/kh/search",
+      en: "https://idonate.istad.co/search",
+      km: "https://idonate.istad.co/search",
     },
   },
 };

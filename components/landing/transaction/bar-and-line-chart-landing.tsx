@@ -1,4 +1,6 @@
-import { AverageType, BarchartType } from "@/difinitions/types/chart/barchart";
+"use client";
+
+import { useEffect, useReducer } from "react";
 import {
   Card,
   CardContent,
@@ -7,65 +9,159 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { CardsMetric } from "./metric";
-import { Overview } from "./overview";
+import { ReacentTransacctions } from "@/components/organization/dashboard/ReacentTransacctions";
+import SockJS from "sockjs-client";
+import { Client } from "@stomp/stompjs";
+import { LoadingTrasaction } from "./LoadingTrasaction";
 import { TransactionType } from "@/difinitions/types/table-type/transaction";
-import barchart from "@/data/barchart.json";
-import averages from "@/data/average-data.json";
-import transactions from "@/data/transactions.json";
-import { ReacentTransacctionsLanding } from "@/components/landing/transaction/reacent-transactions-landing";
+
+// Define action types
+type ActionType =
+  | { type: "FETCH_SUCCESS"; payload: TransactionType[] }
+  | { type: "FETCH_ERROR"; payload: string }
+  | { type: "ADD_TRANSACTION"; payload: TransactionType };
+
+// Reducer function for state management
+const transactionsReducer = (
+  state: {
+    transactions: TransactionType[];
+    loading: boolean;
+    error: string | null;
+  },
+  action: ActionType,
+) => {
+  switch (action.type) {
+    case "FETCH_SUCCESS":
+      return { transactions: action.payload, loading: false, error: null };
+    case "FETCH_ERROR":
+      return { transactions: [], loading: false, error: action.payload };
+    case "ADD_TRANSACTION":
+      return {
+        transactions: [action.payload, ...state.transactions].slice(0, 10), // Keep max 10 recent transactions
+        loading: false,
+        error: null,
+      };
+    default:
+      return state;
+  }
+};
 
 export function BarAndLineChartLanding() {
-  const barchartdata: BarchartType[] = Object.entries(barchart).map(
-    ([name, values]) => ({
-      name,
-      ...values,
-    }),
-  );
+  const [state, dispatch] = useReducer(transactionsReducer, {
+    transactions: [],
+    loading: true,
+    error: null,
+  });
 
-  const recentTransactions: TransactionType[] = transactions
-    .slice(0, 9)
-    .map((transaction) => ({
-      ...transaction,
-      name: "",
-      avatar: "",
-    }));
-  const averageDate: AverageType[] = averages.map((item) => ({
-    ...item,
-    revenue_growth: 0,
-    total_revenue: 0,
-  }));
+  useEffect(() => {
+    const fetchTransactions = async () => {
+      try {
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/v1/donation`,
+        );
+        if (!response.ok) throw new Error("Failed to fetch transactions");
+
+        const data = await response.json();
+
+
+        const formattedTransactions: TransactionType[] = data.content.map(
+          (txn: any) => ({
+            id: crypto.randomUUID(),
+            avatar: txn.avatar || "",
+            donor: txn.username || "Anonymous",
+            event: txn.event,
+            organization: txn.organization,
+            amount: txn.donationAmount,
+            timestamp: new Date(txn.timestamp).toISOString(),
+          }),
+        );
+
+        formattedTransactions.sort(
+          (a, b) =>
+            new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime(),
+        );
+
+        dispatch({ type: "FETCH_SUCCESS", payload: formattedTransactions });
+      } catch (error: any) {
+        dispatch({
+          type: "FETCH_ERROR",
+          payload: error.message || "Something went wrong",
+        });
+      }
+    };
+
+    fetchTransactions();
+
+    const socket = new SockJS(
+      `${process.env.NEXT_PUBLIC_IDONATE_API_URL}/websocket`,
+    );
+    const stompClient = new Client({
+      webSocketFactory: () => socket,
+      reconnectDelay: 5000,
+      heartbeatIncoming: 4000,
+      heartbeatOutgoing: 4000,
+    });
+
+    stompClient.onConnect = () => {
+      stompClient.subscribe("/topic/recentTransactions", (message) => {
+        try {
+          const newTransaction = JSON.parse(message.body);
+
+          if (!newTransaction.content || newTransaction.content.length === 0)
+            return;
+
+          const formattedTransaction: TransactionType = {
+            id: crypto.randomUUID(),
+            avatar: newTransaction.content[0].avatar || "",
+            donor: newTransaction.content[0].username || "Anonymous",
+            event: newTransaction.content[0].event,
+            organization: newTransaction.content[0].organization,
+            amount: newTransaction.content[0].donationAmount,
+            timestamp: new Date(
+              newTransaction.content[0].timestamp,
+            ).toISOString(),
+          };
+
+          dispatch({ type: "ADD_TRANSACTION", payload: formattedTransaction });
+        } catch (error) {
+        }
+      });
+    };
+
+    stompClient.onStompError = (frame) => {
+      dispatch({ type: "FETCH_ERROR", payload: "WebSocket connection error" });
+    };
+
+    stompClient.activate();
+
+    return () => {
+      stompClient.deactivate();
+    };
+  }, []);
+
+  if (state.loading) return <LoadingTrasaction />;
+  if (state.error)
+    return <div className="text-red-500">Error: {state.error}</div>;
 
   return (
     <div className="container mx-auto px-4 md:w-full grid gap-4 lg:grid-cols-[1fr_480px] grid-cols-1">
       <div className="flex flex-col gap-4">
-        {/* Cards for metrics */}
-        <CardsMetric data={averageDate} />
-        <Card className="w-full bg-iDonate-light-gray rounded-lg border border-iDonate-navy-accent dark:bg-iDonate-dark-mode dark:text-iDonate-navy-accent">
-          <CardHeader>
-            <CardTitle className="text-medium-eng font-normal text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
-              Comparison this week
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="pl-2">
-            <Overview data={barchartdata} />
-          </CardContent>
-        </Card>
+        <CardsMetric data={state.transactions} />
       </div>
 
       {/* Recent Transactions Card */}
       <Card className="md:w-full lg:w-[480px] bg-iDonate-light-gray rounded-lg border border-iDonate-navy-accent dark:bg-iDonate-dark-mode">
         <CardHeader>
-          <CardTitle className="text-medium-eng font-normal text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
-            Recent Transactions
+          <CardTitle lang="km" className="text-medium-eng font-normal text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
+            ប្រតិបត្តិការថ្មីៗ
           </CardTitle>
-
-          <CardDescription className="text-sub-description-eng text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
-            You received 10 donations this week..
+          <CardDescription className="text-sub-description-eng py-2 text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
+            អ្នកទទួលបានការបរិច្ចាគចំនួន {state.transactions.length}{" "}
+            ក្នុងសប្តាហ៍នេះ។
           </CardDescription>
         </CardHeader>
-
         <CardContent>
-          <ReacentTransacctionsLanding transactions={recentTransactions} />
+          <ReacentTransacctions transactions={state.transactions.slice(0, 5)} />
         </CardContent>
       </Card>
     </div>

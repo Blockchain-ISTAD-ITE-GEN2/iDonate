@@ -3,10 +3,11 @@ import { RootState } from "@/redux/store";
 import { setToken } from "@/redux/features/auth/authSlice";
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: `${process.env.NEXT_PUBLIC_IDONATE_API_URL}`,
+  baseUrl: `${process.env.NEXT_PUBLIC_IDONATE_API_URL}/api/v1`,
+  // baseUrl: `https://idonateapi.kangtido.life/api/v1`,
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).auth.token;
-    console.log(token);
+
     if (token) {
       headers.set("authorization", `Bearer ${token}`);
     }
@@ -55,6 +56,7 @@ export const idonateApi = createApi({
     "event",
     "organization",
     "testimonial",
+    "donation",
   ],
   reducerPath: "idonateApi",
   baseQuery: baseQueryWithReAuth,

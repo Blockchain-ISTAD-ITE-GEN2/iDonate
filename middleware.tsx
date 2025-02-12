@@ -15,16 +15,14 @@ export function middleware(request: NextRequest) {
   // console.log("Refresh Token: ",refreshToken)
 
   if (!refreshToken) {
-    // console.log("There is no session or refresh token, it will redirect back to the login ")
-    return NextResponse.redirect(new URL("/login", request.url).toString());
+    const loginUrl = new URL("/", request.url); // Replace "/" with your login page path if different
+    return NextResponse.redirect(loginUrl);
   }
+  return NextResponse.next();
 }
 
 export const config = {
-  matcher: [
-    "/donor-dashboard/:path*",
-    "/organization-dashboard/dashboard/:path*",
-  ],
+  matcher: ["/donor-dashboard/:path*", "/organization-dashboard/:path*"],
   compiler: {
     removeConsole: true,
   },
