@@ -50,7 +50,7 @@ export default function CategoryWithEventComponent({
       </h2>
 
       {/* Events */}
-      <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 lg:mx-[100px]">
+      <div className="grid lg:ps-1 md:px-4 px-5 gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 lg:mx-[100px]">
         {isEventsLoading ? (
           <CategoryPlaceholder />
         ) : typedEvents.length > 0 ? (
