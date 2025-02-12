@@ -47,7 +47,7 @@ export function DonorProfileComponent() {
           genderPercentage,
           phoneNumberPercentage,
         ]}
-      />
+        /> 
     </section>
   );
 }

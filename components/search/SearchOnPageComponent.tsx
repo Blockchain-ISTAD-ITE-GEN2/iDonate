@@ -59,7 +59,7 @@ export function SearchPage() {
     },
     {
       key: "currentRaised",
-      title: "startDate Range",
+      title: "Amount Range",
       options: Array.from(
         new Set(
           typedEvents

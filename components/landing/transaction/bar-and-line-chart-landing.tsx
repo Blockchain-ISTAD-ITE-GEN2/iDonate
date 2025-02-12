@@ -54,7 +54,6 @@ export function BarAndLineChartLanding() {
 
         const data = await response.json();
 
-        console.log("Data transactions: ", data);
 
         const formattedTransactions: TransactionType[] = data.content
           .map((txn: any) => ({
