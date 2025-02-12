@@ -65,6 +65,7 @@ export function DonationForm() {
   const [md5, setMd5] = useState();
   const [generatedQr] = useGenerateQrCodeMutation();
   const [sendReceipt] = useSendReceiptMutation();
+  const [isProcessingDonation, setIsProcessingDonation] = useState(false);
 
   console.log("md5", md5);
 
@@ -197,8 +198,10 @@ export function DonationForm() {
 
   // Submit handler for the donation form
   async function onSubmit(values: z.infer<typeof donationSchema>) {
+    if (isProcessingDonation) return; // Prevent multiple submissions
+    
+    setIsProcessingDonation(true);
     try {
-      // Build the donation object
       const donation: DonationType = {
         eventUuid: typedEvents?.uuid || "",
         amount: values.amount,
@@ -206,8 +209,7 @@ export function DonationForm() {
         currency: values.currency,
         city: values.city,
       };
-
-      // Save payment data for QR dialog
+  
       setPaymentData({
         eventUuid: typedEvents?.uuid || "",
         donor: userProfile?.username,
@@ -216,10 +218,9 @@ export function DonationForm() {
         acquiringBank: values.acquiringBank,
         currency: values.currency,
         city: values.city,
-        visibily: true, // Add the missing visibily property
+        visibily: true,
       });
-
-      // Validate donation amount
+  
       if (values.amount <= 0) {
         toast({
           title: "Error",
@@ -228,52 +229,32 @@ export function DonationForm() {
         });
         return;
       }
-
-      // Make donation API call
+  
       const donateResponse = await donate({
         donation: donation,
         organizationUuid: typedEvents?.organization?.uuid || "",
       }).unwrap();
+  
       console.log("Donation API Response:", donateResponse);
-
+      
       const md5Value = donateResponse?.data?.md5;
       if (md5Value) {
-        setMd5(md5Value); // Set md5 value
+        setMd5(md5Value);
       } else {
         throw new Error("MD5 value missing in donation response.");
       }
-
-      // Fetch the QR code manually
-      const qrResponse = generatedQr(donateResponse?.data?.qr || "").unwrap();
-
-      const qrData = await qrResponse;
-      setQrCode(qrData?.base64QRCode); // Save QR code
-      setIsOpened(true); // Open QR dialog
-
-      // Success dialog - check transaction
-      const successResponse = await fetch(
-        `https://api-bakong.nbc.gov.kh/v1/check_transaction_by_md5`,
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjoiYzIwOWMwNDYzNjBlNDEwMSJ9LCJpYXQiOjE3MzczNTg3NTcsImV4cCI6MTc0NTEzNDc1N30.8CdSi4fVh_b1bT-pjEN0peTi_ws4K4AOKGCxrrH0EYE`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            md5: donateResponse?.dataKHQRResponse?.data?.md5,
-          }),
-        },
-      );
-
-      const successData = await successResponse.json();
-      setTransactionData(successData); // Save transaction data
+  
+      const qrResponse = await generatedQr(donateResponse?.data?.qr || "").unwrap();
+      setQrCode(qrResponse?.base64QRCode);
+      setIsOpened(true);
     } catch (error: any) {
-      // console.error("Error during submission:", error);
       toast({
         title: "Error",
         description: error.message || "An unexpected error occurred.",
         variant: "destructive",
       });
+    } finally {
+      setIsProcessingDonation(false);
     }
   }
 
@@ -327,10 +308,10 @@ export function DonationForm() {
             {/* Submit Button */}
             <Button
               type="submit"
-              disabled={isSubmitting}
+              disabled={isSubmitting || isProcessingDonation} // Prevent duplicate submissions
               className="w-full rounded-lg bg-iDonate-green-secondary hover:bg-iDonate-green-secondary text-iDonate-navy-primary font-semibold"
             >
-              {isSubmitting ? "Processing..." : "បរិច្ចាគឥឡូវនេះ"}
+              {isSubmitting || isProcessingDonation ? "Processing..." : "បរិច្ចាគឥឡូវនេះ"}
             </Button>
           </CardFooter>
         </Card>

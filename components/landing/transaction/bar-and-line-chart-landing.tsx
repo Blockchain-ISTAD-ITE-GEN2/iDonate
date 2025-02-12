@@ -9,7 +9,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { CardsMetric } from "./metric";
-import { ReacentTransacctions } from "@/components/organization/dashboard/ReacentTransacctions";
+import { RecentTransactions } from "@/components/organization/dashboard/ReacentTransacctions";
 import { LoadingTrasaction } from "./LoadingTrasaction";
 import { TransactionType } from "@/difinitions/types/table-type/transaction";
 
@@ -94,7 +94,7 @@ export function BarAndLineChartLanding() {
       </div>
 
       {/* Recent Transactions Card */}
-      <Card className="md:w-full lg:w-[480px] bg-iDonate-light-gray rounded-lg border border-iDonate-navy-accent dark:bg-iDonate-dark-mode">
+      <Card className="w-full sm:w-full md:w-full lg:w-full  bg-iDonate-light-gray rounded-lg border border-iDonate-navy-accent dark:bg-iDonate-dark-mode">
         <CardHeader>
           <CardTitle
             lang="km"
@@ -108,7 +108,7 @@ export function BarAndLineChartLanding() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <ReacentTransacctions transactions={state.transactions.slice(0, 5)} />
+          <RecentTransactions transactions={state.transactions.slice(0, 5)} />
         </CardContent>
       </Card>
     </div>

@@ -13,7 +13,7 @@ import { CardsMetric } from "./metric";
 import { Overview } from "./overview";
 import { TransactionType } from "@/difinitions/types/table-type/transaction";
 import barchart from "@/data/barchart.json";
-import { ReacentTransacctions } from "@/components/organization/dashboard/ReacentTransacctions";
+import { RecentTransactions } from "./ReacentTransacctions";
 
 export function BarAndLineChart({ orgUuid }: { orgUuid: string }) {
   const [recentTransactions, setRecentTransactions] = useState<
@@ -114,7 +114,7 @@ export function BarAndLineChart({ orgUuid }: { orgUuid: string }) {
       </div>
 
       {/* ប្រតិបត្តិការថ្មីៗ Card */}
-      <Card className="md:w-full xl:w-[400px] bg-iDonate-light-gray rounded-lg border border-iDonate-navy-accent dark:bg-iDonate-dark-mode">
+      <Card className="w-full sm:w-full md:w-full lg:w-full  bg-iDonate-light-gray rounded-lg border border-iDonate-navy-accent dark:bg-iDonate-dark-mode">
         <CardHeader>
           <CardTitle className="text-medium-eng font-normal text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
             ប្រតិបត្តិការថ្មីៗ
@@ -131,7 +131,7 @@ export function BarAndLineChart({ orgUuid }: { orgUuid: string }) {
             {loading && <p>Loading transactions...</p>}
             {error && <p className="text-red-500">{error}</p>}
             {!loading && !error && (
-              <ReacentTransacctions
+              <RecentTransactions
                 transactions={recentTransactions.slice(0, 5)}
               />
             )}

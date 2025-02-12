@@ -33,7 +33,7 @@ const chartConfig = {
 
 export function DonorCardsMetric({ data }: TransactionProps) {
   return (
-    <Card className="w-full flex-1 bg-iDonate-light-gray rounded-lg border border-iDonate-navy-accent dark:bg-iDonate-dark-mode">
+    <Card className="w-full sm:w-full md:w-full lg:w-full flex-1 bg-iDonate-light-gray rounded-lg border border-iDonate-navy-accent dark:bg-iDonate-dark-mode">
       <CardHeader>
         <CardTitle className="text-medium-eng font-normal text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
           ប្រតិបត្តិការសរុប
