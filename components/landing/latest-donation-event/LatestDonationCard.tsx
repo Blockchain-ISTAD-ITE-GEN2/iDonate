@@ -16,11 +16,11 @@ import { FaRegCalendarAlt } from "react-icons/fa";
 import { HiCalendarDateRange } from "react-icons/hi2";
 
 export default function LatestDonationCard() {
-  const uuid = useParams();
+  const { uuid } = useParams() as { uuid: string };
   const router = useRouter();
   const [typedEvents, setTypedEvents] = useState<EventType[]>([]);
 
-  const { data: events } = useGetEventByUuidQuery(uuid?.uuid);
+  const { data: events } = useGetEventByUuidQuery(uuid);
   const typedEvent: EventType = events;
 
   const [totalDonors, setTotalDonors] = useState(typedEvent?.totalDonors ?? 0);
@@ -42,39 +42,32 @@ export default function LatestDonationCard() {
   }, [apiEventResponse]);
 
   useEffect(() => {
-      if (!typedEvent?.uuid) return;
+    if (!typedEvent?.uuid) return;
   
-      const socket = new SockJS(
-        `${process.env.NEXT_PUBLIC_IDONATE_API_URL}/websocket`,
-      );
-      const stompClient = new Client({
-        webSocketFactory: () => socket,
-        reconnectDelay: 5000,
+    let stompClient: Client | null = null;
+    const socket = new SockJS(`${process.env.NEXT_PUBLIC_IDONATE_API_URL}/websocket`);
+    stompClient = new Client({
+      webSocketFactory: () => socket,
+      reconnectDelay: 5000,
+    });
+  
+    stompClient.onConnect = () => {
+      stompClient?.subscribe(`/topic/totalAmountByEvent/${typedEvent.uuid}`, (message) => {
+        setCurrentRaised(parseFloat(message.body) || 0);
       });
   
-      stompClient.onConnect = () => {
-        // Subscribe to event-specific updates
-        stompClient.subscribe(
-          `/topic/totalAmountByEvent/${typedEvent.uuid}`,
-          (message) => {
-            setCurrentRaised(parseFloat(message.body) || 0);
-          },
-        );
+      stompClient?.subscribe(`/topic/totalDonorsByEvent/${typedEvent.uuid}`, (message) => {
+        setTotalDonors(parseInt(message.body, 10) || 0);
+      });
+    };
   
-        stompClient.subscribe(
-          `/topic/totalDonorsByEvent/${typedEvent.uuid}`,
-          (message) => {
-            setTotalDonors(parseInt(message.body, 10) || 0);
-          },
-        );
-      };
+    stompClient.activate();
   
-      stompClient.activate();
+    return () => {
+      stompClient?.deactivate();
+    };
+  }, [typedEvent?.uuid]);
   
-      return () => {
-        stompClient.deactivate();
-      };
-    }, [typedEvent?.uuid]);
 
   const formatAmount = (amount: any) => {
     return new Intl.NumberFormat("en-US", {
@@ -82,6 +75,13 @@ export default function LatestDonationCard() {
       maximumFractionDigits: 2,
     }).format(amount);
   };
+
+  useEffect(() => {
+    if (events) {
+      setTotalDonors(events.totalDonors ?? 0);
+      setCurrentRaised(events.currentRaised ?? 0);
+    }
+  }, [events]);
 
   // Function to format the date
   function formatDate(dateString: string | undefined): string {
@@ -92,39 +92,35 @@ export default function LatestDonationCard() {
       month: "short",
       year: "numeric",
     });
-  }
+  };
 
   return (
     <div className="w-full h-auto bg-transparent flex flex-col gap-6 lg:pb-[500px]">
       {/* The Big Card of Lastest Event  */}
-      <div className="lg:relative z-10  hover:z-30 lg:hover:z-20 pointer-events-auto transition-transform duration-200 lg:hover:scale-95">
-        {typedEvents.slice(3, 4).map((item) => (
-          <Card
-            onClick={(e) => {
-              e.stopPropagation();
-              router.push(`/event-detail/${item?.uuid}`);
-            }}
-            key={item.uuid}
-            className="w-full overflow-hidden cursor-pointer h-auto lg:h-[660px] p-0 m-0 border-none grid lg:grid-cols-2 item-center lg:relative"
-          >
-            {/* Image Section */}
-            <CardHeader className="relative min-h-[660px]">
-              <Image
-                src={
-                  typeof item?.images?.[0] === "string"
-                    ? item.images[0]
-                    : "/fallback-placeholder.jpg"
-                }
-                // src={
-                //   Array.isArray(item?.images) && item.images[0]
-                //     ? item.images[0]
-                //     : "https://i.pinimg.com/736x/2a/86/a5/2a86a560f0559704310d98fc32bd3d32.jpg"
-                // }
-                fill
-                alt="Community support image"
-                className="absolute inset-0 w-full h-full object-cover"
-              />
-            </CardHeader>
+      <div className="lg:relative z-10 p-2 hover:z-30 lg:hover:z-20 pointer-events-auto transition-transform duration-200 lg:hover:scale-95">
+              {typedEvents.slice(3, 4).map((item) => (
+                <Card
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    router.push(`/event-detail/${item?.uuid}`);
+                  }}
+                  key={item.uuid}
+                  className="w-full overflow-hidden cursor-pointer h-auto lg:h-[660px] p-0 m-0 border-none grid lg:grid-cols-2 item-center lg:relative"
+                >
+                  {/* Image Section */}
+                  <div className="relative w-full min-h-[300px] sm:min-h-[400px] md:min-h-[500px] lg:min-h-[660px] rounded-lg overflow-hidden">
+            <Image
+              src={
+                typeof item?.images?.[0] === "string"
+                  ? item.images[0]
+                  : "/fallback-placeholder.jpg"
+              }
+              fill
+              alt="Community support image"
+              className="absolute inset-0 w-full h-full object-cover"
+              priority // Ensures fast loading for above-the-fold content
+            />
+          </div>
 
                 {/* Content Section */}
                 <CardContent className="p-9 z-10 bg-iDonate-navy-primary text-iDonate-white-space flex flex-grow flex-col gap-4 dark:bg-iDonate-dark-mode">
@@ -212,7 +208,7 @@ export default function LatestDonationCard() {
       </div>
 
       {/* The Small 3 Event  Donations Section */}
-      <div className="w-full flex flex-col gap-2 lg:absolute ">
+      <div className="w-full flex flex-col gap-2 lg:absolute p-3">
         {typedEvents.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 z-10 lg:hover:z-30   items-center justify-center mx-auto lg:grid-cols-3 gap-6 p-2 lg:mt-[500px]">
             {typedEvents.slice(0, 3).map((item) => (

@@ -44,7 +44,7 @@ export default function CategoryWithEventComponent({
       {/* Event Category Title */}
       <h2
         lang="km"
-        className="text-title-khmer text-iDonate-navy-primary md:flex md:items-center md:justify-center lg:flex lg:items-center lg:justify-start dark:text-iDonate-navy-accent lg:mx-[100px]"
+        className="mx-auto text-title-khmer text-iDonate-navy-primary md:flex md:items-center md:justify-center lg:flex lg:items-center lg:justify-start dark:text-iDonate-navy-accent lg:mx-[100px]"
       >
         {category.name}
       </h2>
