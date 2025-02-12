@@ -65,10 +65,12 @@ export function BarAndLineChart({ orgUuid }: { orgUuid: string }) {
           })
         );
 
-        formattedTransactions.sort(
-          (a, b) =>
-            new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime(),
-        );
+        formattedTransactions.sort((a, b) => {
+          const dateA = a.timestamp ? new Date(a.timestamp).getTime() : 0;  // Default to 0 if invalid
+          const dateB = b.timestamp ? new Date(b.timestamp).getTime() : 0;
+          return dateB - dateA;
+        });
+        
 
         setRecentTransactions(formattedTransactions);
 

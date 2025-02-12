@@ -16,7 +16,7 @@ export function RecentTransactions({ transactions }: RecentSalesProps) {
     return <p className="text-gray-500 text-center">No transactions available.</p>;
   }
 
-  const formatDateTime = (timestamp: string) => {
+  const formatDateTime = (timestamp?: string) => {
     if (!timestamp) return "N/A";
     const date = new Date(timestamp);
     return date.toLocaleString("en-GB", {

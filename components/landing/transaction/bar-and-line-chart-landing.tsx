@@ -66,10 +66,12 @@ export function BarAndLineChartLanding() {
             timestamp: txn.timestamp ? new Date(txn.timestamp).toISOString() : "",
           }))
           
-          formattedTransactions.sort(
-            (a, b) =>
-              new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
-          ); // Sort by timestamp (newest first)
+          formattedTransactions.sort((a, b) => {
+            const dateA = a.timestamp ? new Date(a.timestamp).getTime() : 0;  // Default to 0 if invalid
+            const dateB = b.timestamp ? new Date(b.timestamp).getTime() : 0;
+            return dateB - dateA;
+          });
+          
 
         dispatch({ type: "FETCH_SUCCESS", payload: formattedTransactions });
       } catch (error: any) {
