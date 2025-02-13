@@ -15,9 +15,10 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import { AverageType } from "@/difinitions/types/chart/barchart";
+import { TransactionType } from "@/difinitions/types/table-type/transaction";
 
-type AverageProps = {
-  data: AverageType[];
+type TransactionProps = {
+  data: TransactionType[];
 };
 
 const chartConfig = {
@@ -31,9 +32,11 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export function CardsMetric({ data }: AverageProps) {
+export function CardsMetric({ data }: TransactionProps) {
+  console.log("Chart Data:", data); // Debugging line
+
   return (
-    <Card className="w-full sm:w-full md:w-full lg:w-full flex-1 h-full bg-iDonate-light-gray rounded-lg border border-iDonate-navy-accent dark:bg-iDonate-dark-mode">
+    <Card className="w-full sm:w-full md:w-full lg:w-full flex-1 bg-iDonate-light-gray rounded-lg border border-iDonate-navy-accent dark:bg-iDonate-dark-mode">
       <CardHeader>
         <CardTitle className="text-medium-eng font-normal text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
           ប្រតិបត្តិការសរុប
@@ -79,7 +82,7 @@ export function CardsMetric({ data }: AverageProps) {
             />
             <ChartTooltip
               cursor={false}
-              content={<ChartTooltipContent indicator="dot" color="" />}
+              content={<ChartTooltipContent indicator="line" />}
             />
           </AreaChart>
         </ChartContainer>
