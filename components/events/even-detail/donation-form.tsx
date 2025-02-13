@@ -147,54 +147,29 @@ export function DonationForm() {
         amount: transactionData?.data?.amount,
         timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
       };
-
-      saveRecord(record)
-        .unwrap()
-        .then(() => {
-          console.log("Record saved successfully");
-        })
-        .catch((error) => {
-          console.error("Error saving record:", error);
-        });
-
-      setIsSuccessDialogOpen(true);
-    }
-  }, [transactionData]);
-
-  useEffect(() => {
-    if (transactionData?.responseCode === 0) {
-      const record: DonationRecordType = {
-        donationEventID: typedEvents?.uuid || "",
-        amount: transactionData?.data?.amount,
-        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-      };
   
       saveRecord(record)
         .unwrap()
         .then(() => {
           console.log("Record saved successfully");
   
-          // Prepare receipt data
+          // Prepare and send the receipt
           const receiptData: ReceiptType = {
-            userUuid: userProfile?.uuid || "", // Ensure user UUID is available
+            userUuid: userProfile?.uuid || "",
             eventUuid: typedEvents?.uuid || "",
             amount: transactionData?.data?.amount,
-            remark: `Donation for ${typedEvents?.name || "event"}`, // Optional remark
+            remark: `Donation for ${typedEvents?.name || "event"}`,
           };
   
-          // Send receipt
-          sendReceipt(receiptData)
-            .unwrap()
-            .then(() => console.log("Receipt sent successfully"))
-            .catch((error) => console.error("Error sending receipt:", error));
+          return sendReceipt(receiptData).unwrap();
         })
-        .catch((error) => {
-          console.error("Error saving record:", error);
-        });
+        .then(() => console.log("Receipt sent successfully"))
+        .catch((error) => console.error("Error saving record or sending receipt:", error));
   
       setIsSuccessDialogOpen(true);
     }
   }, [transactionData]);
+    
 
   // Submit handler for the donation form
   async function onSubmit(values: z.infer<typeof donationSchema>) {
