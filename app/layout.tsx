@@ -15,17 +15,26 @@ export const metadata: Metadata = {
     template: "%s - iDonate",
     default: "iDonate",
   },
-  description: "iDonate ",
+  description:
+    "iDonate is a blockchain-powered donation platform that ensures transparency, security, and accountability in charitable giving. Support causes with confidence through our decentralized and tamper-proof donation system. Join iDonate Cambodia today and make a real impact with secure, verifiable donations",
   keywords: [
     "IDONATE",
     "iDonate",
+    "iDonate istad",
     "idonate istad",
-    "idonate.istad",
-    "idonate.istad.co",
-    "donation",
-    "donation cambodia",
-    "charity",
-    "Charity",
+    "idonate",
+    "iDonate Cambodia",
+    "idonate Cambodia",
+    "charity Cambodia",
+    "Charity Cambodia",
+    "blockchain donation",
+    "crypto charity",
+    "transparent donation platform",
+    "secure donations",
+    "Cambodia donation platform",
+    "donate with cryptocurrency",
+    "decentralized charity",
+    "tamper-proof donations",
   ],
   icons: {
     icon: "/logo.png", // Path to your favicon file
@@ -42,7 +51,8 @@ export const metadata: Metadata = {
     url: "https://idonate.istad.co",
     type: "website",
     locale: "kh_KH",
-    images:"https://idonateapi.kangtido.life/media/22404496-37b3-4b2d-9209-73a38c9efc71.png"
+    images:
+      "https://idonateapi.kangtido.life/media/22404496-37b3-4b2d-9209-73a38c9efc71.png",
   },
 };
 

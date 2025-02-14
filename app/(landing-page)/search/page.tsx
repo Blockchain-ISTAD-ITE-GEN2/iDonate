@@ -6,11 +6,23 @@ export const metadata: Metadata = {
   description:
     "Search for donation requests, organizations, and events on iDonate.",
   keywords: [
+    "IDONATE",
     "iDonate",
-    "Search",
-    "Donation Requests",
-    "Organizations",
-    "Events",
+    "iDonate istad",
+    "idonate istad",
+    "idonate",
+    "iDonate Cambodia",
+    "idonate Cambodia",
+    "charity Cambodia",
+    "Charity Cambodia",
+    "blockchain donation",
+    "crypto charity",
+    "transparent donation platform",
+    "secure donations",
+    "Cambodia donation platform",
+    "donate with cryptocurrency",
+    "decentralized charity",
+    "tamper-proof donations",
   ],
   icons: {
     icon: "/logo.png", // Path to your favicon file
@@ -35,8 +47,10 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Search - iDonate",
-    description:"Discover donation opportunities, organizations, and events on iDonate.",
-    images:"https://idonateapi.kangtido.life/media/22404496-37b3-4b2d-9209-73a38c9efc71.png"
+    description:
+      "Discover donation opportunities, organizations, and events on iDonate.",
+    images:
+      "https://idonateapi.kangtido.life/media/22404496-37b3-4b2d-9209-73a38c9efc71.png",
   },
   robots: {
     index: true,

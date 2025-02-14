@@ -108,7 +108,7 @@ export default function LatestDonationCard() {
   return (
     <div className="w-full h-auto bg-transparent flex flex-col gap-6">
       {/* The Big Card of Lastest Event  */}
-      <div className="pointer-events-auto transition-transform">
+      <div className="pointer-events-auto transition-transform p-2">
         {typedEvents.slice(3, 4).map((item) => (
           <Card
             onClick={(e) => {
@@ -119,7 +119,7 @@ export default function LatestDonationCard() {
             className="w-full overflow-hidden cursor-pointer h-auto lg:h-[660px] p-0 m-0 border-none grid lg:grid-cols-2 item-center "
           >
             {/* Image Section */}
-            <CardHeader className="relative min-h-[660px]">
+            <div className="relative w-full min-h-[300px] sm:min-h-[400px] md:min-h-[500px] lg:min-h-[660px] rounded-lg overflow-hidden">
               <Image
                 src={
                   typeof item?.images?.[0] === "string"
@@ -129,8 +129,9 @@ export default function LatestDonationCard() {
                 fill
                 alt="Community support image"
                 className="absolute inset-0 w-full h-full object-cover"
+                priority // Ensures fast loading for above-the-fold content
               />
-            </CardHeader>
+            </div>
 
             {/* Content Section */}
             <CardContent className="p-9 z-10 bg-iDonate-navy-primary text-iDonate-white-space flex flex-grow flex-col gap-4 dark:bg-iDonate-dark-mode">
@@ -218,7 +219,7 @@ export default function LatestDonationCard() {
       </div>
 
       {/* The Small 3 Event  Donations Section */}
-      <div className="w-full flex flex-col gap-2">
+      <div className="w-full flex flex-col gap-2 p-3">
         {typedEvents.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 items-center justify-center mx-auto lg:grid-cols-3 gap-6 p-2 ">
             {typedEvents.slice(0, page).map((item) => (

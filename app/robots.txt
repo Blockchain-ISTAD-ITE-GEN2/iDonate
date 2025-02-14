@@ -1,0 +1,4 @@
+User-agent: *
+Disallow:
+
+Sitemap: https://idonate.istad.co/sitemap.xml

@@ -28,5 +28,5 @@ export type TransactionType = {
   end_date?: string;
   avatar?: string;
   donationAmount?: string;
-  timestamp?: any;
+  timestamp?: string;
 };

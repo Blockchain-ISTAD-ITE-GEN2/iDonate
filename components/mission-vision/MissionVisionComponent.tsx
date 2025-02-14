@@ -77,7 +77,8 @@ export default function MissionVision() {
   return (
     <div className="w-full bg-white dark:bg-iDonate-dark-mode">
       {/* Hero Section */}
-      <section className="relative h-[600px] sm:h-[400px] text-iDonate-navy-accent dark:bg ">
+      <section className="relative h-[500px] md:h-[450px] lg:h-[600px] text-iDonate-navy-accent dark:bg">
+        {/* Background Image */}
         <Image
           src={HeroSectionImage}
           alt="People helping people"
@@ -85,20 +86,29 @@ export default function MissionVision() {
           className="object-cover brightness-50"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/30 to-transparent" />
-        <div className="container mx-auto px-4 sm:px-6 md:px-8 relative h-full flex items-center">
+
+        {/* Content Container */}
+        <div className="container mx-auto px-4 sm:px-6 md:px-8 relative h-full flex items-center justify-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="max-w-2xl px-[70px]"
+            className="w-full max-w-4xl text-center lg:text-left px-6 md:px-10 lg:px-[70px]"
           >
-            <h1 className="text-5xl font-bold mb-4">Give Hope, Save Lives</h1>
-            <p className="text-xl mb-8 text-gray-200 font-siemreap leading-relaxed">
+            {/* Title */}
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
+              Give Hope, Save Lives
+            </h1>
+
+            {/* Description */}
+            <p className="text-base sm:text-lg md:text-xl mb-6 md:mb-8 text-gray-200 font-siemreap leading-relaxed">
               នៅក្នុងពិភពលោកដែលពោរពេញដោយបញ្ហាប្រឈម
               ជំនួយរបស់អ្នកអាចជាសញ្ញានៃក្តីសង្ឃឹម
               ដែលនាំនរណាម្នាក់ទៅកាន់ថ្ងៃស្អែកកាន់តែប្រសើរ។
             </p>
-            <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+
+            {/* Stats Section */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
               {stats.map((stat, index) => (
                 <motion.div
                   key={index}
@@ -107,15 +117,16 @@ export default function MissionVision() {
                   transition={{ delay: index * 0.1 }}
                   className="text-center"
                 >
-                  <span className="text-4xl mb-2">{stat.icon}</span>
-                  <div className="text-2xl font-bold">{stat.value}</div>
-                  <div className="text-sm text-gray-300">{stat.label}</div>
+                  <span className="text-3xl sm:text-4xl md:text-5xl mb-2">{stat.icon}</span>
+                  <div className="text-xl sm:text-2xl font-bold">{stat.value}</div>
+                  <div className="text-xs sm:text-sm text-gray-300">{stat.label}</div>
                 </motion.div>
               ))}
             </div>
           </motion.div>
         </div>
       </section>
+
 
       {/* Mission & Vision Section */}
       <section className="py-12 sm:py-20">

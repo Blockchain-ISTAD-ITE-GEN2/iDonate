@@ -111,7 +111,7 @@ export default function TransactionHistory() {
         {loading ? (
           <RecentTransactionsSkeleton />
         ) : (
-          <Card className="w-full xl:w-[480px] bg-iDonate-light-gray rounded-lg border border-iDonate-navy-accent dark:bg-iDonate-dark-mode">
+          <Card className="w-full sm:w-full md:w-full lg:w-full xl:w-[480px] bg-iDonate-light-gray rounded-lg border border-iDonate-navy-accent dark:bg-iDonate-dark-mode">
             <CardHeader>
               <CardTitle className="text-medium-eng font-normal text-iDonate-navy-secondary dark:text-iDonate-navy-accent">
                 ប្រតិបត្តិការថ្មីៗ
