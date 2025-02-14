@@ -186,7 +186,7 @@ export function DonationForm() {
       };
   
       setPaymentData({
-        eventUuid: typedEvents?.uuid || "",
+        eventName: typedEvents?.name || "",
         donor: userProfile?.username,
         amount: values.amount,
         recipient: typedEvents?.organization?.name || "",

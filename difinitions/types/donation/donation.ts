@@ -11,7 +11,7 @@ export type DonationType = {
 };
 
 export type DonationDataType = {
-  eventUuid: string;
+  eventName: string;
   donor: string;
   amount: number;
   recipient: string;
