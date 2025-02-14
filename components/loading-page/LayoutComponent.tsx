@@ -6,6 +6,7 @@ import OrganizationSidebarComponent from "@/components/organization/sidebar/Orga
 import FooterComponent from "@/components/footer/FooterComopent";
 import { usePathname } from "next/navigation";
 import { Loader } from "lucide-react";
+import NavbarBanner from "../landing/banner/navbar-banner";
 
 type RootLayoutProps = {
   children: ReactNode;
@@ -18,6 +19,7 @@ export default function LayoutCompnent({ children }: RootLayoutProps) {
   return (
     <div className="flex flex-col h-full w-full">
       <header className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <NavbarBanner/>
         <NavbarComponent />
       </header>
 
