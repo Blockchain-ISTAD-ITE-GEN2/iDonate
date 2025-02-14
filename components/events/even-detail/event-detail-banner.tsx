@@ -12,7 +12,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { CircleDollarSign, HandCoins, Share2Icon, Users } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { TransactionType } from "@/difinitions/types/table-type/transaction";
 import { useGetEventByUuidQuery } from "@/redux/services/event-service"; // Adjust the import path as needed
 import Image from "next/image";
@@ -51,6 +51,9 @@ export function EventDetailBanner({ uuid }: EventDetailBannerProps) {
 
   const [totalDonors, setTotalDonors] = useState<number>(0);
   const [currentRaised, setCurrentRaised] = useState<number>(0.00);
+
+  const socketUrl = `${process.env.NEXT_PUBLIC_IDONATE_API_URL}/websocket`;
+  const stompClientRef = useRef<Client | null>(null); // ✅ Hook inside component
 
   useEffect(() => {
     if (event) {
@@ -95,33 +98,42 @@ export function EventDetailBanner({ uuid }: EventDetailBannerProps) {
   }, [uuid]); // Depend on `uuid` to fetch data when it changes
 
   useEffect(() => {
-      if (!event?.uuid) return;
-    
-      const socket = new SockJS(`${process.env.NEXT_PUBLIC_IDONATE_API_URL}/websocket`);
-      const stompClient = new Client({
-        webSocketFactory: () => socket,
-        reconnectDelay: 5000,
+    if (!event?.uuid) return;
+
+    // Prevent multiple WebSocket connections
+    if (stompClientRef.current) return;
+
+    const socket = new SockJS(socketUrl);
+    const stompClient = new Client({
+      webSocketFactory: () => socket,
+      reconnectDelay: 5000,
+    });
+
+    stompClient.onConnect = () => {
+      console.log("Connected to WebSocket");
+
+      stompClient.subscribe(`/topic/totalAmountByEvent/${event.uuid}`, (message) => {
+        setCurrentRaised(parseFloat(message.body) || 0.0);
       });
-  
-      stompClient.onConnect = () => {
-        // Subscribe to event-specific updates
-        stompClient.subscribe(
-          `/topic/totalAmountByEvent/${event.uuid}`,
-          (message) => {
-            setCurrentRaised(parseFloat(message.body) || 0.00);
-          },
-        );
-        stompClient.subscribe(`/topic/totalDonorsByEvent/${event.uuid}`, (message) => {
-          setTotalDonors(parseInt(message.body, 10) || 0);
-        });
-      };
-  
-      stompClient.activate();
-  
-      return () => {
-        stompClient.deactivate();
-      };
-    }, [event?.uuid]);
+
+      stompClient.subscribe(`/topic/totalDonorsByEvent/${event.uuid}`, (message) => {
+        setTotalDonors(parseInt(message.body, 10) || 0);
+      });
+    };
+
+    stompClient.onStompError = (frame) => {
+      console.error("WebSocket Error:", frame);
+    };
+
+    stompClient.activate();
+    stompClientRef.current = stompClient; // ✅ Store WebSocket instance
+
+    return () => {
+      console.log("Disconnecting WebSocket");
+      stompClient.deactivate();
+      stompClientRef.current = null; // ✅ Cleanup reference
+    };
+  }, [event?.uuid]);
 
   // Format the currentRaised amount as $100,000
   const formattedCurrentRaised = Number.isFinite(currentRaised)
