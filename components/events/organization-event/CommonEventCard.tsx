@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import { Card, CardContent, CardHeader } from "../../ui/card";
 import { CircleDollarSign, Users } from "lucide-react";
@@ -25,41 +25,47 @@ export function CommonEventCard({ event }: { event: EventType }) {
   const [totalDonors, setTotalDonors] = useState(event.totalDonors ?? 0);
   const [currentRaised, setCurrentRaised] = useState(event.currentRaised ?? 0);
 
+  const socketUrl = `${process.env.NEXT_PUBLIC_IDONATE_API_URL}/websocket`;
+  const stompClientRef = useRef<Client | null>(null); // ✅ Hook inside component
+
   useEffect(() => {
     if (!event?.uuid) return;
 
-    const socket = new SockJS(
-      `${process.env.NEXT_PUBLIC_IDONATE_API_URL}/websocket`,
-    );
+    // Prevent multiple WebSocket connections
+    if (stompClientRef.current) return;
+
+    const socket = new SockJS(socketUrl);
     const stompClient = new Client({
       webSocketFactory: () => socket,
       reconnectDelay: 5000,
     });
 
     stompClient.onConnect = () => {
-      // Subscribe to event-specific updates
-      stompClient.subscribe(
-        `/topic/totalAmountByEvent/${event.uuid}`,
-        (message) => {
-          setCurrentRaised(parseFloat(message.body) || 0);
-        },
-      );
+      console.log("Connected to WebSocket");
 
-      stompClient.subscribe(
-        `/topic/totalDonorsByEvent/${event.uuid}`,
-        (message) => {
-          setTotalDonors(parseInt(message.body, 10) || 0);
-        },
-      );
+      stompClient.subscribe(`/topic/totalAmountByEvent/${event.uuid}`, (message) => {
+        setCurrentRaised(parseFloat(message.body) || 0.0);
+      });
+
+      stompClient.subscribe(`/topic/totalDonorsByEvent/${event.uuid}`, (message) => {
+        setTotalDonors(parseInt(message.body, 10) || 0);
+      });
+    };
+
+    stompClient.onStompError = (frame) => {
+      console.error("WebSocket Error:", frame);
     };
 
     stompClient.activate();
+    stompClientRef.current = stompClient; // ✅ Store WebSocket instance
 
     return () => {
+      console.log("Disconnecting WebSocket");
       stompClient.deactivate();
+      stompClientRef.current = null; // ✅ Cleanup reference
     };
   }, [event?.uuid]);
-
+  
   return (
     <Card
       onClick={() => router.push(`/event-detail/${event?.uuid}`)}
